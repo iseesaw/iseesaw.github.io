@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="Chapter1 1.1 Multi-Dimensional Views 从三个维度看软件系统的构成 用模型&#x2F;视图描述软件系统 将软件构造看做不同视图之间的转换 ##### 1.1.1 Three dimensions         By phares: build-time(构造阶段) run-time(运行阶段)   By dynamics: moment(特定时刻的软件形态) period">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chapter1-软件构造的视图和质量指标">
+<meta property="og:url" content="http://blog.khay.site/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="Chapter1 1.1 Multi-Dimensional Views 从三个维度看软件系统的构成 用模型&#x2F;视图描述软件系统 将软件构造看做不同视图之间的转换 ##### 1.1.1 Three dimensions         By phares: build-time(构造阶段) run-time(运行阶段)   By dynamics: moment(特定时刻的软件形态) period">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612163939996?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="article:published_time" content="2018-03-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-20T02:53:17.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="software construction">
+<meta property="article:tag" content="quality">
+<meta property="article:tag" content="dimentions">
+<meta property="article:tag" content="view">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180612163939996?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+
+
+<link rel="canonical" href="http://blog.khay.site/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Chapter1-软件构造的视图和质量指标 | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter1"><span class="nav-number">1.</span> <span class="nav-text">Chapter1</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#multi-dimensional-views"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Multi-Dimensional Views</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#eight-views"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.2 Eight views</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#transformations-in-software-construction"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.3 Transformations in Software Construction</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#quality-objectives"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 Quality Objectives</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#five-key-quality-objectives"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.2.2 Five key quality objectives</span></a></li></ol></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Chapter1-软件构造的视图和质量指标
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-27 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-27T00:00:00+08:00">2018-03-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-20 10:53:17" itemprop="dateModified" datetime="2019-09-20T10:53:17+08:00">2019-09-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/" class="post-meta-item leancloud_visitors" data-flag-title="Chapter1-软件构造的视图和质量指标" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="chapter1">Chapter1</h3>
+<h4 id="multi-dimensional-views">1.1 Multi-Dimensional Views</h4>
+<p>从三个维度看软件系统的构成 用模型/视图描述软件系统 将软件构造看做不同视图之间的转换 ##### 1.1.1 Three dimensions</p>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 35%" />
+<col style="width: 28%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>By phares:</td>
+<td>build-time(构造阶段)</td>
+<td>run-time(运行阶段)</td>
+</tr>
+<tr class="even">
+<td>By dynamics:</td>
+<td>moment(特定时刻的软件形态)</td>
+<td>period(软件形态随时间点的变化)</td>
+</tr>
+<tr class="odd">
+<td>By levels:</td>
+<td>code(代码的逻辑组织, functions, classes, methods, interfaces)</td>
+<td>component(代码的物理组织, files, directories, packages, libraries)</td>
+</tr>
+</tbody>
+</table>
+<h5 id="eight-views">1.1.2 Eight views</h5>
+<table>
+<tr>
+<td>
+</td>
+<td colspan="2">
+Moment（特定时刻的软件状态）
+</td>
+<td colspan="2">
+Period（软件形态随时间的变化）
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+Code-level
+</td>
+<td>
+Component-level
+</td>
+<td>
+Code-level
+</td>
+<td>
+Component-level
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Build-time
+</td>
+<td rowspan="2">
+Source code（词汇层面，半结构化）, AST（语法层面，语法树，结构化）, Interface-Class-Attribute-Method(Class Diagram)（语义层面，类图，表达&quot;需求&quot;和&quot;设计&quot;思想，再转化成code）（代码的逻辑组织，function，classes，methods，interfaces）
+</td>
+<td rowspan="2">
+Packge, Sorurce, File, Static Linking（静态链接发生在构造阶段）, Library, Test Case(Component Diagram，UML图) Build Script（代码的物理组织，files，directories，packages，libraries）
+</td>
+<td rowspan="2">
+Code Churn(代码变化，增加，修改，删除，版本变更； eg. Git的commit显示修改)
+</td>
+<td rowspan="2">
+Software Configuration Item(SCI 配置项),Version(版本V 1.6.1.5，1.6为major，1为minor，5为patch；Verion Control System(VCS)；baseline，稳定版本)
+</td>
+</tr>
+<tr>
+</tr>
+<tr>
+<td rowspan="2">
+Run-time
+</td>
+<td rowspan="2">
+Code Snapshot(快照图，程序运行时内存里变 量层面的状态),Memory dump(内存信息转储)
+</td>
+<td rowspan="2">
+Package, Library, Dynamic linking（动态链接）, Configuration, Database, Middleware, Network, Hardware(Deployment Diagram)
+</td>
+<td>
+Execution trace(执行追踪，log记录程序执行的调用次序，考虑jstack的使用)
+</td>
+<td>
+Event log（系统层面的事件日志）
+</td>
+</tr>
+<tr>
+<td colspan="2">
+Procedure Call Graph, Message Graph (Sequence Diagram) Parallel and multithreads/processes Distributed processes
+</td>
+</tr>
+</table>
+<h5 id="transformations-in-software-construction">1.1.3 Transformations in Software Construction</h5>
+<img src="https://img-blog.csdn.net/20180612163939996?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" />
+<table>
+<tr>
+<td>
+Null -&gt;Code
+</td>
+<td>
+Code-&gt;Component
+</td>
+<td>
+Build-time-&gt;Run-time
+</td>
+<td>
+Moment-&gt;Period
+</td>
+</tr>
+<tr>
+<td>
+Programming/Coding (ADT / OOP)
+</td>
+<td>
+Design (ADT / OOP, Reusability(可重用性), Maintainability(可维护性))
+</td>
+<td>
+Install/deploy
+</td>
+<td>
+Refactoring(重构)
+</td>
+</tr>
+<tr>
+<td>
+Review, static analysis/checking(静态类型检查)
+</td>
+<td>
+Build : compile, static link, package, install, clean (Construction process)
+</td>
+<td>
+Debug, unit/integration testin (Robustness, 稳健性)
+</td>
+<td>
+Version control (SCM), Loading, dynamic linking, interpreting, execution (dumping, profiling, logging)
+</td>
+</tr>
+</table>
+<h4 id="quality-objectives">1.2 Quality Objectives</h4>
+软件构造过程中需要考虑的重要质量指标 面向质量指标的软件构造技术 ##### 1.2.1 Quality properties External quality factors
+<table>
+<tr>
+<td>
+Correctness(正确性)
+</td>
+<td>
+Robustness(健壮性)
+</td>
+<td>
+Extendibility(可拓展性)
+</td>
+<td>
+Reusability(可复用性)
+</td>
+<td>
+Compatibility(兼容性))
+</td>
+<td>
+Efficiency(有效性)
+</td>
+<td>
+Portability(可移植性)-
+</td>
+<td>
+Ease of use(简约性)
+</td>
+<td>
+Functionality(功能性)
+</td>
+<td>
+Timeliness(及时性)
+</td>
+</tr>
+<tr>
+<td>
+Conditional(分层，每一层保证自己的正确性，同时假设其下层是正确的), Testing and dubugging(测试和调试，消除不正确), Defensive programming(防御式编程，确保正确性), Formal approach(形式化方法，check，guarantee，ensure，形式化验证发现问题-自圆其说)（按照预先定义的&quot;规约&quot;执行，至高无上的质量指标）
+</td>
+<td>
+react appropriately to abnornal conditions(针对异常情况的处理，对规约定义之外的情形做出恰当反应)， Exception handling（出现异常时不能崩溃，未被specification覆盖的情况即为exception）
+</td>
+<td>
+Design simplicity(简约主义), Decentralization(分离主义)（对规约进行修改，是否能够容易应对）
+</td>
+<td>
+Don't Re-invent the Wheel（一次开发，多次使用，发现共性）
+</td>
+<td>
+Homogeneity of design(保持设计的同构性, standardized)
+</td>
+<td>
+balanced(折中优化, 保证正确性，过度优化导致软件不再适应变化和复用)
+</td>
+<td>
+various in hardware and software environments（方便在不同技术环境/硬件/操作系统之间移植）
+</td>
+<td>
+Structural simplicity, Know the user(容易学，安装，操作，监控，提供详细使用指南)
+</td>
+<td>
+Featurism(适当的功能，功能太多极为复杂，不灵活, Agile, SCM)
+</td>
+<td>
+In time（及时性，及时发布新版本）
+</td>
+</tr>
+</table>
+<blockquote>
+<p>Tradeoffs 正确的软件开发过程中，开发者应该将不同质量因素之间如何做出折中的设计决策和标准明确的写下来 虽然需要折中，但“正确性”绝不能与其他质量因素折中</p>
+</blockquote>
+<h5 id="five-key-quality-objectives">1.2.2 Five key quality objectives</h5>
+<table>
+<tr>
+<td>
+Understandability-Elegant and beautiful code(优雅性代码，可理解性)
+</td>
+<td>
+Reusability-Design for/with reuse(可复用)
+</td>
+<td>
+Maintainability and Adaptability -Low complexity(低复杂性，可维护性)
+</td>
+<td>
+Robustness-Robustness and correctness(健壮性, 正确性)
+</td>
+<td>
+Performance-Pertomance and efficiency(效率性)
+<td>
+</tr>
+<pre><code>&lt;tr&gt;
+    &lt;td&gt;代码的可理解性（命名，布局，注释，复杂度）（Code Review, Walkthrough-人工走查, Static Code Analysis）（ADT、函数规约），软件、项目的可理解性（包组织，文件组织，命令空间），（其他包括，重构，版本控制，日志trace）&lt;/td&gt;
+    &lt;td&gt;cheap for develop(开发成本低)；ADT/OOP，接口与实现分离；继承、重载、重写；组合，委派；多态；子类型和泛型；OO设计模式；API设计，库，框架&lt;/td&gt;
+    &lt;td&gt;ready for changes；模块化设计；聚合度、耦合度；SOLID，GRASP；OO设计模式；基于表格（switch，if表格）、状态（State设计模式）、语法（正则表达式）；SCM，version control&lt;/td&gt;
+    &lt;td&gt;safe from bug；异常、错误处理；断言（Assertion）；防御式编程；持续化集成；日志、内存转储分析；Debug测试&lt;/td&gt;
+    &lt;td&gt;efficient to run；代码调优（使用设计模式）；空间复杂性分析（内存管理）；时间复杂度（I/O性能）；内存转储分析；GC垃圾回收；分布式系统；使用多线程，并行；代码的性能分析调整&lt;td&gt;
+&lt;/tr&gt;</code></pre>
+</table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/software-construction/" rel="tag"># software construction</a>
+              <a href="/tags/quality/" rel="tag"># quality</a>
+              <a href="/tags/dimentions/" rel="tag"># dimentions</a>
+              <a href="/tags/view/" rel="tag"># view</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/Chapter2-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="prev" title="Chapter2-软件构造过程和生命周期">
+                  <i class="fa fa-chevron-left"></i> Chapter2-软件构造过程和生命周期
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/Chapter3-%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%88ADT%EF%BC%89%E5%92%8C%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%EF%BC%88OOP%EF%BC%89/" rel="next" title="Chapter3-抽象数据类型（ADT）和面向对象编程（OOP）">
+                  Chapter3-抽象数据类型（ADT）和面向对象编程（OOP） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
