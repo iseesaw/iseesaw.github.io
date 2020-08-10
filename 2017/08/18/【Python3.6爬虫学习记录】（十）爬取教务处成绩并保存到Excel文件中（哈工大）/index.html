@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="前言：基本上每天都会产生一点小想法，在实现的过程中，一步步解决问题，并产生新的想法，就比如，这次是保存为Excel文件。这感觉很美妙！ 目录： 一，安装并简单使用xlwt 1.1 安装xlwt 1.2 写入Excel代码 1.3 拓展 二，登陆教务处爬取成绩 2.1 实现图解 2.2 代码及注释 2.3 相关问题 三，More 3.1 关于教务处的遐想 一，安装并简单使用xlwt 1.1 安装xl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Python3.6爬虫学习记录】（十）爬取教务处成绩并保存到Excel文件中（哈工大）">
+<meta property="og:url" content="http://blog.khay.site/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="前言：基本上每天都会产生一点小想法，在实现的过程中，一步步解决问题，并产生新的想法，就比如，这次是保存为Excel文件。这感觉很美妙！ 目录： 一，安装并简单使用xlwt 1.1 安装xlwt 1.2 写入Excel代码 1.3 拓展 二，登陆教务处爬取成绩 2.1 实现图解 2.2 代码及注释 2.3 相关问题 三，More 3.1 关于教务处的遐想 一，安装并简单使用xlwt 1.1 安装xl">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.blog.csdn.net/20170818223030515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170818222403230?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="article:published_time" content="2017-08-17T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-08T03:47:26.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="excel">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170818223030515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+<link rel="canonical" href="http://blog.khay.site/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【Python3.6爬虫学习记录】（十）爬取教务处成绩并保存到Excel文件中（哈工大） | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Python3.6爬虫学习记录】（十）爬取教务处成绩并保存到Excel文件中（哈工大）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-08-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-08-18T00:00:00+08:00">2017-08-18</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:47:26" itemprop="dateModified" datetime="2019-09-08T11:47:26+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="【Python3.6爬虫学习记录】（十）爬取教务处成绩并保存到Excel文件中（哈工大）" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>前言：</strong>基本上每天都会产生一点小想法，在实现的过程中，一步步解决问题，并产生新的想法，就比如，这次是保存为Excel文件。这感觉很美妙！</p>
+<p><strong>目录：</strong> <strong>一，安装并简单使用xlwt</strong> <strong>1.1 安装xlwt</strong> <strong>1.2 写入Excel代码</strong> <strong>1.3 拓展</strong> <strong>二，登陆教务处爬取成绩</strong> <strong>2.1 实现图解</strong> <strong>2.2 代码及注释</strong> <strong>2.3 相关问题</strong> <strong>三，More</strong> <strong>3.1 关于教务处的遐想</strong></p>
+<p><strong>一，安装并简单使用xlwt</strong> <strong>1.1 安装xlwt</strong><br />
+命令行输入 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install xlwt</span><br></pre></td></tr></table></figure></p>
+<p><strong>1.2 写入Excel代码</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">work &#x3D; Workbook()                    #创建一个工作簿</span><br><span class="line">sheet &#x3D; w.add_sheet(&#39;Hey, Hades&#39;)    #创建一个工作表sheet</span><br><span class="line">sheet.write(0,0,&#39;bit&#39;)               #在1行1列写入bit</span><br><span class="line">sheet.write(0,1,&#39;huang&#39;)           #在1行2列写入huang</span><br><span class="line">sheet.write(1,0,&#39;xuan&#39;)          #在2行1列写入xuan</span><br><span class="line">work.save(&#39;Test.xls&#39;)                 #保存</span><br></pre></td></tr></table></figure> 注意，和数组一样，Excel表格是从 0 行 0 列开始计数</p>
+<p><strong>1.3 拓展</strong> 有了写入，当然也有读取。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install xlrd</span><br></pre></td></tr></table></figure> 使用参考链接： <a target="_blank" rel="noopener" href="http://www.jb51.net/article/103761.htm">Python第三方库xlrd/xlwt的安装与读写Excel表格</a> <a target="_blank" rel="noopener" href="http://blog.csdn.net/xiaowanggedege/article/details/17146813">Python--使用xlwt将列表类型的数据写到Excel xls文件中--TxtToExcel</a> <a target="_blank" rel="noopener" href="http://blog.csdn.net/u013634684/article/details/48182491">window10下python的对elcel表格操作xlrd和xlwt模块的下载与安装及基本的使用</a></p>
+<p><strong>二，登陆教务处爬取成绩</strong> <strong>2.1 实现图解</strong> <img src="http://img.blog.csdn.net/20170818223030515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" /> （多张图片合成GIF，也是现想到的，教程-&gt;<a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/3052f5a1c91f0497f31f862a.html">photoshop将多个图片合成制作gif</a>）</p>
+<p>Excel文件： <img src="http://img.blog.csdn.net/20170818222403230?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" /></p>
+<p><strong>2.2 代码及注释</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"># 由于放假回家，而登陆教务处需要校园网，所以采用SSL VPN登陆，到了学校，可以直接去掉前面的VPN登陆</span><br><span class="line"># 通过SSL vpn登陆教务处,爬取成绩并保存到Excel</span><br><span class="line"># SSL vpn地址 https:&#x2F;&#x2F;vpn.hit.edu.cn&#x2F;dana-na&#x2F;auth&#x2F;url_default&#x2F;welcome.cgi</span><br><span class="line"># 教务处网址 jwts.hit.edu.cn</span><br><span class="line">import xlwt</span><br><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver.common.by import By</span><br><span class="line">from selenium.webdriver.common.keys import Keys</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">import time</span><br><span class="line">import requests</span><br><span class="line">from selenium.webdriver.common.action_chains import ActionChains</span><br><span class="line">from selenium.webdriver.support.wait import WebDriverWait</span><br><span class="line"># 主要难点及错点在于各种按钮的点击</span><br><span class="line"></span><br><span class="line">def login_VPN():</span><br><span class="line">    # 打开SSL VPN</span><br><span class="line">    SSLVPN &#x3D; &#39;https:&#x2F;&#x2F;vpn.hit.edu.cn&#x2F;dana-na&#x2F;auth&#x2F;url_default&#x2F;welcome.cgi&#39;</span><br><span class="line">    driver &#x3D; webdriver.Chrome()</span><br><span class="line">    driver.get(SSLVPN)</span><br><span class="line">    # 输入用户密码</span><br><span class="line">    user &#x3D; driver.find_element_by_id(&#39;username&#39;)</span><br><span class="line">    username &#x3D; input(&#39;Enter your username : &#39;)</span><br><span class="line">    user.send_keys(username)</span><br><span class="line">    pwd &#x3D; driver.find_element_by_id(&#39;password&#39;)</span><br><span class="line">    password &#x3D; input(&#39;Enter your password : &#39;)</span><br><span class="line">    pwd.send_keys(password)</span><br><span class="line"></span><br><span class="line">    # 选择登陆账户类型 -&gt;下拉列表元素的定位</span><br><span class="line">    login &#x3D; driver.find_element_by_id(&#39;btnSubmit_6&#39;)</span><br><span class="line">    login.click()</span><br><span class="line"></span><br><span class="line">    # 成功登陆到网站；里面</span><br><span class="line">    driver.find_element_by_id(&#39;browseUrl&#39;).send_keys(&#39;jwts.hit.edu.cn&#39;)</span><br><span class="line">    driver.find_element_by_id(&#39;btnBrowse_3&#39;).click()</span><br><span class="line">    # 教务网登陆 通用身份登陆</span><br><span class="line">    time.sleep(1)</span><br><span class="line">     # 以后都借助Google 开发者，直接拷贝xpath定位</span><br><span class="line">    driver.find_element_by_xpath(&#39;&#x2F;&#x2F;*[@id&#x3D;&quot;dl&quot;]&#39;).click()</span><br><span class="line"></span><br><span class="line">    driver.find_element_by_id(&#39;username&#39;).send_keys(username)</span><br><span class="line">    driver.find_element_by_id(&#39;password&#39;).send_keys(password)</span><br><span class="line">    driver.find_element_by_xpath(&#39;&#x2F;&#x2F;*[@id&#x3D;&quot;casLoginForm&quot;]&#x2F;p[5]&#x2F;button&#39;).click()</span><br><span class="line"></span><br><span class="line">    # 先点击 成绩管理</span><br><span class="line">    driver.find_element_by_xpath(&#39;&#x2F;&#x2F;*[@id&#x3D;&quot;menu_7&quot;]&#x2F;span&#39;).click()</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    # 出现四个选项,选择个人成绩 -&gt; Message: element not visible</span><br><span class="line">    # xpath定位有问题&#x2F;&#x2F;*[@id&#x3D;&quot;closeBtn2&quot;]&#x2F;span[2]</span><br><span class="line">    # 原来是个超链接，用text定位</span><br><span class="line">    meGrade &#x3D; driver.find_element_by_link_text(&#39;个人成绩&#39;)</span><br><span class="line">    meGrade.click()</span><br><span class="line"></span><br><span class="line">    # 在出现的页面中选择期末成绩</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    driver.switch_to_frame(&#39;iframename&#39;)</span><br><span class="line">    driver.find_element_by_class_name(&#39;qmcx&#39;).click()</span><br><span class="line">    # 出现所有成绩页面</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    page&#x3D;0</span><br><span class="line">    hang &#x3D; 0</span><br><span class="line">    # 创建Excel文件</span><br><span class="line">    MyGrades &#x3D; xlwt.Workbook()</span><br><span class="line">    sheet &#x3D; MyGrades.add_sheet(&#39;Grade&#39;,cell_overwrite_ok&#x3D;True)</span><br><span class="line">    while(page&lt;2):</span><br><span class="line">        soup &#x3D; BeautifulSoup(driver.page_source,&#39;lxml&#39;)</span><br><span class="line">        grades &#x3D; soup.find(class_&#x3D;&#39;list&#39;).find_all(&#39;tr&#39;)</span><br><span class="line">        for grade in grades:</span><br><span class="line">            line &#x3D; grade.get_text()</span><br><span class="line">            # 根据换行分割</span><br><span class="line">            ths &#x3D; line.split(&#39;\n&#39;)</span><br><span class="line">            lie&#x3D;0</span><br><span class="line">            for th in ths:</span><br><span class="line">                sheet.write(hang,lie,th)</span><br><span class="line">                lie+&#x3D;1</span><br><span class="line">            hang+&#x3D;1</span><br><span class="line">            # 最后一页，没有下一页</span><br><span class="line">        if(page!&#x3D;1):</span><br><span class="line">            driver.find_element_by_link_text(&#39;2&#39;).click()</span><br><span class="line">        page +&#x3D; 1</span><br><span class="line">        time.sleep(1)</span><br><span class="line"></span><br><span class="line">    # 保存Excel文件</span><br><span class="line">    MyGrades.save(&#39;Grades.xls&#39;)</span><br><span class="line">    # 退出</span><br><span class="line">    driver.switch_to_default_content()</span><br><span class="line">    driver.find_element_by_css_selector(&#39;[title&#x3D;&quot;Sign out&quot;]&#39;).click()</span><br><span class="line">    </span><br><span class="line">login_VPN()</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p><strong>2.3 相关问题</strong> ①Google开发者copy xpath 发现Google可以直接 右键-&gt; 检查-&gt; select选定页面element -&gt; 显示相应源码 -&gt; 右键copy -&gt; copy xpath 就这样，愉快的定位了，结果，，，坑死了 定位不唯一！！！终于发现，有时候还要自己修改，我‘好运’的碰到了。 <strong>warning</strong>，总的来说，只要有多个并列element（比如教务网的上的那一排选项），那么直接copy xpath是不可行了，需要修改或者再选别的定位方法。 ②关于存在超链接的定位 通过link文字精确定位元素 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a onclick&#x3D;&quot;return false;&quot; class&#x3D;&quot;lb&quot; name&#x3D;&quot;tj_login&quot; href&#x3D;&quot;https:&#x2F;&#x2F;passport.baidu.com&#x2F;v2&#x2F;?login&amp;tpl&#x3D;mn&amp;u&#x3D;http%3A%2F%2Fwww.baidu.com%2F&quot;&gt;登录&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure> 存在 href, 并且最后面是文本（也可以是父类中有href） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find_element_by_link_text(&quot;登录&quot;)</span><br></pre></td></tr></table></figure> 参考链接：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yufeihlf/p/5717291.html#test5">Selenuim+Python之元素定位总结及实例说明</a>（写的非常好，有时定位拿不准时就可以参考，该作者还写了一系列文章） 一些注意事项：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yufeihlf/p/5689042.html">Python+Selenium定位不到元素常见原因及解决办法（报：NoSuchElementException）</a></p>
+<p>③ 关于下拉列表的处理 参考链接：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/vivianwzheng/p/6265921.html">Python Selenium下拉列表元素定位</a></p>
+<p>然而我的使用情况如下 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 选择登陆账户类型 -&gt;下拉列表元素的定位</span><br><span class="line"># 定位父元素select,然后通过tag name找到所有option，得到option元素的数组，</span><br><span class="line"># 然后通过数组索引定位，最后click.</span><br><span class="line"># 报错 AttributeError: &#39;list&#39; object has no attribute &#39;click&#39;</span><br><span class="line"></span><br><span class="line"># 用select方法</span><br><span class="line"># 报错 AttributeError: &#39;list&#39; object has no attribute &#39;tag_name&#39;</span><br><span class="line"># select &#x3D; Select(driver.find_elements_by_name(&#39;realm&#39;))</span><br><span class="line"># select.select_by_value(&#39;本科生&#39;)</span><br></pre></td></tr></table></figure> 最终解决如下，主要是先定位到下拉菜单父属性，再定位到选项 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(&#39;realm_17&#39;).find_element_by_css_selector(&#39;[value&#x3D;&quot;本科生&quot;]&#39;).click()</span><br></pre></td></tr></table></figure> ④点击出现，Message: element not visible 自信的用copy xpath直接定位，坑惨了，还是定位原因。。 不过还是参考了很多事例，前面也提到过处理方法，此处不再细说。</p>
+<p>⑤关于字符串分割及print的问题 开始准备直接打印到文本，然而由于打印的格式不满意，最终想到了Excel。 不过前面遇到了一些问题，也记载下来： 一个是打印列表的新用法啊 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 根据换行分割</span><br><span class="line">         ths &#x3D; line.split(&#39;\n&#39;)</span><br><span class="line">         # 直接打印</span><br><span class="line">         print(&#39;\t&#39;.join(ths))</span><br></pre></td></tr></table></figure> 另一个是print 自动换行打印，需要注意。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ths &#x3D; line.split(&#39;\n&#39;)</span><br><span class="line">for th in ths:</span><br><span class="line">      # print(th) 会自动换行，需要加上end&#x3D;&quot;&quot;才不会自动换行</span><br><span class="line">      print(&#39;%15s&#39;%th, end&#x3D;&quot;&quot;)</span><br></pre></td></tr></table></figure></p>
+<p><strong>三，More</strong> <strong>3.1 关于教务处的遐想</strong> 提到教务网，基本所有学计算机的都是从攻击本校教务处开始。当然，这有点难度，不过，从教务网搞到全校学生照片，找找校花，还是嘿嘿的。。 本来准备下午就开始行动的的，然而，由于放假回家，用不到校园网，而用SSLVPN去操作下载，实在麻烦，需要反复登陆才行。所以作罢，到学校再试。 思路，教务网找到自己照片，查看对应源码, 光标悬浮在src属性上，查看照片真正源码，在新页面打开便是照片。可以发现照片真正地址与学号有关（应该所有高校都是这样吧），然后采用循环（得到系列学号-&gt;照片地址），下载所有照片。（注意，要捕获异常，避免因为学号不存在而发生错误） 伪代码： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">def DownPictures():</span><br><span class="line">    xh&#x3D;xxxxxxxxxxx</span><br><span class="line">    urlHead &#x3D; &#39;https:&#x2F;&#x2F;vpn.hit.edu.cn&#x2F;xswhxx&#x2F;,DanaInfo&#x3D;jwts.hit.edu.cn+showPhoto?xh&#x3D;&#39;</span><br><span class="line">    url &#x3D; urlHead+str(xh)</span><br><span class="line">    driver &#x3D; webdriver.Chrome()</span><br><span class="line">    driver.get(url)</span><br><span class="line">    data &#x3D; requests.get(url).content</span><br><span class="line">    soup &#x3D;BeautifulSoup(data,&#39;lxml&#39;)</span><br><span class="line">    image &#x3D; soup.find(&#39;img&#39;)</span><br><span class="line">    number &#x3D; 000000000000</span><br><span class="line">    while(number&lt; stuNum)</span><br><span class="line">       try:</span><br><span class="line">          with open(str(xh)+&#39;.jpg&#39;,&#39;wb&#39;) as f:</span><br><span class="line">              f.write(img)</span><br><span class="line">              print(&#39;Picture of &#39;+str(xh)+&#39; has downloaded&#39;)</span><br><span class="line">        except Exception as e:</span><br><span class="line">            print(str(number)+e)</span><br><span class="line">       number+&#x3D;1</span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"># 爬虫</a>
+              <a href="/tags/excel/" rel="tag"># excel</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/08/17/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AB%EF%BC%89Selenium%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%96%B0%E6%B5%AA%E9%82%AE%E7%AE%B1%E5%B9%B6%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/" rel="prev" title="【Python3.6爬虫学习记录】（八）Selenium模拟登录新浪邮箱并发送邮件">
+                  <i class="fa fa-chevron-left"></i> 【Python3.6爬虫学习记录】（八）Selenium模拟登录新浪邮箱并发送邮件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/08/19/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%E4%B8%80%EF%BC%89%E4%BD%BF%E7%94%A8%E4%BB%A3%E7%90%86IP%E5%8F%8A%E7%94%A8%E5%A4%9A%E7%BA%BF%E7%A8%8B%E6%B5%8B%E8%AF%95IP%E5%8F%AF%E7%94%A8%E6%80%A7--%E5%88%B7%E8%AE%BF%E9%97%AE%E9%87%8F/" rel="next" title="【Python3.6爬虫学习记录】（十一）使用代理IP及用多线程测试IP可用性--刷访问量">
+                  【Python3.6爬虫学习记录】（十一）使用代理IP及用多线程测试IP可用性--刷访问量 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

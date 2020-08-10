@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="Python相关库的神应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Python技能】 QtWebView + Jinja2 +  JavaScript + MySQL">
+<meta property="og:url" content="http://blog.khay.site/2019/04/07/%E3%80%90Python%E6%8A%80%E8%83%BD%E3%80%91%20QtWebView%20+%20Jinja2%20+%20%20JavaScript%20+%20MySQL/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="Python相关库的神应用">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190407233302689.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190407234713619.png">
+<meta property="article:published_time" content="2019-04-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-11T13:32:28.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="QtWebView">
+<meta property="article:tag" content="Jinja2">
+<meta property="article:tag" content="JavaScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190407233302689.png">
+
+
+<link rel="canonical" href="http://blog.khay.site/2019/04/07/%E3%80%90Python%E6%8A%80%E8%83%BD%E3%80%91%20QtWebView%20+%20Jinja2%20+%20%20JavaScript%20+%20MySQL/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【Python技能】 QtWebView + Jinja2 +  JavaScript + MySQL | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jinja2%E6%B8%B2%E6%9F%93%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.</span> <span class="nav-text">Jinja2渲染模板</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#qtwebview%E5%B1%95%E7%A4%BAhtml"><span class="nav-number">3.</span> <span class="nav-text">QtWebView展示HTML</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#javascript%E8%BF%9E%E6%8E%A5%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">4.</span> <span class="nav-text">JavaScript连接数据库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E7%BB%AD"><span class="nav-number">5.</span> <span class="nav-text">后续</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2019/04/07/%E3%80%90Python%E6%8A%80%E8%83%BD%E3%80%91%20QtWebView%20+%20Jinja2%20+%20%20JavaScript%20+%20MySQL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Python技能】 QtWebView + Jinja2 +  JavaScript + MySQL
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-07 00:00:00" itemprop="dateCreated datePublished" datetime="2019-04-07T00:00:00+08:00">2019-04-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-11 21:32:28" itemprop="dateModified" datetime="2019-09-11T21:32:28+08:00">2019-09-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/04/07/%E3%80%90Python%E6%8A%80%E8%83%BD%E3%80%91%20QtWebView%20+%20Jinja2%20+%20%20JavaScript%20+%20MySQL/" class="post-meta-item leancloud_visitors" data-flag-title="【Python技能】 QtWebView + Jinja2 +  JavaScript + MySQL" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/04/07/%E3%80%90Python%E6%8A%80%E8%83%BD%E3%80%91%20QtWebView%20+%20Jinja2%20+%20%20JavaScript%20+%20MySQL/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/04/07/%E3%80%90Python%E6%8A%80%E8%83%BD%E3%80%91%20QtWebView%20+%20Jinja2%20+%20%20JavaScript%20+%20MySQL/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+            <div class="post-description">Python相关库的神应用</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="写在前面">写在前面</h3>
+<p>  数据库系统实验，设计实现一个社交网络系统，要求包含各种SQL操作。初步设计为朋友圈形式，使用PyQt实现UI。</p>
+<p>  过程中要实现类似朋友圈的说说、评论形式，但是由于PyQT使用不熟练，做出的UI难以恭维。同时希望主体仍然是基于桌面的应用，虽然有考虑过直接使用Flask搭建博客系统，由于时间和知识储备不足而放弃。</p>
+<p>  经过各种尝试，初步设想如下： - 设计说说、评论HTML模板，可以参考v2ex使用table标签或者自定义div标签 - python读取数据库信息，使用Jinja2渲染HTML模板 - QtWebView展示渲染之后的HTML页面 - 在HTML页面进行操作，需要写入数据库 + 使用QtWebChannel实现HTML和Python的数据交互，然而报错，之后没效果 + 直接使用JavaScript连接数据库，写入信息</p>
+<h3 id="jinja2渲染模板">Jinja2渲染模板</h3>
+<ul>
+<li>安装Jinja2，<code>pip install jinja2</code></li>
+<li>编写HTML模板代码，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/hellosweet1/article/details/79642668">jinja2中if和for的使用</a> <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    &#123;% for k,v in user.items() %&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; k &#125;&#125;:&#123;&#123; v &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line">    &#123;% for websites in websites %&#125;</span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; websites &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    &#123;% endfor %&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>使用Jinja2加载并渲染HTML模板 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> jinja2 <span class="keyword">import</span> Environment, FileSystemLoader</span><br><span class="line"></span><br><span class="line">user = &#123;</span><br><span class="line">   <span class="string">&#x27;username&#x27;</span>: <span class="string">u&#x27;ww&#x27;</span>,</span><br><span class="line">   <span class="string">&#x27;age&#x27;</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line">websites = [<span class="string">&#x27;baidu.com&#x27;</span>,<span class="string">&#x27;google.com&#x27;</span>]</span><br><span class="line"></span><br><span class="line">env = Environment(loader=FileSystemLoader(<span class="string">&quot;./&quot;</span>))</span><br><span class="line">template = env.get_template(<span class="string">&quot;index.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 此处得到的时候HTML代码，可以写入直接写入文件保存为HTML</span></span><br><span class="line">content = template.render(user=user, websites=websites)</span><br><span class="line"></span><br></pre></td></tr></table></figure> &gt;此处与Flask中的使用略有区别，注意文件地址问题</li>
+</ul>
+<h3 id="qtwebview展示html">QtWebView展示HTML</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># QtWidget可以是任意的面板对象</span></span><br><span class="line">view = QWebEngineView(QtWidget)</span><br><span class="line"><span class="comment">#view.setGeometry(QtCore.QRect(0, -1, 400, 581))</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># content是Jinja2渲染得到的HTML代码</span></span><br><span class="line">view.setHtml(content,</span><br><span class="line">baseUrl=QtCore.QUrl.fromLocalFile(os.path.abspath(<span class="string">&#x27;index.html&#x27;</span>)))</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>尤其注意，<code>baseUrl=QtCore.QUrl.fromLocalFile(os.path.abspath('index.html'))</code>，这个很重要，保证了绝对地址 否则，在HTML代码中引用<code>js</code>或<code>css</code>或图片将失败</p>
+</blockquote>
+<h3 id="javascript连接数据库">JavaScript连接数据库</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.runoob.com/nodejs/nodejs-install-setup.html">安装Node.js</a>，便于js代码测试</li>
+<li>安装mysql包，<code>npm install mysql</code></li>
+<li>连接代码 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mysql = <span class="built_in">require</span>(<span class="string">&#x27;mysql&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接配置</span></span><br><span class="line"><span class="keyword">var</span> connection = mysql.createConnection(&#123;</span><br><span class="line">    host : <span class="string">&#x27;localhost&#x27;</span>,</span><br><span class="line">    user : <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">    password : <span class="string">&#x27;123456&#x27;</span>,</span><br><span class="line">    database : <span class="string">&#x27;smdb&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接操作</span></span><br><span class="line">connection.connect(<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;----:&quot;</span> + err);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;Successfully!&quot;</span>)</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> sql = <span class="string">&quot;select * from student&quot;</span></span><br><span class="line"><span class="comment">// 执行mysql语句</span></span><br><span class="line">connection.query(sql, <span class="function"><span class="keyword">function</span> (<span class="params">err, result</span>)</span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;[SELECT ERROR] - &#x27;</span>, err.message);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;-----------------SELECT-----------------&quot;</span>)</span><br><span class="line">    <span class="built_in">console</span>.log(result);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;----------------------------------------&quot;</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">connection.end()</span><br></pre></td></tr></table></figure></li>
+<li>执行js代码，<code>node  examplel.js</code>
+<center>
+<img src="https://img-blog.csdnimg.cn/20190407233302689.png"  width="60%" height= "50%"/>
+<center></li>
+</ul>
+<h3 id="后续">后续</h3>
+大致实现界面
+<center>
+<img src="https://img-blog.csdnimg.cn/20190407234713619.png"  width="30%" height= "30%"/>
+<center>
+<p>当发生点赞或删除等操作，js写数据库。</p>
+<p>总体来说，实现了想要的效果，虽然过程曲折了一些。但是，也Get了在PyQt中嵌入网页实现数据交互的技能；同时，也增强了JavaScript的使用熟练度。</p>
+<p>题目也不知道取什么合适，算是为了实现目标而不择手段。</p>
+<h3 id="reference">Reference</h3>
+<p><a target="_blank" rel="noopener" href="http://docs.jinkan.org/docs/jinja2/">欢迎来到 Jinja2</a> <a target="_blank" rel="noopener" href="http://www.runoob.com/nodejs/nodejs-mysql.html">Node.js 连接 MySQL</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MySQL/" rel="tag"># MySQL</a>
+              <a href="/tags/QtWebView/" rel="tag"># QtWebView</a>
+              <a href="/tags/Jinja2/" rel="tag"># Jinja2</a>
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/31/Bert%E6%A8%A1%E5%9E%8B%20fine%20tuning%20%E4%BB%A3%E7%A0%81run_squad.py%E5%AD%A6%E4%B9%A0/" rel="prev" title="Bert模型 fine tuning 代码run_squad.py学习">
+                  <i class="fa fa-chevron-left"></i> Bert模型 fine tuning 代码run_squad.py学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/04/13/PyQT5%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/" rel="next" title="PyQT5用法总结">
+                  PyQT5用法总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

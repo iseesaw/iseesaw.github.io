@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="前言 Cookie，指某些网站为了辨别用户身份、进行session跟踪而储存在用户本地终端上的数据（通常经过加密）。 有些网站需要登录后才能访问某个页面，比如知乎的回答，QQ空间的好友列表、微博上关注的人和粉丝等，在登录之前，你想抓取某个页面内容是不允许的。那么我们可以利用某些库保存我们登录后的Cookie，然后爬虫使用保存的Cookie可以打开网页进行相关爬取，此时该页面仍然以为是我们人为的在访">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Python3.6爬虫学习记录】（五）Cookie的使用以及简单的爬取知乎">
+<meta property="og:url" content="http://blog.khay.site/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89Cookie%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E7%AE%80%E5%8D%95%E7%9A%84%E7%88%AC%E5%8F%96%E7%9F%A5%E4%B9%8E/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="前言 Cookie，指某些网站为了辨别用户身份、进行session跟踪而储存在用户本地终端上的数据（通常经过加密）。 有些网站需要登录后才能访问某个页面，比如知乎的回答，QQ空间的好友列表、微博上关注的人和粉丝等，在登录之前，你想抓取某个页面内容是不允许的。那么我们可以利用某些库保存我们登录后的Cookie，然后爬虫使用保存的Cookie可以打开网页进行相关爬取，此时该页面仍然以为是我们人为的在访">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.blog.csdn.net/20170814204708821?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170814204014309?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="article:published_time" content="2017-08-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-08T03:47:32.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="cookie">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170814204708821?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+<link rel="canonical" href="http://blog.khay.site/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89Cookie%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E7%AE%80%E5%8D%95%E7%9A%84%E7%88%AC%E5%8F%96%E7%9F%A5%E4%B9%8E/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【Python3.6爬虫学习记录】（五）Cookie的使用以及简单的爬取知乎 | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89Cookie%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E7%AE%80%E5%8D%95%E7%9A%84%E7%88%AC%E5%8F%96%E7%9F%A5%E4%B9%8E/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Python3.6爬虫学习记录】（五）Cookie的使用以及简单的爬取知乎
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-08-14 00:00:00" itemprop="dateCreated datePublished" datetime="2017-08-14T00:00:00+08:00">2017-08-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:47:32" itemprop="dateModified" datetime="2019-09-08T11:47:32+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89Cookie%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E7%AE%80%E5%8D%95%E7%9A%84%E7%88%AC%E5%8F%96%E7%9F%A5%E4%B9%8E/" class="post-meta-item leancloud_visitors" data-flag-title="【Python3.6爬虫学习记录】（五）Cookie的使用以及简单的爬取知乎" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89Cookie%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E7%AE%80%E5%8D%95%E7%9A%84%E7%88%AC%E5%8F%96%E7%9F%A5%E4%B9%8E/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%BA%94%EF%BC%89Cookie%E7%9A%84%E4%BD%BF%E7%94%A8%E4%BB%A5%E5%8F%8A%E7%AE%80%E5%8D%95%E7%9A%84%E7%88%AC%E5%8F%96%E7%9F%A5%E4%B9%8E/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>前言</strong> Cookie，指某些网站为了辨别用户身份、进行session跟踪而储存在用户本地终端上的数据（通常经过加密）。 有些网站需要登录后才能访问某个页面，比如知乎的回答，QQ空间的好友列表、微博上关注的人和粉丝等，在登录之前，你想抓取某个页面内容是不允许的。那么我们可以利用某些库保存我们登录后的Cookie，然后爬虫使用保存的Cookie可以打开网页进行相关爬取，此时该页面仍然以为是我们人为的在访问，孰不知是爬虫。当然，一个Cookie也不能永久的使用，一段时间后需要更换。</p>
+<p><strong>对于登陆情况的处理</strong> 1 使用表单登陆 这种情况属于post请求，即先向服务器发送表单数据，服务器再将返回的cookie存入本地。 data = {'data1':'XXXXX', 'data2':'XXXXX'} Requests：data为dict，json import requests response = requests.post(url=url, data=data) 2 使用cookie登陆 使用cookie登陆，服务器会认为你是一个已登陆的用户，所以就会返回给你一个已登陆的内容。因此，需要验证码的情况可以使用带验证码登陆的cookie解决，此为后话。 import requests<br />
+requests_session = requests.session() response = requests_session.post(url=url_login, data=data)</p>
+<p>本文只用到简单的cookie模拟登陆，<a target="_blank" rel="noopener" href="http://blog.csdn.net/c406495762/article/details/69817490">详细教程戳这里</a> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"># 爬取知乎，-headers的应用</span><br><span class="line">from http import cookiejar</span><br><span class="line">from  urllib import request</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line"># # cookie的测试</span><br><span class="line"># # 声明一个CookieJar实例对象</span><br><span class="line"># cookie &#x3D; cookiejar.CookieJar()</span><br><span class="line"># # 创建cookie处理器</span><br><span class="line"># handle &#x3D; request.HTTPCookieProcessor(cookie)</span><br><span class="line"># # 通过cookie处理器创建opener实例</span><br><span class="line"># opener &#x3D; request.build_opener(handle)</span><br><span class="line"># # 通过opener实例打开网页</span><br><span class="line"># response &#x3D; opener.open(&#39;https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;25313930&#39;)</span><br><span class="line"># # 打印cookie</span><br><span class="line">#  for item in cookie:</span><br><span class="line">#      print(&#39;Name &#x3D; %s&#39; % item.name)</span><br><span class="line">#      print(&#39;Value &#x3D; %s&#39; % item.value)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 命名保存cookie的文件的文件名</span><br><span class="line">filename &#x3D; &#39;cookie.txt&#39;</span><br><span class="line">#保存cookie到文件</span><br><span class="line">def saveCookie():</span><br><span class="line">    cookie &#x3D; cookiejar.MozillaCookieJar(filename)</span><br><span class="line">    handler &#x3D; request.HTTPCookieProcessor(cookie)</span><br><span class="line">    opener &#x3D; request.build_opener(handler)</span><br><span class="line">    response &#x3D; opener.open(&#39;https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;25313930&#39;)</span><br><span class="line">    # ignore_discard的意思是即使cookies将被丢弃也将它保存下来；</span><br><span class="line">    # ignore_expires的意思是如果在该文件中cookies已经存在，则覆盖原文件写入</span><br><span class="line">    cookie.save(ignore_discard&#x3D;True, ignore_expires&#x3D;True)</span><br><span class="line"></span><br><span class="line"> saveCookie()</span><br><span class="line"># 从文件中获取cookie并访问</span><br><span class="line"># 创建MozillaCookieJar实例</span><br><span class="line">cookie &#x3D; cookiejar.MozillaCookieJar()</span><br><span class="line"># 从文件中读取cookie内容到变量</span><br><span class="line">cookie.load(filename,ignore_discard&#x3D;True,ignore_expires&#x3D;True)</span><br><span class="line"># 创建cookie处理器</span><br><span class="line">handle &#x3D; request.HTTPCookieProcessor(cookie)</span><br><span class="line"># 通过cookie处理器创建opener对象</span><br><span class="line">opener &#x3D; request.build_opener(handle)</span><br><span class="line"># 通过opener对象的open方法打开网页</span><br><span class="line">response &#x3D; opener.open(&#39;https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;25313930&#39;)</span><br><span class="line">html &#x3D; response.read()</span><br><span class="line"></span><br><span class="line">soup &#x3D; BeautifulSoup(html,&#39;lxml&#39;)</span><br><span class="line">storys &#x3D; soup.find_all(&#39;div&#39;,class_&#x3D;&quot;List-item&quot;)</span><br><span class="line">print(len(storys))</span><br><span class="line">for story in storys :</span><br><span class="line">    nameLabel &#x3D; story.find(&#39;meta&#39;,itemprop&#x3D;&quot;name&quot;)</span><br><span class="line">    name &#x3D; nameLabel[&quot;content&quot;]</span><br><span class="line">    with open(&#39;By &#39;+str(name)+&#39;.txt&#39;,&#39;w&#39;) as f:</span><br><span class="line">        storyText &#x3D; story.find(&#39;span&#39;, class_&#x3D;&quot;RichText CopyrightRichText-richText&quot;)</span><br><span class="line">        #storyPages &#x3D; storyText.find_all(&#39;p&#39;)</span><br><span class="line">        try:</span><br><span class="line">            # 获取多个内容，不过需要遍历获取，比如下面的例子</span><br><span class="line">             for string in storyText.strings:</span><br><span class="line">                 f.write(repr(string)+&#39;\n&#39;)</span><br><span class="line">            print(&#39;By &#39;+str(name)+&#39; has been finished&#39;)</span><br><span class="line">        except Exception:</span><br><span class="line">            print(&#39;Something is wrong on writing to txt&#39;)</span><br><span class="line"></span><br><span class="line">print(&#39;That is all&#39;)</span><br></pre></td></tr></table></figure> <strong>相关问题</strong> ①解决更新Cookie问题的思路 创建saveCookie()方法，每次获取并保存前一次登陆获得的cookie</p>
+<p>②爬取某个回答的全文 <img src="http://img.blog.csdn.net/20170814204708821?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="源码" /> 使用下面的代码出现问题，并且打印storyPages为空 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">storyPages &#x3D; storyText.find_all(&#39;p&#39;)</span><br><span class="line">for storyPage in storyPages:</span><br><span class="line"> f.write(str(storyPage)+&#39;\n&#39;)</span><br></pre></td></tr></table></figure> 遂再次查看<a target="_blank" rel="noopener" href="http://cuiqingcai.com/1319.html">BeautifulSoup的使用教程</a>，改为以下用法 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for string in storyText.strings:</span><br><span class="line">                f.write(repr(string)+&#39;\n&#39;)</span><br></pre></td></tr></table></figure></p>
+<p>③未能爬起该页面下全部回答 <img src="http://img.blog.csdn.net/20170814204014309?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="遇到的问题" /></p>
+<p>④获得url的源码的等价处理 使用cookie与不使用时，以下两个方法，打印，得到相同结果 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#当使用cookie时</span><br><span class="line">response &#x3D; opener.open(&#39;https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;25313930&#39;)</span><br><span class="line">html &#x3D; response.read()</span><br></pre></td></tr></table></figure> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#当不使用cookie时</span><br><span class="line">url &#x3D; &#39;http:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;82833d443e76&#39;</span><br><span class="line">html &#x3D; requests.get(url).content</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"># 爬虫</a>
+              <a href="/tags/cookie/" rel="tag"># cookie</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AD%EF%BC%89urllib%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95(header,%E4%BB%A3%E7%90%86,%E8%B6%85%E6%97%B6,%E8%AE%A4%E8%AF%81,%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)/" rel="prev" title="【Python3.6爬虫学习记录】（六）urllib详细使用方法(header,代理,超时,认证,异常处理)">
+                  <i class="fa fa-chevron-left"></i> 【Python3.6爬虫学习记录】（六）urllib详细使用方法(header,代理,超时,认证,异常处理)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/08/15/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%83%EF%BC%89%E4%BD%BF%E7%94%A8Selenium+ChromeDriver%E7%88%AC%E5%8F%96%E7%9F%A5%E4%B9%8E%E6%9F%90%E9%97%AE%E9%A2%98%E7%9A%84%E5%9B%9E%E7%AD%94/" rel="next" title="【Python3.6爬虫学习记录】（七）使用Selenium+ChromeDriver爬取知乎某问题的回答">
+                  【Python3.6爬虫学习记录】（七）使用Selenium+ChromeDriver爬取知乎某问题的回答 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

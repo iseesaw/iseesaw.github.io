@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="写在前面 因为算法课上骆老师讲的是真的好，所以对动态规划还是比较熟悉的。总结来说就是自底向上求解，主要在于DP转移方程的分析，然后构造DP数组进行填表即可，有时可能需要注意保存求解路径。 #### 动态规划 简单分析一个最大连续子序列之和问题： 123给定K个整数的序列&amp;#123; N1, N2, ..., NK &amp;#125;，其任意连续子序列可表示为&amp;#123; Ni, Ni+1, ..., N">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法笔记之动态规划(DP)">
+<meta property="og:url" content="http://blog.khay.site/2019/03/20/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92(DP)/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="写在前面 因为算法课上骆老师讲的是真的好，所以对动态规划还是比较熟悉的。总结来说就是自底向上求解，主要在于DP转移方程的分析，然后构造DP数组进行填表即可，有时可能需要注意保存求解路径。 #### 动态规划 简单分析一个最大连续子序列之和问题： 123给定K个整数的序列&amp;#123; N1, N2, ..., NK &amp;#125;，其任意连续子序列可表示为&amp;#123; Ni, Ni+1, ..., N">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190320160828930.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2019-03-19T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-08T03:54:08.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="动态规划">
+<meta property="article:tag" content="减治法">
+<meta property="article:tag" content="拈游戏">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190320160828930.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70">
+
+
+<link rel="canonical" href="http://blog.khay.site/2019/03/20/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92(DP)/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>算法笔记之动态规划(DP) | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%96%E7%90%83%E5%8D%9A%E5%BC%88"><span class="nav-number">2.</span> <span class="nav-text">取球博弈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2019/03/20/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92(DP)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          算法笔记之动态规划(DP)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-20 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-20T00:00:00+08:00">2019-03-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:54:08" itemprop="dateModified" datetime="2019-09-08T11:54:08+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/03/20/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92(DP)/" class="post-meta-item leancloud_visitors" data-flag-title="算法笔记之动态规划(DP)" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/03/20/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92(DP)/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/03/20/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92(DP)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="写在前面">写在前面</h4>
+<p>因为算法课上骆老师讲的是真的好，所以对动态规划还是比较熟悉的。总结来说就是<strong>自底向上求解</strong>，主要在于<code>DP转移方程</code>的分析，然后构造<code>DP数组</code>进行填表即可，有时可能需要注意保存求解路径。 #### 动态规划 简单分析一个最大连续子序列之和问题： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">给定K个整数的序列&#123; N1, N2, ..., NK &#125;，其任意连续子序列可表示为&#123; Ni, Ni+1, ..., Nj &#125;，</span><br><span class="line">其中 1 &lt;&#x3D; i &lt;&#x3D; j &lt;&#x3D; K。最大连续子序列是所有连续子序中元素和最大的一个， </span><br><span class="line">例如给定序列&#123; -2, 11, -4, 13, -5, -2 &#125;，其最大连续子序列为&#123; 11, -4, 13 &#125;，最大和为20。</span><br></pre></td></tr></table></figure> - 蛮力法求解，就是遍历任意两个数，对其形成的子序列进行求和。 - 动态规划自底向上求解。如下图，构造<code>DP数组</code>，求解过程就是填表过程，从最底层(<code>m(i,i)</code>)开始，然后依次向上沿对角线进行求解，每次都会用到之前已经计算过的结果。这个例子还是很简单的，因为<code>DP转移方程</code>很明确。 - 就这道题而言，还有一个<code>O(n)</code>的解法，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/zmazon/article/details/8247015">动态规划经典五题</a>。 <img src="https://img-blog.csdnimg.cn/20190320160828930.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /> 动态规划代码实现 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dp</span><span class="params">(<span class="keyword">int</span>[] seq)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = seq.length;</span><br><span class="line">  <span class="keyword">int</span>[][] dparr = <span class="keyword">new</span> <span class="keyword">int</span>[n][];</span><br><span class="line">  <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">int</span> end = <span class="number">0</span>;</span><br><span class="line"> <span class="comment">// 最底层(最外列)求解</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">       dparr[i] = <span class="keyword">new</span> <span class="keyword">int</span>[i + <span class="number">1</span>];</span><br><span class="line">      dparr[i][i] = seq[i];</span><br><span class="line">     <span class="keyword">if</span> (dparr[i][i] &gt; sum) &#123;</span><br><span class="line">         sum = dparr[i][i];</span><br><span class="line">            start = i;</span><br><span class="line">            end = i;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 自底向上求解</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; i++) &#123;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n - i; j++) &#123;</span><br><span class="line">           <span class="comment">// 在原有的基础上进行计算</span></span><br><span class="line">           <span class="comment">// 转移方程</span></span><br><span class="line">          dparr[j + i][j] = dparr[j + i - <span class="number">1</span>][j] + seq[j + i];</span><br><span class="line">           <span class="keyword">if</span> (dparr[j + i][j] &gt; sum) &#123;</span><br><span class="line">             sum = dparr[j + i][j];</span><br><span class="line">                start = j;</span><br><span class="line">                end = j + i;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  System.out.println(<span class="string">&quot;maxsum = &quot;</span> + sum);</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = start; i &lt;= end; i++) &#123;</span><br><span class="line">        System.out.print(seq[i] + <span class="string">&quot; &quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;java</span><br><span class="line">    public static void maxsum(int[] seq) &#123;</span><br><span class="line">       int maxSum &#x3D; 0, thisSum &#x3D; 0;</span><br><span class="line">        for (int i &#x3D; 0; i &lt; seq.length; i++) &#123;</span><br><span class="line">           thisSum +&#x3D; seq[i];</span><br><span class="line">           if (thisSum &gt; maxSum) &#123;</span><br><span class="line">               maxSum &#x3D; thisSum;</span><br><span class="line">            &#125; else if (thisSum &lt; 0) &#123;</span><br><span class="line">                thisSum &#x3D; 0;</span><br><span class="line">         &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;\nmaxsum &#x3D; &quot; + maxSum);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="取球博弈">取球博弈</h4>
+<ul>
+<li>拈游戏 摘自博客<a target="_blank" rel="noopener" href="https://blog.csdn.net/u014248127/article/details/52928641">leetcode_292_拈游戏</a> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">桌子上有一堆石头，每一次你们轮流取1至3颗石头。最后一个取走石头的人就是赢家。第一轮由你先取。</span><br><span class="line">根据题设条件：</span><br><span class="line">当n∈[1,3]时，先手必胜。</span><br><span class="line">当n &#x3D;&#x3D; 4时，无论先手第一轮如何选取，下一轮都会转化为n∈[1,3]的情形，此时先手必负。</span><br><span class="line">当n∈[5,7]时，先手必胜，先手分别通过取走[1,3]颗石头，可将状态转化为n &#x3D;&#x3D; 4时的情形，此时后手必负。</span><br><span class="line">当n &#x3D;&#x3D; 8时，无论先手第一轮如何选取，下一轮都会转化为n∈[5,7]的情形，此时先手必负。 </span><br><span class="line">……</span><br><span class="line">以此类推，可以得出结论：</span><br><span class="line">当n % 4 !&#x3D; 0时，先手必胜；否则先手必负。</span><br></pre></td></tr></table></figure></li>
+<li>取球博弈 解析参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/Lynn_coder/article/details/79602135">第七届蓝桥杯取球博弈详解</a> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">两个人玩取球的游戏。</span><br><span class="line">一共有N个球，每人轮流取球，每次可取集合&#123;n1,n2,n3&#125;中的任何一个数目。</span><br><span class="line">如果无法继续取球，则游戏结束。</span><br><span class="line">此时，持有奇数个球的一方获胜。</span><br><span class="line">如果两人都是奇数，则为平局。</span><br><span class="line"></span><br><span class="line">假设双方都采用最聪明的取法，</span><br><span class="line">第一个取球的人一定能赢吗？</span><br><span class="line">试编程解决这个问题。</span><br><span class="line"></span><br><span class="line">输入格式：</span><br><span class="line">第一行3个正整数n1 n2 n3，空格分开，表示每次可取的数目 (0&lt;n1,n2,n3&lt;100)</span><br><span class="line">第二行5个正整数x1 x2 ... x5，空格分开，表示5局的初始球数(0&lt;xi&lt;1000)</span><br><span class="line"></span><br><span class="line">输出格式：</span><br><span class="line">一行5个字符，空格分开。分别表示每局先取球的人能否获胜。</span><br><span class="line">能获胜则输出+，</span><br><span class="line">次之，如有办法逼平对手，输出0，</span><br><span class="line">无论如何都会输，则输出-</span><br><span class="line">例如，输入：</span><br><span class="line">1 2 3</span><br><span class="line">1 2 3 4 5</span><br><span class="line">程序应该输出：</span><br><span class="line">+ 0 + 0 -</span><br><span class="line">再例如，输入：</span><br><span class="line">1 4 5</span><br><span class="line">10 11 12 13 15</span><br><span class="line">程序应该输出：</span><br><span class="line">0 - 0 + +</span><br><span class="line">再例如，输入：</span><br><span class="line">2 3 5</span><br><span class="line">7 8 9 10 11</span><br><span class="line">程序应该输出：</span><br><span class="line">+ 0 0 0 0</span><br></pre></td></tr></table></figure> &gt;解题思路是减治法+动态规划 &gt;动态规划的应用在于，可以构建两个玩家的DP数组，<code>table[i][j]</code>保存两个玩家当前分别有<code>i</code>个球和<code>j</code>个球时的胜负情况； &gt;减治法，实际上是一种递归的实现，初始时是最上层的情况，然后不断递归，到可以判断胜负为止(即拈游戏中球数目为4时)。</li>
+</ul>
+<h4 id="代码实现">代码实现</h4>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 拈游戏 n个石头, 两个人每次取1-m个, 取走最有一个石头的玩家获胜. </span></span><br><span class="line"><span class="comment"> * 减治法思想, 1&lt;=n&lt;=m时, 先手获胜; n=m+1时, 先手失败;</span></span><br><span class="line"><span class="comment"> * m+2&lt;=n&lt;=2m+1, 先手获胜; n=2m+2时, 先手失败; </span></span><br><span class="line"><span class="comment"> * 以此类推, n%(m+1)!=0时, 先手获胜</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * 取球博弈 n个球, 每次可取&#123;n1, n2, n3&#125;中任意值数目球 </span></span><br><span class="line"><span class="comment"> * 最后, 持有奇数个球的一方获胜; 都是奇数则平局;</span></span><br><span class="line"><span class="comment"> * 解决思路, 减值法和动态规划 为两个玩家分别建立一个DP表,</span></span><br><span class="line"><span class="comment"> *  (i,j)保存玩家1拥有i个球、玩家2拥有j个球时的结果 </span></span><br><span class="line"><span class="comment"> * 结果中, +表示当前玩家获胜,-表示失败, 0表示平局 递归进行解的搜索</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 每次可以取得球数目</span></span><br><span class="line"> <span class="keyword">static</span> <span class="keyword">int</span>[] ns = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>];</span><br><span class="line"> <span class="comment">// 五局初始的球数目</span></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">int</span>[] xs = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>];</span><br><span class="line"> <span class="comment">// 分别保存两个玩家的动态表</span></span><br><span class="line">  <span class="keyword">static</span> <span class="keyword">char</span>[][][] table;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> min;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">     <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">       Scanner in = <span class="keyword">new</span> Scanner(System.in);</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">           ns[i] = in.nextInt();</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">           xs[i] = in.nextInt();</span><br><span class="line">     &#125;</span><br><span class="line">        getMin();</span><br><span class="line">     <span class="keyword">int</span> k;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i: xs) &#123;</span><br><span class="line">          table = <span class="keyword">new</span> <span class="keyword">char</span>[<span class="number">2</span>][<span class="number">1000</span>][<span class="number">1000</span>];</span><br><span class="line">            k = dp(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, i);</span><br><span class="line">           System.out.print((<span class="keyword">char</span>)k + <span class="string">&quot; &quot;</span>);</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">getMin</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> m = <span class="number">99999</span>;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> n : ns) &#123;</span><br><span class="line">         <span class="keyword">if</span> (n &lt; m) &#123;</span><br><span class="line">             m = n;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        min = m;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 当前的玩家</span></span><br><span class="line"> <span class="comment">// 两个玩家分别拥有的球数目</span></span><br><span class="line">  <span class="comment">// 初始球数目</span></span><br><span class="line"> <span class="comment">// 终止条件为当前球数小于最小可取球数</span></span><br><span class="line"> <span class="comment">// 否则继续递归</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">char</span> <span class="title">dp</span><span class="params">(<span class="keyword">int</span> p, <span class="keyword">int</span> aowns, <span class="keyword">int</span> bowns, <span class="keyword">int</span> s)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">int</span> rest = s - aowns - bowns;</span><br><span class="line">        <span class="comment">// 已经计算过了则直接返回</span></span><br><span class="line">       <span class="keyword">if</span> (table[p][aowns][bowns] != <span class="string">&#x27;\u0000&#x27;</span>) &#123;</span><br><span class="line">         <span class="keyword">return</span> table[p][aowns][bowns];</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 如果没法再取球则计算双方胜败</span></span><br><span class="line">        <span class="keyword">if</span> (rest &lt; min) &#123;</span><br><span class="line">            <span class="keyword">if</span> (aowns % <span class="number">2</span> == <span class="number">1</span> &amp;&amp; bowns % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">             table[p][aowns][bowns] = <span class="string">&#x27;+&#x27;</span>;</span><br><span class="line">           &#125; <span class="keyword">else</span> <span class="keyword">if</span> (aowns % <span class="number">2</span> == <span class="number">0</span> &amp;&amp; bowns % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">                table[p][aowns][bowns] = <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               table[p][aowns][bowns] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">           &#125;</span><br><span class="line">            <span class="keyword">return</span> table[p][aowns][bowns];</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line">        <span class="keyword">if</span> (p == <span class="number">0</span>) &#123;</span><br><span class="line">           <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> i : ns) &#123;</span><br><span class="line">             <span class="keyword">if</span> (rest &gt;= i) &#123;</span><br><span class="line">                 <span class="keyword">if</span> (dp(<span class="number">1</span>, aowns + i, bowns, s) == <span class="string">&#x27;+&#x27;</span>) &#123;</span><br><span class="line">                      <span class="keyword">return</span> table[<span class="number">0</span>][aowns][bowns] = <span class="string">&#x27;+&#x27;</span>;</span><br><span class="line">                   &#125; <span class="keyword">else</span> <span class="keyword">if</span> (dp(<span class="number">1</span>, aowns + i, bowns, s) == <span class="string">&#x27;0&#x27;</span>) &#123;</span><br><span class="line">                     flag = <span class="keyword">true</span>;</span><br><span class="line">                 &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">             table[<span class="number">0</span>][aowns][bowns] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               table[<span class="number">0</span>][aowns][bowns] = <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (p == <span class="number">1</span>) &#123;</span><br><span class="line">           <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;</span><br><span class="line">           <span class="keyword">for</span> (<span class="keyword">int</span> i : ns) &#123;</span><br><span class="line">             <span class="keyword">if</span> (rest &gt;= i) &#123;</span><br><span class="line">                 <span class="keyword">if</span> (dp(<span class="number">0</span>, aowns, bowns + i, s) == <span class="string">&#x27;-&#x27;</span>) &#123;</span><br><span class="line">                      <span class="keyword">return</span> table[<span class="number">1</span>][aowns][bowns] = <span class="string">&#x27;-&#x27;</span>;</span><br><span class="line">                   &#125; <span class="keyword">else</span> <span class="keyword">if</span> (dp(<span class="number">0</span>, aowns + i, bowns, s) == <span class="string">&#x27;0&#x27;</span>) &#123;</span><br><span class="line">                     flag = <span class="keyword">true</span>;</span><br><span class="line">                 &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (flag) &#123;</span><br><span class="line">             table[<span class="number">1</span>][aowns][bowns] = <span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               table[<span class="number">1</span>][aowns][bowns] = <span class="string">&#x27;+&#x27;</span>;</span><br><span class="line">           &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> table[p][aowns][bowns];</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="reference">Reference</h4>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zmazon/article/details/8247015">动态规划经典五题</a> <a target="_blank" rel="noopener" href="https://blog.csdn.net/u014248127/article/details/52928641">leetcode_292_拈游戏</a><br />
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/Lynn_coder/article/details/79602135">第七届蓝桥杯取球博弈详解</a><br />
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/u013309870/article/details/75193592">算法-动态规划 Dynamic Programming--从菜鸟到老鸟</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" rel="tag"># 动态规划</a>
+              <a href="/tags/%E5%87%8F%E6%B2%BB%E6%B3%95/" rel="tag"># 减治法</a>
+              <a href="/tags/%E6%8B%88%E6%B8%B8%E6%88%8F/" rel="tag"># 拈游戏</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/19/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2(DFS)/" rel="prev" title="算法笔记之深度优先搜索(DFS)">
+                  <i class="fa fa-chevron-left"></i> 算法笔记之深度优先搜索(DFS)
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/03/26/%E4%BD%BF%E7%94%A8PyQT%E8%BF%9B%E8%A1%8C%E5%8F%AF%E8%A7%86%E5%8C%96%E7%BC%96%E7%A8%8B/" rel="next" title="使用PyQT进行可视化编程">
+                  使用PyQT进行可视化编程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

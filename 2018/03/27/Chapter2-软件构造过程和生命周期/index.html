@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="Chapter2 Process and Tools of Software Construction 主要介绍了软件开发的基本过程，传统软件开发过程模型，敏捷开发，软件配置管理SCM，版本控制系统VCS，Git作为配置管理工具； 广义的软件构造过程，Eclipse作为java构造工具，软件构造各阶段的常见工具，狭义的软件构造：build，常见的build工具； 2.1 Software Life">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chapter2-软件构造过程和生命周期">
+<meta property="og:url" content="http://blog.khay.site/2018/03/27/Chapter2-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="Chapter2 Process and Tools of Software Construction 主要介绍了软件开发的基本过程，传统软件开发过程模型，敏捷开发，软件配置管理SCM，版本控制系统VCS，Git作为配置管理工具； 广义的软件构造过程，Eclipse作为java构造工具，软件构造各阶段的常见工具，狭义的软件构造：build，常见的build工具； 2.1 Software Life">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612234707719?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612234722624?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612234729190?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612234737692?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/2018061223474511?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612235330669?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180613144339685?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180613150336109?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180613152504724?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180613150853102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180613151030741?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180613151413528?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="article:published_time" content="2018-03-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-08T03:52:32.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="software constrution">
+<meta property="article:tag" content="SCM">
+<meta property="article:tag" content="XP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180612234707719?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
+
+
+<link rel="canonical" href="http://blog.khay.site/2018/03/27/Chapter2-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Chapter2-软件构造过程和生命周期 | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter2-process-and-tools-of-software-construction"><span class="nav-number">1.</span> <span class="nav-text">Chapter2 Process and Tools of Software Construction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#software-lifecycle-and-configuration-management"><span class="nav-number">1.1.</span> <span class="nav-text">2.1 Software Lifecycle and Configuration Management</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#software-development-lifecyclesdlc"><span class="nav-number">1.1.1.</span> <span class="nav-text">2.1.1 Software Development Lifecycle(SDLC)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#traditional-software-process-models"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.1.2 Traditional Software process models</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#agile-development-and-extreme-programmingxp"><span class="nav-number">1.1.3.</span> <span class="nav-text">2.1.3 Agile development and eXtreme Programming(XP)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#software-configuration-managementscm"><span class="nav-number">1.1.4.</span> <span class="nav-text">2.1.4 Software Configuration Management(SCM)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#git-github"><span class="nav-number">1.1.5.</span> <span class="nav-text">2.1.5 Git &amp; GitHub</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#process-systems-and-tools"><span class="nav-number">1.2.</span> <span class="nav-text">2.2 Process, Systems, and Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#general-process-of-sofrware-construction"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.2.1 General process of sofrware construction</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#narrow-sense-process-of-software-constructionbuild"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2.2 Narrow-sense process of software construction（build）</span></a></li></ol></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2018/03/27/Chapter2-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Chapter2-软件构造过程和生命周期
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-27 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-27T00:00:00+08:00">2018-03-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:52:32" itemprop="dateModified" datetime="2019-09-08T11:52:32+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/03/27/Chapter2-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="post-meta-item leancloud_visitors" data-flag-title="Chapter2-软件构造过程和生命周期" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/03/27/Chapter2-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Chapter2-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="chapter2-process-and-tools-of-software-construction">Chapter2 Process and Tools of Software Construction</h3>
+<p>主要介绍了软件开发的基本过程，传统软件开发过程模型，敏捷开发，<strong>软件配置管理SCM</strong>，<strong>版本控制系统VCS</strong>，<strong>Git作为配置管理工具</strong>； 广义的软件构造过程，Eclipse作为java构造工具，软件构造各阶段的常见工具，狭义的软件构造：build，常见的build工具；</p>
+<h4 id="software-lifecycle-and-configuration-management">2.1 Software Lifecycle and Configuration Management</h4>
+<h5 id="software-development-lifecyclesdlc">2.1.1 Software Development Lifecycle(SDLC)</h5>
+<p>软件构造遵循的过程: ①From 0 to 1 (从到无到有) ②From 0 to n (从有到好) 软件的生命周期: <strong>计划</strong>(产品经理) <strong>-&gt; 需求</strong>(需求工程师) <strong>-&gt; 设计</strong>(架构师) <strong>-&gt; 构造(实现)</strong>(程序员) <strong>-&gt; 测试</strong>(程序员) <strong>-&gt; 部署</strong>(运维工程师) <strong>-&gt; 运维</strong>(运维工程师)</p>
+<h5 id="traditional-software-process-models">2.1.2 Traditional Software process models</h5>
+<p>选择合适的过程模型的依据： ①用户参与程度，适应变化的能力 ②开发效率，管理复杂度 ③开发出的软件的质量</p>
+传统软件过程模型:
+<table>
+<tr>
+<td>
+Basic types
+</td>
+<td>
+Linear(线性过程)
+</td>
+<td>
+Iterative(迭代过程)
+</td>
+</tr>
+<tr>
+<td>
+Existing models
+</td>
+<td>
+Waterfall(瀑布过程，线性/整体推进（无迭代），阶段划分清楚，管理简单，无法适应需求，拓展-&gt;V字模型), Incremental(增量过程，线性推进（无迭代），增量式（多个瀑布的串行），比较容易适应需求的增加)
+</td>
+<td>
+Spiral(螺旋过程， 多轮迭代基本遵循瀑布模式，每轮迭代有明确的目标，遵循原型过程，进行严格的风险分析，方可进入下一轮迭代)
+</td>
+</tr>
+</table>
+<blockquote>
+<p>迭代：开发出来会后有用户试用、评审，发现问题反馈给开发者，开发者修改原有的实现，继续交给用户评审。循环往复，直到用户满意，时间代价高，但开发质量高</p>
+</blockquote>
+<p>使用图示查看各个模型过程还是很直观的 瀑布模型 <img src="https://img-blog.csdn.net/20180612234707719?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 增量模型 <img src="https://img-blog.csdn.net/20180612234722624?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> V字模型 <img src="https://img-blog.csdn.net/20180612234729190?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 原型模型 <img src="https://img-blog.csdn.net/20180612234737692?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 螺旋模型 <img src="https://img-blog.csdn.net/2018061223474511?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<h5 id="agile-development-and-extreme-programmingxp">2.1.3 Agile development and eXtreme Programming(XP)</h5>
+敏捷开发和极限编程
+<table>
+<tr>
+<td>
+Agile development（敏捷开发）
+</td>
+<td>
+eXtreme Programming（极限编程）
+</td>
+</tr>
+<tr>
+<td>
+通过快速迭代和小规模的持续改进，以快速适应变化；极限的用户参与，极限的小步骤迭代，极限的确认、验证
+</td>
+<td>
+Strengthen communication; start from simple; seek feedback; be brave in seeking truth from facts(近螺旋式开发)
+</td>
+</tr>
+</table>
+<p>Waterfall vs Agile <img src="https://img-blog.csdn.net/20180612235330669?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<h5 id="software-configuration-managementscm">2.1.4 Software Configuration Management(SCM)</h5>
+<strong>Terminology(专业术语)</strong>
+<table>
+<tr>
+<td>
+Software Configuration Management(SCM, 软件配置管理)
+</td>
+<td>
+Configuration Item(SCI, 软件配置项)
+</td>
+<td>
+Baselines(基线)
+</td>
+<td>
+CMDB(配置管理数据库)
+</td>
+<td>
+Versioning(版本控制)
+</td>
+</tr>
+<tr>
+<td>
+追踪和控制软件的变化
+</td>
+<td>
+软件中发生变化的基本单元(eg. 文件)
+</td>
+<td>
+软件持续变化过程中的&quot;稳定时刻&quot;(eg. 对外发布的版本)
+</td>
+<td>
+存储软件的各配置项随时间发生变化的信息+基线
+</td>
+<td>
+为软件的任一特定时刻(Moment)的形态指派一个唯一的编号, 作为&quot;身份标识&quot;
+</td>
+</tr>
+</table>
+<strong>Version Control System(VCS, 版本控制系统)</strong> &gt;<strong>重要性</strong>：回滚上一个版本；比较两个版本的差异；备份软件版本历史；获取备份；合并；多个开发者之间共享和协作；记录每个开发者的动作，便于&quot;审计&quot;。 &gt;<strong>terminology</strong>： &gt;仓库：即SCM中的CMDB &gt;工作拷贝：在开发者本地机器上的一份项目拷贝 &gt;变化：即code churm，两个版本之间的差异 &gt;HEAD：当前版本
+<table>
+<tr>
+<td>
+Local VCS(本地版本控制系统)
+</td>
+<td>
+Centralized VCS(集中式版本控制系统)
+</td>
+<td>
+Distributed VCS(分布式版本控制系统)
+</td>
+</tr>
+<tr>
+<td>
+仓库存储于开发者本地机器, 无法共享和协作
+</td>
+<td>
+仓库存储于独立的服务器, 支持多开发者之间的协作
+</td>
+<td>
+仓库存储于独立的服务器+每个开发者的本地机器
+</td>
+</tr>
+</table>
+<h5 id="git-github">2.1.5 Git &amp; GitHub</h5>
+<p>Git的结构、工作原理、基本指令 GitHub</p>
+<p><strong>Git管理软件演变过程中的变化</strong> <img src="https://img-blog.csdn.net/20180613144339685?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 这里按照图示，基本概述一下<strong>Git管理的相关指令操作</strong>： 要在本地创建一个仓库，首先需要<code>git init</code> 生成.git，.git保存所有版本控制数据，即本地的CMDB； 将工作目录（本地文件系统，workspace）文件加入暂存区，使用<code>git add file</code>（git add . 将当前目录下所有文件加入暂存区），此时状态为Staged，已暂存； 使用<code>git commit -m &quot;comment&quot;</code>将暂存区文件加入到本地仓库（local repository），此时状态为Committed，已提交； 将本地仓库同步到远程仓库使用<code>git push origin master</code> （master，主线）； 如果远程仓库发生了改变，需要先使用<code>git fetch</code> 同步本地仓库。</p>
+<p><strong>Git的管理变化</strong>，每个文件只保存一份，在每个版本中，如果发生改变则更改，否则使用前一个版本的文件，该版本中不显示，如下图： <img src="https://img-blog.csdn.net/20180613150336109?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p><strong>Object Graph</strong> 版本之间的演化关系图，一条边A-&gt;B表征了“在版本A的基础上作出变化，形成了版本B”； 其中每次commit（提交），都是一个当前整个项目的快照，展示为一个树节点；同时包含一个日志信息，who，when，short log message，以hash值作为区别； 这里可以使用<code>git lol</code> 在git bash上得到演变树； <img src="https://img-blog.csdn.net/20180613152504724?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 下面是Git项目的历史演变构成一个<code>directed acyclic graph（DAG）</code>，保存在<code>.git</code>中，而使用<code>git commit</code>就是向该图中增加节点； <img src="https://img-blog.csdn.net/20180613150853102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 使用<code>git show commithash</code> 以展示某次提交的详细情况；</p>
+<p><strong>Branch and Merge（分支与合并）</strong> master为主线，其余为分支，可以将分支与主线进行合并； 可以使用<code>git checkout</code> 切换分支或恢复工作树文件；<code>git merge brname</code> 合并分支； <img src="https://img-blog.csdn.net/20180613151030741?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p><strong>collaboration（合作）</strong> 主要涉及commit、push、merge、fetch等交互操作； <img src="https://img-blog.csdn.net/20180613151413528?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p><strong>关于GItHub</strong> Git的web服务器 Basic process: commit， branch and merge Collaboration process: fork and pull request，issues</p>
+<h4 id="process-systems-and-tools">2.2 Process, Systems, and Tools</h4>
+<h5 id="general-process-of-sofrware-construction">2.2.1 General process of sofrware construction</h5>
+广义的软件构造过程: <strong>Design（设计） -&gt; Programming/refactoring（重构） -&gt; Debugging（调试） -&gt; Testing（测试） -&gt; Build（构建） -&gt;Release（发布）</strong>
+<table>
+<tr>
+<td>
+Programming/refactoring(编程/重构)
+</td>
+<td>
+Review and static code analysis(代码评审)
+</td>
+<td>
+Debugging(dumping and logging) and Testing(调试和测试)
+</td>
+<td>
+Dynamic code analysis/profiling(动态分析)
+</td>
+</tr>
+<tr>
+<td>
+重构: 在不改变功能的前提下优化代码
+</td>
+<td>
+Formal code review(正式代码评审会议); Lightweight code review(轻量级的代码评审, eg. Pair programming-结对编程); Static code analysis(利用工具进行的静态代码分析, eg. CheckStyle, FindBugs, PMD)
+</td>
+<td>
+测试：发现程序是否有错误; 调试: 定位错误, 发现错误根源
+</td>
+<td>
+executing programs, profiling(对代码的运行时状态和性能进行度量)
+</td>
+</tr>
+</table>
+<h5 id="narrow-sense-process-of-software-constructionbuild">2.2.2 Narrow-sense process of software construction（build）</h5>
+粗略理解build，就是从build-time到run-time，借助工具，将软件构造各阶段的活动&quot;自动化&quot;，提高构造效率； 狭义的软件构造过程(Build): <strong>Validate</strong>(验证) <strong>-&gt; Compile</strong>(编译) <strong>-&gt; Link</strong>(链接) <strong>-&gt; Test</strong>(测试) <strong>-&gt; Package</strong>(打包) <strong>-&gt;Install</strong>(部署) <strong>-&gt;Deploy</strong>(发布)
+<table>
+<tr>
+<td>
+Build system
+</td>
+<td>
+Build variants and build language
+</td>
+<td>
+Build tools
+</td>
+</tr>
+<tr>
+<td>
+components and process
+</td>
+<td>
+Makefile, build.xml
+</td>
+<td>
+Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持续集成）
+</td>
+</tr>
+</table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/software-constrution/" rel="tag"># software constrution</a>
+              <a href="/tags/SCM/" rel="tag"># SCM</a>
+              <a href="/tags/XP/" rel="tag"># XP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/03/08/%E4%BD%BF%E7%94%A8Travis%20CI%E8%BF%9B%E8%A1%8C%E6%8C%81%E7%BB%AD%E5%8C%96%E9%9B%86%E6%88%90%EF%BC%88%E6%B6%89%E5%8F%8AAnt+Junit%EF%BC%89/" rel="prev" title="使用Travis CI进行持续化集成（涉及Ant+Junit）">
+                  <i class="fa fa-chevron-left"></i> 使用Travis CI进行持续化集成（涉及Ant+Junit）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/" rel="next" title="Chapter1-软件构造的视图和质量指标">
+                  Chapter1-软件构造的视图和质量指标 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

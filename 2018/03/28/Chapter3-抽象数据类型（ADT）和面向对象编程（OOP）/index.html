@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="Chapter3 本章主要介绍： 软件构造的理论基础-ADT 软件构造的技术基础-OOP #### 3.1 Data Type and Type Checking 第一节研究数据类型及其特性： 基本数据类型、对象数据类型 静态类型检查、动态类型检查 Mutable、Immutable数据类型（可变数据类型的危险性，不变数据类型的优越性） 值的改变、引用的改变 防御式拷贝 Snapshot diag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chapter3-抽象数据类型（ADT）和面向对象编程（OOP）">
+<meta property="og:url" content="http://blog.khay.site/2018/03/28/Chapter3-%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%88ADT%EF%BC%89%E5%92%8C%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%EF%BC%88OOP%EF%BC%89/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="Chapter3 本章主要介绍： 软件构造的理论基础-ADT 软件构造的技术基础-OOP #### 3.1 Data Type and Type Checking 第一节研究数据类型及其特性： 基本数据类型、对象数据类型 静态类型检查、动态类型检查 Mutable、Immutable数据类型（可变数据类型的危险性，不变数据类型的优越性） 值的改变、引用的改变 防御式拷贝 Snapshot diag">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdn.net/20180613215550407?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180327225648876?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180327230003557?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180327230145747?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180327230422350?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180613215137377?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180327230452753?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180614163733357?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180328113134751?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180615160255638?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180615163715159?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180615164405315?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180615191021957?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180615222944507?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180615223522716?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="article:published_time" content="2018-03-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-08T03:52:35.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="ADT">
+<meta property="article:tag" content="OOP">
+<meta property="article:tag" content="Override">
+<meta property="article:tag" content="Overload">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180613215550407?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+
+
+<link rel="canonical" href="http://blog.khay.site/2018/03/28/Chapter3-%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%88ADT%EF%BC%89%E5%92%8C%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%EF%BC%88OOP%EF%BC%89/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Chapter3-抽象数据类型（ADT）和面向对象编程（OOP） | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter3"><span class="nav-number">1.</span> <span class="nav-text">Chapter3</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#mutability-and-immutability"><span class="nav-number">1.0.1.</span> <span class="nav-text">3.1.2 Mutability and Immutability</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#snapshot-diagram"><span class="nav-number">1.0.2.</span> <span class="nav-text">3.1.3 Snapshot diagram</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#designing-specification"><span class="nav-number">1.1.</span> <span class="nav-text">3.2 Designing Specification</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#about-specifications"><span class="nav-number">1.1.1.</span> <span class="nav-text">3.2.1 About Specifications</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#specification-structure"><span class="nav-number">1.1.2.</span> <span class="nav-text">3.2.2 Specification Structure</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#design-specifications"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.2.3 Design Specifications</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#abstract-data-typeadt"><span class="nav-number">1.2.</span> <span class="nav-text">3.3 Abstract Data Type(ADT)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#abstract-data-types"><span class="nav-number">1.2.1.</span> <span class="nav-text">3.3.1 Abstract Data Types</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%A8%E7%A4%BA%E7%8B%AC%E7%AB%8B%E6%80%A7-%E8%A1%A8%E7%A4%BA%E6%B3%84%E9%9C%B2"><span class="nav-number">1.2.2.</span> <span class="nav-text">3.3.2 表示独立性 &amp; 表示泄露</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#comment-ri-af-safety-from-rep-exposure"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.3.3 Comment ：RI &amp; AF &amp; Safety from Rep Exposure</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#design-good-adt"><span class="nav-number">1.2.4.</span> <span class="nav-text">3.3.4 Design Good ADT</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#object-oriented-programmingoop"><span class="nav-number">1.3.</span> <span class="nav-text">3.4 Object-Oriented Programming(OOP)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#basic-concepts"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.4.2 Basic concepts</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#distinc-features-of-oop"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.4.3 Distinc features of OOP</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#object-methods"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.4.4 Object methods</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#equality-in-adt-and-oop"><span class="nav-number">1.4.</span> <span class="nav-text">3.5 Equality in ADT and OOP</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#three-ways-to-regard-equality"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.5.2 Three ways to regard equality</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vs-equals"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.5.3 &#x3D;&#x3D; Vs equals()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#equality-of-mutabel-and-immutable-types"><span class="nav-number">1.4.3.</span> <span class="nav-text">3.5.4 Equality of mutabel and immutable types</span></a></li></ol></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2018/03/28/Chapter3-%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%88ADT%EF%BC%89%E5%92%8C%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%EF%BC%88OOP%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Chapter3-抽象数据类型（ADT）和面向对象编程（OOP）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-28 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-28T00:00:00+08:00">2018-03-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:52:35" itemprop="dateModified" datetime="2019-09-08T11:52:35+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/03/28/Chapter3-%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%88ADT%EF%BC%89%E5%92%8C%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%EF%BC%88OOP%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="Chapter3-抽象数据类型（ADT）和面向对象编程（OOP）" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/03/28/Chapter3-%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%88ADT%EF%BC%89%E5%92%8C%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%EF%BC%88OOP%EF%BC%89/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/28/Chapter3-%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%EF%BC%88ADT%EF%BC%89%E5%92%8C%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B%EF%BC%88OOP%EF%BC%89/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="chapter3">Chapter3</h3>
+本章主要介绍： 软件构造的理论基础-ADT 软件构造的技术基础-OOP #### 3.1 Data Type and Type Checking 第一节研究数据类型及其特性： 基本数据类型、对象数据类型 静态类型检查、动态类型检查 Mutable、Immutable数据类型（可变数据类型的危险性，不变数据类型的优越性） 值的改变、引用的改变 防御式拷贝 Snapshot diagram理解数据类型 Null references（空指针） ##### 3.1.1 Date type <strong>Date type in Java（基本、对象数据类型）</strong>
+<table>
+<tr>
+<td>
+primitive types（基本数据类型）
+</td>
+<td>
+object types（对象数据类型）
+</td>
+</tr>
+<tr>
+<td>
+int（范围[-2<sup>31,+2</sup>31]）,long（范围[-2<sup>63,+2</sup>63]）, byte, short, char, float, double, boolean
+</td>
+<td>
+Classes, interfaces, arrays, enums, annotations, String, Integer, Double
+</td>
+</tr>
+<tr>
+<td>
+No identity except their value(只有值, 没有ID, 与其他值无法区分)
+</td>
+<td>
+Have identity distinct from value(既有值, 也有ID)
+</td>
+</tr>
+<tr>
+<td>
+Immutable（基本数据类型是不可变的）
+</td>
+<td>
+Some mutable, some not（可变、不可变）
+</td>
+</tr>
+<tr>
+<td>
+On stack, exist only when in use(在栈内分配内存，代价低；函数返回后, 栈回收, 变量将不存在)
+</td>
+<td>
+On heap, garbage collected（在堆中分配内存，代价昂贵）
+</td>
+</tr>
+</table>
+<p>这里，关于对象数据类型，有几点需要注意： ①所有的非基本数据类型都是对象，Object是最上层父类，其余对象类型都是继承Object（extends）； ②可以将基本数据类型包装成对象数据类型，通常都是在定义集合类型的时候使用它们（Boolean，Integer，Short，Long，Float，eg. Map&lt;Interger, Boolean&gt;），一般情况下尽量避免使用，一般可以自动转换； ③操作符作用于某种数据类型，则结果也为该数据类型（eg. int x int -&gt; int；Math.sin(theta), double-&gt;doubel；bigint1.add(bigint2), BigInteger + BigInteger -&gt;BigInteger；字符串连接，String text = &quot;hello&quot; +&quot; world&quot;） ④使用重载，可以使同样的操作名作用于不同的数据类型</p>
+<strong>Static Typing &amp; Dynamic Typing（静态、动态类型检查）</strong> &gt;检查程度： &gt;静态类型检查 &gt;&gt; 动态 &gt;&gt; 无检查
+<table>
+<tr>
+<td>
+Static Checking（静态检查）
+</td>
+<td>
+Dynamic Checking（动态检查）
+</td>
+</tr>
+<tr>
+<td>
+在编译阶段进行类型检查（避免将错误带入运行阶段，提高程序的正确性和健壮性）, 关于&quot;类型&quot;的检查，不考虑值
+</td>
+<td>
+在运行阶段进行类型检查, 关于&quot;值&quot;的检查
+</td>
+</tr>
+<tr>
+<td>
+Static checking: Syntax errors（语法错误）, Wrong names（类名，函数名错误）, Wrong number of arguments（参数数目错误）, Wrong argument types（参数类型错误）, Wrong return types（返回值类型错误）
+</td>
+<td>
+Dynamic checking: Illegal argument values（非法的参数值）, Unrepresentable return values（非法的返回值）, Out-of -range indexes（越界）, Calling a method on a null object reference（空指针）
+</td>
+</tr>
+</table>
+<h5 id="mutability-and-immutability">3.1.2 Mutability and Immutability</h5>
+<strong>Diff of changing a variable or its value（值的改变、引用的改变）</strong>
+<table>
+<tr>
+<td>
+changing a variable（改变一个变量-引用）
+</td>
+<td>
+changing a value（改变一个变量的值）
+</td>
+</tr>
+<tr>
+<td>
+changing where the variable's arrow points or point it to a different value(将该变量指向另一个存储空间)
+</td>
+<td>
+changing reference inside that value, such as an array or list(将该变量当前指向的值的存储空间中写入一个新的值)
+</td>
+</tr>
+</table>
+<strong>Difference Of Mutability &amp; Immutability（可变、不可变）</strong>
+<table>
+<tr>
+<td>
+Type
+</td>
+<td>
+Mutability（可变性）/td&gt;
+<td>
+Immutability（不变性-重要的设计原则）
+</td>
+<pre><code>&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Introduce&lt;/td&gt;
+    &lt;td&gt;拥有方法可以修改自己的值、引用&lt;/td&gt;
+    &lt;td&gt;一旦创建，始终指向同一个值、引用；尽量使用`final`变量（如果改变final类型变量，编译器会提示错误，这也是一种静态检查）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Advantage&lt;/td&gt;
+    &lt;td&gt;最小化拷贝以提高效率；可以获得更好的性能；适合在多个模块之间共享数据&lt;/td&gt;
+    &lt;td&gt;更安全，在其他质量指标上表现更好&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Risks&lt;/td&gt;
+    &lt;td&gt;传递或者返回一个可变类型数据, 会存在多个引用, 之后在一个地方改变这个值，其他地方也会改变&lt;/td&gt;
+    &lt;td&gt;频繁修改会产生大量的临时拷贝（需要垃圾回收）&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Example&lt;/td&gt;
+    &lt;td&gt;Date(java.time), List(ArrayList, LinkedList), Set, Map(HashMap), StringBuilder；安全的使用可变类型：局部变量，不涉及共享；只有一个引用；使用防御式拷贝，返回一个全新的对象&lt;/td&gt;
+    &lt;td&gt;基本类型及其封装对象类型（eg.int -&gt; Interger）是不可变的, String也是不可变的；可以使用包装器，`List&lt; String &gt; listCopy = Collections.unmodifiableList(list)`，此后，listCopy不能再修改，否则会报错`UnsupportedOperationException`&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+</table>
+<strong>About Immutability</strong> &gt; Using immutable objects and immutable references as much as possible &gt; 尽可能多的使用不可变对象和不可变类型
+<table>
+<tr>
+<td>
+final
+</td>
+<td>
+To make a reference immutable, declare it with the keyword <strong>final</strong>(Re. final类无法派生子类; final变量无法改变值/引用; final方法无法被子类重写)
+</td>
+</tr>
+<tr>
+<td>
+String
+</td>
+<td>
+String is an immutable type(一旦创建一个String类型变量, 如果需要改变值, 则需要指向另一存储空间, 原存储空间被丢弃), while StringBuilder is a mutable type(创建一个StringBuild类型变量后, 改变值是直接在原存储空间中改变)
+</td>
+</tr>
+<tr>
+<td>
+Defensive copy
+</td>
+<td>
+Return a new copy of the object(通过防御式拷贝, 返回一个全新的Object对象) just for mutability, while immutable types never need to be defensively copied(因为不可变类型, 一经创建, 无法改变值, 所以不用担心在不同的引用中被改变， 如果某个变量需要改变, 则要重新创建一个对象, 会有新的引用, 不用担心改变其他变量的引用)
+</td>
+</tr>
+</table>
+<h5 id="snapshot-diagram">3.1.3 Snapshot diagram</h5>
+<blockquote>
+<p>Run as a code-level, run-time, and moment view 用于描述程序运行时的内部状态，便于刻画各类变量随时间变化</p>
+</blockquote>
+<p>①Primitive values(基本类型的值) 指向一个值 <img src="https://img-blog.csdn.net/20180613215550407?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p>②Object values(对象类型的值) 指向一片存储空间 简单表示的是指向一个标记类型的圆圈； 详细点，内部箭头指向内部变量具体的值； 更详细，写出内部变量的声明类型； <img src="https://img-blog.csdn.net/20180327225648876?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" width = "400" height = "200" alt="图片名称" align=center /></p>
+<p>③Immutable values and mutable values Immutable values - String 不可变的对象，用双线椭圆 直接改变引用, 指向新的存储空间, 丢弃之前的存储空间</p>
+<p>mutable values - StringBuilder 直接改变存储空间中的值 <img src="https://img-blog.csdn.net/20180327230003557?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" width = "400" height = "300" alt="图片名称" align=center /></p>
+<p>④immutable reference 不可变的引用, 用双线箭头 (引用是不可变的, 但指向的值却可以是可变的, 同样的, 可变的引用, 也可指向不可变的值，主要是对象内部可以改变) <img src="https://img-blog.csdn.net/20180327230145747?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p>⑤List List is an interface, members in a List must be an object. <img src="https://img-blog.csdn.net/20180327230422350?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p>⑥Set A Set is an unordered collection of zero or more unique objects.(Set-集合, 其中的元素是没有顺序的) <img src="https://img-blog.csdn.net/20180613215137377?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p>⑦Map A Map is similar to a dictionary (key-value) <img src="https://img-blog.csdn.net/20180327230452753?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" width = "300" height = "200" alt="图片名称" align=center /></p>
+<p>⑧关于迭代器Iterator Iterator是一种mutable类型； Problem：通过遍历（for-each，for循环）无法成功删除list中的元素；需要使用迭代器，然后使用迭代的删除操作进行删除;下面举个简单的例子 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">list.add(<span class="string">&quot;6.01&quot;</span>);</span><br><span class="line">list.add(<span class="string">&quot;6.02&quot;</span>);</span><br><span class="line">list.add(<span class="string">&quot;6.03&quot;</span>);</span><br><span class="line">Iterator it = list.iterator()</span><br><span class="line"><span class="keyword">while</span>(it.hasnext)&#123;</span><br><span class="line"> String object= it.next();</span><br><span class="line"> <span class="keyword">if</span>(object.startsWith(<span class="string">&quot;6.&quot;</span>))&#123;</span><br><span class="line">      it.remove(); </span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 执行如上代码之后，list为[]； 如果将<code>it.remove()</code>改成<code>list.remove(object)</code>，则list为[&quot;6.02&quot;]，下面就这个问题进行解释一下： 首先list中下标0执行&quot;6.01&quot;，下标1执行&quot;6.02&quot;，下标2执行&quot;6.03&quot;；循环第一遍，将下标0与&quot;6.01&quot;断开，此时下标1指向&quot;6.02&quot;，下标1指向&quot;6.03&quot;，下标2为空；循环第二遍，将下标1与&quot;6.03&quot;断开，此时，遍历结束。 当然，如果使用<code>for-each</code>遍历，并且同样执行删除，会报错<code>ConcurrentModificationException</code>。</p>
+<h4 id="designing-specification">3.2 Designing Specification</h4>
+<p>第二节研究方法和操作的规约及其特性： 方法的规约（specification） 前置、后置条件（pre/post-condition） 行为等价性 规约的强度及其比较</p>
+<h5 id="about-specifications">3.2.1 About Specifications</h5>
+<p><strong>Introduce</strong> &gt; 程序和客户端之间达成的一致，Spec给供需双方都确定了责任，在调用的时候双方都要遵守； &gt; Decoupled(解耦), 不需要了解具体实现, 不关心是什么对象, 只需要知道有什么功能即可，扮演防火墙的功能； &gt; specification永远不要告诉方法的局部变量和私有类型；</p>
+<p>内容包括： 输入、输出的数据类型；功能和正确性；性能等等。</p>
+<p>下面是Java class BigInteger中add()操作的文档 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> BigInteger <span class="title">add</span><span class="params">(BigInteger val)</span></span></span><br><span class="line"><span class="function">Returns a BigInteger whose value <span class="title">is</span> <span class="params">(<span class="keyword">this</span> + val)</span></span></span><br><span class="line"><span class="function">**Parameters:**</span></span><br><span class="line"><span class="function">val - value to be added to <span class="keyword">this</span> BigInteger</span></span><br><span class="line"><span class="function">**Returns:**</span></span><br><span class="line"><span class="function"><span class="keyword">this</span> + val</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>Behavioral Equivalence（行为等价性）</strong> 站在客户端视角看, 如果能够实现<em>相同的功能</em>, 符合<em>同一个规约</em>, 则就是行为等价, 可以相互替换；</p>
+<h5 id="specification-structure">3.2.2 Specification Structure</h5>
+<strong>pre-condition &amp; post-condition（前置条件和后置条件，亦为requires &amp; effects）</strong>
+<table>
+<tr>
+<td>
+Structure
+</td>
+<td>
+Pre-condition(前置条件)
+</td>
+<td>
+Post-condition(后置条件)
+</td>
+</tr>
+<tr>
+<td>
+Keyword
+</td>
+<td>
+requires
+</td>
+<td>
+effects
+</td>
+</tr>
+<tr>
+<td>
+Obligation
+</td>
+<td>
+On the client(对客户端的约束, 在使用方法时必须满足的条件)
+</td>
+<td>
+On the implementer(对开发者的约束, 方法结束时必须满足的条件)
+</td>
+</tr>
+<tr>
+<td>
+Comment
+</td>
+<td>
+Put into <span class="citation" data-cites="param">@param</span> where possible
+</td>
+<td>
+Put into <span class="citation" data-cites="return">@return</span> and <span class="citation" data-cites="throws">@throws</span>
+</td>
+</tr>
+<tr>
+<td>
+contract（契约）
+</td>
+<td colspan="2">
+If the precondition holds, and then the postcondition must hold(前置条件满足, 则后置条件必须满足; 前置条件不满足, 则方法可做任何事情)
+</td>
+</tr>
+</table>
+<p><strong>Examples：</strong> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Find a value in an array.</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> arr array to search, requires that val occurs exactly once in arr</span></span><br><span class="line"><span class="comment">* <span class="doctag">@param</span> val value to search for</span></span><br><span class="line"><span class="comment">* <span class="doctag">@return</span> index i such that arr[i] = val</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> val)</span></span></span><br><span class="line"><span class="function"> <span class="keyword">requires</span>: val occurs exactly once in arr</span></span><br><span class="line"><span class="function">   effects: returns index i such that arr[i] </span>= val</span><br></pre></td></tr></table></figure></p>
+<p><strong>关于specification和mutability</strong> 除非在后置条件里声明过，否则方法内部不应该改变输入参数； 尽量遵循此规则，尽量不设计mutating的方法； 关键在于“不可变”，在规约里限制住（比如，返回一个字符数组，要求不能改变，如果只在注释，<span class="citation" data-cites="return中限制">@return中限制</span>，则不可靠；最好的方法是返回类型设置为String，是不可变的，这样在规约里面限制，更可靠）。</p>
+<h5 id="design-specifications">3.2.3 Design Specifications</h5>
+<strong>Classifying specifications</strong>
+<table>
+<tr>
+<td colspan="3">
+Deterministic(确定性)
+</td>
+<td colspan="2">
+Declarative(陈述性)
+</td>
+<td colspan="2">
+Strong(强度)
+</td>
+</tr>
+<tr>
+<td>
+Deterministic(确定的规约)
+</td>
+<td>
+Under-deterministic(欠定的规约)
+</td>
+<td>
+Non-deterministic(非确定的规约)
+</td>
+<td>
+Operational(操作式规约)
+</td>
+<td>
+Declarative(声明式规约)
+</td>
+<td>
+Stronger(强规约)
+</td>
+<td>
+Weaker(弱规约)
+</td>
+</tr>
+<tr>
+<td>
+给定一个满足pre-condition的输入, 输出是唯一的、明确的（eg. occurs exactly once in array）
+</td>
+<td>
+同一输入可以有多个输出, 通常有确定的实现，欠定的规约通常有确定的实现（eg.不同的遍历方式，遍历顺序不同, 产生不同的结果）
+</td>
+<td>
+同一输入, 多次执行输出可能不同（eg. depending on random or timing）
+</td>
+<td>
+Give a series of steps that the method performs(eg. pseudocode, 伪代码)
+</td>
+<td>
+Give properties of the final outcome, and how it's related to the initial state(没有内部实现的描述, 只有&quot;初-终&quot;状态, 更具有价值)
+</td>
+<td colspan="2">
+S2和S1，如果S2前置条件更弱更少, 条件更少，而后置条件更强, 要求更多更细，则S2&gt;=S1，可以用S2代替S1（spec变强：更放松的前置条件+更严格的后置条件）
+</td>
+</tr>
+</table>
+<p><strong>Example Of Stronger &amp; weaker specs</strong> 举一个强和弱规约的例子 <img src="https://img-blog.csdn.net/20180614163733357?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 在这里，第三个规约的前置条件更弱（包含第一个的情况），而后置条件更强（被第一个情况包含），则可以用第三个规约实现的代码代替第一个规约实现的代码。因为第一个为第三个的一种情况，所以第一个仍然可以得到正确的结果。</p>
+<p><strong>Diagramming Specifications</strong> Note1 &gt; A specification defines a region in the space of all possible implementations. (某个具体实现, 若满足规约, 则落在其范围内; 否则, 在其之外)</p>
+<p>Note2 &gt; When S2 is stronger than S1, it defines a smaller region in this diagram. A weaker specification defines a larger region. &gt; S1要求找一个或多个元素，且返回的下标任意，可以第一个也可以最后一个（从头遍历或从尾遍历）；S2要求找一个或多个元素，返回下标要限制，必须是第一个（从头遍历）； &gt; S2与S1前置条件相同，S2后置条件更强；S2更强，定义了一个小区域；S1较弱，定义了一个大区域；（这里可以体会到，S2可以代替S1，S2是S1的一种情况） &gt; <img src="https://img-blog.csdn.net/20180328113134751?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" width = "300" height = "200" alt="Diagram" align=center /></p>
+<strong>Quality Of Specifications</strong>
+<table>
+<tr>
+<td>
+Coherent(内聚的)
+</td>
+<td>
+Inormative（信息丰富的）
+</td>
+<td>
+Strong enough（足够强）
+</td>
+<td>
+Weak enough（足够弱）
+</td>
+<td>
+Abstract types（抽象类型）
+</td>
+<td>
+Precondition &amp; Postcondition ?
+</td>
+</tr>
+<tr>
+<td>
+Spec描述的功能应单一、简单、易理解
+</td>
+<td>
+信息足够的丰富, 不能让客户端产生理解的歧义
+</td>
+<td>
+Not only give clients a strong enghou guarantee in the general case(一般情况), but also use extra care when specifying the special cases(特殊情况)（eg.说明输入null的解决方法）
+</td>
+<td>
+太强的spec, 在很多特殊情况下难以达到
+</td>
+<td>
+在规约里使用抽象类型, 可以给方法的实现体与客户端更大的自由度（eg.泛型）
+</td>
+<td>
+不限定太强的precondition，而是在postcondition中抛出异常：输入不合法(是否使用前置条件取决于(1)check的代价；(2)方法的使用范围)
+</td>
+</tr>
+</table>
+<h4 id="abstract-data-typeadt">3.3 Abstract Data Type(ADT)</h4>
+<p>本节将数据和操作复合起来，构成ADT，学习ADT的核心特征，以及如何设计好的ADT。 本节考点： ADT操作的四种类型 表示独立性 表示泄露 不变量、表示不变量RI 表示空间、抽象空间、AF 以注释的形式撰写AF、RI ##### 3.3.0 About ADT 抽象数据类型（Abstract Data Type ，ADT） ADT是一个实现包括储存数据元素的存储结构以及实现基本操作的算法。ADT是由操作定义的，与其内部如何实现无关！强调“作用于数据上的操作”，程序员和client无需关心数据如何具体存储的，只需设计/使用操作即可。 &gt; 举个例子，对于抽象数据类型Bool的定义 &gt; 包含如下操作，后面是操作的返回值，不需要管操作的具体实现 &gt; true: Bool &gt; false: Bool &gt; and: Bool X Bool -&gt; Bool &gt; or: Bool X Bool -&gt; Bool &gt; not Bool -&gt; Bool</p>
+<h5 id="abstract-data-types">3.3.1 Abstract Data Types</h5>
+<strong>ADT操作的四种类型</strong>
+<table>
+<tr>
+<td colspan="2">
+Data Types
+</td>
+<td colspan="4">
+Operations Types
+</td>
+</tr>
+<tr>
+<td>
+Mutable types（可变类型的对象）
+</td>
+<td>
+Immutable types（不可变类型的对象）
+</td>
+<td>
+Creators(构造器)
+</td>
+<td>
+Producers(生产器)
+</td>
+<td>
+Observers(观察器)
+</td>
+<td>
+Mutators(变值器)
+</td>
+</tr>
+<tr>
+<td>
+提供了可改变其内部数据的值的操作
+</td>
+<td>
+其操作不改变内部值, 而是构造新的对象
+</td>
+<td>
+创造相同类型的新对象；可能实现为<strong>构造函数</strong>或<strong>静态函数（工厂方法）</strong> （eg. Integer.valueOf()，确保不变量为true)
+</td>
+<td>
+根据一定规则生成新的对象（eg. <strong>BigInteger.mod()</strong>；String.toUpperCase()；<strong>Collections.unmodifiableList()</strong>；String.concat()，String X String -&gt; String， 确保不变量为true)
+</td>
+<td>
+传入该类型对象，返回不同类型的对象；得到对象内部的属性情况 （eg. Set.contains()， List.size() 保持不变性)
+</td>
+<td>
+改变该对象属性的方法，返回类型通常为void，也可能为非空类型（eg.List.add()（返回boolean）；Coponent.add()（返回对象本身）；Collections.copy()；<strong>BufferedReader.readLine()</strong>（向缓冲区添加字符串）， 保持不变性)，<strong>不可变类型对象没有变值器</strong>
+</td>
+</tr>
+</table>
+<blockquote>
+<p>以int，String和List类型举例 int 是不可变类型，没有变值器 creators（构造器）: 0，1，2， .... producers（生产器）: +，-，*，/ observers（观察器）: ==，!=，&lt;，&gt; mutators（变值器）: none .......................... String是不可变类型 creators（构造器）: String构造方法 producers（生产器）: concat，substring，toUpperCase，（连接操作，子串，转为大写） observers（观察器）: length，charAt mutators（变值器）: none .......................... List是可变类型，并且是一个接口，ArrayList和LinkedList等类实现了该接口 creators（构造器）: ArrayList和LinkedList构造函数，Collections.singleonList producers（生产器）: Collection.unmodifiableList，（产生一个不可更改的list） observers（观察器）: size，get，（获得list的大小或某个位置的元素） mutators（变值器）: add，remove，addAll，Collections.sort，（改变了内部元素个数或顺序）</p>
+</blockquote>
+<p><strong>设计ADT的原则</strong> 设计好的ADT，靠“经验法则”，提供一组操作，设计其行为规约 spec ①设计简洁、一致的操作 ②要足以支持client对数据所做的所有操作需要，且用操作满足client需要的难度要低 ③要足以支持client对数据所做的所有操作需要，且用操作满足client需要的难度要低</p>
+<p><strong>测试ADT</strong> 测试creators, producers, and mutators：调用observers来观察这些operations的结果是否满足spec； 测试observers：调用creators, producers, and mutators等方法产生或改变对象，来看结果是否正确； 测试时，需要划分输入空间，此为后话。</p>
+<h5 id="表示独立性-表示泄露">3.3.2 表示独立性 &amp; 表示泄露</h5>
+<p><strong>表示独立性</strong> 表示独立性（Representation Independence） - private fields： client使用ADT时无需考虑其内部如何实现, ADT内部表示的变化不应影响外部spec和客户端 （可以改变实现方式以提高性能，但返回给客户的结果不能变；例如，List提供的操作是独立的，不用管是作为linked list还是array来实现） spec规定client和implementer之间的契约：除非ADT的操作指明了具体的precondition和postcondition, 否则不能改变ADT的内部表示</p>
+<p><strong>表示泄露</strong> 首先提出不变量的概念（<strong>不变量</strong>：在任何时候总是true，由ADT负责不变量，与client的任何行为无关）； 然后说明需要不变量的原因（保持程序的正确性，容易发现错误），当<strong>Immutability</strong>作为不变量时没问题； 但是，当<strong>mutable</strong>时， ...，会发生<strong>表示泄露</strong>（影响不变性，以及表示独立性，改变时影响客户端）； 解决方式， 成员变量，变成不可变的（<strong>private</strong>仅类内部可见，<strong>final</strong>保证不变性）； 但声明为final也不一定有用，调用方法，改变了传入参数的值（如下图，传入对象t，获取t的timestamp属性，并在该属性基础上，改变原值，构建新的Tweet对象） <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Tweet <span class="title">retweetLater</span><span class="params">(Tweet t)</span></span>&#123;</span><br><span class="line">  Date d = t.getTimestamp();</span><br><span class="line">    d.setHours(d.getHours()+<span class="number">1</span>);</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">new</span> Tweet(<span class="string">&quot;rbmllr&quot;</span>, t.getText(), d)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 改变结果如下，传入参数t的timestamp值被改变了 <img src="https://img-blog.csdn.net/20180615160255638?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" width="400" height="300"> 终极解决方法---<strong>Defensive copying</strong>（Copy和<strong>clone()</strong>，clone()默认的<strong>Object中的操作</strong>是<strong>浅拷贝</strong>，首先和new操作类型，创建新的地址，然后将原对象的各个属性填充到clone生成的对象中，所以改变生成对象的属性，同样会改变原对象的属性；如果要实现<strong>深拷贝</strong>，则对象需要实现<strong>Cloneable接口</strong>，并<strong>重写clone</strong>方法；对于mutable对象可以使用clone()进行赋值，但并不支持所有对象)； 最好的办法还是使用immutable类型，彻底避免表示泄露； 总结：<strong>表示不变性</strong>和<strong>避免表示泄露</strong>，是ADT最重要的一个<strong>Invariant</strong>！</p>
+<h5 id="comment-ri-af-safety-from-rep-exposure">3.3.3 Comment ：RI &amp; AF &amp; Safety from Rep Exposure</h5>
+<p><strong>表示空间、抽象空间、AF</strong> <strong>表示空间（Representation，R）：</strong> ADT实现者关注R， <strong>抽象空间（Abstract，A）：</strong> 抽象值构成的空间，用户看到和使用的值，用户关注A； <strong>AF（Abstraction Function，抽象函数）：</strong> R和A之间映射（<strong>mapping</strong>）关系的函数，一定是<strong>满射</strong>，<strong>未必单射</strong>，<strong>未必双射</strong> <strong>Rep Invariant（表示不变量）</strong>：从表示值映射到booleans，R -&gt; boolean；如果AF映射r，表示为<strong>RI(r)</strong>； 描述R，A，RI的关系： <img src="https://img-blog.csdn.net/20180615163715159?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" width="600" height="400"></p>
+<strong>Document RI &amp; AF &amp; Safety from Rep Exposure</strong> 在代码中用<strong>注释形式</strong>记录AF和RI
+<table>
+<tr>
+<td>
+Rep Invariant(RI, 表示不变量)
+</td>
+<td>
+Abstraction Function(AF)
+</td>
+<td>
+Safety from Rep Exposure
+</td>
+</tr>
+<tr>
+<td>
+所有表示值的一个子集，包含所有合法的表示值， 随时检查RI是否满足(定义一个函数<strong>checkRep()</strong>，通过一些属性检查变量是否满足要求, 使用assert用法, 在每个函数返回之前调用checkRep()；默认所有对象不为<strong>null</strong>)
+</td>
+<td>
+R A之间映射关系的函数(描述类的实现)
+</td>
+<td>
+给出理由, 证明代码并未对外泄露其内部表示-自证清白
+</td>
+</tr>
+<tr>
+<td>
+通过creators和producers创建对象时要确保不变量为true，执行mutators和observers要保持不变性，并且没有表示泄露；eg. 在一个三角形的类中, 三条边要始终满足关系, 在每次赋值或者改变时都要都用checkRep()检查
+</td>
+<td>
+做出具体的解释: 每个rep value是如何映射到abstract value中的
+</td>
+<td>
+eg1. All fields are private.(私有类型) eg2. Rep1 is String, so are guaranteed immutable.(不可变类型保证不变) eg3. Obj1 is a mutable Object, so Func1 and Func2 make defensive copies(可变对象, 在使用时, 要防御式拷贝)
+</td>
+</tr>
+</table>
+<p>举个表示不变量的例子 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span></span>&#123;</span><br><span class="line">            <span class="keyword">private</span> String s;</span><br><span class="line">        <span class="keyword">private</span> String t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 其中为C的表示不变量的描述为（有s的组成，s和t的限制-长度，第三个不明确） <img src="https://img-blog.csdn.net/20180615164405315?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" width="300" height="200"> <strong>esp</strong>，可以用不变量取代方法的Precondition。</p>
+<blockquote>
+<p>Note: ADT的规约里只能使用<strong>client可见</strong>的内容来撰写，包括<strong>参数</strong>、<strong>返回值</strong>、<strong>异常</strong>等。 如果规约里需要提及“值”，只能使用<strong>A空间中的“值”</strong>。 ADT的内部表示(<strong>私有属性</strong>)对外部都应严格不可见。 故在代码中以<strong>注释的形式</strong>写出<strong>AF</strong>和<strong>RI</strong>而不能在<strong>Javadoc文档</strong>中，防止被外部看到而破坏<strong>表示独立性</strong>/<strong>信息隐藏</strong>。</p>
+</blockquote>
+<h5 id="design-good-adt">3.3.4 Design Good ADT</h5>
+<p>设计ADT： (1) 选择R和A； (2) RI --- 合法的表示值； (3) 如何解释合法的表示值 ---映射AF</p>
+<h4 id="object-oriented-programmingoop">3.4 Object-Oriented Programming(OOP)</h4>
+本节学习ADT的具体实现技术：OOP，用OOP/接口/类实现ADT 考点： 接口、抽象类、具体类 继承、override 多态、overload 泛型 ##### 3.4.1 Criteria of Object-Orientation
+<table>
+<tr>
+<td colspan="4">
+Criteria of Object-Orientation(面向对象编程的标准)
+</td>
+</tr>
+<tr>
+<td>
+Genericity(泛型)
+</td>
+<td>
+Interitance(继承)
+</td>
+<td>
+Polymorphism(多态)
+</td>
+<td>
+Dynamic dispatch/binding(动态分派/绑定)
+</td>
+</tr>
+</table>
+<h5 id="basic-concepts">3.4.2 Basic concepts</h5>
+<table>
+<tr>
+<td>
+Object
+</td>
+<td>
+Class
+</td>
+<td>
+Interface
+</td>
+<td>
+Comparing
+</td>
+</tr>
+<tr>
+<td>
+An object is a bundle of state(data fields) and behavior(actions methods).
+</td>
+<td>
+A class defines methods and fields. Class defines both type and implementation. Loosely speaking, the methods of a class are its Application Programming Interface(API). Include class variable(类变量, 区别instance variables-实例成员变量) and class methods(类方法, 区别instance methods-实例方法)
+</td>
+<td>
+An interface in Java is a list of method signatures, but no method bodies.(接口只有方法的签名, 即抽象的方法，没有构造方法，成员变量，实现体) A class implements an interface if it declares the interface in its implements clause, and provides method bodies for all of the interface's method.(一个类实现一个接口就要实现接口中的所有方法)
+</td>
+<td>
+Interface(所有方法都是抽象的) -&gt; abstract class(有至少一个抽象方法的类，使用<strong>abstract</strong>标识) -&gt; class
+</td>
+</tr>
+<tr>
+<td colspan="4">
+Interface和Class：定义和实现ADT；接口: 确定ADT的规约, <strong>一个接口可以继承（extends）多个接口</strong>, <strong>一个接口可以有多种实现</strong> ；类: 实现ADT, <strong>一个类只能继承一个类(</strong>extends，单继承), <strong>一个类可以实现多个接口</strong>(implements，多继承)
+</td>
+</tr>
+</table>
+<p>关于<strong>Static</strong> 静态变量，静态方法属于<strong>整个类</strong>所有，所以可以直接<strong>用类名访问</strong>（eg. <strong>B.method2()</strong>）；静态成员变量自第一次使用，分配内存空间后，次后一直使用该空间；静态方法可以直接调用类中静态变量，但不能直接调用非静态变量/方法； 静态方法调用使用<strong>同一个栈</strong>，而一般方法调用，每次调用时<strong>使用不同的栈</strong>； <img src="https://img-blog.csdn.net/20180615191021957?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<h5 id="distinc-features-of-oop">3.4.3 Distinc features of OOP</h5>
+verriding- overriding while final and static diff of overloading and overriding
+<table>
+<tr>
+<td>
+Encapsulation(封装)
+</td>
+<td>
+Interitance(继承)
+</td>
+<td colspan="3">
+<strong>Polymorphism</strong>(多态)
+</td>
+</tr>
+<tr>
+<td>
+Information hiding（信息隐藏）
+</td>
+<td>
+<strong>Overriding</strong>（重写）
+</td>
+<td>
+Ad hoc polymorphism(特殊多态，<strong>Overloading</strong>, 重载)
+</td>
+<td>
+Parametic polymorphism(参数化多态，<strong>Generics,</strong> 泛型)
+</td>
+<td>
+Subtyping(子类型多态、包含多态)
+</td>
+</tr>
+<tr>
+<td>
+隐藏所有的实现细节，客户端仅<strong>使用接口类型声明变量</strong>（InterfaceA var = new SubClass()），客户端代码无法直接访问属性； Benefits of information hiding(Decouples, 解耦; Speeds up system development，加速; Eases burden of maintenance，维护; Increases software reuse, 复用; Enables effective performance tuning，性能
+</td>
+<td>
+完全相同的signature-类型和参数, <strong>实际执行时调用哪个方法在运行时决定</strong>(在<strong>run-time</strong>进行<strong>动态检查</strong>), 重写不要改变方法的本意
+</td>
+<td>
+多个方法具有同样的名字, 但有<strong>不同的参数列表</strong>或<strong>返回值类型</strong>, 方便client调用, client可用不同的参数列表, 调用同样的函数。Overloading is a static polymorphism.(<strong>静态类型检查</strong>, 在<strong>编译阶段</strong>决定具体执行哪个方法)
+</td>
+<td>
+<strong>types to-be-specified-later</strong>，包括泛型接口（public interface List&lt; E &gt;，可以用任意类型替代E；可以有非泛型的实现类，<strong>public class ArrayList&lt; String &gt; implements List&lt; String &gt;</strong>；或泛型的实现类，<strong>public class ArrayList&lt; E &gt; implemetns List&lt; E &gt;</strong>），泛型方法（<strong>public T get(int index)</strong>）
+</td>
+<td>
+A subtype is simply a subset of the supertype.<strong>子类型的规约不能弱化超类型的规约</strong>, 不同类型的对象可以统一的处理而无需区分。
+</td>
+</tr>
+<tr>
+<td>
+Visibility modifiers for members: <strong>private</strong>-类中可见；<strong>protected</strong>-子类（不一定在同一个包中）或同一个包中可见；<strong>无修饰词</strong>-同一个包内可见；<strong>public</strong>-任意可见
+</td>
+<td>
+<strong>final标识的变量不能改变</strong>, <strong>final标识的类不能继承</strong>, <strong>final, static, private标识的方法无法在子类中重写</strong>（严格继承）；由于是<strong>静态类型检查</strong>,只看最开始定义的类型, 在Atype var = new ASubClass()中, <strong>调用的是父类</strong>Atype中的方法；super.thisfunction(param)，调用父类的该方法
+</td>
+<td>
+<strong>不同的参数列表</strong>（不能只是参数名不同，必须是参数类型或参数个数不同）, <strong>相同/不同的返回值类型</strong>, <strong>相同或不同的public/private/protected</strong>，不同的异常， 可以在同一个类内重载, 也可以在<strong>子类中重载</strong>
+</td>
+<td>
+泛型变量, 泛型类, 泛型接口, 泛型方法; <strong>Wildcards通配符(?)</strong>（eg. List&lt; ? &gt; = new ArrayList&lt; String &gt;()；<strong>List&lt;? extends Animal&gt;</strong>，可以是Animal的<strong>子类型</strong>，也可以是Animal的<strong>父类型</strong>）, 只有使用泛型的时候出现, 不能在定义中出现（仅在编译时判断，<strong>运行时泛型消失了</strong>）
+</td>
+<td>
+obj = instanceof(Obj), 判断obj是否是Obj类的一个实例, 或者Obj是否为superclass, obj为subclas
+</td>
+</tr>
+</table>
+<p>关于重载的例子 ①静态类型检查 由于实例animalRefToHorse时，声明的是Animal类型，实现的是Horse类型；由于是静态类型检查，记为Animal类型，所以调用UseAnimals的doStuff方法时，是执行的第一个方法，参数为Animal类型； <img src="https://img-blog.csdn.net/20180615222944507?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> ②简单判断 第一个，接口不能实例化 第四个，b声明为Animal类型，但Animal中没有vocalize方法，所以出现错误，此时需要强转为Cow类型；当然，如果Animal中有该方法，则直接调用子类Cow中的实现； <img src="https://img-blog.csdn.net/20180615223522716?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<h5 id="object-methods">3.4.4 Object methods</h5>
+<table>
+<tr>
+<td>
+equals()
+</td>
+<td>
+hashCode()
+</td>
+<td>
+toString()
+</td>
+</tr>
+<tr>
+<td>
+– 身份语义， 两个对象相等，返回true（重写时，需要使用instanceof判断类型是否相同）
+</td>
+<td>
+– 身份语义， a hash code for use in hash maps/list/set(Override, if int number, add dirctly, if String, <strong>str.hashCode()</strong>，eg. a = 23, b = &quot;message&quot;, hashcode = a + b.hashCode()，或a*17/31 + b)
+</td>
+<td>
+– ugly and uninformative, 用于打印展示
+</td>
+</tr>
+</table>
+<h4 id="equality-in-adt-and-oop">3.5 Equality in ADT and OOP</h4>
+本节考点： 等价性equals()和== equals()的自反、传递、对称 hashCode() 可变对象的观察等价性、行为等价性 ##### 3.5.1 About equality
+<table>
+<tr>
+<td>
+Equality operation on an ADT
+</td>
+<td>
+Equality of values in a data type
+</td>
+</tr>
+<tr>
+<td>
+<ol type="1">
+<li>ADT是对数据的抽象, 体现为一组对数据的操作, 而不是数据的表示 2. 抽象函数AF: 内部表示 -&gt; 抽象表示 3. 基于抽象函数AF定义ADT的等价操作
+</td>
+<pre><code> &lt;td&gt; Two physical objects are nerver truly equal to each other; they only have degrees of similarity.&lt;/td&gt;</code></pre>
+</tr>
+</table>
+<h5 id="three-ways-to-regard-equality">3.5.2 Three ways to regard equality</h5>
+<table>
+<tr>
+<td>
+Using AF
+</td>
+<td>
+Using a relation
+</td>
+<td>
+Using observation
+</td>
+</tr>
+<tr>
+<td>
+a equals b if and only if f(a) = f(b), AF映射到同样的结果, 则等价.
+</td>
+<td>
+An equivalence is a relation(等价关系) that reflexive(<strong>自反</strong>), symmetric(<strong>对称</strong>), transitive(<strong>传递</strong>)
+</td>
+<td>
+Two objects are equal when every operation we can apply produces the same result for both objects.(站在外部观察者角度, client/ outsider)
+</td>
+</tr>
+</table>
+<h5 id="vs-equals">3.5.3 == Vs equals()</h5>
+<table>
+<tr>
+<td>
+<strong>==</strong>
+</td>
+<td>
+<strong>obj.equals()</strong>
+</td>
+</tr>
+<tr>
+<td>
+compares reference equality(<strong>引用等价性</strong>, 对<strong>基本数据类型</strong>(for primitives types), 使用==判定相等)
+</td>
+<td>
+compares object equality(<strong>对象等价性</strong>, 对<strong>对象类型</strong>(for object reference types), 使用equals())
+</td>
+</tr>
+<tr>
+<td>
+== 是在判断两个对象身份标识ID是否相等(指向<strong>内存里的同一段空间</strong>)
+</td>
+<td>
+在自定义ADT时, 需要合理地<strong>重写</strong>Object的<strong>equals()</strong>方法
+</td>
+</tr>
+<tr>
+<td colspan="2">
+Tips for overriding a method: 1. Make sure <strong>signatures match</strong>（签名相同） 2. Use <strong><span class="citation" data-cites="Override">@Override</span></strong> so compiler has your back（使用标识） 3. Do <strong>copy-and-paste</strong> declaration（声明一致）
+</td>
+</tr>
+</table>
+<blockquote>
+<p><strong>Note</strong> 在Object中实现的<strong>缺省的equals()</strong>是在判断<strong>引用等价性</strong>（ <code>this == that</code>） 这通常不是程序员所期望的，因此，需要重写 <code>@Overrde</code> <code>public boolean equals(Object obj)</code> 需要使用<strong>instanceof</strong>判断是否为<strong>null</strong> <strong>参数必须是Object类型，如果改为对象类型，则为overload</strong></p>
+</blockquote></li>
+</ol>
+<h5 id="equality-of-mutabel-and-immutable-types">3.5.4 Equality of mutabel and immutable types</h5>
+<table>
+<tr>
+<td>
+Equality of <strong>immutable</strong> types
+</td>
+<td>
+Equality of <strong>mutable</strong> types
+</td>
+</tr>
+<tr>
+<td>
+override equals() with our own implementation，重写equals()和hashCode()方法（<strong>List、Set等集合类的contains()方法是由equals()和hashCode()的实现的</strong>）
+</td>
+<td>
+Observational equality(<strong>观察等价性</strong>): 在不改变状态的情况下，两个mutable对象是否看起来一致；Behavioral equality(<strong>行为等价性</strong>): 调用对象的任何方法都展示出一致的结果；对可变类型来说，往往倾向于实现严格的观察等价性
+</td>
+</tr>
+<tr>
+<td colspan="2">
+The equals contract(重写equals()的契约), 1. Reflexive(<strong>自反</strong>, every object equals to itself) 2. Symmetric(<strong>对称</strong>, if a.equals(b) then b.equals(a)) 3. Transitive(<strong>传递</strong>, if a.equals(b) and b.equals(c), then a.equals(c)) 4. Consistent(equal objects stay equal unless mutated) 5. <strong>Non-null</strong>(a.equals(null) return false)；
+</td>
+</tr>
+<tr>
+<td colspan="2">
+The hashCode contract(equals(Object) and hashCode return the same integer result，两个equal的objects，一定要有同样的hashcode，根据equal比较的内容来重写hashcode): ①Equal objects must have equal hash codes(override hashCode when override equals) ②不相等的对象可以映射为同样的hashCode，但性能会变差 ③除非一个object改变，否则hashCode不能改变
+</td>
+</tr>
+</table>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ADT/" rel="tag"># ADT</a>
+              <a href="/tags/OOP/" rel="tag"># OOP</a>
+              <a href="/tags/Override/" rel="tag"># Override</a>
+              <a href="/tags/Overload/" rel="tag"># Overload</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/" rel="prev" title="Chapter1-软件构造的视图和质量指标">
+                  <i class="fa fa-chevron-left"></i> Chapter1-软件构造的视图和质量指标
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/04/09/Chapter5-%E9%9D%A2%E5%90%91%E5%8F%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/" rel="next" title="Chapter5-面向可复用的软件构造方法">
+                  Chapter5-面向可复用的软件构造方法 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

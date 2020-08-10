@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="BERT源码中run_squad.py脚本理解说明">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bert模型 fine tuning 代码run_squad.py学习">
+<meta property="og:url" content="http://blog.khay.site/2019/03/31/Bert%E6%A8%A1%E5%9E%8B%20fine%20tuning%20%E4%BB%A3%E7%A0%81run_squad.py%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="BERT源码中run_squad.py脚本理解说明">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-03-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-11T13:33:39.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="NLP">
+<meta property="article:tag" content="Bert">
+<meta property="article:tag" content="squad">
+<meta property="article:tag" content="阅读理解">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.khay.site/2019/03/31/Bert%E6%A8%A1%E5%9E%8B%20fine%20tuning%20%E4%BB%A3%E7%A0%81run_squad.py%E5%AD%A6%E4%B9%A0/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Bert模型 fine tuning 代码run_squad.py学习 | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Erun_squad.py"><span class="nav-number">1.</span> <span class="nav-text">关于run_squad.py</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%A8%A1%E5%9D%97%E5%AD%A6%E4%B9%A0"><span class="nav-number">2.</span> <span class="nav-text">分模块学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#squadexample"><span class="nav-number">2.1.</span> <span class="nav-text">SquadExample</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#inputfeatures"><span class="nav-number">2.2.</span> <span class="nav-text">InputFeatures</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#create_model"><span class="nav-number">2.3.</span> <span class="nav-text">create_model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#model_fn_builder"><span class="nav-number">2.4.</span> <span class="nav-text">model_fn_builder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#input_fn_builder"><span class="nav-number">2.5.</span> <span class="nav-text">input_fn_builder</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#write_predictions"><span class="nav-number">2.6.</span> <span class="nav-text">write_predictions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get_final_text"><span class="nav-number">2.7.</span> <span class="nav-text">get_final_text</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#get_best_indexes-get-the-n-best-logits-from-a-list."><span class="nav-number">2.8.</span> <span class="nav-text">_get_best_indexes &gt;Get the n-best logits from a list.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#compute_softmax-compute-softmax-probability-over-raw-logits."><span class="nav-number">2.9.</span> <span class="nav-text">_compute_softmax &gt;Compute softmax probability over raw logits.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#featurewriter"><span class="nav-number">2.10.</span> <span class="nav-text">FeatureWriter</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#validate_flags_or_throw"><span class="nav-number">2.11.</span> <span class="nav-text">validate_flags_or_throw</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A7%E8%A1%8C%E5%8F%8A%E8%B0%83%E7%94%A8%E5%85%B3%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">执行及调用关系</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#estimator"><span class="nav-number">3.0.1.</span> <span class="nav-text">Estimator</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#flags.do_train"><span class="nav-number">3.0.2.</span> <span class="nav-text">FLAGS.do_train</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#flags.do_predict"><span class="nav-number">3.0.3.</span> <span class="nav-text">FLAGS.do_predict</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#about"><span class="nav-number">3.0.4.</span> <span class="nav-text">About</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tensorflow%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">TensorFlow知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tf.flags.define_xxx"><span class="nav-number">4.1.</span> <span class="nav-text">tf.flags.DEFINE_xxx</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tf.gfile"><span class="nav-number">4.2.</span> <span class="nav-text">tf.gfile</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E5%87%BD%E6%95%B0"><span class="nav-number">4.3.</span> <span class="nav-text">嵌套函数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.</span> <span class="nav-text">其他</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2019/03/31/Bert%E6%A8%A1%E5%9E%8B%20fine%20tuning%20%E4%BB%A3%E7%A0%81run_squad.py%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Bert模型 fine tuning 代码run_squad.py学习
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-31 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-31T00:00:00+08:00">2019-03-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-11 21:33:39" itemprop="dateModified" datetime="2019-09-11T21:33:39+08:00">2019-09-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index"><span itemprop="name">NLP</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/03/31/Bert%E6%A8%A1%E5%9E%8B%20fine%20tuning%20%E4%BB%A3%E7%A0%81run_squad.py%E5%AD%A6%E4%B9%A0/" class="post-meta-item leancloud_visitors" data-flag-title="Bert模型 fine tuning 代码run_squad.py学习" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/03/31/Bert%E6%A8%A1%E5%9E%8B%20fine%20tuning%20%E4%BB%A3%E7%A0%81run_squad.py%E5%AD%A6%E4%B9%A0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/03/31/Bert%E6%A8%A1%E5%9E%8B%20fine%20tuning%20%E4%BB%A3%E7%A0%81run_squad.py%E5%AD%A6%E4%B9%A0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+            <div class="post-description">BERT源码中run_squad.py脚本理解说明</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="关于run_squad.py">关于run_squad.py</h3>
+<p><code>bert</code>用于mrc任务的<code>fine tuning</code>脚本 <a target="_blank" rel="noopener" href="https://github.com/google-research/bert">google-research/bert</a></p>
+<h3 id="分模块学习">分模块学习</h3>
+<h4 id="squadexample">SquadExample</h4>
+<blockquote>
+<p>A single training/test example for simple sequence classification. For examples without an answer, the start and end position are -1.</p>
+</blockquote>
+<p>读取Squad格式数据，一个query-answer为一个样本</p>
+<ul>
+<li><p><code>__str__</code> 调用<code>__repr__</code>，<code>print(object)</code>时的输出</p></li>
+<li><p><code>__repr__</code> 拼接字符串</p></li>
+</ul>
+<h4 id="inputfeatures">InputFeatures</h4>
+<blockquote>
+<p>A single set of features of data.</p>
+</blockquote>
+<ul>
+<li>read_squad_examples &gt;Read a SQuAD json file into a list of SquadExample.</li>
+</ul>
+<p>使用<code>tf.gfile</code>操作文件。依次读取json文件，data -&gt; entry -&gt; paragraphs -&gt; context/qas(-&gt; id question answers text answer_start)(<code>Squad2</code>中包含<code>is_impossible</code>字段)；最后将每个样本保存为<code>SquadExample</code>类型对象。<br />
+详细处理包括：<br />
+1. <code>char_to_word_offset</code> 用于根据答案和答案开始位置确定答案的起始位置(即模型的输出) 2. <code>tokenization.whitespace_tokenize</code>对原始答案进行取空白符<code>\s</code>处理，判断能否从<code>document</code>获取答案，不能则跳过(避免<code>weird Unicode stuff</code>)</p>
+<blockquote>
+<p>paragraph_text = 'This is a test, good luck!' doc_tokens = ['This', 'is', 'a', 'test,', 'good', 'luck!'] char_to_word_offset = [0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5]</p>
+</blockquote>
+<ul>
+<li>convert_examples_to_features &gt;Loads a data file into a list of <code>InputBatch</code>s.</li>
+</ul>
+<p>将每个样本从<code>SquadExample</code>类型转为<code>InputFeatures</code>类型。<br />
+1. 对每个样本的<code>question_text</code>用<code>tokenizer.tokenize</code>处理。<br />
+2. 对每个问题进行<code>max_query_length</code>判断，超过最大长度则截断 3. 对文本中每个词进行<code>tokenizer.tokenize</code>处理 4. <code>doc_span</code>，将超过最大长度的文件进行窗口移动截断成多个片段 5. 连接文章和问题 <code>[CLS]</code>+ query + <code>[SEP]</code> + context + <code>[SEP]</code>，问题放在前面，可以利用BERT<code>Next Sentence Predict</code>的训练方式获得更丰富的语义信息 6. <code>input_ids</code> 使用<code>tokenizer.convert_tokens_to_ids(tokens)</code>将词用词表中的id表示 7. <code>input_mask</code> 词用1表示，填充用0表示 8. <code>segment_ids</code> 文章中词用0表示，问题中词用1表示 9. <code>output_fn(feature)</code>进行<code>run callback</code>，回调函数主要作用是进行特征写入</p>
+<blockquote>
+<p><code>input_ids, input_mask, segment_ids</code>都用0进行填充</p>
+</blockquote>
+<ul>
+<li>def _improve_answer_span &gt;Returns tokenized answer spans that better match the annotated answer.</li>
+</ul>
+<p>主要是将 (1895-1943) 处理为 ( 1895 - 1943 )</p>
+<ul>
+<li>_check_is_max_context &gt;Check if this is the 'max context' doc span for the token.</li>
+</ul>
+<p>当使用<code>sliding window</code>方法后， <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Doc: the man went to the store and bought a gallon of milk</span><br><span class="line">Span A: the man went to the</span><br><span class="line">Span B: to the store and bought</span><br><span class="line">Span C: and bought a gallon of</span><br></pre></td></tr></table></figure> 要获得一个词的最大上下文，比如<code>bought</code>在B中有4个左上下文和0个右上下文，而在C中有1个左上下文和3个右上下文，最终选择片段C。</p>
+<h4 id="create_model">create_model</h4>
+<blockquote>
+<p>Create a classification model</p>
+</blockquote>
+<p>Bert fine tuning: <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">model = modeling.BertModel(</span><br><span class="line">    config=bert_config,</span><br><span class="line">    is_training=is_training,</span><br><span class="line">    input_ids=input_ids,</span><br><span class="line">    input_mask=input_mask,</span><br><span class="line">    token_type_ids=segment_ids,</span><br><span class="line">    use_one_hot_embeddings=use_one_hot_embeddings)</span><br><span class="line"><span class="comment"># 得到词向量输出(run_classifier.py中model.get_pooled_output()是一维句子向量)</span></span><br><span class="line">final_hidden = model.get_sequence_output()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出维度为(batch_size, seq_length, word_vector_shape)</span></span><br><span class="line">final_hidden_shape = modeling.get_shape_list(final_hidden, expected_rank=<span class="number">3</span>)</span><br><span class="line">batch_size = final_hidden_shape[<span class="number">0</span>]</span><br><span class="line">seq_length = final_hidden_shape[<span class="number">1</span>]</span><br><span class="line">hidden_size = final_hidden_shape[<span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 获得weights和bias变量</span></span><br><span class="line">output_weights = tf.get_variable(</span><br><span class="line">    <span class="string">&quot;cls/squad/output_weights&quot;</span>, [<span class="number">2</span>, hidden_size],</span><br><span class="line">    initializer=tf.truncated_normal_initializer(stddev=<span class="number">0.02</span>))</span><br><span class="line">output_bias = tf.get_variable(</span><br><span class="line">    <span class="string">&quot;cls/squad/output_bias&quot;</span>, [<span class="number">2</span>], initializer=tf.zeros_initializer())</span><br><span class="line"></span><br><span class="line">final_hidden_matrix = tf.reshape(final_hidden,</span><br><span class="line">                                    [batch_size * seq_length, hidden_size])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 全连接层：matmul + bias</span></span><br><span class="line">logits = tf.matmul(final_hidden_matrix, output_weights, transpose_b=<span class="literal">True</span>)</span><br><span class="line">logits = tf.nn.bias_add(logits, output_bias)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 维度转换与句子分解</span></span><br><span class="line">logits = tf.reshape(logits, [batch_size, seq_length, <span class="number">2</span>])</span><br><span class="line">logits = tf.transpose(logits, [<span class="number">2</span>, <span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">unstacked_logits = tf.unstack(logits, axis=<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型输出</span></span><br><span class="line">(start_logits, end_logits) = (unstacked_logits[<span class="number">0</span>], unstacked_logits[<span class="number">1</span>])</span><br></pre></td></tr></table></figure></p>
+<h4 id="model_fn_builder">model_fn_builder</h4>
+<blockquote>
+<p>Returns <code>model_fn</code> closure for TPUEstimator.</p>
+</blockquote>
+<ul>
+<li>model_fn &gt; The <code>model_fn</code> for TPUEstimator.</li>
+</ul>
+<ol type="1">
+<li>构建模型函数的时候需要完成model_fh(features,labels,mode,params)这个函数</li>
+<li>这个函数需要提供代码来处理三种mode(TRAIN,EVAL,PREDICT)值，返回tf.estimator.EstimatorSpec的一个实例</li>
+<li>tf.estimator.ModeKeys.TRAIN模式：主要是需要返回loss，train_op(优化器)</li>
+<li>tf.estimator.ModeKeys.PREDICT模式：主要是需要返回predictions结果</li>
+<li>tf.estimator.ModeKeys.EVAL模式：主要是需要返回loss,eval_metrics=[评价函数]</li>
+</ol>
+<h4 id="input_fn_builder">input_fn_builder</h4>
+<blockquote>
+<p>Creates an <code>input_fn</code> closure to be passed to TPUEstimator.</p>
+</blockquote>
+<p>设计一个模型的输出函数，完成读取tf.record文件，反序列化样本获得原始的样本，如果是训练的话，则打乱数据集，获取batch量的样本集</p>
+<ul>
+<li><p>_decode_record &gt;Decodes a record to a TensorFlow example.</p></li>
+<li><p>input_fn &gt;The actual input function.</p></li>
+</ul>
+<h4 id="write_predictions">write_predictions</h4>
+<blockquote>
+<p>Write final predictions to the json file and log-odds of null if needed.</p>
+</blockquote>
+<p>根据模型输出的预测概率，寻找答案的最优起始点。由于长度限制而进行了文本分片，因此每个片段有多个起始点，需要选择有最大上下文的片段。</p>
+<h4 id="get_final_text">get_final_text</h4>
+<blockquote>
+<p>Project the tokenized prediction back to the original text. <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pred_text &#x3D; steve smith</span><br><span class="line">orig_text &#x3D; Steve Smith&#39;s</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<ul>
+<li>_strip_spaces</li>
+</ul>
+<h4 id="get_best_indexes-get-the-n-best-logits-from-a-list.">_get_best_indexes &gt;Get the n-best logits from a list.</h4>
+<p>模型最后输出两个数组，分别为样本中每个词作为答案开始和结束的概率。需要找到开始和结束概率最大的前n个词，然后进行组合得到最终的答案。</p>
+<h4 id="compute_softmax-compute-softmax-probability-over-raw-logits.">_compute_softmax &gt;Compute softmax probability over raw logits.</h4>
+<p>对答案组合计算softmax得分。</p>
+<h4 id="featurewriter">FeatureWriter</h4>
+<blockquote>
+<p>Writes InputFeature to TF example file</p>
+</blockquote>
+<p>临时特征文件存储。</p>
+<ul>
+<li><p>process_feature &gt;Write a InputFeature to the TFRecordWriter as a tf.train.Example.</p></li>
+<li><p>create_int_feature 定义特征。</p></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">features = collections.OrderedDict()</span><br><span class="line">features[<span class="string">&#x27;key&#x27;</span>] = create_int_feature(value)</span><br><span class="line"><span class="comment">#...</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义一个Example，包含若干个feature，每个feature是key-value结构</span></span><br><span class="line">tf_example = tf.train.Example(features=tf.train.Features(feature=features))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将样本序列化（压缩）保存到tf.record文件中</span></span><br><span class="line">self.__writer.write(tf_example.SerializeToString())</span><br></pre></td></tr></table></figure>
+<h4 id="validate_flags_or_throw">validate_flags_or_throw</h4>
+<blockquote>
+<p>Validate the input FLAGS or throw an exception</p>
+</blockquote>
+<p>关于命令行输出参数的异常判断。</p>
+<h3 id="执行及调用关系">执行及调用关系</h3>
+<p>主体函数的调用，源代码中在预测处理时进行了较多的细节操作，此处省略。</p>
+<h5 id="estimator">Estimator</h5>
+<ul>
+<li><code>model_fn_builder</code>中调用<code>create_model</code>创建网络模型(fine tuning)
+<ul>
+<li>读取<code>checkpoint</code>，并根据<code>tf.estimator.ModeKeys</code>，进行具体的训练和预测操作；训练包括定义<code>loss</code>函数和优化函数；预测则直接得到预测结果</li>
+</ul></li>
+<li><code>estimator = tf.contrib.TPUEstimator(model_fn)</code>，创建时输入网络模型</li>
+<li>训练，<code>estimator.train(train_input_fn)</code></li>
+<li>预测，<code>estimator.predict(predict_input_fn)</code></li>
+</ul>
+<h5 id="flags.do_train">FLAGS.do_train</h5>
+<ul>
+<li><code>train_examples = read_squad_examples</code>读取样本数据，返回为<code>SquadExample</code>对象</li>
+<li><code>train_writer = FeatureWriter()</code>，特征写入器
+<ul>
+<li><code>tf.train.Example()</code></li>
+</ul></li>
+<li><code>convert_examples_to_features(train_exampes，train_writer.process_feature)</code>
+<ul>
+<li>将<code>SquadExample</code>对象解析为<code>InputFeatures</code>对象</li>
+<li>使用回调函数<code>train_writer.process_feature</code>，将转换的<code>InputFeatures</code>特征写入文件</li>
+</ul></li>
+<li><code>train_input_fn = input_fn_builder(train_writer.filename)</code>，用于训练时特征读取器
+<ul>
+<li>将特征写入文件，包括<code>unique_ids</code>，<code>input_ids</code>，<code>input_mask</code>，<code>segment_ids</code></li>
+<li>以及<code>tf.data.TFRecordDataset()</code>的创建和读取</li>
+</ul></li>
+<li><code>estimator.train(train_input_fn)</code>，使用特征读取器训练</li>
+</ul>
+<h5 id="flags.do_predict">FLAGS.do_predict</h5>
+<ul>
+<li><code>eval_examples = read_squad_examples()</code>读取测试数据，返回为<code>SquadExample</code>对象</li>
+<li><code>eval_writer = FeatureWriter()</code>，特征写入器</li>
+<li><code>convert_examples_to_features(eval_examples，tokenizer，append_feature)</code>
+<ul>
+<li><code>eval_examples</code></li>
+<li><code>tokenizer</code></li>
+<li><code>append_feature</code>，回调函数，保存到<code>eval_features</code>中(便于得到预测结果)；用<code>eval_writer.process_feature</code>写入文件</li>
+</ul></li>
+<li><code>predict_input_fn = input_fn_builder(eval_writer.filename)</code>，用于预测时的特征读取器</li>
+<li><code>estimator.predict(predict_input_fn)</code>，使用特征读取器预测</li>
+<li><code>write_predictions(eval_examples, eval_features, all_result)</code>，得到预测结果解析并保存文件</li>
+</ul>
+<h5 id="about">About</h5>
+<ul>
+<li><code>create_model(bert_config, is_training, input_ids, input_mask, segment_ids)</code>
+<ul>
+<li><code>is_training</code>，<code>do_train</code>时为<code>True</code>，否则为<code>False</code></li>
+<li><code>input_ids</code>，<code>input_mask</code>，<code>segment_ids</code>，输入模型的特征向量</li>
+</ul></li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/NoneWait/bert_demo/tree/master/demo_aic_v2">Ref</a></p>
+<h3 id="tensorflow知识点">TensorFlow知识点</h3>
+<h4 id="tf.flags.define_xxx">tf.flags.DEFINE_xxx</h4>
+<p>用于添加命令行参数 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义参数</span></span><br><span class="line">tf.flags.DEFINE_string(<span class="string">&quot;strParam&quot;</span>, value, <span class="string">&quot;This is a string param&quot;</span>)</span><br><span class="line"><span class="comment">#tf.flags.DEFINE_bool/integer/float/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用参数</span></span><br><span class="line">tf.flags.FLAGS.strParam</span><br><span class="line"></span><br><span class="line"><span class="comment"># 命令行输入，更换参数</span></span><br><span class="line"><span class="comment"># python file.py --strParam strname</span></span><br><span class="line"></span><br></pre></td></tr></table></figure> <a target="_blank" rel="noopener" href="https://blog.csdn.net/spring_willow/article/details/80111993">Ref</a></p>
+<h4 id="tf.gfile">tf.gfile</h4>
+<p>TensorFlow的文件操作，包括但不限于：<br />
+- tf.gfile.MakeDirs(FLAGS.output_dir) - with tf.gfile.Open(file, 'r') as reader</p>
+<h4 id="嵌套函数">嵌套函数</h4>
+<p>代码中使用了大量的嵌套函数，主要用于Estimator回调；可以使用<code>functools</code>库直接实现 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> functools</span><br><span class="line">train_inpf = functools.partial(input_fn, param1, param2)</span><br></pre></td></tr></table></figure></p>
+<h3 id="其他">其他</h3>
+<ul>
+<li>抛出异常 raise ValueError(&quot;This causes a value error.&quot;)</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
+              <a href="/tags/Bert/" rel="tag"># Bert</a>
+              <a href="/tags/squad/" rel="tag"># squad</a>
+              <a href="/tags/%E9%98%85%E8%AF%BB%E7%90%86%E8%A7%A3/" rel="tag"># 阅读理解</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/03/26/%E4%BD%BF%E7%94%A8PyQT%E8%BF%9B%E8%A1%8C%E5%8F%AF%E8%A7%86%E5%8C%96%E7%BC%96%E7%A8%8B/" rel="prev" title="使用PyQT进行可视化编程">
+                  <i class="fa fa-chevron-left"></i> 使用PyQT进行可视化编程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/04/07/%E3%80%90Python%E6%8A%80%E8%83%BD%E3%80%91%20QtWebView%20+%20Jinja2%20+%20%20JavaScript%20+%20MySQL/" rel="next" title="【Python技能】 QtWebView + Jinja2 +  JavaScript + MySQL">
+                  【Python技能】 QtWebView + Jinja2 +  JavaScript + MySQL <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

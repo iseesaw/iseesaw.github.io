@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="PyQT5的常用模块的使用案例">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyQT5用法总结">
+<meta property="og:url" content="http://blog.khay.site/2019/04/13/PyQT5%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="PyQT5的常用模块的使用案例">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-04-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-11T13:31:32.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="PyQT">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://blog.khay.site/2019/04/13/PyQT5%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>PyQT5用法总结 | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pyqt5-usage"><span class="nav-number">2.</span> <span class="nav-text">PyQT5 Usage</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E6%8F%90%E7%A4%BA%E6%A1%86"><span class="nav-number">2.1.</span> <span class="nav-text">通用提示框</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E5%AF%B9%E8%AF%9D%E6%A1%86"><span class="nav-number">2.2.</span> <span class="nav-text">文件对话框</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%98%BE%E7%A4%BAgif"><span class="nav-number">2.3.</span> <span class="nav-text">显示GIF</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.</span> <span class="nav-text">其他</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2019/04/13/PyQT5%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PyQT5用法总结
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-04-13 00:00:00" itemprop="dateCreated datePublished" datetime="2019-04-13T00:00:00+08:00">2019-04-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-11 21:31:32" itemprop="dateModified" datetime="2019-09-11T21:31:32+08:00">2019-09-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/04/13/PyQT5%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/" class="post-meta-item leancloud_visitors" data-flag-title="PyQT5用法总结" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/04/13/PyQT5%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/04/13/PyQT5%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+            <div class="post-description">PyQT5的常用模块的使用案例</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h3 id="写在前面">写在前面</h3>
+<p>最近各种实验一直在使用PyQT进行GUI编程，网上教程博客很多，但是良莠不齐，在此总结一下用到的组件。</p>
+<h3 id="pyqt5-usage">PyQT5 Usage</h3>
+<h4 id="通用提示框">通用提示框</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span>  QMessageBox</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Message</span>(<span class="params">QtWidgets.QWidget</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        super(Message, self).__init__()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">alert</span>(<span class="params">self, msg</span>):</span></span><br><span class="line">        reply = QMessageBox.information(self,</span><br><span class="line">                                        <span class="string">&quot;警告&quot;</span>,</span><br><span class="line">                                        msg,</span><br><span class="line">                                        QMessageBox.Yes | QMessageBox.No)</span><br><span class="line">                                        </span><br><span class="line"><span class="comment"># 调用</span></span><br><span class="line"> myshow = Message()</span><br><span class="line"> myshow.alert(<span class="string">&quot;Your Message Here&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="文件对话框">文件对话框</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> QFileDialog</span><br><span class="line">fileName, filetype = QFileDialog.getOpenFileName(self,</span><br><span class="line">                                                 <span class="string">&quot;选取文件&quot;</span>,</span><br><span class="line">                                                 <span class="string">&quot;./&quot;</span>,</span><br><span class="line">                                                 <span class="string">&quot;PNG Files (*.png);;JPG Files (*.jpg)&quot;</span>) </span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>self</code>是表示所在的父面板 可以使用正则<code>*</code>匹配用户可选的文件类型 #### 计时器 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PyQt5.QtCore <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> *</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyPyQT_Form</span>(<span class="params">QtWidgets.QWidget, Ui_Form</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        super(MyPyQT_Form, self).__init__()</span><br><span class="line">        </span><br><span class="line">        self.setupUi(self)</span><br><span class="line">        </span><br><span class="line">        self.pushButton_start.clicked.connect(self.start)</span><br><span class="line">        self.pushButton_end.clicked.connect(self.end)</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.timer_id = self.startTimer(<span class="number">1000</span>, timerType=QtCore.Qt.VeryCoarseTimer)</span><br><span class="line">        self.pushButton_start.setEnabled(<span class="literal">False</span>)</span><br><span class="line">        self.pushButton_end.setEnabled(<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">end</span>(<span class="params">self</span>):</span></span><br><span class="line">        self.signal = <span class="literal">False</span></span><br><span class="line">        <span class="keyword">if</span> self.timer_id:</span><br><span class="line">            self.killTimer(self.timer_id)</span><br><span class="line">            self.timer_id = <span class="number">0</span></span><br><span class="line">        self.pushButton_start.setEnabled(<span class="literal">True</span>)</span><br><span class="line">        self.pushButton_end.setEnabled(<span class="literal">False</span>)</span><br></pre></td></tr></table></figure> 详见<a href="">参考链接</a> #### 多线程 主要解决一个问题，原始错误显示找不到了，大概就是，不能在非GUI的线程中创建或操作GUI组件 意思就是说，在GUI中使用<code>threading.Thread(target=func)</code>，执行的<code>func</code>函数中，无法操作GUI组件。因为<code>threading.Thread()</code>不是GUI的线程，只有<code>Qthread</code>是GUI的线程，因此需要使用<code>Qthread</code>代替<code>threading.Thread()</code> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ......</span></span><br><span class="line">        self.thread = Thread()</span><br><span class="line">        self.thread.start()</span><br><span class="line">        self.thread.trigger.connect(self.output)</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">output</span>(<span class="params">self</span>):</span></span><br><span class="line">         <span class="comment"># .......</span></span><br><span class="line"><span class="comment"># ......</span></span><br><span class="line">        </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Thread</span>(<span class="params">QThread</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;docstring for Thread&quot;&quot;&quot;</span></span><br><span class="line">    trigger = pyqtSignal()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        super(Thread, self).__init__()</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span>(<span class="params">self</span>):</span></span><br><span class="line">        os.system(<span class="string">&quot;python run_mrc.py&quot;</span>)</span><br><span class="line">        self.trigger.emit()</span><br></pre></td></tr></table></figure> <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34710142/article/details/80936986">参考链接</a>，讲的非常好 #### 嵌入网页 参考上一篇博客<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/89067100">[Python技能] QtWebView + Jinja2 + JavaScript + MySQL</a> #### 网页交互 主要是在嵌入的网页上，如果用户点击了网页上的按钮，则产生Js时间，然后将信号传回Python进行下一步响应。 下面代码是创建一个传递给Js的对象，用于信号交互 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> PyQt5.QtCore <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyObjectCls</span>(<span class="params">QObject</span>):</span></span><br><span class="line">    sigSetParentWindowTitle = pyqtSignal(str)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, parent=None</span>):</span></span><br><span class="line">        self.pool = ThreadPoolExecutor(<span class="number">10</span>)</span><br><span class="line">        QObject.__init__(self, parent)</span><br><span class="line"></span><br><span class="line">  <span class="comment"># 注册信息</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">enroll</span>(<span class="params">self, user_id, friend_id, </span>):</span></span><br><span class="line">        self.user_id = user_id</span><br><span class="line">        self.friend_id = friend_id</span><br><span class="line"></span><br><span class="line"><span class="meta">    @pyqtSlot(str)</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">putMessage</span>(<span class="params">self, msg</span>):</span></span><br><span class="line">      <span class="comment"># 线程池使用</span></span><br><span class="line">        self.pool.submit(self.write_messages, msg)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">write_messages</span>(<span class="params">self, msg</span>):</span></span><br><span class="line">        cur_time = time.strftime(<span class="string">&#x27;%Y-%m-%d&#x27;</span>, time.localtime(time.time()))</span><br><span class="line">     print(cur_time)</span><br></pre></td></tr></table></figure> 下面在主面板创建并注册上述代码中的对象 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ......</span></span><br><span class="line">      self.view = QWebEngineView(self)</span><br><span class="line">      self.view.setGeometry(QtCore.QRect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">700</span>, <span class="number">600</span>))</span><br><span class="line">      <span class="comment"># 绝对地址，否则无法正常显示</span></span><br><span class="line">      self.view.setHtml(self.get_chat_msg(), baseUrl=QtCore.QUrl.fromLocalFile(os.path.abspath(<span class="string">&#x27;templates/chat.html&#x27;</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 注册</span></span><br><span class="line">      self.channel = QWebChannel(self.view.page())</span><br><span class="line">      self.my_project = MyObjectCls(self.view)</span><br><span class="line">      self.my_project.enroll(self.config[<span class="string">&quot;user_id&quot;</span>], self.friend[<span class="string">&quot;user_id&quot;</span>])</span><br><span class="line">      self.channel.registerObject(<span class="string">&quot;MyObject&quot;</span>, self.my_project)</span><br><span class="line">      self.view.page().setWebChannel(self.channel)</span><br><span class="line">      <span class="comment"># ......</span></span><br></pre></td></tr></table></figure> 下面是HTML中的js代码 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    $(<span class="string">&quot;.mui-btn&quot;</span>).click(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// 事件代码</span></span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 向python进行数据交互，传递数据msg</span></span><br><span class="line">        <span class="keyword">new</span> QWebChannel(qt.webChannelTransport, <span class="function"><span class="keyword">function</span>(<span class="params">channel</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> my_object = channel.objects.MyObject;</span><br><span class="line">            my_object.putMessage(msg);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">       <span class="comment">// 事件代码</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure> #### 带行号的文本框 将以下代码保存到文件<code>QCodeEditor.py</code>，使用<code>from QCodeEditor import QCodeEditor</code>，代替本来的<code>QTextEdit</code>即可 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"><span class="comment"># QcodeEditor.py by acbetter.</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> PyQt5.QtCore <span class="keyword">import</span> Qt, QRect, QSize</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> QWidget, QPlainTextEdit, QTextEdit</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> QColor, QPainter, QTextFormat</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QLineNumberArea</span>(<span class="params">QWidget</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, editor</span>):</span></span><br><span class="line">        super().__init__(editor)</span><br><span class="line">        self.codeEditor = editor</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sizeHint</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="keyword">return</span> QSize(self.editor.lineNumberAreaWidth(), <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">paintEvent</span>(<span class="params">self, event</span>):</span></span><br><span class="line">        self.codeEditor.lineNumberAreaPaintEvent(event)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">QCodeEditor</span>(<span class="params">QPlainTextEdit</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, parent=None</span>):</span></span><br><span class="line">        super().__init__(parent)</span><br><span class="line">        self.lineNumberArea = QLineNumberArea(self)</span><br><span class="line">        self.blockCountChanged.connect(self.updateLineNumberAreaWidth)</span><br><span class="line">        self.updateRequest.connect(self.updateLineNumberArea)</span><br><span class="line">        self.cursorPositionChanged.connect(self.highlightCurrentLine)</span><br><span class="line">        self.updateLineNumberAreaWidth(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lineNumberAreaWidth</span>(<span class="params">self</span>):</span></span><br><span class="line">        digits = <span class="number">1</span></span><br><span class="line">        max_value = max(<span class="number">1</span>, self.blockCount())</span><br><span class="line">        <span class="keyword">while</span> max_value &gt;= <span class="number">10</span>:</span><br><span class="line">            max_value /= <span class="number">10</span></span><br><span class="line">            digits += <span class="number">1</span></span><br><span class="line">        space = <span class="number">3</span> + self.fontMetrics().width(<span class="string">&#x27;9&#x27;</span>) * digits</span><br><span class="line">        <span class="keyword">return</span> space</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">updateLineNumberAreaWidth</span>(<span class="params">self, _</span>):</span></span><br><span class="line">        self.setViewportMargins(self.lineNumberAreaWidth(), <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">updateLineNumberArea</span>(<span class="params">self, rect, dy</span>):</span></span><br><span class="line">        <span class="keyword">if</span> dy:</span><br><span class="line">            self.lineNumberArea.scroll(<span class="number">0</span>, dy)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.lineNumberArea.update(<span class="number">0</span>, rect.y(), self.lineNumberArea.width(), rect.height())</span><br><span class="line">        <span class="keyword">if</span> rect.contains(self.viewport().rect()):</span><br><span class="line">            self.updateLineNumberAreaWidth(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">resizeEvent</span>(<span class="params">self, event</span>):</span></span><br><span class="line">        super().resizeEvent(event)</span><br><span class="line">        cr = self.contentsRect()</span><br><span class="line">        self.lineNumberArea.setGeometry(QRect(cr.left(), cr.top(), self.lineNumberAreaWidth(), cr.height()))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">highlightCurrentLine</span>(<span class="params">self</span>):</span></span><br><span class="line">        extraSelections = []</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.isReadOnly():</span><br><span class="line">            selection = QTextEdit.ExtraSelection()</span><br><span class="line">            lineColor = QColor(Qt.yellow).lighter(<span class="number">160</span>)</span><br><span class="line">            selection.format.setBackground(lineColor)</span><br><span class="line">            selection.format.setProperty(QTextFormat.FullWidthSelection, <span class="literal">True</span>)</span><br><span class="line">            selection.cursor = self.textCursor()</span><br><span class="line">            selection.cursor.clearSelection()</span><br><span class="line">            extraSelections.append(selection)</span><br><span class="line">        self.setExtraSelections(extraSelections)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">lineNumberAreaPaintEvent</span>(<span class="params">self, event</span>):</span></span><br><span class="line">        painter = QPainter(self.lineNumberArea)</span><br><span class="line"></span><br><span class="line">        painter.fillRect(event.rect(), Qt.lightGray)</span><br><span class="line"></span><br><span class="line">        block = self.firstVisibleBlock()</span><br><span class="line">        blockNumber = block.blockNumber()</span><br><span class="line">        top = self.blockBoundingGeometry(block).translated(self.contentOffset()).top()</span><br><span class="line">        bottom = top + self.blockBoundingRect(block).height()</span><br><span class="line"></span><br><span class="line">        <span class="comment"># Just to make sure I use the right font</span></span><br><span class="line">        height = self.fontMetrics().height()</span><br><span class="line">        <span class="keyword">while</span> block.isValid() <span class="keyword">and</span> (top &lt;= event.rect().bottom()):</span><br><span class="line">            <span class="keyword">if</span> block.isVisible() <span class="keyword">and</span> (bottom &gt;= event.rect().top()):</span><br><span class="line">                number = str(blockNumber + <span class="number">1</span>)</span><br><span class="line">                painter.setPen(Qt.black)</span><br><span class="line">                painter.drawText(<span class="number">0</span>, top, self.lineNumberArea.width(), height, Qt.AlignRight, number)</span><br><span class="line"></span><br><span class="line">            block = block.next()</span><br><span class="line">            top = bottom</span><br><span class="line">            bottom = top + self.blockBoundingRect(block).height()</span><br><span class="line">            blockNumber += <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">import</span> sys</span><br><span class="line">    <span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> QApplication</span><br><span class="line"></span><br><span class="line">    app = QApplication(sys.argv)</span><br><span class="line">    codeEditor = QCodeEditor()</span><br><span class="line">    codeEditor.show()</span><br><span class="line">    sys.exit(app.exec_())</span><br></pre></td></tr></table></figure> <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/40386194/create-text-area-textedit-with-line-number-in-pyqt">参考StackOverflow Create text area (textEdit) with line number in PyQt</a></p>
+</blockquote>
+<h4 id="显示gif">显示GIF</h4>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"> <span class="comment">#from myUI import Ui_MainWindow #导入生成myUI.py里生成的类</span></span><br><span class="line"><span class="keyword">from</span> tab <span class="keyword">import</span> Ui_testTAB</span><br><span class="line"><span class="keyword">from</span> PyQt5 <span class="keyword">import</span> QtWidgets, QtGui, QtCore </span><br><span class="line"><span class="keyword">from</span> PyQt5.QtWidgets <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtCore <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> PyQt5.QtGui <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment">#打开gif文件</span></span><br><span class="line">movie = QtGui.QMovie(<span class="string">&quot;./icon/watch.gif&quot;</span>) </span><br><span class="line"><span class="comment">#设置cacheMode为CacheAll时表示gif无限循环，注意此时loopCount()返回-1</span></span><br><span class="line">movie.setCacheMode(QtGui.QMovie.CacheAll) </span><br><span class="line"><span class="comment">#播放速度</span></span><br><span class="line">movie.setSpeed(<span class="number">100</span>) </span><br><span class="line"><span class="comment">#self.movie_screen是在qt designer里定义的一个QLabel对象的对象名，将gif显示在label上</span></span><br><span class="line">self.movie_screen.setMovie(movie)   </span><br><span class="line"><span class="comment">#开始播放，对应的是movie.start()</span></span><br><span class="line">movie.start()</span><br></pre></td></tr></table></figure>
+<h3 id="其他">其他</h3>
+<ul>
+<li>无边框按钮 QtDesigner 中<code>StyleSheet</code>设置为<code>border:none</code></li>
+</ul>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/xdbcb8">知乎专栏 PyQt5图形界面编程</a> 基本所有的PyQT5组件都涉及到了，可能有一些错误，但是仍然能够对PyQT5的功能有总体上的认识</li>
+<li><a target="_blank" rel="noopener" href="https://doc.qt.io/qt-5/index.html">Qt Documentation</a> PyQt的所有API都在Qt中有对应，由于PyQt的库都被封装在文件中，所有很多都没有自动补全，因此可以在Qt文档中查看相关的类关系</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/40386194/create-text-area-textedit-with-line-number-in-pyqt">参考StackOverflow Create text area (textEdit) with line number in PyQt</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34710142/article/details/80936986">PyQt5进阶（二）——多线程：QThread &amp; 事件处理</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41706426/article/details/80871240">利用多线程在pyqt5中间接实现无限制录音</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Mengwei_Ren/article/details/72566991">【PyQt】在窗口中显示GIF</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PyQT/" rel="tag"># PyQT</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/04/07/%E3%80%90Python%E6%8A%80%E8%83%BD%E3%80%91%20QtWebView%20+%20Jinja2%20+%20%20JavaScript%20+%20MySQL/" rel="prev" title="【Python技能】 QtWebView + Jinja2 +  JavaScript + MySQL">
+                  <i class="fa fa-chevron-left"></i> 【Python技能】 QtWebView + Jinja2 +  JavaScript + MySQL
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/04/30/%E4%BB%8Eflask%E5%88%B0webapi%E7%9A%84%E6%80%BB%E7%BB%93/" rel="next" title="从flask到webapi的总结">
+                  从flask到webapi的总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
