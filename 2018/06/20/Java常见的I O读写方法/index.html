@@ -19,15 +19,15 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="目录 0、写在前面 本节为软件构造系列Chapter8中的I&#x2F;O性能部分的补充。 1、I&#x2F;O Java的I&#x2F;O操作比较多，具体可以查询Java文档，Chrome中使用Ctrl+F查询io或nio即可。 这里主要介绍四种比较基本I&#x2F;O方式，每种读写大致可以分为两种，按行读取和按字节读取，整体来说，大同小异。在此实现最基本的操作。 对于下面涉及的文件地址及File对象，在下面定义： 123456&amp;#x">
+  <meta name="description" content="目录0、写在前面本节为软件构造系列Chapter8中的I&#x2F;O性能部分的补充。 1、I&#x2F;OJava的I&#x2F;O操作比较多，具体可以查询Java文档，Chrome中使用Ctrl+F查询io或nio即可。这里主要介绍四种比较基本I&#x2F;O方式，每种读写大致可以分为两种，按行读取和按字节读取，整体来说，大同小异。在此实现最基本的操作。对于下面涉及的文件地址及File对象，在下面定义： 123456&#x2F;*">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java常见的I O读写方法">
 <meta property="og:url" content="http://blog.khay.site/2018/06/20/Java%E5%B8%B8%E8%A7%81%E7%9A%84I%20O%E8%AF%BB%E5%86%99%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="目录 0、写在前面 本节为软件构造系列Chapter8中的I&#x2F;O性能部分的补充。 1、I&#x2F;O Java的I&#x2F;O操作比较多，具体可以查询Java文档，Chrome中使用Ctrl+F查询io或nio即可。 这里主要介绍四种比较基本I&#x2F;O方式，每种读写大致可以分为两种，按行读取和按字节读取，整体来说，大同小异。在此实现最基本的操作。 对于下面涉及的文件地址及File对象，在下面定义： 123456&amp;#x">
+<meta property="og:description" content="目录0、写在前面本节为软件构造系列Chapter8中的I&#x2F;O性能部分的补充。 1、I&#x2F;OJava的I&#x2F;O操作比较多，具体可以查询Java文档，Chrome中使用Ctrl+F查询io或nio即可。这里主要介绍四种比较基本I&#x2F;O方式，每种读写大致可以分为两种，按行读取和按字节读取，整体来说，大同小异。在此实现最基本的操作。对于下面涉及的文件地址及File对象，在下面定义： 123456&#x2F;*">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdn.net/20180620230414226?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="article:published_time" content="2018-06-19T16:00:00.000Z">
@@ -285,11 +285,6 @@ mjx-container[display="true"] + br {
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -346,7 +341,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">0、写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#io"><span class="nav-number">3.</span> <span class="nav-text">1、I&#x2F;O</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#bufferedreaderwriter"><span class="nav-number">3.1.</span> <span class="nav-text">1.1、BufferedReader&#x2F;Writer</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#bufferedwriter"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1.2、BufferedWriter</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#nio-files"><span class="nav-number">3.2.</span> <span class="nav-text">1.2、nio Files</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#write"><span class="nav-number">3.2.1.</span> <span class="nav-text">1.2.2、write</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#scannerprintwriter"><span class="nav-number">3.3.</span> <span class="nav-text">1.3、Scanner&#x2F;PrintWriter</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#scanner"><span class="nav-number">3.3.1.</span> <span class="nav-text">1.3.1、Scanner</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#printwriter"><span class="nav-number">3.3.2.</span> <span class="nav-text">1.3.2、PrintWriter</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#stream"><span class="nav-number">3.4.</span> <span class="nav-text">1.4、Stream</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#outputstream"><span class="nav-number">3.4.1.</span> <span class="nav-text">1.4.2、OutputStream</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="nav-number">4.</span> <span class="nav-text">2、性能对比</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0%E3%80%81%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">0、写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81I-O"><span class="nav-number">3.</span> <span class="nav-text">1、I&#x2F;O</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1%E3%80%81BufferedReader-Writer"><span class="nav-number">3.1.</span> <span class="nav-text">1.1、BufferedReader&#x2F;Writer</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-1-1%E3%80%81BufferedReader"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1.1、BufferedReader</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-1-2%E3%80%81BufferedWriter"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.1.2、BufferedWriter</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2%E3%80%81nio-Files"><span class="nav-number">3.2.</span> <span class="nav-text">1.2、nio Files</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-2-1%E3%80%81read"><span class="nav-number">3.2.1.</span> <span class="nav-text">1.2.1、read</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-2-2%E3%80%81write"><span class="nav-number">3.2.2.</span> <span class="nav-text">1.2.2、write</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3%E3%80%81Scanner-PrintWriter"><span class="nav-number">3.3.</span> <span class="nav-text">1.3、Scanner&#x2F;PrintWriter</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-3-1%E3%80%81Scanner"><span class="nav-number">3.3.1.</span> <span class="nav-text">1.3.1、Scanner</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-3-2%E3%80%81PrintWriter"><span class="nav-number">3.3.2.</span> <span class="nav-text">1.3.2、PrintWriter</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-4%E3%80%81Stream"><span class="nav-number">3.4.</span> <span class="nav-text">1.4、Stream</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-4-1%E3%80%81InputStream"><span class="nav-number">3.4.1.</span> <span class="nav-text">1.4.1、InputStream</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-4-2%E3%80%81OutputStream"><span class="nav-number">3.4.2.</span> <span class="nav-text">1.4.2、OutputStream</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E6%80%A7%E8%83%BD%E5%AF%B9%E6%AF%94"><span class="nav-number">4.</span> <span class="nav-text">2、性能对比</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -464,6 +459,34 @@ mjx-container[display="true"] + br {
             </span>
 
           
+            <span id="/2018/06/20/Java%E5%B8%B8%E8%A7%81%E7%9A%84I%20O%E8%AF%BB%E5%86%99%E6%96%B9%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="Java常见的I O读写方法" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/06/20/Java%E5%B8%B8%E8%A7%81%E7%9A%84I%20O%E8%AF%BB%E5%86%99%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/06/20/Java%E5%B8%B8%E8%A7%81%E7%9A%84I%20O%E8%AF%BB%E5%86%99%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -472,36 +495,32 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="目录">目录</h4>
-<h4 id="写在前面">0、写在前面</h4>
-<p>本节为<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/80382927#83code-tuning-for-performance-optimization">软件构造系列Chapter8</a>中的I/O性能部分的补充。</p>
-<h4 id="io">1、I/O</h4>
-<p>Java的I/O操作比较多，具体可以查询<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/api/">Java文档</a>，Chrome中使用Ctrl+F查询io或nio即可。 这里主要介绍四种比较基本I/O方式，每种读写大致可以分为两种，按行读取和按字节读取，整体来说，大同小异。在此实现最基本的操作。 对于下面涉及的文件地址及File对象，在下面定义：</p>
+        <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><h4 id="0、写在前面"><a href="#0、写在前面" class="headerlink" title="0、写在前面"></a>0、写在前面</h4><p>本节为<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/80382927#83code-tuning-for-performance-optimization">软件构造系列Chapter8</a>中的I/O性能部分的补充。</p>
+<h4 id="1、I-O"><a href="#1、I-O" class="headerlink" title="1、I/O"></a>1、I/O</h4><p>Java的I/O操作比较多，具体可以查询<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/api/">Java文档</a>，Chrome中使用Ctrl+F查询io或nio即可。<br>这里主要介绍四种比较基本I/O方式，每种读写大致可以分为两种，按行读取和按字节读取，整体来说，大同小异。在此实现最基本的操作。<br>对于下面涉及的文件地址及File对象，在下面定义：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* in file *&#x2F;</span><br><span class="line">String filePathIn &#x3D; &quot;file.txt&quot;;</span><br><span class="line">File fileIn &#x3D; new File(filePath);</span><br><span class="line">&#x2F;* out file *&#x2F;</span><br><span class="line">String filePathOut &#x3D; &quot;Out.txt&quot;;</span><br><span class="line">File fileOut &#x3D; new File(filePathOut);</span><br></pre></td></tr></table></figure>
-<h5 id="bufferedreaderwriter">1.1、BufferedReader/Writer</h5>
-<p>使用缓存区的读写方式。 ###### 1.1.1、BufferedReader 这里把brCh的大小设置为<code>file.length()</code>，一次性把文件加载到缓存中，之后可以进行解析等操作；也可以设置为特定的值（eg. 1024）等，分次加载。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* new FileReader(fileIn)读写器 *&#x2F;</span><br><span class="line">   BufferedReader brIn &#x3D; new BufferedReader(new FileReader(fileIn));</span><br><span class="line">   &#x2F;* 文件大小 *&#x2F;</span><br><span class="line">   char[] brCh &#x3D; new char[(int) fileIn.length()];</span><br><span class="line">   &#x2F;* 读取进入brCh *&#x2F;</span><br><span class="line">   brIn.read(brCh);</span><br><span class="line">   brIn.close();</span><br></pre></td></tr></table></figure></p>
-<h6 id="bufferedwriter">1.1.2、BufferedWriter</h6>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BufferedWriter bwOut &#x3D; new BufferedWriter(new FileWriter(fileOut));</span><br><span class="line">&#x2F;* 将之前读取的brCh数组写入内存 *&#x2F;</span><br><span class="line">bwOut.write(brCh);</span><br><span class="line">bwOut.close();</span><br></pre></td></tr></table></figure>
-<h5 id="nio-files">1.2、nio Files</h5>
-<p>新IO操作，有很多改进，效率较高，操作较简单。 ###### 1.2.1、read</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 按字节读取 *&#x2F;</span><br><span class="line">   byte[] nioBy &#x3D; Files.readAllBytes(Paths.get(filePathIn));</span><br><span class="line">   &#x2F;* 一次性读取所有行，可以使用for-each遍历 *&#x2F;</span><br><span class="line">   &#x2F;&#x2F;String[] lines &#x3D; Files.readAllLines(Paths.get(filePathIn));</span><br></pre></td></tr></table></figure>
-<h6 id="write">1.2.2、write</h6>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 将之前读取的nioBy字节数组写入内存 *&#x2F;</span><br><span class="line">   Files.write(Paths.get(filePathOut), nioBy);</span><br></pre></td></tr></table></figure>
-<h5 id="scannerprintwriter">1.3、Scanner/PrintWriter</h5>
-<h6 id="scanner">1.3.1、Scanner</h6>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 创建Scanner读取 *&#x2F;</span><br><span class="line">Scanner scIn &#x3D; new Scanner(fileIn);</span><br><span class="line">&#x2F;* 使用StringBuffer保存，避免生成太多临时变量 *&#x2F;</span><br><span class="line">StringBuffer scStr &#x3D; new StringBuffer();</span><br><span class="line">String scLine;</span><br><span class="line">&#x2F;* 按行读取 *&#x2F;</span><br><span class="line">while (scIn.hasNextLine()) &#123;</span><br><span class="line">  scLine &#x3D; scIn.nextLine();</span><br><span class="line">  scStr.append(scLine + &quot;\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line">scIn.close();</span><br></pre></td></tr></table></figure>
-<h6 id="printwriter">1.3.2、PrintWriter</h6>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 写入器 *&#x2F;</span><br><span class="line">PrintWriter pwOut &#x3D; new PrintWriter(fileOut);</span><br><span class="line">&#x2F;* 将之前读取保存的StringBuffer转为String类型，然后写入文件 *&#x2F;</span><br><span class="line">pwOut.write(scStr.toString());</span><br><span class="line">pwOut.close();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="stream">1.4、Stream</h5>
-<p>使用文件流操作。 ###### 1.4.1、InputStream</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   InputStream disIn &#x3D; new FileInputStream(fileIn);</span><br><span class="line">&#x2F;* 保存的字节数组 *&#x2F;</span><br><span class="line">   byte dosB[] &#x3D; new byte[(int) fileIn.length()];</span><br><span class="line">   &#x2F;* 一次加载进缓存 *&#x2F;</span><br><span class="line">   disIn.read(dosB);</span><br><span class="line">   disIn.close();</span><br></pre></td></tr></table></figure>
-<h6 id="outputstream">1.4.2、OutputStream</h6>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">OutputStream dosOut &#x3D; new FileOutputStream(fileOut);</span><br><span class="line">&#x2F;* 将读取的字节数组写入文件 *&#x2F;</span><br><span class="line">dosOut.write(dosB);</span><br><span class="line">dosOut.close();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="性能对比">2、性能对比</h4>
-<figure>
-<img src="https://img-blog.csdn.net/20180620230414226?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /><figcaption>这里写图片描述</figcaption>
-</figure>
-<p>参考： <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/api/">javadoc</a></p>
+
+<h5 id="1-1、BufferedReader-Writer"><a href="#1-1、BufferedReader-Writer" class="headerlink" title="1.1、BufferedReader/Writer"></a>1.1、BufferedReader/Writer</h5><p>使用缓存区的读写方式。</p>
+<h6 id="1-1-1、BufferedReader"><a href="#1-1-1、BufferedReader" class="headerlink" title="1.1.1、BufferedReader"></a>1.1.1、BufferedReader</h6><p>这里把brCh的大小设置为<code>file.length()</code>，一次性把文件加载到缓存中，之后可以进行解析等操作；也可以设置为特定的值（eg. 1024）等，分次加载。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* new FileReader(fileIn)读写器 *&#x2F;</span><br><span class="line">   BufferedReader brIn &#x3D; new BufferedReader(new FileReader(fileIn));</span><br><span class="line">   &#x2F;* 文件大小 *&#x2F;</span><br><span class="line">   char[] brCh &#x3D; new char[(int) fileIn.length()];</span><br><span class="line">   &#x2F;* 读取进入brCh *&#x2F;</span><br><span class="line">   brIn.read(brCh);</span><br><span class="line">   brIn.close();</span><br></pre></td></tr></table></figure>
+
+<h6 id="1-1-2、BufferedWriter"><a href="#1-1-2、BufferedWriter" class="headerlink" title="1.1.2、BufferedWriter"></a>1.1.2、BufferedWriter</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BufferedWriter bwOut &#x3D; new BufferedWriter(new FileWriter(fileOut));</span><br><span class="line">&#x2F;* 将之前读取的brCh数组写入内存 *&#x2F;</span><br><span class="line">bwOut.write(brCh);</span><br><span class="line">bwOut.close();</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-2、nio-Files"><a href="#1-2、nio-Files" class="headerlink" title="1.2、nio Files"></a>1.2、nio Files</h5><p>新IO操作，有很多改进，效率较高，操作较简单。</p>
+<h6 id="1-2-1、read"><a href="#1-2-1、read" class="headerlink" title="1.2.1、read"></a>1.2.1、read</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 按字节读取 *&#x2F;</span><br><span class="line">   byte[] nioBy &#x3D; Files.readAllBytes(Paths.get(filePathIn));</span><br><span class="line">   &#x2F;* 一次性读取所有行，可以使用for-each遍历 *&#x2F;</span><br><span class="line">   &#x2F;&#x2F;String[] lines &#x3D; Files.readAllLines(Paths.get(filePathIn));</span><br></pre></td></tr></table></figure>
+
+<h6 id="1-2-2、write"><a href="#1-2-2、write" class="headerlink" title="1.2.2、write"></a>1.2.2、write</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 将之前读取的nioBy字节数组写入内存 *&#x2F;</span><br><span class="line">   Files.write(Paths.get(filePathOut), nioBy);</span><br></pre></td></tr></table></figure>
+
+<h5 id="1-3、Scanner-PrintWriter"><a href="#1-3、Scanner-PrintWriter" class="headerlink" title="1.3、Scanner/PrintWriter"></a>1.3、Scanner/PrintWriter</h5><h6 id="1-3-1、Scanner"><a href="#1-3-1、Scanner" class="headerlink" title="1.3.1、Scanner"></a>1.3.1、Scanner</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 创建Scanner读取 *&#x2F;</span><br><span class="line">Scanner scIn &#x3D; new Scanner(fileIn);</span><br><span class="line">&#x2F;* 使用StringBuffer保存，避免生成太多临时变量 *&#x2F;</span><br><span class="line">StringBuffer scStr &#x3D; new StringBuffer();</span><br><span class="line">String scLine;</span><br><span class="line">&#x2F;* 按行读取 *&#x2F;</span><br><span class="line">while (scIn.hasNextLine()) &#123;</span><br><span class="line">  scLine &#x3D; scIn.nextLine();</span><br><span class="line">  scStr.append(scLine + &quot;\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line">scIn.close();</span><br></pre></td></tr></table></figure>
+
+<h6 id="1-3-2、PrintWriter"><a href="#1-3-2、PrintWriter" class="headerlink" title="1.3.2、PrintWriter"></a>1.3.2、PrintWriter</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 写入器 *&#x2F;</span><br><span class="line">PrintWriter pwOut &#x3D; new PrintWriter(fileOut);</span><br><span class="line">&#x2F;* 将之前读取保存的StringBuffer转为String类型，然后写入文件 *&#x2F;</span><br><span class="line">pwOut.write(scStr.toString());</span><br><span class="line">pwOut.close();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="1-4、Stream"><a href="#1-4、Stream" class="headerlink" title="1.4、Stream"></a>1.4、Stream</h5><p>使用文件流操作。</p>
+<h6 id="1-4-1、InputStream"><a href="#1-4-1、InputStream" class="headerlink" title="1.4.1、InputStream"></a>1.4.1、InputStream</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   InputStream disIn &#x3D; new FileInputStream(fileIn);</span><br><span class="line">&#x2F;* 保存的字节数组 *&#x2F;</span><br><span class="line">   byte dosB[] &#x3D; new byte[(int) fileIn.length()];</span><br><span class="line">   &#x2F;* 一次加载进缓存 *&#x2F;</span><br><span class="line">   disIn.read(dosB);</span><br><span class="line">   disIn.close();</span><br></pre></td></tr></table></figure>
+
+<h6 id="1-4-2、OutputStream"><a href="#1-4-2、OutputStream" class="headerlink" title="1.4.2、OutputStream"></a>1.4.2、OutputStream</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">OutputStream dosOut &#x3D; new FileOutputStream(fileOut);</span><br><span class="line">&#x2F;* 将读取的字节数组写入文件 *&#x2F;</span><br><span class="line">dosOut.write(dosB);</span><br><span class="line">dosOut.close();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="2、性能对比"><a href="#2、性能对比" class="headerlink" title="2、性能对比"></a>2、性能对比</h4><p><img src="https://img-blog.csdn.net/20180620230414226?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>参考：<br><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/api/">javadoc</a></p>
 
     </div>
 
@@ -542,6 +561,7 @@ mjx-container[display="true"] + br {
 
 
       
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -587,6 +607,26 @@ mjx-container[display="true"] + br {
   </div>
 
       
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -623,8 +663,70 @@ mjx-container[display="true"] + br {
   
 
   
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>

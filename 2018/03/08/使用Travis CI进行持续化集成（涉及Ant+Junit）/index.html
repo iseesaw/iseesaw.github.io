@@ -19,15 +19,15 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="目录 前记  鉴于实验要求，需要对项目包进行build。推荐使用JDK、Ant、Maven、Gradle等工具进行build，或者是提交到GitHub后使用Travis进行自动化集成。   在此采用Travis进行自动化集成，但是需要配置文件build.xml，因此又学习了Ant相关知识。而eclipse自带Ant功能，可以自动生成build.xml文件，但是运行时出错，在GitHub上找到了关于">
+  <meta name="description" content="目录前记 &amp;nbsp;鉴于实验要求，需要对项目包进行build。推荐使用JDK、Ant、Maven、Gradle等工具进行build，或者是提交到GitHub后使用Travis进行自动化集成。 &amp;nbsp; 在此采用Travis进行自动化集成，但是需要配置文件build.xml，因此又学习了Ant相关知识。而eclipse自带Ant功能，可以自动生成build.xml文件，但是运行时出错，在Git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用Travis CI进行持续化集成（涉及Ant+Junit）">
 <meta property="og:url" content="http://blog.khay.site/2018/03/08/%E4%BD%BF%E7%94%A8Travis%20CI%E8%BF%9B%E8%A1%8C%E6%8C%81%E7%BB%AD%E5%8C%96%E9%9B%86%E6%88%90%EF%BC%88%E6%B6%89%E5%8F%8AAnt+Junit%EF%BC%89/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="目录 前记  鉴于实验要求，需要对项目包进行build。推荐使用JDK、Ant、Maven、Gradle等工具进行build，或者是提交到GitHub后使用Travis进行自动化集成。   在此采用Travis进行自动化集成，但是需要配置文件build.xml，因此又学习了Ant相关知识。而eclipse自带Ant功能，可以自动生成build.xml文件，但是运行时出错，在GitHub上找到了关于">
+<meta property="og:description" content="目录前记 &amp;nbsp;鉴于实验要求，需要对项目包进行build。推荐使用JDK、Ant、Maven、Gradle等工具进行build，或者是提交到GitHub后使用Travis进行自动化集成。 &amp;nbsp; 在此采用Travis进行自动化集成，但是需要配置文件build.xml，因此又学习了Ant相关知识。而eclipse自带Ant功能，可以自动生成build.xml文件，但是运行时出错，在Git">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2018-03-07T16:00:00.000Z">
 <meta property="article:modified_time" content="2020-08-10T17:31:37.072Z">
@@ -283,11 +283,6 @@ mjx-container[display="true"] + br {
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -344,7 +339,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%AE%B0"><span class="nav-number"></span> <span class="nav-text">前记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#travis"><span class="nav-number"></span> <span class="nav-text">1、Travis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Etravis"><span class="nav-number">1.</span> <span class="nav-text">1.1、关于Travis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8travis"><span class="nav-number">2.</span> <span class="nav-text">1.2、使用Travis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ant"><span class="nav-number"></span> <span class="nav-text">2、Ant</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#eclipse%E4%B8%AD%E7%9A%84ant%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">2.1、Eclipse中的Ant使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#antjunit"><span class="nav-number">2.</span> <span class="nav-text">2.2、Ant+Junit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#problems"><span class="nav-number">3.</span> <span class="nav-text">2.3、problems</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%AD%A6%E5%91%8A%E7%BC%96%E7%A0%81-gbk-%E7%9A%84%E4%B8%8D%E5%8F%AF%E6%98%A0%E5%B0%84%E5%AD%97%E7%AC%A6"><span class="nav-number">3.1.</span> <span class="nav-text">2.3.1、警告:编码 GBK 的不可映射字符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#classnotfoundexception"><span class="nav-number">3.2.</span> <span class="nav-text">2.3.2、ClassNotFoundException</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number"></span> <span class="nav-text">后记</span></a></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%AE%B0"><span class="nav-number"></span> <span class="nav-text">前记</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81Travis"><span class="nav-number"></span> <span class="nav-text">1、Travis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1%E3%80%81%E5%85%B3%E4%BA%8ETravis"><span class="nav-number">1.</span> <span class="nav-text">1.1、关于Travis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2%E3%80%81%E4%BD%BF%E7%94%A8Travis"><span class="nav-number">2.</span> <span class="nav-text">1.2、使用Travis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81Ant"><span class="nav-number"></span> <span class="nav-text">2、Ant</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1%E3%80%81Eclipse%E4%B8%AD%E7%9A%84Ant%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">2.1、Eclipse中的Ant使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2%E3%80%81Ant-Junit"><span class="nav-number">2.</span> <span class="nav-text">2.2、Ant+Junit</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3%E3%80%81problems"><span class="nav-number">3.</span> <span class="nav-text">2.3、problems</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-1%E3%80%81%E8%AD%A6%E5%91%8A-%E7%BC%96%E7%A0%81-GBK-%E7%9A%84%E4%B8%8D%E5%8F%AF%E6%98%A0%E5%B0%84%E5%AD%97%E7%AC%A6"><span class="nav-number">3.1.</span> <span class="nav-text">2.3.1、警告:编码 GBK 的不可映射字符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2%E3%80%81ClassNotFoundException"><span class="nav-number">3.2.</span> <span class="nav-text">2.3.2、ClassNotFoundException</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-3%E3%80%81exception-java-lang-AssertionError"><span class="nav-number">3.3.</span> <span class="nav-text">2.3.3、exception: java.lang.AssertionError</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number"></span> <span class="nav-text">后记</span></a></div>
       </section>
       <!--/noindex-->
 
@@ -462,6 +457,34 @@ mjx-container[display="true"] + br {
             </span>
 
           
+            <span id="/2018/03/08/%E4%BD%BF%E7%94%A8Travis%20CI%E8%BF%9B%E8%A1%8C%E6%8C%81%E7%BB%AD%E5%8C%96%E9%9B%86%E6%88%90%EF%BC%88%E6%B6%89%E5%8F%8AAnt+Junit%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="使用Travis CI进行持续化集成（涉及Ant+Junit）" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/03/08/%E4%BD%BF%E7%94%A8Travis%20CI%E8%BF%9B%E8%A1%8C%E6%8C%81%E7%BB%AD%E5%8C%96%E9%9B%86%E6%88%90%EF%BC%88%E6%B6%89%E5%8F%8AAnt+Junit%EF%BC%89/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/08/%E4%BD%BF%E7%94%A8Travis%20CI%E8%BF%9B%E8%A1%8C%E6%8C%81%E7%BB%AD%E5%8C%96%E9%9B%86%E6%88%90%EF%BC%88%E6%B6%89%E5%8F%8AAnt+Junit%EF%BC%89/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -470,30 +493,23 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="目录">目录</h4>
-<h3 id="前记">前记</h3>
-<p> 鉴于实验要求，需要对项目包进行build。推荐使用JDK、<a target="_blank" rel="noopener" href="http://ant.apache.org">Ant</a>、<a target="_blank" rel="noopener" href="http://maven.apache.org">Maven</a>、<a target="_blank" rel="noopener" href="https://gradle.org">Gradle</a>等工具进行build，或者是提交到GitHub后使用<a target="_blank" rel="noopener" href="https://travis-ci.org">Travis</a>进行自动化集成。   在此采用Travis进行自动化集成，但是需要配置文件build.xml，因此又学习了Ant相关知识。而eclipse自带Ant功能，可以自动生成build.xml文件，但是运行时出错，在GitHub上找到了关于ant+Junit的项目模板，最终重写了build.xml文件，构建成功。</p>
-<h3 id="travis">1、Travis</h3>
-<h4 id="关于travis">1.1、关于Travis</h4>
-<p>  Travis可以用来持续集成项目，通过与GitHub的特定仓库进行连接，在该仓库每次git push origin时，都将在线自动集成，进行项目构建，并将构建结果发送到GitHub邮箱，其具体操作直接按官网指示步骤进行即可。   根据仓库的种类，分为：<a target="_blank" rel="noopener" href="https://travis-ci.org/">共有仓库集成</a> 和<a target="_blank" rel="noopener" href="https://travis-ci.com/">私有仓库集成</a>。</p>
-<h4 id="使用travis">1.2、使用Travis</h4>
-<p>  对GitHub仓库项目进行构建时，仓库内需要有配置文件.travis.yml，基本格式如下：</p>
+        <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><h3 id="前记"><a href="#前记" class="headerlink" title="前记"></a>前记</h3><p> &nbsp;鉴于实验要求，需要对项目包进行build。推荐使用JDK、<a target="_blank" rel="noopener" href="http://ant.apache.org/">Ant</a>、<a target="_blank" rel="noopener" href="http://maven.apache.org/">Maven</a>、<a target="_blank" rel="noopener" href="https://gradle.org/">Gradle</a>等工具进行build，或者是提交到GitHub后使用<a target="_blank" rel="noopener" href="https://travis-ci.org/">Travis</a>进行自动化集成。<br> &nbsp; 在此采用Travis进行自动化集成，但是需要配置文件build.xml，因此又学习了Ant相关知识。而eclipse自带Ant功能，可以自动生成build.xml文件，但是运行时出错，在GitHub上找到了关于ant+Junit的项目模板，最终重写了build.xml文件，构建成功。</p>
+<h3 id="1、Travis"><a href="#1、Travis" class="headerlink" title="1、Travis"></a>1、Travis</h3><h4 id="1-1、关于Travis"><a href="#1-1、关于Travis" class="headerlink" title="1.1、关于Travis"></a>1.1、关于Travis</h4><p>&nbsp; Travis可以用来持续集成项目，通过与GitHub的特定仓库进行连接，在该仓库每次git push origin时，都将在线自动集成，进行项目构建，并将构建结果发送到GitHub邮箱，其具体操作直接按官网指示步骤进行即可。<br>&nbsp; 根据仓库的种类，分为：<a target="_blank" rel="noopener" href="https://travis-ci.org/">共有仓库集成</a> 和<a target="_blank" rel="noopener" href="https://travis-ci.com/">私有仓库集成</a>。</p>
+<h4 id="1-2、使用Travis"><a href="#1-2、使用Travis" class="headerlink" title="1.2、使用Travis"></a>1.2、使用Travis</h4><p>&nbsp; 对GitHub仓库项目进行构建时，仓库内需要有配置文件.travis.yml，基本格式如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">language: java</span><br><span class="line"></span><br><span class="line">jdk:</span><br><span class="line">  - oraclejdk8</span><br></pre></td></tr></table></figure>
-<p>可以查看官方文档添加其他参数信息。   刚开始使用时，在最后添加了一句<code>javascipt: ant build</code>，结果进行构建时，只执行到了build target，之后的test target未执行。个人觉得该段JavaScript代码是作为命令行参数进行执行的，更多用法有待查看doc进行发掘。   不曾想到，使用Travis进行自动化集成，本质还是使用的Ant进行集成的，仍然需要build.xml文件。由此展开下文......</p>
-<h3 id="ant">2、Ant</h3>
-<h4 id="eclipse中的ant使用">2.1、Eclipse中的Ant使用</h4>
-<p>  eclipse自带Ant和Maven等工具，可以直接使用。   因此，可以直接使用eclipse自动生成build.xml：<strong>选中项目，右键-&gt;Export-&gt;General-&gt;Ant Buildfiles</strong>，即可生成build.xml。   而运行Ant build的方法是：<strong>选中项目，右键-&gt;Properties-&gt;Builders-&gt;New-&gt;Ant Builders，选择build.xml及项目根目录，之后选择目录中的build.xml，右键-&gt;run as-&gt;ant build</strong>，即可进行Ant build。在run as处，可以选择<strong>ant build...</strong>，从而选择特定的target进行build。</p>
-<h4 id="antjunit">2.2、Ant+Junit</h4>
-<p>  以为万事具备只欠东风，却Ant build时出现各种报错，具体见2.3problems。各种错误查阅了半天，无果，最终在GitHub看到了<a target="_blank" rel="noopener" href="https://github.com/mplacona/java-junit-template-project">Ant+Junit的项目模板</a>，决定重写build.xml。   在此分析下该项目下的build.xml源码，作为对xml语法的复习，以及以后项目的模板： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--首先明确项目结构，src下是主文件(可以包含文件夹)，test下是测试文件(可以包含文件夹)，lib下是引用的库</span><br><span class="line">过程中生成的.class文件存在build下(由于直接选择的是src及test，若文件下包含很多文件夹，则在build下的.class文件仍然存在对于的文件名下)--&gt;</span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot;?&gt;   </span><br><span class="line">&lt;!--项目名为java-junit-template-prjecet</span><br><span class="line">默认执行的是test target，&quot;.&quot;代表当前目录(build.xml所在目录)为根目录--&gt;</span><br><span class="line">&lt;project name&#x3D;&quot;java-junit-template-project&quot; default&#x3D;&quot;test&quot; basedir&#x3D;&quot;.&quot;&gt;</span><br><span class="line">&lt;!--property，是一个个的键值对，在之后的引用中可以直接用$&#123;name&#125;进行使用--&gt;</span><br><span class="line">  &lt;property name&#x3D;&quot;main.build.dir&quot; value&#x3D;&quot;build&#x2F;main&quot; &#x2F;&gt;  </span><br><span class="line">  &lt;property name&#x3D;&quot;main.src.dir&quot; value&#x3D;&quot;src&quot; &#x2F;&gt;</span><br><span class="line">  &lt;property name&#x3D;&quot;test.build.dir&quot; value&#x3D;&quot;build&#x2F;test&quot; &#x2F;&gt;</span><br><span class="line">  &lt;property name&#x3D;&quot;test.src.dir&quot; value&#x3D;&quot;test&quot; &#x2F;&gt;</span><br><span class="line">&lt;!--path，设置引用的库位置，该path下没有分标签，表明没有引用库</span><br><span class="line">之后可以使用refid进行引用--&gt;</span><br><span class="line">  &lt;path id&#x3D;&quot;classpath.base&quot; &#x2F;&gt;</span><br><span class="line">&lt;!--第1、2行设置引用的库位置，第3行设置.class文件位置，的第4行引用之前设置的classpath.base--&gt;</span><br><span class="line">  &lt;path id&#x3D;&quot;classpath.test&quot;&gt;</span><br><span class="line">    &lt;pathelement location&#x3D;&quot;lib&#x2F;junit-4.11.jar&quot; &#x2F;&gt;</span><br><span class="line">    &lt;pathelement location&#x3D;&quot;lib&#x2F;hamcrest-core-1.3.jar&quot; &#x2F;&gt;</span><br><span class="line">    &lt;pathelement location&#x3D;&quot;$&#123;main.build.dir&#125;&quot;&#x2F;&gt;</span><br><span class="line">    &lt;path refid&#x3D;&quot;classpath.base&quot; &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;path&gt;</span><br><span class="line">&lt;!--target，作为一个执行项目，需要依赖项目run,clean，也就是在选择执行该target时，先执行run和clean--&gt;</span><br><span class="line">  &lt;target name&#x3D;&quot;test&quot; depends&#x3D;&quot;run, clean&quot; &#x2F;&gt;</span><br><span class="line">&lt;!--target，进行编译，生成.class文件--&gt;</span><br><span class="line">  &lt;target name&#x3D;&quot;compile&quot;&gt;</span><br><span class="line">&lt;!--mkdir，生成目录，$&#123;main.build.dir&#125;表示引用之前的属性</span><br><span class="line">value值为build&#x2F;main，意即在build下生成main文件夹--&gt;</span><br><span class="line">    &lt;mkdir dir&#x3D;&quot;$&#123;main.build.dir&#125;&quot;&#x2F;&gt;</span><br><span class="line">&lt;!--javac，使用javac命令进行编译，srcdir为源文件位置，即为src中的文件</span><br><span class="line">destdir为目的文件位置，即将编译的.class文件保存在build&#x2F;main下。</span><br><span class="line">需要注意的是，若src中包括多个文件夹，则会将src中的所有.java文件都编译，</span><br><span class="line">并在build&#x2F;main中创创建相应的文件夹，保存对于.java文件的.class文件。</span><br><span class="line">includeantruntime，是否在类路径中包含Ant运行时库;默认为yes，除非设置build.sysclasspath。</span><br><span class="line">通常最好将其设置为false，否则将出错--&gt;</span><br><span class="line">    &lt;javac srcdir&#x3D;&quot;$&#123;main.src.dir&#125;&quot; destdir&#x3D;&quot;$&#123;main.build.dir&#125;&quot; includeantruntime&#x3D;&quot;false&quot;&gt;</span><br><span class="line">&lt;!--所需要的库位置，refid，引用之前的classpath.base的定义--&gt;</span><br><span class="line">      &lt;classpath refid&#x3D;&quot;classpath.base&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;javac&gt;</span><br><span class="line">  &lt;&#x2F;target&gt;</span><br><span class="line">&lt;!--target，build，对测试文件进行构建，需要依赖的target是compile--&gt;</span><br><span class="line">  &lt;target name&#x3D;&quot;build&quot; depends&#x3D;&quot;compile&quot;&gt;</span><br><span class="line">&lt;!--mkdir，创建目录build&#x2F;test--&gt;</span><br><span class="line">    &lt;mkdir dir&#x3D;&quot;$&#123;test.build.dir&#125;&quot;&#x2F;&gt;</span><br><span class="line">&lt;!--javac，编译测试文件，源文件目录为test，目的文件目录为build&#x2F;test--&gt;</span><br><span class="line">    &lt;javac srcdir&#x3D;&quot;$&#123;test.src.dir&#125;&quot; destdir&#x3D;&quot;$&#123;test.build.dir&#125;&quot; includeantruntime&#x3D;&quot;false&quot;&gt;</span><br><span class="line">&lt;!--编译时需要使用的库路径，调用之前的classpath.test的设置--&gt;</span><br><span class="line">        &lt;classpath refid&#x3D;&quot;classpath.test&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;javac&gt;</span><br><span class="line">&lt;!--打印信息:Build done--&gt;</span><br><span class="line">    &lt;echo message&#x3D;&quot;Build done&quot; &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;target&gt;</span><br><span class="line">  &lt;!-- Test and build all files  --&gt;</span><br><span class="line">  &lt;!-- To run this: use &quot;ant&quot; (default) or &quot;ant run&quot; --&gt;</span><br><span class="line">&lt;!--target，run，运行测试文件，需要依赖的target为build--&gt;</span><br><span class="line">  &lt;target name&#x3D;&quot;run&quot; depends&#x3D;&quot;build&quot;&gt;</span><br><span class="line">&lt;!--junit，打印测试总结，如果运行时出错则停止构建--&gt;</span><br><span class="line">    &lt;junit printsummary&#x3D;&quot;on&quot; haltonfailure&#x3D;&quot;yes&quot;&gt;</span><br><span class="line">&lt;!--相关路径的设置</span><br><span class="line">第一行为引用的库位置</span><br><span class="line">第二行为.class文件的位置--&gt;</span><br><span class="line">        &lt;classpath&gt;</span><br><span class="line">          &lt;path refid&#x3D;&quot;classpath.test&quot; &#x2F;&gt;</span><br><span class="line">          &lt;pathelement location&#x3D;&quot;$&#123;test.build.dir&#125;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;classpath&gt;</span><br><span class="line">&lt;!--测试报告测输出格式，以及是否使用文件--&gt;</span><br><span class="line">        &lt;formatter type&#x3D;&quot;brief&quot; usefile&#x3D;&quot;false&quot; &#x2F;&gt;</span><br><span class="line">&lt;!--batchtest，对test1下所有满足**&#x2F;*Test*.java格式的文件进行测试。</span><br><span class="line">也可以使用test标签对单个文件进行测试--&gt;</span><br><span class="line">        &lt;batchtest&gt;</span><br><span class="line">            &lt;fileset dir&#x3D;&quot;$&#123;test.src.dir&#125;&quot; includes&#x3D;&quot;**&#x2F;*Test*.java&quot; &#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;batchtest&gt;</span><br><span class="line">    &lt;&#x2F;junit&gt;</span><br><span class="line">  &lt;&#x2F;target&gt;</span><br><span class="line">  &lt;!-- delete all class files --&gt;</span><br><span class="line">  &lt;!-- To run this: use &quot;ant clean&quot; --&gt;</span><br><span class="line">&lt;!--target，clean构建过程中生成的文件--&gt;</span><br><span class="line">  &lt;target name&#x3D;&quot;clean&quot;&gt;</span><br><span class="line">&lt;!--delete，删除文件，为根目录下所有**&#x2F;*.class格式的文件--&gt;</span><br><span class="line">    &lt;delete&gt;</span><br><span class="line">        &lt;fileset dir&#x3D;&quot;$&#123;basedir&#125;&quot; includes&#x3D;&quot;**&#x2F;*.class&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;delete&gt;</span><br><span class="line">&lt;!--echo，打印信息：clean done--&gt;</span><br><span class="line">    &lt;echo message&#x3D;&quot;clean done&quot; &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;target&gt;</span><br><span class="line">&lt;&#x2F;project&gt;</span><br></pre></td></tr></table></figure> <strong>注意：</strong> 从代码中可以看出，target 的depends关系：</p>
+<p>可以查看官方文档添加其他参数信息。<br>&nbsp; 刚开始使用时，在最后添加了一句<code>javascipt: ant build</code>，结果进行构建时，只执行到了build target，之后的test target未执行。个人觉得该段JavaScript代码是作为命令行参数进行执行的，更多用法有待查看doc进行发掘。<br>&nbsp; 不曾想到，使用Travis进行自动化集成，本质还是使用的Ant进行集成的，仍然需要build.xml文件。由此展开下文……</p>
+<h3 id="2、Ant"><a href="#2、Ant" class="headerlink" title="2、Ant"></a>2、Ant</h3><h4 id="2-1、Eclipse中的Ant使用"><a href="#2-1、Eclipse中的Ant使用" class="headerlink" title="2.1、Eclipse中的Ant使用"></a>2.1、Eclipse中的Ant使用</h4><p>&nbsp; eclipse自带Ant和Maven等工具，可以直接使用。<br>&nbsp; 因此，可以直接使用eclipse自动生成build.xml：<strong>选中项目，右键-&gt;Export-&gt;General-&gt;Ant Buildfiles</strong>，即可生成build.xml。<br>&nbsp; 而运行Ant build的方法是：<strong>选中项目，右键-&gt;Properties-&gt;Builders-&gt;New-&gt;Ant Builders，选择build.xml及项目根目录，之后选择目录中的build.xml，右键-&gt;run as-&gt;ant build</strong>，即可进行Ant build。在run as处，可以选择**ant build…**，从而选择特定的target进行build。</p>
+<h4 id="2-2、Ant-Junit"><a href="#2-2、Ant-Junit" class="headerlink" title="2.2、Ant+Junit"></a>2.2、Ant+Junit</h4><p>&nbsp; 以为万事具备只欠东风，却Ant build时出现各种报错，具体见2.3problems。各种错误查阅了半天，无果，最终在GitHub看到了<a target="_blank" rel="noopener" href="https://github.com/mplacona/java-junit-template-project">Ant+Junit的项目模板</a>，决定重写build.xml。<br>&nbsp; 在此分析下该项目下的build.xml源码，作为对xml语法的复习，以及以后项目的模板：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--首先明确项目结构，src下是主文件(可以包含文件夹)，test下是测试文件(可以包含文件夹)，lib下是引用的库</span><br><span class="line">过程中生成的.class文件存在build下(由于直接选择的是src及test，若文件下包含很多文件夹，则在build下的.class文件仍然存在对于的文件名下)--&gt;</span><br><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot;?&gt;   </span><br><span class="line">&lt;!--项目名为java-junit-template-prjecet</span><br><span class="line">默认执行的是test target，&quot;.&quot;代表当前目录(build.xml所在目录)为根目录--&gt;</span><br><span class="line">&lt;project name&#x3D;&quot;java-junit-template-project&quot; default&#x3D;&quot;test&quot; basedir&#x3D;&quot;.&quot;&gt;</span><br><span class="line">&lt;!--property，是一个个的键值对，在之后的引用中可以直接用$&#123;name&#125;进行使用--&gt;</span><br><span class="line">  &lt;property name&#x3D;&quot;main.build.dir&quot; value&#x3D;&quot;build&#x2F;main&quot; &#x2F;&gt;  </span><br><span class="line">  &lt;property name&#x3D;&quot;main.src.dir&quot; value&#x3D;&quot;src&quot; &#x2F;&gt;</span><br><span class="line">  &lt;property name&#x3D;&quot;test.build.dir&quot; value&#x3D;&quot;build&#x2F;test&quot; &#x2F;&gt;</span><br><span class="line">  &lt;property name&#x3D;&quot;test.src.dir&quot; value&#x3D;&quot;test&quot; &#x2F;&gt;</span><br><span class="line">&lt;!--path，设置引用的库位置，该path下没有分标签，表明没有引用库</span><br><span class="line">之后可以使用refid进行引用--&gt;</span><br><span class="line">  &lt;path id&#x3D;&quot;classpath.base&quot; &#x2F;&gt;</span><br><span class="line">&lt;!--第1、2行设置引用的库位置，第3行设置.class文件位置，的第4行引用之前设置的classpath.base--&gt;</span><br><span class="line">  &lt;path id&#x3D;&quot;classpath.test&quot;&gt;</span><br><span class="line">    &lt;pathelement location&#x3D;&quot;lib&#x2F;junit-4.11.jar&quot; &#x2F;&gt;</span><br><span class="line">    &lt;pathelement location&#x3D;&quot;lib&#x2F;hamcrest-core-1.3.jar&quot; &#x2F;&gt;</span><br><span class="line">    &lt;pathelement location&#x3D;&quot;$&#123;main.build.dir&#125;&quot;&#x2F;&gt;</span><br><span class="line">    &lt;path refid&#x3D;&quot;classpath.base&quot; &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;path&gt;</span><br><span class="line">&lt;!--target，作为一个执行项目，需要依赖项目run,clean，也就是在选择执行该target时，先执行run和clean--&gt;</span><br><span class="line">  &lt;target name&#x3D;&quot;test&quot; depends&#x3D;&quot;run, clean&quot; &#x2F;&gt;</span><br><span class="line">&lt;!--target，进行编译，生成.class文件--&gt;</span><br><span class="line">  &lt;target name&#x3D;&quot;compile&quot;&gt;</span><br><span class="line">&lt;!--mkdir，生成目录，$&#123;main.build.dir&#125;表示引用之前的属性</span><br><span class="line">value值为build&#x2F;main，意即在build下生成main文件夹--&gt;</span><br><span class="line">    &lt;mkdir dir&#x3D;&quot;$&#123;main.build.dir&#125;&quot;&#x2F;&gt;</span><br><span class="line">&lt;!--javac，使用javac命令进行编译，srcdir为源文件位置，即为src中的文件</span><br><span class="line">destdir为目的文件位置，即将编译的.class文件保存在build&#x2F;main下。</span><br><span class="line">需要注意的是，若src中包括多个文件夹，则会将src中的所有.java文件都编译，</span><br><span class="line">并在build&#x2F;main中创创建相应的文件夹，保存对于.java文件的.class文件。</span><br><span class="line">includeantruntime，是否在类路径中包含Ant运行时库;默认为yes，除非设置build.sysclasspath。</span><br><span class="line">通常最好将其设置为false，否则将出错--&gt;</span><br><span class="line">    &lt;javac srcdir&#x3D;&quot;$&#123;main.src.dir&#125;&quot; destdir&#x3D;&quot;$&#123;main.build.dir&#125;&quot; includeantruntime&#x3D;&quot;false&quot;&gt;</span><br><span class="line">&lt;!--所需要的库位置，refid，引用之前的classpath.base的定义--&gt;</span><br><span class="line">      &lt;classpath refid&#x3D;&quot;classpath.base&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;javac&gt;</span><br><span class="line">  &lt;&#x2F;target&gt;</span><br><span class="line">&lt;!--target，build，对测试文件进行构建，需要依赖的target是compile--&gt;</span><br><span class="line">  &lt;target name&#x3D;&quot;build&quot; depends&#x3D;&quot;compile&quot;&gt;</span><br><span class="line">&lt;!--mkdir，创建目录build&#x2F;test--&gt;</span><br><span class="line">    &lt;mkdir dir&#x3D;&quot;$&#123;test.build.dir&#125;&quot;&#x2F;&gt;</span><br><span class="line">&lt;!--javac，编译测试文件，源文件目录为test，目的文件目录为build&#x2F;test--&gt;</span><br><span class="line">    &lt;javac srcdir&#x3D;&quot;$&#123;test.src.dir&#125;&quot; destdir&#x3D;&quot;$&#123;test.build.dir&#125;&quot; includeantruntime&#x3D;&quot;false&quot;&gt;</span><br><span class="line">&lt;!--编译时需要使用的库路径，调用之前的classpath.test的设置--&gt;</span><br><span class="line">        &lt;classpath refid&#x3D;&quot;classpath.test&quot;&#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;javac&gt;</span><br><span class="line">&lt;!--打印信息:Build done--&gt;</span><br><span class="line">    &lt;echo message&#x3D;&quot;Build done&quot; &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;target&gt;</span><br><span class="line">  &lt;!-- Test and build all files  --&gt;</span><br><span class="line">  &lt;!-- To run this: use &quot;ant&quot; (default) or &quot;ant run&quot; --&gt;</span><br><span class="line">&lt;!--target，run，运行测试文件，需要依赖的target为build--&gt;</span><br><span class="line">  &lt;target name&#x3D;&quot;run&quot; depends&#x3D;&quot;build&quot;&gt;</span><br><span class="line">&lt;!--junit，打印测试总结，如果运行时出错则停止构建--&gt;</span><br><span class="line">    &lt;junit printsummary&#x3D;&quot;on&quot; haltonfailure&#x3D;&quot;yes&quot;&gt;</span><br><span class="line">&lt;!--相关路径的设置</span><br><span class="line">第一行为引用的库位置</span><br><span class="line">第二行为.class文件的位置--&gt;</span><br><span class="line">        &lt;classpath&gt;</span><br><span class="line">          &lt;path refid&#x3D;&quot;classpath.test&quot; &#x2F;&gt;</span><br><span class="line">          &lt;pathelement location&#x3D;&quot;$&#123;test.build.dir&#125;&quot;&#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;classpath&gt;</span><br><span class="line">&lt;!--测试报告测输出格式，以及是否使用文件--&gt;</span><br><span class="line">        &lt;formatter type&#x3D;&quot;brief&quot; usefile&#x3D;&quot;false&quot; &#x2F;&gt;</span><br><span class="line">&lt;!--batchtest，对test1下所有满足**&#x2F;*Test*.java格式的文件进行测试。</span><br><span class="line">也可以使用test标签对单个文件进行测试--&gt;</span><br><span class="line">        &lt;batchtest&gt;</span><br><span class="line">            &lt;fileset dir&#x3D;&quot;$&#123;test.src.dir&#125;&quot; includes&#x3D;&quot;**&#x2F;*Test*.java&quot; &#x2F;&gt;</span><br><span class="line">        &lt;&#x2F;batchtest&gt;</span><br><span class="line">    &lt;&#x2F;junit&gt;</span><br><span class="line">  &lt;&#x2F;target&gt;</span><br><span class="line">  &lt;!-- delete all class files --&gt;</span><br><span class="line">  &lt;!-- To run this: use &quot;ant clean&quot; --&gt;</span><br><span class="line">&lt;!--target，clean构建过程中生成的文件--&gt;</span><br><span class="line">  &lt;target name&#x3D;&quot;clean&quot;&gt;</span><br><span class="line">&lt;!--delete，删除文件，为根目录下所有**&#x2F;*.class格式的文件--&gt;</span><br><span class="line">    &lt;delete&gt;</span><br><span class="line">        &lt;fileset dir&#x3D;&quot;$&#123;basedir&#125;&quot; includes&#x3D;&quot;**&#x2F;*.class&quot; &#x2F;&gt;</span><br><span class="line">    &lt;&#x2F;delete&gt;</span><br><span class="line">&lt;!--echo，打印信息：clean done--&gt;</span><br><span class="line">    &lt;echo message&#x3D;&quot;clean done&quot; &#x2F;&gt;</span><br><span class="line">  &lt;&#x2F;target&gt;</span><br><span class="line">&lt;&#x2F;project&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong><br>从代码中可以看出，target 的depends关系：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;target name&#x3D;&quot;test&quot; depends&#x3D;&quot;run,clean&quot;&#x2F;&gt;</span><br><span class="line">&lt;target name&#x3D;&quot;complie&quot;&gt;</span><br><span class="line">&lt;target name&#x3D;&quot;build&quot; depends&#x3D;&quot;complie&quot;&gt;</span><br><span class="line">&lt;target name&#x3D;&quot;run&quot; depends&#x3D;&quot;build&quot;&gt;</span><br><span class="line">&lt;target name&#x3D;&quot;clean&quot;&gt;</span><br></pre></td></tr></table></figure>
-<p>在最开始设置的default，默认执行target为test，而test依赖于run，clean，run依赖于build，build依赖于compile。这样会依次执行compile-&gt;build-&gt;run-&gt;test-&gt;clean，而不用ant target进行一个一个执行。 参考： <a target="_blank" rel="noopener" href="http://blog.csdn.net/fanxiaobin577328725/article/details/53637261">Ant Junit任务整合</a> <a target="_blank" rel="noopener" href="http://ant.apache.org/manual/index.html">Apache Ant™ 1.10.2 Manual</a> <a target="_blank" rel="noopener" href="http://ant.apache.org/manual/Tasks/javac.html">javac task</a></p>
-<h4 id="problems">2.3、problems</h4>
-<h5 id="警告编码-gbk-的不可映射字符">2.3.1、警告:编码 GBK 的不可映射字符</h5>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac标签中加入  &lt;compilerarg line&#x3D;&quot;-encoding UTF-8 &quot;&#x2F;&gt; </span><br></pre></td></tr></table></figure>
-<h5 id="classnotfoundexception">2.3.2、ClassNotFoundException</h5>
-<p>错误原因是，将文件从eclipse进行剥离时，相应的包名及类引用不正确。例如，在之前的项目中，每个文件的包名为src及test下的文件目录，用&quot;.&quot;分离；类引用，直接使用引用类所在的包名即可。 ##### 2.3.3、exception: java.lang.AssertionError 错误原因是，启动时断言错误。在本地eclipse上测试时，设置了-ea，在自动化集成时，可以通过如下实现： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">junit标签中加入&lt;jvmarg line&#x3D;&quot;-ea&quot;&gt;</span><br></pre></td></tr></table></figure></p>
-<h3 id="后记">后记</h3>
-<p>使用Travis进行集成还是很方便的，除了在实验中进行build，还可以用在博客构建中。使用hexo或jekyll搭建博客，每次更新博文或者更改配置时，都需要在本地进行构建浏览，而使用Travis，可以在更新后，push到GitHub进行自动化集成，以后可以尝试。</p>
+<p>在最开始设置的default，默认执行target为test，而test依赖于run，clean，run依赖于build，build依赖于compile。这样会依次执行compile-&gt;build-&gt;run-&gt;test-&gt;clean，而不用ant target进行一个一个执行。<br>参考：<br><a target="_blank" rel="noopener" href="http://blog.csdn.net/fanxiaobin577328725/article/details/53637261">Ant Junit任务整合</a><br><a target="_blank" rel="noopener" href="http://ant.apache.org/manual/index.html">Apache Ant™ 1.10.2 Manual</a><br><a target="_blank" rel="noopener" href="http://ant.apache.org/manual/Tasks/javac.html">javac task</a></p>
+<h4 id="2-3、problems"><a href="#2-3、problems" class="headerlink" title="2.3、problems"></a>2.3、problems</h4><h5 id="2-3-1、警告-编码-GBK-的不可映射字符"><a href="#2-3-1、警告-编码-GBK-的不可映射字符" class="headerlink" title="2.3.1、警告:编码 GBK 的不可映射字符"></a>2.3.1、警告:编码 GBK 的不可映射字符</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac标签中加入  &lt;compilerarg line&#x3D;&quot;-encoding UTF-8 &quot;&#x2F;&gt; </span><br></pre></td></tr></table></figure>
+<h5 id="2-3-2、ClassNotFoundException"><a href="#2-3-2、ClassNotFoundException" class="headerlink" title="2.3.2、ClassNotFoundException"></a>2.3.2、ClassNotFoundException</h5><p>错误原因是，将文件从eclipse进行剥离时，相应的包名及类引用不正确。例如，在之前的项目中，每个文件的包名为src及test下的文件目录，用”.”分离；类引用，直接使用引用类所在的包名即可。</p>
+<h5 id="2-3-3、exception-java-lang-AssertionError"><a href="#2-3-3、exception-java-lang-AssertionError" class="headerlink" title="2.3.3、exception: java.lang.AssertionError"></a>2.3.3、exception: java.lang.AssertionError</h5><p>错误原因是，启动时断言错误。在本地eclipse上测试时，设置了-ea，在自动化集成时，可以通过如下实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">junit标签中加入&lt;jvmarg line&#x3D;&quot;-ea&quot;&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h3><p>使用Travis进行集成还是很方便的，除了在实验中进行build，还可以用在博客构建中。使用hexo或jekyll搭建博客，每次更新博文或者更改配置时，都需要在本地进行构建浏览，而使用Travis，可以在更新后，push到GitHub进行自动化集成，以后可以尝试。</p>
 
     </div>
 
@@ -534,6 +550,7 @@ mjx-container[display="true"] + br {
 
 
       
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -579,6 +596,26 @@ mjx-container[display="true"] + br {
   </div>
 
       
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -615,8 +652,70 @@ mjx-container[display="true"] + br {
   
 
   
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>

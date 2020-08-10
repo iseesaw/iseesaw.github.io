@@ -19,15 +19,15 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="Selenium很好使用，下面写了三个函数，分别用来: login_163() --&gt; 登陆163邮箱(手动点击验证码) login_qzone() --&gt; 登陆QQ空间（快捷登录） login_sina_post() --&gt; 登陆新浪邮箱并发送邮件 其中发送邮件部分，忙活了大半天，各种百度，总算解决。遇到不少经典问题，在后面列出。 12345678910111213141516">
+  <meta name="description" content="Selenium很好使用，下面写了三个函数，分别用来: login_163() –&gt; 登陆163邮箱(手动点击验证码)login_qzone() –&gt; 登陆QQ空间（快捷登录）login_sina_post() –&gt; 登陆新浪邮箱并发送邮件 其中发送邮件部分，忙活了大半天，各种百度，总算解决。遇到不少经典问题，在后面列出。 1234567891011121314151617181">
 <meta property="og:type" content="article">
 <meta property="og:title" content="【Python3.6爬虫学习记录】（八）Selenium模拟登录新浪邮箱并发送邮件">
 <meta property="og:url" content="http://blog.khay.site/2017/08/17/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AB%EF%BC%89Selenium%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%96%B0%E6%B5%AA%E9%82%AE%E7%AE%B1%E5%B9%B6%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="Selenium很好使用，下面写了三个函数，分别用来: login_163() --&gt; 登陆163邮箱(手动点击验证码) login_qzone() --&gt; 登陆QQ空间（快捷登录） login_sina_post() --&gt; 登陆新浪邮箱并发送邮件 其中发送邮件部分，忙活了大半天，各种百度，总算解决。遇到不少经典问题，在后面列出。 12345678910111213141516">
+<meta property="og:description" content="Selenium很好使用，下面写了三个函数，分别用来: login_163() –&gt; 登陆163邮箱(手动点击验证码)login_qzone() –&gt; 登陆QQ空间（快捷登录）login_sina_post() –&gt; 登陆新浪邮箱并发送邮件 其中发送邮件部分，忙活了大半天，各种百度，总算解决。遇到不少经典问题，在后面列出。 1234567891011121314151617181">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2017-08-16T16:00:00.000Z">
 <meta property="article:modified_time" content="2019-09-08T03:47:29.000Z">
@@ -281,11 +281,6 @@ mjx-container[display="true"] + br {
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -459,6 +454,34 @@ mjx-container[display="true"] + br {
             </span>
 
           
+            <span id="/2017/08/17/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AB%EF%BC%89Selenium%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%96%B0%E6%B5%AA%E9%82%AE%E7%AE%B1%E5%B9%B6%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/" class="post-meta-item leancloud_visitors" data-flag-title="【Python3.6爬虫学习记录】（八）Selenium模拟登录新浪邮箱并发送邮件" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2017/08/17/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AB%EF%BC%89Selenium%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%96%B0%E6%B5%AA%E9%82%AE%E7%AE%B1%E5%B9%B6%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/08/17/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AB%EF%BC%89Selenium%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%96%B0%E6%B5%AA%E9%82%AE%E7%AE%B1%E5%B9%B6%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -468,13 +491,19 @@ mjx-container[display="true"] + br {
     
     <div class="post-body" itemprop="articleBody">
         <p>Selenium很好使用，下面写了三个函数，分别用来:</p>
-<p>login_163() --&gt; 登陆163邮箱(手动点击验证码) login_qzone() --&gt; 登陆QQ空间（快捷登录） login_sina_post() --&gt; 登陆新浪邮箱并发送邮件</p>
+<p>login_163() –&gt; 登陆163邮箱(手动点击验证码)<br>login_qzone() –&gt; 登陆QQ空间（快捷登录）<br>login_sina_post() –&gt; 登陆新浪邮箱并发送邮件</p>
 <p>其中发送邮件部分，忙活了大半天，各种百度，总算解决。遇到不少经典问题，在后面列出。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"># 测试 selenium的使用</span><br><span class="line"># 有些网页需要登陆才能打开</span><br><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver.common.keys import Keys</span><br><span class="line">from selenium.webdriver.common.action_chains import ActionChains</span><br><span class="line">from selenium.webdriver.support.ui import WebDriverWait</span><br><span class="line">from selenium.webdriver.support import expected_conditions as EC</span><br><span class="line">from selenium.common.exceptions import ElementNotVisibleException</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"># 自动访问浏览器，模拟登陆163邮箱---问题，需要点击验证码--手动输入</span><br><span class="line">def login_163():</span><br><span class="line">    driver &#x3D; webdriver.Chrome()</span><br><span class="line">    driver.get(&#39;http:&#x2F;&#x2F;mail.163.com&#x2F;&#39;)</span><br><span class="line">    # 设置等待时间，等待页面加载之后再操作</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    # frame中实际上是嵌入了另一个页面，而webdriver每次只能在一个页面识别,需先跳转到iframe框架</span><br><span class="line">    driver.switch_to_frame(&#39;x-URS-iframe&#39;)</span><br><span class="line">    # 设置等待时间，等待页面加载之后再操作</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    elem_user &#x3D; driver.find_element_by_name(&#39;email&#39;)</span><br><span class="line">    elem_user.clear()</span><br><span class="line">    elem_user.send_keys(&#39;账号&#39;)</span><br><span class="line">    elem_pwd &#x3D; driver.find_element_by_name(&#39;password&#39;)</span><br><span class="line">    elem_pwd.clear()</span><br><span class="line">    elem_pwd.send_keys(&#39;密码&#39;)</span><br><span class="line">    elem_pwd.send_keys(Keys.RETURN)</span><br><span class="line">    time.sleep(10)</span><br><span class="line">    driver.find_element_by_id(&quot;dologin&quot;).click()</span><br><span class="line">    # driver.find_element_by_id(&quot;dologin&quot;).submit()</span><br><span class="line">    # driver.close()</span><br><span class="line">    # driver.quit()</span><br><span class="line"></span><br><span class="line"># 使用快捷登陆，不用输入验证码</span><br><span class="line">def login_qzone():</span><br><span class="line">    driver &#x3D; webdriver.Chrome()</span><br><span class="line">    driver.get(&#39;http:&#x2F;&#x2F;i.qq.com&#x2F;&#39;)</span><br><span class="line">    driver.switch_to_frame(&#39;login_frame&#39;)</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    driver.find_element_by_id(&#39;img_out_QQ号&#39;).click()</span><br><span class="line">    # driver.quit()</span><br><span class="line"></span><br><span class="line"># 模拟登录新浪邮箱（没有验证码）发送邮件</span><br><span class="line">def login_sina_post():</span><br><span class="line">    driver &#x3D; webdriver.Chrome()</span><br><span class="line">    print(&#39;打开网页&#39;)</span><br><span class="line">    # driver &#x3D; webdriver.PhantomJS()</span><br><span class="line">    driver.set_window_size(1120, 550)</span><br><span class="line">    driver.get(&#39;http:&#x2F;&#x2F;mail.sina.com.cn&#x2F;?from&#x3D;mail#&#39;)</span><br><span class="line">    time.sleep(2)</span><br><span class="line">    print(&#39;输入账号及密码&#39;)</span><br><span class="line">    elem_user &#x3D; driver.find_element_by_id(&#39;freename&#39;)</span><br><span class="line">    elem_user.clear()</span><br><span class="line">    elem_user.send_keys(&#39;账号&#39;)</span><br><span class="line">    elem_pwd &#x3D; driver.find_element_by_id(&#39;freepassword&#39;)</span><br><span class="line">    elem_pwd.clear()</span><br><span class="line">    elem_pwd.send_keys(&#39;密码&#39;)</span><br><span class="line">    driver.find_element_by_class_name(&#39;loginBtn&#39;).click()</span><br><span class="line">    # waiting for</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    # 通过属性定位元素</span><br><span class="line">    driver.find_element_by_css_selector(&quot;a[_act&#x3D;&#39;navigate&#39;][_appid&#x3D;&#39;writer&#39;]&quot;).click()</span><br><span class="line">    time.sleep(3)</span><br><span class="line">    print(&#39;输入收件人&#39;)</span><br><span class="line">    # 通过类名定位收件人,主题</span><br><span class="line">    # selenium.common.exceptions.WebDriverException: Message: unknown error: cannot focus element</span><br><span class="line">    # 解决上述问题-&gt;需要移动鼠标</span><br><span class="line">    elem_address&#x3D;driver.find_element_by_class_name(&#39;wui-AddrInput&#39;)</span><br><span class="line">    action_a &#x3D; ActionChains(driver)</span><br><span class="line">    action_a.move_to_element(elem_address).click().send_keys(&#39;收件人邮箱&#39;).send_keys(Keys.RETURN).perform()</span><br><span class="line">    print(&#39;输入主题&#39;)</span><br><span class="line">    # 报错 ① Message: invalid selector: Compound class names not permitted</span><br><span class="line">    # 有两个类名不能用空格，前后都要用 .</span><br><span class="line">    # ② selenium.common.exceptions.ElementNotVisibleException: Message: element not visible</span><br><span class="line">    # driver.execute_script(&quot;window.scrollBy(0,200)&quot;, &quot;&quot;)  # 向下滚动200px</span><br><span class="line">    # driver.execute_script(&quot;window.scrollBy(0,document.body.scrollHeight)&quot;, &quot;&quot;)  # 向下滚动到页面底部</span><br><span class="line">    # 解决，使用name定位</span><br><span class="line">    driver.find_element_by_name(&#39;subj&#39;).send_keys(&#39;Test&#39;)</span><br><span class="line"></span><br><span class="line">    print(&#39;输入邮件内容&#39;)</span><br><span class="line">    # 切换到写信部分所在框架</span><br><span class="line">    # frame 没有name，id时的定位方法</span><br><span class="line">    elem_frame &#x3D; driver.find_element_by_class_name(&#39;iframe&#39;)</span><br><span class="line">    driver.switch_to_frame(elem_frame)</span><br><span class="line">    # sina邮箱比较特殊</span><br><span class="line">    driver.find_element_by_xpath(&#39;&#x2F;&#x2F;body&#39;).send_keys(&#39;this is just a test based on selenium&#39;)</span><br><span class="line">    print(&#39;点击发送&#39;)</span><br><span class="line">    # 跳出当前框架进行发送</span><br><span class="line">    # driver.switch_to.parent_content() -&gt; AttributeError: &#39;SwitchTo&#39; object has no attribute &#39;parent_content&#39;</span><br><span class="line">    driver.switch_to.default_content()</span><br><span class="line">    driver.find_element_by_class_name(&#39;mailPubText&#39;).click()</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    print(&#39;发送成功&#39;)</span><br><span class="line">    driver.quit()</span><br><span class="line"></span><br><span class="line">login_sina_post()</span><br></pre></td></tr></table></figure>
-<p><strong>相关问题：</strong> ① 设置等待时间，等待页面加载之后再操作</p>
-<p>②报错 1）selenium.common.exceptions.WebDriverException: Message: unknown error: cannot focus element 解决： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">elem_address&#x3D;driver.find_element_by_class_name(&#39;wui-AddrInput&#39;)</span><br><span class="line">action_a &#x3D; ActionChains(driver)</span><br><span class="line">action_a.move_to_element(elem_address).click().send_keys(&#39;18846080950@163.com&#39;).send_keys(Keys.RETURN).perform()</span><br></pre></td></tr></table></figure> <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/11908249/debugging-element-is-not-clickable-at-point-error">详情参考</a>（中间详细讲了几种可能）</p>
-<p>2）Message: invalid selector: Compound class names not permitted 解决： 有两个类名不能用空格，前后都要用 .</p>
-<p>3）selenium.common.exceptions.ElementNotVisibleException: Message: element not visible 存在frame，要切换到该frame中才能找到 最后要记得跳出frame 可以参考<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yufeihlf/p/5689042.html">Python+Selenium定位不到元素常见原因及解决办法（报：NoSuchElementException）</a> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.switch_to_frame(&#39;login_frame&#39;)</span><br></pre></td></tr></table></figure> 很多时候是因为，搜索的不唯一，导致搜到别的地方，结果出错 ③对于运行报错 一定先到<a target="_blank" rel="noopener" href="https://stackoverflow.com/">stackoverflow</a>搜索，直接搜报错原因，多看评论，多尝试</p>
+
+<p><strong>相关问题：</strong><br>①  设置等待时间，等待页面加载之后再操作</p>
+<p>②报错<br>1）selenium.common.exceptions.WebDriverException: Message: unknown error: cannot focus element<br>    解决： </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">elem_address&#x3D;driver.find_element_by_class_name(&#39;wui-AddrInput&#39;)</span><br><span class="line">action_a &#x3D; ActionChains(driver)</span><br><span class="line">action_a.move_to_element(elem_address).click().send_keys(&#39;18846080950@163.com&#39;).send_keys(Keys.RETURN).perform()</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/11908249/debugging-element-is-not-clickable-at-point-error">详情参考</a>（中间详细讲了几种可能）</p>
+<p>2）Message: invalid selector: Compound class names not permitted<br>    解决： 有两个类名不能用空格，前后都要用 .</p>
+<p>3）selenium.common.exceptions.ElementNotVisibleException: Message: element not visible<br>    存在frame，要切换到该frame中才能找到<br>    最后要记得跳出frame<br>可以参考<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yufeihlf/p/5689042.html">Python+Selenium定位不到元素常见原因及解决办法（报：NoSuchElementException）
+</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.switch_to_frame(&#39;login_frame&#39;)</span><br></pre></td></tr></table></figure>
+<p>很多时候是因为，搜索的不唯一，导致搜到别的地方，结果出错<br>③对于运行报错<br>    一定先到<a target="_blank" rel="noopener" href="https://stackoverflow.com/">stackoverflow</a>搜索，直接搜报错原因，多看评论，多尝试</p>
 
     </div>
 
@@ -513,6 +542,7 @@ mjx-container[display="true"] + br {
 
 
       
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -558,6 +588,26 @@ mjx-container[display="true"] + br {
   </div>
 
       
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -594,8 +644,70 @@ mjx-container[display="true"] + br {
   
 
   
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>

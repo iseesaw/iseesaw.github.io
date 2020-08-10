@@ -19,19 +19,17 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="目录 1、概念 性能度量（评价）指标，主分为两大类：  1）分类评价指标（classification），主要分析，离散的，整数的。其具体指标包括accuracy(准确率)，precision(精确率)，recall(召回率)，F值，P-R曲线，ROC曲线和AUC。  2）回归评价指标（regression），主要分析整数和实数之间的关系。其具体指标包括可释方差得分(explianed_varia">
+  <meta name="description" content="目录1、概念性能度量（评价）指标，主分为两大类：&amp;nbsp;1）分类评价指标（classification），主要分析，离散的，整数的。其具体指标包括accuracy(准确率)，precision(精确率)，recall(召回率)，F值，P-R曲线，ROC曲线和AUC。&amp;nbsp;2）回归评价指标（regression），主要分析整数和实数之间的关系。其具体指标包括可释方差得分(explianed">
 <meta property="og:type" content="article">
 <meta property="og:title" content="分类评价指标和回归评价指标及python实现">
 <meta property="og:url" content="http://blog.khay.site/2018/04/15/%E5%88%86%E7%B1%BB%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%92%8C%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="目录 1、概念 性能度量（评价）指标，主分为两大类：  1）分类评价指标（classification），主要分析，离散的，整数的。其具体指标包括accuracy(准确率)，precision(精确率)，recall(召回率)，F值，P-R曲线，ROC曲线和AUC。  2）回归评价指标（regression），主要分析整数和实数之间的关系。其具体指标包括可释方差得分(explianed_varia">
+<meta property="og:description" content="目录1、概念性能度量（评价）指标，主分为两大类：&amp;nbsp;1）分类评价指标（classification），主要分析，离散的，整数的。其具体指标包括accuracy(准确率)，precision(精确率)，recall(召回率)，F值，P-R曲线，ROC曲线和AUC。&amp;nbsp;2）回归评价指标（regression），主要分析整数和实数之间的关系。其具体指标包括可释方差得分(explianed">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdn.net/20180415083022415?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:image" content="https://img-blog.csdn.net/20180415091130263?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:image" content="https://img-blog.csdn.net/20180415091607872?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180415092501785?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/2018041509251027?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180415092551928?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
@@ -292,11 +290,6 @@ mjx-container[display="true"] + br {
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -353,7 +346,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">1、概念</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%9B%B2%E7%BA%BF-p-r%E6%9B%B2%E7%BA%BFroc%E6%9B%B2%E7%BA%BF%E5%8F%8Aauc%E5%80%BC"><span class="nav-number">2.0.1.</span> <span class="nav-text">2.1.2 相关曲线-P-R曲线、ROC曲线及AUC值</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87"><span class="nav-number">2.1.</span> <span class="nav-text">2.2、回归评价指标</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E6%A6%82%E5%BF%B5"><span class="nav-number">2.</span> <span class="nav-text">1、概念</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1%E3%80%81%E5%89%8D%E6%8F%90"><span class="nav-number">2.1.</span> <span class="nav-text">1.1、前提</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-1-2-%E7%9B%B8%E5%85%B3%E6%9B%B2%E7%BA%BF-P-R%E6%9B%B2%E7%BA%BF%E3%80%81ROC%E6%9B%B2%E7%BA%BF%E5%8F%8AAUC%E5%80%BC"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.2 相关曲线-P-R曲线、ROC曲线及AUC值</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2%E3%80%81%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87"><span class="nav-number">2.2.</span> <span class="nav-text">2.2、回归评价指标</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -471,6 +464,34 @@ mjx-container[display="true"] + br {
             </span>
 
           
+            <span id="/2018/04/15/%E5%88%86%E7%B1%BB%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%92%8C%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="分类评价指标和回归评价指标及python实现" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/04/15/%E5%88%86%E7%B1%BB%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%92%8C%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/04/15/%E5%88%86%E7%B1%BB%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%92%8C%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -479,179 +500,112 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="目录">目录</h4>
-<h4 id="概念">1、概念</h4>
-性能度量（评价）指标，主分为两大类：<br />
- 1）分类评价指标（classification），主要分析，离散的，整数的。其具体指标包括accuracy(准确率)，precision(精确率)，recall(召回率)，F值，P-R曲线，ROC曲线和AUC。  2）回归评价指标（regression），主要分析整数和实数之间的关系。其具体指标包括可释方差得分(explianed_variance_score)，平均绝对误差MAE(mean_absolute_error)，均方误差MSE(mean-squared_error)，均方根差RMSE，交叉熵lloss(Log loss，cross-entropy loss)，R方值(确定系数，r2_score)。 ##### 1.1、前提 &gt; 假设只有两类-正类（positive）和负类（negative），通常以关注的类为正类，其他类为负类（故多类问题亦可归纳为两类）<br />
-&gt;混淆矩阵（Confusion matrix）如下
-<table>
-<tr>
-<td>
-实际类别
-</td>
-<td colspan="4">
-预测类别
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-正
-</td>
-<td>
-负
-</td>
-<td>
-总结
-</td>
-</tr>
-<tr>
-<td>
-正
-</td>
-<td>
-TP
-</td>
-<td>
-FN
-</td>
-<td>
-P(实际为正)
-</td>
-</tr>
-<tr>
-<td>
-负
-</td>
-<td>
-FP
-</td>
-<td>
-TN
-</td>
-<td>
-N(实际为负)
-</td>
-</tr>
-</table>
-<blockquote>
-表中AB模式：第一个表示预测结果的对错，第二个表示预测的类别。如TP表示，True Positive，即正确的预测为正类；FN表示，False Negative，即错误的预测为了负类。 #### 2、评价指标（性能度量） ##### 2.1、分类评价指标 ###### 2.1.1 值指标-Accuracy、Precision、Recall、F值
-<table>
-<tr>
-<td>
-度量
-</td>
-<td>
-Accuracy(准确率)
-</td>
-<td>
-Precision(精确率)
-</td>
-<td>
-Recall(召回率)
-</td>
-<td>
-F值
-</td>
-</tr>
-<tr>
-<td>
-定义
-</td>
-<td>
-正确分类的样本数与总样本数之比（预测为垃圾短信中真正的垃圾短信的比例）
-</td>
-<td>
-判定为正例中真正正例数与判定为正例数之比（所有真的垃圾短信被分类求正确找出来的比例）
-</td>
-<td>
-被正确判定为正例数与总正例数之比
-</td>
-<td>
-准确率与召回率的调和平均F<sub><span class="math inline">\(\beta\)</span></sub>-score
-</td>
-</tr>
-<tr>
-<td>
-表示
-</td>
-<td>
-accuracy=<span class="math display">\[\frac{TP+TN}{P+N}\]</span>
-</td>
-<td>
-precision=<span class="math display">\[\frac{TP}{TP+FP}\]</span>
-</td>
-<td>
-recall=<span class="math display">\[\frac{TP}{P}\]</span>
-</td>
-<td>
-F<sub><span class="math inline">\(\beta\)</span></sub> - score = <span class="math display">\[\frac{(1+\beta^2)*precision*recall}{\beta^2*precision+recall}\]</span>
-</td>
-</tr>
-</table>
-<p>1.precision也常称为查准率，recall称为查全率 2.比较常用的是F1， <span class="math display">\[\frac{1}{F1}=\frac{1}{2}*(\frac{1}{P}+\frac{1}{R})\]</span></p>
+        <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><h4 id="1、概念"><a href="#1、概念" class="headerlink" title="1、概念"></a>1、概念</h4><p>性能度量（评价）指标，主分为两大类：<br>&nbsp;1）分类评价指标（classification），主要分析，离散的，整数的。其具体指标包括accuracy(准确率)，precision(精确率)，recall(召回率)，F值，P-R曲线，ROC曲线和AUC。<br>&nbsp;2）回归评价指标（regression），主要分析整数和实数之间的关系。其具体指标包括可释方差得分(explianed_variance_score)，平均绝对误差MAE(mean_absolute_error)，均方误差MSE(mean-squared_error)，均方根差RMSE，交叉熵lloss(Log loss，cross-entropy loss)，R方值(确定系数，r2_score)。</p>
+<h5 id="1-1、前提"><a href="#1-1、前提" class="headerlink" title="1.1、前提"></a>1.1、前提</h5><blockquote>
+<p>假设只有两类-正类（positive）和负类（negative），通常以关注的类为正类，其他类为负类（故多类问题亦可归纳为两类）<br>混淆矩阵（Confusion matrix）如下</p>
 </blockquote>
+<table>
+    <tr>
+        <td>实际类别</td>
+        <td colspan="4">预测类别</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>正</td>
+        <td>负</td>
+        <td>总结</td>
+    </tr>
+    <tr>
+        <td>正</td>
+        <td>TP</td>
+        <td>FN</td>
+        <td>P(实际为正)</td>
+    </tr>
+    <tr>
+        <td>负</td>
+        <td>FP</td>
+        <td>TN</td>
+        <td>N(实际为负)</td>
+    </tr>
+</table>
+>表中AB模式：第一个表示预测结果的对错，第二个表示预测的类别。如TP表示，True Positive，即正确的预测为正类；FN表示，False Negative，即错误的预测为了负类。
+#### 2、评价指标（性能度量）
+##### 2.1、分类评价指标
+###### 2.1.1 值指标-Accuracy、Precision、Recall、F值
+<table>
+    <tr>
+        <td>度量</td>
+        <td>Accuracy(准确率)</td>
+        <td>Precision(精确率)</td>
+        <td>Recall(召回率)</td>
+        <td>F值</td>
+    </tr>
+    <tr>
+        <td>定义</td>
+        <td>正确分类的样本数与总样本数之比（预测为垃圾短信中真正的垃圾短信的比例）</td>
+        <td>判定为正例中真正正例数与判定为正例数之比（所有真的垃圾短信被分类求正确找出来的比例）</td>
+        <td>被正确判定为正例数与总正例数之比</td>
+        <td>准确率与召回率的调和平均F<sub>$\beta$</sub>-score</td>
+    </tr>
+    <tr>
+        <td>表示</td>
+        <td>accuracy=$$\frac{TP+TN}{P+N}$$</td>
+        <td>precision=$$\frac{TP}{TP+FP}$$</td>
+        <td>recall=$$\frac{TP}{P}$$</td>
+        <td>F<sub>$\beta$</sub> - score = $$\frac{(1+\beta^2)*precision*recall}{\beta^2*precision+recall}$$</td>
+    </tr>
+</table>
+>1.precision也常称为查准率，recall称为查全率
+>2.比较常用的是F1，
+>$$\frac{1}{F1}=\frac{1}{2}*(\frac{1}{P}+\frac{1}{R})$$
+
 <p>python3.6代码实现：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#调用sklearn库中的指标求解</span><br><span class="line">from sklearn import metrics</span><br><span class="line">from sklearn.metrics import precision_recall_curve</span><br><span class="line">from sklearn.metrics import average_precision_score</span><br><span class="line">from sklearn.metrics import accuracy_score</span><br><span class="line">#给出分类结果</span><br><span class="line">y_pred &#x3D; [0, 1, 0, 0]</span><br><span class="line">y_true &#x3D; [0, 1, 1, 1]</span><br><span class="line">print(&quot;accuracy_score:&quot;, accuracy_score(y_true, y_pred))</span><br><span class="line">print(&quot;precision_score:&quot;, metrics.precision_score(y_true, y_pred))</span><br><span class="line">print(&quot;recall_score:&quot;, metrics.recall_score(y_true, y_pred))</span><br><span class="line">print(&quot;f1_score:&quot;, metrics.f1_score(y_true, y_pred))</span><br><span class="line">print(&quot;f0.5_score:&quot;, metrics.fbeta_score(y_true, y_pred, beta&#x3D;0.5))</span><br><span class="line">print(&quot;f2_score:&quot;, metrics.fbeta_score(y_true, y_pred, beta&#x3D;2.0))</span><br></pre></td></tr></table></figure>
-<h6 id="相关曲线-p-r曲线roc曲线及auc值">2.1.2 相关曲线-P-R曲线、ROC曲线及AUC值</h6>
-1）P-R曲线 步骤：    1、从高到低将&quot;score&quot;值排序并依次作为阈值threshold；    2、对于每个阈值，&quot;score&quot;值大于或等于这个threshold的测试样本被认为正例，其他为负例。从而形成一组预测数。 eg. <img src="https://img-blog.csdn.net/20180415083022415?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 将0.9作为阈值，则第1个测试样本为正例，2、3、4、5为负例 得到
-<table>
-<tr>
-<td>
-</td>
-<td>
-预测为正例
-</td>
-<td>
-预测为负例
-</td>
-<td>
-总计
-</td>
-</tr>
-<tr>
-<td>
-正例(score大于阈值)
-</td>
-<td>
-0.9
-</td>
-<td>
-0.1
-</td>
-<td>
-1
-</td>
-</tr>
-<tr>
-<td>
-负例(score小于阈值)
-</td>
-<td>
-0.2+0.3+0.3+0.35 = 1.15
-</td>
-<td>
-0.8+0.7+0.7+0.65 = 2.85
-</td>
-<td>
-4
-</td>
-</tr>
-<tr>
-<td colspan="4">
-precision=<span class="math display">\[\frac{0.9}{0.9+1.15}\]</span><br />
-recall=<span class="math display">\[\frac{0.9}{1}\]</span>
-</td>
-</tr>
-</table>
-<blockquote>
-<p>在阈值以下的部分，当作负例，则预测为负例的取值情况是正确预测值，即如果本身是正例，则取TP；如果本身是负例，则取TN，其都为预测分值。 python实现伪代码 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#precision和recall的求法如上</span><br><span class="line">#主要介绍一下python画图的库</span><br><span class="line">import matplotlib.pyplot ad plt</span><br><span class="line">#主要用于矩阵运算的库</span><br><span class="line">import numpy as np</span><br><span class="line">#导入iris数据及训练见前一博文</span><br><span class="line">...</span><br><span class="line">#加入800个噪声特征，增加图像的复杂度</span><br><span class="line">#将150*800的噪声特征矩阵与150*4的鸢尾花数据集列合并</span><br><span class="line">X &#x3D; np.c_[X, np.random.RandomState(0).randn(n_samples, 200*n_features)]</span><br><span class="line">#计算precision，recall得到数组</span><br><span class="line">for i in range(n_classes):</span><br><span class="line"> #计算三类鸢尾花的评价指标， _作为临时的名称使用</span><br><span class="line"> precision[i], recall[i], _ &#x3D; precision_recall_curve(y_test[:, i], y_score[:,i])</span><br><span class="line">#plot作图</span><br><span class="line">plt.clf()</span><br><span class="line">for i in range(n_classes):</span><br><span class="line">  plt.plot(recall[i], precision[i])</span><br><span class="line">plt.xlim([0.0, 1.0])</span><br><span class="line">plt.ylim([0.0, 1.05])</span><br><span class="line">plt.xlabel(&quot;Recall&quot;)</span><br><span class="line">plt.ylabel(&quot;Precision&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure> 将上述代码补充完整后得到鸢尾花数据集的P-R曲线 <img src="https://img-blog.csdn.net/20180415091130263?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 2）ROC曲线 横轴：假正例率 fp rate = FP / N 纵轴：真正例率 tp rate = TP / N 步骤：    1、从高到低将&quot;score&quot;值排序并依次作为阈值threshold；    2、对于每个阈值，&quot;score&quot;值大于或等于这个threshold的测试样本被认为正例，其他为负例。从而形成一组预测数。 同P-R曲线计算类似，不再赘述 鸢尾花数据集的ROC图像为 <img src="https://img-blog.csdn.net/20180415091607872?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> AUC（Area Under Curve）定义为ROC曲线下的面积 AUC值提供了分类器的一个整体数值。通常AUC越大，分类器更好，取值为[0, 1]</p>
-</blockquote>
-<h5 id="回归评价指标">2.2、回归评价指标</h5>
-<p>1）可释方差得分 <img src="https://img-blog.csdn.net/20180415092501785?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 2）平均绝对误差 MAE （Mean absolute error） <img src="https://img-blog.csdn.net/2018041509251027?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 3）均方差 MSE （Mean squared error） <img src="https://img-blog.csdn.net/20180415092551928?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> <img src="https://img-blog.csdn.net/20180415092624750?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 4）logistics回归损失 <img src="https://img-blog.csdn.net/20180415092647350?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 5）一致性评价 - pearson相关系数法 <img src="https://img-blog.csdn.net/20180415092711915?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> python代码实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import log_loss</span><br><span class="line">log_loss(y_true, y_pred)</span><br><span class="line">from scipy.stats import pearsonr</span><br><span class="line">pearsonr(rater1, rater2)</span><br><span class="line">from sklearn.metrics import cohen_kappa_score</span><br><span class="line">cohen_kappa_score(rater1, rater2)</span><br></pre></td></tr></table></figure>
 
+<h6 id="2-1-2-相关曲线-P-R曲线、ROC曲线及AUC值"><a href="#2-1-2-相关曲线-P-R曲线、ROC曲线及AUC值" class="headerlink" title="2.1.2 相关曲线-P-R曲线、ROC曲线及AUC值"></a>2.1.2 相关曲线-P-R曲线、ROC曲线及AUC值</h6><p>1）P-R曲线<br>步骤：<br>&nbsp;&nbsp;&nbsp;1、从高到低将”score”值排序并依次作为阈值threshold；<br>&nbsp;&nbsp;&nbsp;2、对于每个阈值，”score”值大于或等于这个threshold的测试样本被认为正例，其他为负例。从而形成一组预测数。<br>eg.<br><img src="https://img-blog.csdn.net/20180415083022415?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>将0.9作为阈值，则第1个测试样本为正例，2、3、4、5为负例<br>得到</p>
+<table>
+    <tr>
+        <td></td>
+        <td>预测为正例</td>
+        <td>预测为负例</td>
+        <td>总计</td>
+    </tr>
+    <tr>
+        <td>正例(score大于阈值)</td>
+        <td>0.9</td>
+        <td>0.1</td>
+        <td>1</td>
+    </tr>
+    <tr>
+        <td>负例(score小于阈值)</td>
+        <td>0.2+0.3+0.3+0.35 = 1.15</td>
+        <td>0.8+0.7+0.7+0.65 = 2.85</td>
+        <td>4</td>
+    </tr>
+    <tr>
+        <td colspan="4">precision=$$\frac{0.9}{0.9+1.15}$$  
+        recall=$$\frac{0.9}{1}$$</td>
+    </tr>
+</table>
+>在阈值以下的部分，当作负例，则预测为负例的取值情况是正确预测值，即如果本身是正例，则取TP；如果本身是负例，则取TN，其都为预测分值。
+python实现伪代码
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#precision和recall的求法如上</span><br><span class="line">#主要介绍一下python画图的库</span><br><span class="line">import matplotlib.pyplot ad plt</span><br><span class="line">#主要用于矩阵运算的库</span><br><span class="line">import numpy as np</span><br><span class="line">#导入iris数据及训练见前一博文</span><br><span class="line">...</span><br><span class="line">#加入800个噪声特征，增加图像的复杂度</span><br><span class="line">#将150*800的噪声特征矩阵与150*4的鸢尾花数据集列合并</span><br><span class="line">X &#x3D; np.c_[X, np.random.RandomState(0).randn(n_samples, 200*n_features)]</span><br><span class="line">#计算precision，recall得到数组</span><br><span class="line">for i in range(n_classes):</span><br><span class="line">    #计算三类鸢尾花的评价指标， _作为临时的名称使用</span><br><span class="line">    precision[i], recall[i], _ &#x3D; precision_recall_curve(y_test[:, i], y_score[:,i])</span><br><span class="line">#plot作图</span><br><span class="line">plt.clf()</span><br><span class="line">for i in range(n_classes):</span><br><span class="line">    plt.plot(recall[i], precision[i])</span><br><span class="line">plt.xlim([0.0, 1.0])</span><br><span class="line">plt.ylim([0.0, 1.05])</span><br><span class="line">plt.xlabel(&quot;Recall&quot;)</span><br><span class="line">plt.ylabel(&quot;Precision&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+将上述代码补充完整后得到鸢尾花数据集的P-R曲线
+![这里写图片描述](https://img-blog.csdn.net/20180415091130263?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+2）ROC曲线
+横轴：假正例率 fp rate = FP / N
+纵轴：真正例率 tp rate = TP / N
+步骤：
+&nbsp;&nbsp;&nbsp;1、从高到低将"score"值排序并依次作为阈值threshold；
+&nbsp;&nbsp;&nbsp;2、对于每个阈值，"score"值大于或等于这个threshold的测试样本被认为正例，其他为负例。从而形成一组预测数。
+>同P-R曲线计算类似，不再赘述
+鸢尾花数据集的ROC图像为
+![这里写图片描述](https://img-blog.csdn.net/20180415091607872?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+AUC（Area Under Curve）定义为ROC曲线下的面积
+AUC值提供了分类器的一个整体数值。通常AUC越大，分类器更好，取值为[0, 1]
+
+<h5 id="2-2、回归评价指标"><a href="#2-2、回归评价指标" class="headerlink" title="2.2、回归评价指标"></a>2.2、回归评价指标</h5><p>1）可释方差得分<br><img src="https://img-blog.csdn.net/20180415092501785?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>2）平均绝对误差 MAE （Mean absolute error）<br><img src="https://img-blog.csdn.net/2018041509251027?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>3）均方差 MSE （Mean squared error）<br><img src="https://img-blog.csdn.net/20180415092551928?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br><img src="https://img-blog.csdn.net/20180415092624750?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>4）logistics回归损失<br><img src="https://img-blog.csdn.net/20180415092647350?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>5）一致性评价 - pearson相关系数法<br><img src="https://img-blog.csdn.net/20180415092711915?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>python代码实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import log_loss</span><br><span class="line">log_loss(y_true, y_pred)</span><br><span class="line">from scipy.stats import pearsonr</span><br><span class="line">pearsonr(rater1, rater2)</span><br><span class="line">from sklearn.metrics import cohen_kappa_score</span><br><span class="line">cohen_kappa_score(rater1, rater2)</span><br></pre></td></tr></table></figure>
     </div>
 
     
@@ -690,6 +644,7 @@ recall=<span class="math display">\[\frac{0.9}{1}\]</span>
 
 
       
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -735,6 +690,26 @@ recall=<span class="math display">\[\frac{0.9}{1}\]</span>
   </div>
 
       
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -771,8 +746,70 @@ recall=<span class="math display">\[\frac{0.9}{1}\]</span>
   
 
   
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>

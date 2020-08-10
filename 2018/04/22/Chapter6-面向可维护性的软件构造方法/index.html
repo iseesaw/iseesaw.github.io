@@ -19,17 +19,16 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="目录 Chapter 6: Maintainability-Oriented Software Construction Approaches #### 6.0、Maintainability-Oriented Software Construction Approaches 第6章主要讲的是面向可维护的软件构造方法； 第一节介绍了什么是软件维护，以及可维护性的度量标准，和实现可维护性的设计原则；">
+  <meta name="description" content="目录Chapter 6: Maintainability-Oriented Software Construction Approaches  6.0、Maintainability-Oriented Software Construction Approaches第6章主要讲的是面向可维护的软件构造方法；第一节介绍了什么是软件维护，以及可维护性的度量标准，和实现可维护性的设计原则；第二节介绍了可">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Chapter6-面向可维护性的软件构造方法">
 <meta property="og:url" content="http://blog.khay.site/2018/04/22/Chapter6-%E9%9D%A2%E5%90%91%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="目录 Chapter 6: Maintainability-Oriented Software Construction Approaches #### 6.0、Maintainability-Oriented Software Construction Approaches 第6章主要讲的是面向可维护的软件构造方法； 第一节介绍了什么是软件维护，以及可维护性的度量标准，和实现可维护性的设计原则；">
+<meta property="og:description" content="目录Chapter 6: Maintainability-Oriented Software Construction Approaches  6.0、Maintainability-Oriented Software Construction Approaches第6章主要讲的是面向可维护的软件构造方法；第一节介绍了什么是软件维护，以及可维护性的度量标准，和实现可维护性的设计原则；第二节介绍了可">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://img-blog.csdn.net/20180619091050636?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180429195036210?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180429195150276?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="article:published_time" content="2018-04-21T16:00:00.000Z">
@@ -39,7 +38,7 @@
 <meta property="article:tag" content="pattern">
 <meta property="article:tag" content="Maintainability">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdn.net/20180619091050636?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180429195036210?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 
 
 <link rel="canonical" href="http://blog.khay.site/2018/04/22/Chapter6-%E9%9D%A2%E5%90%91%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/">
@@ -285,11 +284,6 @@ mjx-container[display="true"] + br {
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -346,7 +340,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#modular-design-and-modularity-principles"><span class="nav-number">1.1.</span> <span class="nav-text">6.1.2、Modular Design and Modularity Principles</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#oo-design-principles"><span class="nav-number">1.2.</span> <span class="nav-text">6.1.3、OO design principles</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#design-patterns-for-maintainability"><span class="nav-number">2.</span> <span class="nav-text">6.2、Design Patterns For Maintainability</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#maintainability-oriented-construction-techniques"><span class="nav-number">3.</span> <span class="nav-text">6.3、Maintainability-Oriented Construction Techniques</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#state-based-construction"><span class="nav-number">3.1.</span> <span class="nav-text">6.3.1、State-based construction</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#grammer-based-construction"><span class="nav-number">3.2.</span> <span class="nav-text">6.3.2、Grammer-based construction</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-0%E3%80%81Maintainability-Oriented-Software-Construction-Approaches"><span class="nav-number">2.</span> <span class="nav-text">6.0、Maintainability-Oriented Software Construction Approaches</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-1%E3%80%81Metrics-and-Construction-Principles-for-Maintainability"><span class="nav-number">3.</span> <span class="nav-text">6.1、Metrics and Construction Principles for Maintainability</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#6-1-1%E3%80%81Metrics-of-Maintainability"><span class="nav-number">3.1.</span> <span class="nav-text">6.1.1、Metrics of Maintainability</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-1-2%E3%80%81Modular-Design-and-Modularity-Principles"><span class="nav-number">3.2.</span> <span class="nav-text">6.1.2、Modular Design and Modularity Principles</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-1-3%E3%80%81OO-design-principles"><span class="nav-number">3.3.</span> <span class="nav-text">6.1.3、OO design principles</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-2%E3%80%81Design-Patterns-For-Maintainability"><span class="nav-number">4.</span> <span class="nav-text">6.2、Design Patterns For Maintainability</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-3%E3%80%81Maintainability-Oriented-Construction-Techniques"><span class="nav-number">5.</span> <span class="nav-text">6.3、Maintainability-Oriented Construction Techniques</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#6-3-1%E3%80%81State-based-construction"><span class="nav-number">5.1.</span> <span class="nav-text">6.3.1、State-based construction</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-3-2%E3%80%81Grammer-based-construction"><span class="nav-number">5.2.</span> <span class="nav-text">6.3.2、Grammer-based construction</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -464,6 +458,34 @@ mjx-container[display="true"] + br {
             </span>
 
           
+            <span id="/2018/04/22/Chapter6-%E9%9D%A2%E5%90%91%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="Chapter6-面向可维护性的软件构造方法" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/04/22/Chapter6-%E9%9D%A2%E5%90%91%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/04/22/Chapter6-%E9%9D%A2%E5%90%91%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -472,390 +494,220 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="目录">目录</h4>
-<p><strong>Chapter 6: Maintainability-Oriented Software Construction Approaches</strong> #### 6.0、Maintainability-Oriented Software Construction Approaches 第6章主要讲的是面向可维护的软件构造方法； 第一节介绍了什么是软件维护，以及可维护性的度量标准，和实现可维护性的设计原则； 第二节介绍了可维护性的设计模式； 第三节介绍除了OO设计模式以外的其他能够提升软件可维护性的构造技术：基于状态、表驱动、基于语法的构造技术。 考点： 可维护性的常见度量指标 聚合度和耦合度 SOLID 语法、正则表达式 #### 6.1、Metrics and Construction Principles for Maintainability ##### 6.1.1、Metrics of Maintainability 〇几个概念Concepts 软件维护：修复错误、改善性能（软件的大部分成本来自于维护阶段）； 软件演化：对软件进行持续的更新； 软件熵（Entropy）：当系统被修改时，它的混乱度（熵）会增加；</p>
-①Some Names Of Maintainability 可维护性的范畴 &gt;Ready for Change, Ready for Extension.
-<table>
-<tr>
-<td>
-Maintainability（可维护性）
-</td>
-<td>
-软件系统或者组件可以轻松的修改以纠正错误，性能和属性或适应变化的环境
-</td>
-</tr>
-<tr>
-<td>
-Extensibility（可扩展性）
-</td>
-<td>
-软件设计、实现将未来的发展考虑在内，并被视为系统扩展能力的系统测量和实现扩展所需的工作量
-</td>
-</tr>
-<tr>
-<td>
-Flexibility（灵活性）
-</td>
-<td>
-软件根据用户需求，外部技术和社会环境等容易改变的能力
-</td>
-</tr>
-<tr>
-<td>
-Adaptability（可适应性）
-</td>
-<td>
-交互式系统（自适应系统）能够根据获取的有关用户及其环境的信息，使其行为适应个人用户的能力
-</td>
-</tr>
-<tr>
-<td>
-Manageability（可管理性）
-</td>
-<td>
-能够有效和轻松地监控和维护软件系统，以保持系统的正常运行，安全并平稳运行
-</td>
-</tr>
-</table>
-②Some comman-used <strong>maintainbility metrics</strong> 一些评估可维护性的常用标准
-<table>
-<tr>
-<td>
-Cyclomatic Complexity（圈复杂度）
-</td>
-<td>
-衡量代码的结构复杂性；分支（if-else，switch）越多，控制流程越复杂，越难维护，圈复杂度越高
-</td>
-</tr>
-<tr>
-<td>
-Lines Of Code（代码行数）
-</td>
-<td>
-指示代码大致的行数，行数太多，表明该类或方法做了太多工作，应该将不同的工作分离到多个类中实现
-</td>
-</tr>
-<tr>
-<td>
-Maintainability Index（MI，可维护性指数）
-</td>
-<td>
-计算0到100之间的索引值，表示维护代码的相对容易性，越高意味着更好的可维护性；基于Halsted Volume（HV，基于源代码中不同运算符和操作符数量的合成度量）、Cyclomatic Complexity（CC，圈复杂度）、Average number of lines of code per module（LOC，每个模块平均的代码行数）、Percentage of comment lines per module（COM，每个模块注释行数的百分比）
-</td>
-</tr>
-<tr>
-<td>
-Depth Of Inheritance（继承的层数）
-</td>
-<td>
-继承的层数越深，就越难理解特定方法和变量是在哪个父类被定义或重新定义的
-</td>
-</tr>
-<tr>
-<td>
-Class Coupling（类之间的耦合度）
-</td>
-<td>
-通过参数、局部变量、返回类型、方法调用、泛型或模板实例化、基类、接口实现、在外部类型上定义的字段以及属性修饰来测量对唯一类的耦合。良好的软件设计决定了类型和方法应该具有高内聚性和低耦合性（可以理解为是否相互联系紧密，相互影响，如果一个类与其他类是基本相互独立的，不相互影响，有较少的依赖关系，则具有低耦合性）。
-</td>
-</tr>
-<tr>
-<td>
-Unit test coverage（测试覆盖度）
-</td>
-<td>
-表示代码库的哪些部分被自动化单元测试覆盖
-</td>
-</tr>
-</table>
-<h5 id="modular-design-and-modularity-principles">6.1.2、Modular Design and Modularity Principles</h5>
+        <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><p><strong>Chapter 6: Maintainability-Oriented Software Construction Approaches</strong> </p>
+<h4 id="6-0、Maintainability-Oriented-Software-Construction-Approaches"><a href="#6-0、Maintainability-Oriented-Software-Construction-Approaches" class="headerlink" title="6.0、Maintainability-Oriented Software Construction Approaches"></a>6.0、Maintainability-Oriented Software Construction Approaches</h4><p>第6章主要讲的是面向可维护的软件构造方法；<br>第一节介绍了什么是软件维护，以及可维护性的度量标准，和实现可维护性的设计原则；<br>第二节介绍了可维护性的设计模式；<br>第三节介绍除了OO设计模式以外的其他能够提升软件可维护性的构造技术：基于状态、表驱动、基于语法的构造技术。<br>考点：<br>可维护性的常见度量指标<br>聚合度和耦合度<br>SOLID<br>语法、正则表达式</p>
+<h4 id="6-1、Metrics-and-Construction-Principles-for-Maintainability"><a href="#6-1、Metrics-and-Construction-Principles-for-Maintainability" class="headerlink" title="6.1、Metrics and Construction Principles for Maintainability"></a>6.1、Metrics and Construction Principles for Maintainability</h4><h5 id="6-1-1、Metrics-of-Maintainability"><a href="#6-1-1、Metrics-of-Maintainability" class="headerlink" title="6.1.1、Metrics of Maintainability"></a>6.1.1、Metrics of Maintainability</h5><p>〇几个概念Concepts<br>软件维护：修复错误、改善性能（软件的大部分成本来自于维护阶段）；<br>软件演化：对软件进行持续的更新；<br>软件熵（Entropy）：当系统被修改时，它的混乱度（熵）会增加；</p>
+<p>①Some Names Of Maintainability<br>可维护性的范畴</p>
 <blockquote>
-<p>模块化编程是一种强调将程序功能分离为<strong>独立</strong>，可互换模块的设计技术，每种模块都包含执行所需功能一个方面所需的一切； 模块化意味着将系统划分为<strong>组件</strong>或<strong>模块</strong>，每个组件或模块都可以与系统的其他部分分开设计，实施，测试，推理和重复使用； 目标是实现高内聚和低耦合。</p>
+<p>Ready for Change, Ready for Extension.</p>
 </blockquote>
-①Five Criteria for Evaluating Modularity 实现模块化的五个标准
 <table>
-<tr>
-<td>
-Decomposability（可分解性）
-</td>
-<td>
-将问题分解为各个可独立解决的子问题
-</td>
-<td>
-目标：使得模块之间的依赖关系显式化和最小化；例如：自上而下的结构设计
-</td>
-</tr>
-<tr>
-<td>
-Composability（可组合性）
-</td>
-<td>
-可以容易的将模块组合起来形成新的系统
-</td>
-<td>
-目标：使得模块可在不同环境下复用；例如：Math库，UNIX command &amp; pipes
-</td>
-</tr>
-<tr>
-<td>
-Understandablity（可理解性）
-</td>
-<td>
-每个子模块都可被设计者容易的理解
-</td>
-<td>
-Unix shell像Program1 | Program2 | Program3
-</td>
-</tr>
-<tr>
-<td>
-Continuity（可持续性）
-</td>
-<td>
-小的变化将只影响一小部分模块，而不会影响整个体系结构
-</td>
-<td>
-例如：宏常量的使用；统一接入模式
-</td>
-</tr>
-<tr>
-<td>
-Protection（出现异常之后的保护）
-</td>
-<td>
-运行时的不正常将局限于小范围模块内
-</td>
-<td>
-在源处进行验证输入
-</td>
-</tr>
+    <tr>
+        <td>Maintainability（可维护性）</td>
+        <td>软件系统或者组件可以轻松的修改以纠正错误，性能和属性或适应变化的环境</td>
+    </tr>
+    <tr>
+        <td>Extensibility（可扩展性）</td>
+        <td>软件设计、实现将未来的发展考虑在内，并被视为系统扩展能力的系统测量和实现扩展所需的工作量</td>
+    </tr>
+    <tr>
+        <td>Flexibility（灵活性）</td>
+        <td>软件根据用户需求，外部技术和社会环境等容易改变的能力</td>
+    </tr>
+    <tr>
+        <td>Adaptability（可适应性）</td>
+        <td>交互式系统（自适应系统）能够根据获取的有关用户及其环境的信息，使其行为适应个人用户的能力</td>
+    </tr>
+    <tr>
+        <td>Manageability（可管理性）</td>
+        <td>能够有效和轻松地监控和维护软件系统，以保持系统的正常运行，安全并平稳运行</td>
+    </tr>
 </table>
-②Five <strong>Rules</strong> of Modularity Design 五个模块化设计的<strong>原则</strong>
+
+<p>②Some comman-used <strong>maintainbility metrics</strong><br>一些评估可维护性的常用标准</p>
 <table>
-<tr>
-<td>
-Direct Mapping（直接映射）
-</td>
-<td>
-模块的结构与需要解决的实际问题领域的结构保持一致（对持续性和可分解性有影响）
-</td>
-</tr>
-<tr>
-<td>
-Few Interfaces（尽可能少的接口）
-</td>
-<td>
-模块尽可能少的与其他模块通讯（对可持续性、保护性、可理解性、可组合性产生影响）
-</td>
-</tr>
-<tr>
-<td>
-Small Interfaces（尽可能小的接口）
-</td>
-<td>
-如果两个模块通讯，那么它们应交换尽可能少的信息（限制模块之间通讯的带宽，对可持续性和保护性产生影响)）
-</td>
-</tr>
-<tr>
-<td>
-Explicit Interfaces（显示接口）
-</td>
-<td>
-当A与B通讯时，应明显的发生在A与B的接口之间（不要直接使用类，通过接口调用，eg. superInterface a = new subclass(), 在每个subclass变量声明为superInterface类型对象；对可分解性、可组合性、可持续性、 可理解性产生影响）
-</td>
-</tr>
-<tr>
-<td>
-Information Hiding（信息隐藏）
-</td>
-<td>
-经常可能发生变化的设计决策应尽可能隐藏在抽象接口后面
-</td>
-</tr>
+    <tr>
+        <td>Cyclomatic Complexity（圈复杂度）</td>
+        <td>衡量代码的结构复杂性；分支（if-else，switch）越多，控制流程越复杂，越难维护，圈复杂度越高</td>
+    </tr>
+    <tr>
+        <td>Lines Of Code（代码行数）</td>
+        <td>指示代码大致的行数，行数太多，表明该类或方法做了太多工作，应该将不同的工作分离到多个类中实现</td>
+    </tr>
+    <tr>
+        <td>Maintainability Index（MI，可维护性指数）</td>
+        <td>计算0到100之间的索引值，表示维护代码的相对容易性，越高意味着更好的可维护性；基于Halsted Volume（HV，基于源代码中不同运算符和操作符数量的合成度量）、Cyclomatic Complexity（CC，圈复杂度）、Average number of lines of code per module（LOC，每个模块平均的代码行数）、Percentage of comment lines per module（COM，每个模块注释行数的百分比）</td>
+    </tr>
+    <tr>
+        <td>Depth Of Inheritance（继承的层数）</td>
+        <td>继承的层数越深，就越难理解特定方法和变量是在哪个父类被定义或重新定义的</td>
+    </tr>
+    <tr>
+        <td>Class Coupling（类之间的耦合度）</td>
+        <td>通过参数、局部变量、返回类型、方法调用、泛型或模板实例化、基类、接口实现、在外部类型上定义的字段以及属性修饰来测量对唯一类的耦合。良好的软件设计决定了类型和方法应该具有高内聚性和低耦合性（可以理解为是否相互联系紧密，相互影响，如果一个类与其他类是基本相互独立的，不相互影响，有较少的依赖关系，则具有低耦合性）。</td>
+    </tr>
+    <tr>
+        <td>Unit test coverage（测试覆盖度）</td>
+        <td>表示代码库的哪些部分被自动化单元测试覆盖</td>
+    </tr>
 </table>
-③<strong>Coupling（耦合性） and Cohesion（内聚性）</strong>
-<table>
-<tr>
-<td>
-耦合性
-</td>
-<td>
-内聚性
-</td>
-</tr>
-<tr>
-<td>
-模块之间依赖关系（关联程度）的度量。如果两个模块之间的变化可能需要另一个模块的变更，则两个模块之间存在依赖关系
-</td>
-<td>
-衡量一个模块的功能或责任有多强烈程度的一个指标（模块的功能强度），即一个模块内部各个元素彼此结合的紧密程度的度量
-</td>
-</tr>
-<tr>
-<td>
-块之间的耦合程度取决于：模块之间的接口数量（数量）和每个接口的复杂性（由通信类型决定）（质量）
-</td>
-<td>
-如果模块的所有元素都朝着相同的目标努力，则模块具有高度的凝聚力
-</td>
-</tr>
-<tr>
-<td colspan="2">
-最好的设计在模块内具有高内聚力（也称为强内聚力）和模块之间的低耦合（也称为弱耦合）
-</td>
-</tr>
-</table>
-<p>图示高内聚性和低耦合性 <img src="https://img-blog.csdn.net/20180619091050636?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
-<h5 id="oo-design-principles">6.1.3、OO design principles</h5>
-①SOLID
-<table>
-<tr>
-<td>
-The Single Responsibility Principle（SRP，单一责任原则）
-</td>
-<td>
-The Open-Closed Principle（OCP，开放-封闭原则）
-</td>
-<td>
-The Liskov Substitution Principle（LSP，Liskov替换原则）
-</td>
-<td>
-The Interface Segregation Principle（ISP，接口聚合原则）
-</td>
-<td>
-The Dependency Inversion Principle（DIP，依赖转置原则）
-</td>
-</tr>
-<tr>
-<td>
-一个类，一个责任，只执行一个主要任务；不应有多于一个的原因使得一个类发生变化；通过分解，将两个无关的责任分离开来，分别放置在两个类中，使得每个类只负责一个类型的任务
-</td>
-<td>
-对扩展性的开放，对修改的封闭；使用抽象技术实现，构造一个抽象的父类，包含针对所有类型的子类都通用的代码（避免使用if &amp; case语句，应该将具体针对的对象抽象出来），实现对修改的封闭，当出现新的子类型，只需要从抽象父类派生具体子类，实现对扩展的开放
-</td>
-<td>
-子类型必须能够替换其基类型；派生类必须能够通过其基类的接口使用，客户端无需了解二者之间的差异（使用父接口而不是直接的子类）
-</td>
-<td>
-接口是属于客户端的而不是继承的，不能为了继承而使得接口臃肿；应该使得接口是聚合的，将功能复杂的接口分解成多个小接口，不同的接口分别向不同的客户端提供服务，客户端只访问自己需要的接口
-</td>
-<td>
-抽象的模块不应依赖于具体的模块，具体应依赖于抽象；当定义一个对象时，不应该定义为具体的类型，而应该是接口类型
-</td>
-</tr>
-</table>
-<h4 id="design-patterns-for-maintainability">6.2、Design Patterns For Maintainability</h4>
-简略介绍
-<table>
-<tr>
-<td rowspan="3">
-Creational patterns
-</td>
-<td>
-Factory Method Pattern
-</td>
-<td>
-创建对象而不是指定要创建的确切类（创建一个实例对象返回，new ConcreteTwo().makeObject()，遵循OCP）
-</td>
-</tr>
-<tr>
-<td>
-Abstract factory pattern
-</td>
-<td>
-将具有共同特征的对象工厂分组（提供接口以创建一组相关、相互依赖的对象，但不需要指明其具体类）
-</td>
-</tr>
-<tr>
-<td>
-Builder pattern
-</td>
-<td>
-通过分离构造和表示来构造复杂的对象（创建一个对象，可能需要创建多个类型的实例对象，进行组合，则在这个模式中进行创建和返回）
-</td>
-</tr>
-<tr>
-<td rowspan="3">
-Structural patterns
-</td>
-<td>
-Bridge
-</td>
-<td>
-将抽象从其实现中分离出来，以使两者可独立地变化
-</td>
-</tr>
-<tr>
-<td>
-Proxy
-</td>
-<td>
-为另一个对象提供一个占位符来控制访问，降低成本并降低复杂性（某个对象比较私密、重要，不希望被client直接访问到，故设置proxy，在二者之前建立防火墙）
-</td>
-</tr>
-<tr>
-<td>
-Composite
-</td>
-<td>
-组成零个或多个相似的对象，以便它们可以作为一个对象进行操作（目的是在同类型的对象之间建立起树型层次结构，一个上层对象可包含多个下层对象）
-</td>
-</tr>
-<tr>
-<td rowspan="5">
-Behavior Patterns
-</td>
-<td>
-Mediator
-</td>
-<td>
-通过成为唯一具有其方法详细内容的类，允许类之间的松散耦合
-</td>
-</tr>
-<tr>
-<td>
-Observer
-</td>
-<td>
-是一种发布、订阅模式，允许许多观察者对象查看事件
-</td>
-</tr>
-<tr>
-<td>
-Visitor
-</td>
-<td>
-通过将方法的层次结构移动到一个对象中将算法从对象结构中分离出来
-</td>
-</tr>
-<tr>
-<td>
-Chain of responsibility
-</td>
-<td>
-将命令委托给一系列处理对象
-</td>
-</tr>
-<tr>
-<td>
-Command
-</td>
-<td>
-创建封装动作和参数的对象
-</td>
-</tr>
-</table>
-<h4 id="maintainability-oriented-construction-techniques">6.3、Maintainability-Oriented Construction Techniques</h4>
-<h5 id="state-based-construction">6.3.1、State-based construction</h5>
-<blockquote>
-<p>核心思想：将程序看作是一个有限状态自动机，侧重于对&quot;状态&quot;及状态转换的抽象和编程。</p>
+
+<h5 id="6-1-2、Modular-Design-and-Modularity-Principles"><a href="#6-1-2、Modular-Design-and-Modularity-Principles" class="headerlink" title="6.1.2、Modular Design and Modularity Principles"></a>6.1.2、Modular Design and Modularity Principles</h5><blockquote>
+<p>模块化编程是一种强调将程序功能分离为<strong>独立</strong>，可互换模块的设计技术，每种模块都包含执行所需功能一个方面所需的一切；<br>模块化意味着将系统划分为<strong>组件</strong>或<strong>模块</strong>，每个组件或模块都可以与系统的其他部分分开设计，实施，测试，推理和重复使用；<br>目标是实现高内聚和低耦合。</p>
 </blockquote>
-<p>①State Pattern 依旧逃离不了无处不在的delegation：ADT的操作看作是状态转换，都委派给了外部的state对象 ； 不同的“状态”子类：delegate ADT在该状态Si下能够发生的所有行为，即从Si到所有可能其他状态的转换； <img src="https://img-blog.csdn.net/20180429195036210?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
-<p>②Memento Pattern 记住对象的历史状态，以便于“回滚”； Originator：需要“备忘”的类； Caretaker：添加originator的备忘记录和恢复 Memento：备忘录，记录originator对象的历史状态 Demonstration：实例主函数，创建Caretaker和Originator对象，每次修改Originator类后，调用Caretaker进行备忘； <img src="https://img-blog.csdn.net/20180429195150276?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
-<h5 id="grammer-based-construction">6.3.2、Grammer-based construction</h5>
-<p>理解语法生成和<strong>正则表达式操作符</strong>的思想； 能够<strong>读取</strong>语法或正则表达式，并确定它是否<strong>匹配</strong>字符序列； 能够编写语法或正则表达式来匹配一组字符序列并将其<strong>解析</strong>为一个数据结构；</p>
-<p><strong>语法生成</strong> 举例，可以自己生成自己 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">* URl</span><br><span class="line">* http:&#x2F;&#x2F;stanford.edu&#x2F;</span><br><span class="line">* http:&#x2F;&#x2F;google.com&#x2F;</span><br><span class="line">*&#x2F;</span><br><span class="line">   url ::&#x3D; &#39;http:&#x2F;&#x2F;&#39; [a-z]+ &#39;.&#39; [a-z]+ &#39;&#x2F;&#39;</span><br><span class="line">&#x2F;* 语法解析树表示, 具有多个非终端的文法 *&#x2F;</span><br><span class="line">  url ::&#x3D; &#39;http:&#x2F;&#x2F;&#39; hostname &#39;&#x2F;&#39;</span><br><span class="line">    hostname ::&#x3D; word &#39;.&#39; word</span><br><span class="line">   word ::&#x3D; [a-z]+</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line">* http:&#x2F;&#x2F;didit.csail.mit.edu:4949&#x2F;</span><br><span class="line">*&#x2F;</span><br><span class="line">  url ::&#x3D; &#39;http:&#x2F;&#x2F;&#39; hostname (&#39;:&#39; port)? &#39;&#x2F;&#39; &#x2F;* 端口可有可无 *&#x2F;</span><br><span class="line"> hostname ::&#x3D; word &#39;.&#39; hostname | word &#39;.&#39; word &#x2F;* 可以有一个或多个&#39;.&#39; *&#x2F;</span><br><span class="line">   &#x2F;&#x2F;hostname ::&#x3D; (word &#39;.&#39;)+ word</span><br><span class="line">    port ::&#x3D; [0-9]+</span><br><span class="line">  word ::&#x3D; [a-z]+</span><br><span class="line">&#x2F;**</span><br><span class="line">* Markdown 和 HTML的斜体</span><br><span class="line">* Markdown</span><br><span class="line">*  This is _italic_.</span><br><span class="line">* HTML</span><br><span class="line">*    Here is an &lt;i&gt;italic&lt;&#x2F;i&gt; word.</span><br><span class="line">*&#x2F;</span><br><span class="line"> markdown ::&#x3D; ( normal | italic ) * &#x2F;* 由斜体和一般字体构成 *&#x2F;</span><br><span class="line">    italic ::&#x3D; &#39;_&#39; normal &#39;_&#39;</span><br><span class="line">    normal ::&#x3D; text</span><br><span class="line">  text ::&#x3D; [^_]* &#x2F;* &#39;^&#39;为取反符号，除了&#39;_&#39;不能取，其余任取 *&#x2F;</span><br><span class="line"></span><br><span class="line">  html ::&#x3D; ( normal | italic ) * &#x2F;* 由斜体和一般字体构成 *&#x2F;</span><br><span class="line">    italic ::&#x3D; &#39;&lt;i&gt;&#39; html &#39;&lt;&#x2F;i&gt;&#39;</span><br><span class="line">    normal ::&#x3D; text</span><br><span class="line">  text ::&#x3D; [^&lt;&gt;]*</span><br><span class="line">&#x2F;**</span><br><span class="line">* Think</span><br><span class="line">* 使用上述匹配</span><br><span class="line">* markdown不能嵌套</span><br><span class="line">* a_b_c_d_e -&gt; b, d为斜体</span><br><span class="line">* html可以嵌套</span><br><span class="line">* a&lt;i&gt;b&lt;i&gt;c&lt;i&gt;d&lt;i&gt;e -&gt; b,c,d均为斜体</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure> a_b_c_d_e（b，d为斜体效果） a<i>b<i>c<i>d<i>e（bcd均为斜体效果）</p>
-<p><strong>Regular Grammar（正则表达式）</strong> 不能自己产生自己（html ::= ( [ ^&lt;&gt;]* | '<i>' html '</i>' )* 错误） 在java中&quot;&quot;要用&quot;\&quot;进行转义 Regular Expression， <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/80145139">正则表达式的使用</a></p>
+<p>①Five Criteria for Evaluating Modularity<br>实现模块化的五个标准</p>
+<table>
+    <tr>
+        <td>Decomposability（可分解性）</td>
+        <td>将问题分解为各个可独立解决的子问题</td>
+        <td>目标：使得模块之间的依赖关系显式化和最小化；例如：自上而下的结构设计</td>
+    </tr>
+    <tr>
+        <td>Composability（可组合性）</td>
+        <td>可以容易的将模块组合起来形成新的系统</td>
+        <td>目标：使得模块可在不同环境下复用；例如：Math库，UNIX command & pipes</td>
+    </tr>
+    <tr>
+        <td>Understandablity（可理解性）</td>
+        <td>每个子模块都可被设计者容易的理解</td>
+        <td>Unix shell像Program1 | Program2 | Program3</td>
+    </tr>
+    <tr>
+        <td>Continuity（可持续性）</td>
+        <td>小的变化将只影响一小部分模块，而不会影响整个体系结构</td>
+        <td>例如：宏常量的使用；统一接入模式</td>
+    </tr>
+    <tr>
+        <td>Protection（出现异常之后的保护）</td>
+        <td>运行时的不正常将局限于小范围模块内</td>
+        <td>在源处进行验证输入</td>
+    </tr>
+</table>
+
+<p>②Five <strong>Rules</strong> of Modularity Design<br>五个模块化设计的<strong>原则</strong></p>
+<table>
+    <tr>
+        <td>Direct Mapping（直接映射）</td>
+        <td>模块的结构与需要解决的实际问题领域的结构保持一致（对持续性和可分解性有影响）</td>
+    </tr>
+    <tr>
+        <td>Few Interfaces（尽可能少的接口）</td>
+        <td>模块尽可能少的与其他模块通讯（对可持续性、保护性、可理解性、可组合性产生影响）</td>
+    </tr>
+    <tr>
+        <td>Small Interfaces（尽可能小的接口）</td>
+        <td>如果两个模块通讯，那么它们应交换尽可能少的信息（限制模块之间通讯的带宽，对可持续性和保护性产生影响)）</td>
+    </tr>
+    <tr>
+        <td>Explicit Interfaces（显示接口）</td>
+        <td>当A与B通讯时，应明显的发生在A与B的接口之间（不要直接使用类，通过接口调用，eg. superInterface a = new  subclass(), 在每个subclass变量声明为superInterface类型对象；对可分解性、可组合性、可持续性、 可理解性产生影响）</td>
+    </tr>
+    <tr>
+        <td>Information Hiding（信息隐藏）</td>
+        <td>经常可能发生变化的设计决策应尽可能隐藏在抽象接口后面</td>
+    </tr>
+</table>
+
+<p>③<strong>Coupling（耦合性） and Cohesion（内聚性）</strong></p>
+<table>
+    <tr>
+        <td>耦合性</td>
+        <td>内聚性</td>
+    </tr>
+    <tr>
+        <td>模块之间依赖关系（关联程度）的度量。如果两个模块之间的变化可能需要另一个模块的变更，则两个模块之间存在依赖关系</td>
+        <td>衡量一个模块的功能或责任有多强烈程度的一个指标（模块的功能强度），即一个模块内部各个元素彼此结合的紧密程度的度量</td>
+    </tr>
+    <tr>
+        <td>块之间的耦合程度取决于：模块之间的接口数量（数量）和每个接口的复杂性（由通信类型决定）（质量）</td>
+        <td>如果模块的所有元素都朝着相同的目标努力，则模块具有高度的凝聚力</td>
+    </tr>
+    <tr>
+        <td colspan="2"> 最好的设计在模块内具有高内聚力（也称为强内聚力）和模块之间的低耦合（也称为弱耦合）</td>
+    </tr>
+</table>
+图示高内聚性和低耦合性
+![这里写图片描述](https://img-blog.csdn.net/20180619091050636?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+<h5 id="6-1-3、OO-design-principles"><a href="#6-1-3、OO-design-principles" class="headerlink" title="6.1.3、OO design principles"></a>6.1.3、OO design principles</h5><p>①SOLID</p>
+<table>
+    <tr>
+        <td>The Single Responsibility Principle（SRP，单一责任原则）</td>
+        <td>The Open-Closed Principle（OCP，开放-封闭原则）</td>
+        <td>The Liskov Substitution Principle（LSP，Liskov替换原则）</td>
+        <td>The Interface Segregation Principle（ISP，接口聚合原则）</td>
+        <td>The Dependency Inversion Principle（DIP，依赖转置原则）</td>
+    </tr>
+    <tr>
+        <td>一个类，一个责任，只执行一个主要任务；不应有多于一个的原因使得一个类发生变化；通过分解，将两个无关的责任分离开来，分别放置在两个类中，使得每个类只负责一个类型的任务</td>
+        <td>对扩展性的开放，对修改的封闭；使用抽象技术实现，构造一个抽象的父类，包含针对所有类型的子类都通用的代码（避免使用if & case语句，应该将具体针对的对象抽象出来），实现对修改的封闭，当出现新的子类型，只需要从抽象父类派生具体子类，实现对扩展的开放</td>
+        <td>子类型必须能够替换其基类型；派生类必须能够通过其基类的接口使用，客户端无需了解二者之间的差异（使用父接口而不是直接的子类）</td>
+        <td>接口是属于客户端的而不是继承的，不能为了继承而使得接口臃肿；应该使得接口是聚合的，将功能复杂的接口分解成多个小接口，不同的接口分别向不同的客户端提供服务，客户端只访问自己需要的接口</td>
+        <td>抽象的模块不应依赖于具体的模块，具体应依赖于抽象；当定义一个对象时，不应该定义为具体的类型，而应该是接口类型</td>
+    </tr>
+</table>
+
+<h4 id="6-2、Design-Patterns-For-Maintainability"><a href="#6-2、Design-Patterns-For-Maintainability" class="headerlink" title="6.2、Design Patterns For Maintainability"></a>6.2、Design Patterns For Maintainability</h4><p>简略介绍</p>
+<table>
+    <tr>
+        <td rowspan="3">Creational patterns</td>
+        <td>Factory Method Pattern</td>
+        <td>创建对象而不是指定要创建的确切类（创建一个实例对象返回，new ConcreteTwo().makeObject()，遵循OCP）</td>
+    </tr>
+    <tr>
+        <td>Abstract factory pattern</td>
+        <td>将具有共同特征的对象工厂分组（提供接口以创建一组相关、相互依赖的对象，但不需要指明其具体类）</td>
+    </tr>
+    <tr>
+        <td>Builder pattern</td>
+        <td>通过分离构造和表示来构造复杂的对象（创建一个对象，可能需要创建多个类型的实例对象，进行组合，则在这个模式中进行创建和返回）</td>
+    </tr>
+    <tr>
+        <td rowspan="3">Structural patterns</td>
+        <td>Bridge</td>
+        <td>将抽象从其实现中分离出来，以使两者可独立地变化</td>
+    </tr>
+    <tr>
+        <td>Proxy</td>
+        <td>为另一个对象提供一个占位符来控制访问，降低成本并降低复杂性（某个对象比较私密、重要，不希望被client直接访问到，故设置proxy，在二者之前建立防火墙）</td>
+    </tr>
+    <tr>
+        <td>Composite</td>
+        <td>组成零个或多个相似的对象，以便它们可以作为一个对象进行操作（目的是在同类型的对象之间建立起树型层次结构，一个上层对象可包含多个下层对象）</td>
+    </tr>
+    <tr>
+        <td rowspan="5">Behavior Patterns</td>
+        <td>Mediator</td>
+        <td>通过成为唯一具有其方法详细内容的类，允许类之间的松散耦合</td>
+    </tr>
+    <tr>
+        <td>Observer</td>
+        <td>是一种发布、订阅模式，允许许多观察者对象查看事件</td>
+    </tr>
+    <tr>
+        <td>Visitor</td>
+        <td>通过将方法的层次结构移动到一个对象中将算法从对象结构中分离出来</td>
+    </tr>
+    <tr>
+        <td>Chain of responsibility</td>
+        <td>将命令委托给一系列处理对象</td>
+    </tr>
+    <tr>
+        <td>Command</td>
+        <td>创建封装动作和参数的对象</td>
+    </tr>
+</table>
+
+<h4 id="6-3、Maintainability-Oriented-Construction-Techniques"><a href="#6-3、Maintainability-Oriented-Construction-Techniques" class="headerlink" title="6.3、Maintainability-Oriented Construction Techniques"></a>6.3、Maintainability-Oriented Construction Techniques</h4><h5 id="6-3-1、State-based-construction"><a href="#6-3-1、State-based-construction" class="headerlink" title="6.3.1、State-based construction"></a>6.3.1、State-based construction</h5><blockquote>
+<p>核心思想：将程序看作是一个有限状态自动机，侧重于对”状态”及状态转换的抽象和编程。</p>
+</blockquote>
+<p>①State Pattern<br>依旧逃离不了无处不在的delegation：ADT的操作看作是状态转换，都委派给了外部的state对象 ；<br>不同的“状态”子类：delegate ADT在该状态Si下能够发生的所有行为，即从Si到所有可能其他状态的转换；<br><img src="https://img-blog.csdn.net/20180429195036210?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p>②Memento Pattern<br>记住对象的历史状态，以便于“回滚”；<br>Originator：需要“备忘”的类；<br>Caretaker：添加originator的备忘记录和恢复<br>Memento：备忘录，记录originator对象的历史状态<br>Demonstration：实例主函数，创建Caretaker和Originator对象，每次修改Originator类后，调用Caretaker进行备忘；<br><img src="https://img-blog.csdn.net/20180429195150276?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h5 id="6-3-2、Grammer-based-construction"><a href="#6-3-2、Grammer-based-construction" class="headerlink" title="6.3.2、Grammer-based construction"></a>6.3.2、Grammer-based construction</h5><p>理解语法生成和<strong>正则表达式操作符</strong>的思想；<br>能够<strong>读取</strong>语法或正则表达式，并确定它是否<strong>匹配</strong>字符序列；<br>能够编写语法或正则表达式来匹配一组字符序列并将其<strong>解析</strong>为一个数据结构；</p>
+<p><strong>语法生成</strong><br>举例，可以自己生成自己</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">* URl</span><br><span class="line">* http:&#x2F;&#x2F;stanford.edu&#x2F;</span><br><span class="line">* http:&#x2F;&#x2F;google.com&#x2F;</span><br><span class="line">*&#x2F;</span><br><span class="line">    url ::&#x3D; &#39;http:&#x2F;&#x2F;&#39; [a-z]+ &#39;.&#39; [a-z]+ &#39;&#x2F;&#39;</span><br><span class="line">&#x2F;* 语法解析树表示, 具有多个非终端的文法 *&#x2F;</span><br><span class="line">    url ::&#x3D; &#39;http:&#x2F;&#x2F;&#39; hostname &#39;&#x2F;&#39;</span><br><span class="line">    hostname ::&#x3D; word &#39;.&#39; word</span><br><span class="line">    word ::&#x3D; [a-z]+</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line">* http:&#x2F;&#x2F;didit.csail.mit.edu:4949&#x2F;</span><br><span class="line">*&#x2F;</span><br><span class="line">    url ::&#x3D; &#39;http:&#x2F;&#x2F;&#39; hostname (&#39;:&#39; port)? &#39;&#x2F;&#39; &#x2F;* 端口可有可无 *&#x2F;</span><br><span class="line">    hostname ::&#x3D; word &#39;.&#39; hostname | word &#39;.&#39; word &#x2F;* 可以有一个或多个&#39;.&#39; *&#x2F;</span><br><span class="line">    &#x2F;&#x2F;hostname ::&#x3D; (word &#39;.&#39;)+ word</span><br><span class="line">    port ::&#x3D; [0-9]+</span><br><span class="line">    word ::&#x3D; [a-z]+</span><br><span class="line">&#x2F;**</span><br><span class="line">* Markdown 和 HTML的斜体</span><br><span class="line">* Markdown</span><br><span class="line">*     This is _italic_.</span><br><span class="line">* HTML</span><br><span class="line">*    Here is an &lt;i&gt;italic&lt;&#x2F;i&gt; word.</span><br><span class="line">*&#x2F;</span><br><span class="line">    markdown ::&#x3D; ( normal | italic ) * &#x2F;* 由斜体和一般字体构成 *&#x2F;</span><br><span class="line">    italic ::&#x3D; &#39;_&#39; normal &#39;_&#39;</span><br><span class="line">    normal ::&#x3D; text</span><br><span class="line">    text ::&#x3D; [^_]* &#x2F;* &#39;^&#39;为取反符号，除了&#39;_&#39;不能取，其余任取 *&#x2F;</span><br><span class="line"></span><br><span class="line">    html ::&#x3D; ( normal | italic ) * &#x2F;* 由斜体和一般字体构成 *&#x2F;</span><br><span class="line">    italic ::&#x3D; &#39;&lt;i&gt;&#39; html &#39;&lt;&#x2F;i&gt;&#39;</span><br><span class="line">    normal ::&#x3D; text</span><br><span class="line">    text ::&#x3D; [^&lt;&gt;]*</span><br><span class="line">&#x2F;**</span><br><span class="line">* Think</span><br><span class="line">* 使用上述匹配</span><br><span class="line">* markdown不能嵌套</span><br><span class="line">* a_b_c_d_e -&gt; b, d为斜体</span><br><span class="line">* html可以嵌套</span><br><span class="line">* a&lt;i&gt;b&lt;i&gt;c&lt;i&gt;d&lt;i&gt;e -&gt; b,c,d均为斜体</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure>
+<p>a_b_c_d_e（b，d为斜体效果）<br>a<i>b<i>c<i>d<i>e（bcd均为斜体效果）</p>
+<p><strong>Regular Grammar（正则表达式）</strong><br>不能自己产生自己（html ::= ( [ ^&lt;&gt;]* | ‘<i>‘ html ‘</i>‘ )* 错误）<br>在java中”&quot;要用”\“进行转义<br>Regular Expression， <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/80145139">正则表达式的使用</a></p>
 
     </div>
 
@@ -894,6 +746,7 @@ Command
 
 
       
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -939,6 +792,26 @@ Command
   </div>
 
       
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -975,8 +848,70 @@ Command
   
 
   
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>

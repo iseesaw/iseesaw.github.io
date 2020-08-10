@@ -19,22 +19,21 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="Chapter2 Process and Tools of Software Construction 主要介绍了软件开发的基本过程，传统软件开发过程模型，敏捷开发，软件配置管理SCM，版本控制系统VCS，Git作为配置管理工具； 广义的软件构造过程，Eclipse作为java构造工具，软件构造各阶段的常见工具，狭义的软件构造：build，常见的build工具； 2.1 Software Life">
+  <meta name="description" content="Chapter2 Process and Tools of Software Construction主要介绍了软件开发的基本过程，传统软件开发过程模型，敏捷开发，软件配置管理SCM，版本控制系统VCS，Git作为配置管理工具；广义的软件构造过程，Eclipse作为java构造工具，软件构造各阶段的常见工具，狭义的软件构造：build，常见的build工具； 2.1 Software Lifecy">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Chapter2-软件构造过程和生命周期">
 <meta property="og:url" content="http://blog.khay.site/2018/03/27/Chapter2-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="Chapter2 Process and Tools of Software Construction 主要介绍了软件开发的基本过程，传统软件开发过程模型，敏捷开发，软件配置管理SCM，版本控制系统VCS，Git作为配置管理工具； 广义的软件构造过程，Eclipse作为java构造工具，软件构造各阶段的常见工具，狭义的软件构造：build，常见的build工具； 2.1 Software Life">
+<meta property="og:description" content="Chapter2 Process and Tools of Software Construction主要介绍了软件开发的基本过程，传统软件开发过程模型，敏捷开发，软件配置管理SCM，版本控制系统VCS，Git作为配置管理工具；广义的软件构造过程，Eclipse作为java构造工具，软件构造各阶段的常见工具，狭义的软件构造：build，常见的build工具； 2.1 Software Lifecy">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdn.net/20180612234707719?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180612234722624?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180612234729190?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180612234737692?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/2018061223474511?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
-<meta property="og:image" content="https://img-blog.csdn.net/20180612235330669?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180613144339685?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180613150336109?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180613152504724?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
@@ -294,11 +293,6 @@ mjx-container[display="true"] + br {
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -355,7 +349,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#chapter2-process-and-tools-of-software-construction"><span class="nav-number">1.</span> <span class="nav-text">Chapter2 Process and Tools of Software Construction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#software-lifecycle-and-configuration-management"><span class="nav-number">1.1.</span> <span class="nav-text">2.1 Software Lifecycle and Configuration Management</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#software-development-lifecyclesdlc"><span class="nav-number">1.1.1.</span> <span class="nav-text">2.1.1 Software Development Lifecycle(SDLC)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#traditional-software-process-models"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.1.2 Traditional Software process models</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#agile-development-and-extreme-programmingxp"><span class="nav-number">1.1.3.</span> <span class="nav-text">2.1.3 Agile development and eXtreme Programming(XP)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#software-configuration-managementscm"><span class="nav-number">1.1.4.</span> <span class="nav-text">2.1.4 Software Configuration Management(SCM)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#git-github"><span class="nav-number">1.1.5.</span> <span class="nav-text">2.1.5 Git &amp; GitHub</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#process-systems-and-tools"><span class="nav-number">1.2.</span> <span class="nav-text">2.2 Process, Systems, and Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#general-process-of-sofrware-construction"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.2.1 General process of sofrware construction</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#narrow-sense-process-of-software-constructionbuild"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2.2 Narrow-sense process of software construction（build）</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Chapter2-Process-and-Tools-of-Software-Construction"><span class="nav-number">1.</span> <span class="nav-text">Chapter2 Process and Tools of Software Construction</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-Software-Lifecycle-and-Configuration-Management"><span class="nav-number">1.1.</span> <span class="nav-text">2.1 Software Lifecycle and Configuration Management</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-1-Software-Development-Lifecycle-SDLC"><span class="nav-number">1.1.1.</span> <span class="nav-text">2.1.1 Software Development Lifecycle(SDLC)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-2-Traditional-Software-process-models"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.1.2 Traditional Software process models</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-3-Agile-development-and-eXtreme-Programming-XP"><span class="nav-number">1.1.3.</span> <span class="nav-text">2.1.3 Agile development and eXtreme Programming(XP)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-4-Software-Configuration-Management-SCM"><span class="nav-number">1.1.4.</span> <span class="nav-text">2.1.4 Software Configuration Management(SCM)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-5-Git-amp-GitHub"><span class="nav-number">1.1.5.</span> <span class="nav-text">2.1.5 Git &amp; GitHub</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-Process-Systems-and-Tools"><span class="nav-number">1.2.</span> <span class="nav-text">2.2 Process, Systems, and Tools</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-General-process-of-sofrware-construction"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.2.1 General process of sofrware construction</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-Narrow-sense-process-of-software-construction%EF%BC%88build%EF%BC%89"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2.2  Narrow-sense process of software construction（build）</span></a></li></ol></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -473,6 +467,34 @@ mjx-container[display="true"] + br {
             </span>
 
           
+            <span id="/2018/03/27/Chapter2-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="post-meta-item leancloud_visitors" data-flag-title="Chapter2-软件构造过程和生命周期" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/03/27/Chapter2-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Chapter2-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -481,194 +503,111 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="chapter2-process-and-tools-of-software-construction">Chapter2 Process and Tools of Software Construction</h3>
-<p>主要介绍了软件开发的基本过程，传统软件开发过程模型，敏捷开发，<strong>软件配置管理SCM</strong>，<strong>版本控制系统VCS</strong>，<strong>Git作为配置管理工具</strong>； 广义的软件构造过程，Eclipse作为java构造工具，软件构造各阶段的常见工具，狭义的软件构造：build，常见的build工具；</p>
-<h4 id="software-lifecycle-and-configuration-management">2.1 Software Lifecycle and Configuration Management</h4>
-<h5 id="software-development-lifecyclesdlc">2.1.1 Software Development Lifecycle(SDLC)</h5>
-<p>软件构造遵循的过程: ①From 0 to 1 (从到无到有) ②From 0 to n (从有到好) 软件的生命周期: <strong>计划</strong>(产品经理) <strong>-&gt; 需求</strong>(需求工程师) <strong>-&gt; 设计</strong>(架构师) <strong>-&gt; 构造(实现)</strong>(程序员) <strong>-&gt; 测试</strong>(程序员) <strong>-&gt; 部署</strong>(运维工程师) <strong>-&gt; 运维</strong>(运维工程师)</p>
-<h5 id="traditional-software-process-models">2.1.2 Traditional Software process models</h5>
-<p>选择合适的过程模型的依据： ①用户参与程度，适应变化的能力 ②开发效率，管理复杂度 ③开发出的软件的质量</p>
-传统软件过程模型:
+        <h3 id="Chapter2-Process-and-Tools-of-Software-Construction"><a href="#Chapter2-Process-and-Tools-of-Software-Construction" class="headerlink" title="Chapter2 Process and Tools of Software Construction"></a>Chapter2 Process and Tools of Software Construction</h3><p>主要介绍了软件开发的基本过程，传统软件开发过程模型，敏捷开发，<strong>软件配置管理SCM</strong>，<strong>版本控制系统VCS</strong>，<strong>Git作为配置管理工具</strong>；<br>广义的软件构造过程，Eclipse作为java构造工具，软件构造各阶段的常见工具，狭义的软件构造：build，常见的build工具；</p>
+<h4 id="2-1-Software-Lifecycle-and-Configuration-Management"><a href="#2-1-Software-Lifecycle-and-Configuration-Management" class="headerlink" title="2.1 Software Lifecycle and Configuration Management"></a>2.1 Software Lifecycle and Configuration Management</h4><h5 id="2-1-1-Software-Development-Lifecycle-SDLC"><a href="#2-1-1-Software-Development-Lifecycle-SDLC" class="headerlink" title="2.1.1 Software Development Lifecycle(SDLC)"></a>2.1.1 Software Development Lifecycle(SDLC)</h5><p>软件构造遵循的过程:<br>①From 0 to 1 (从到无到有)<br>②From 0 to n (从有到好)<br>软件的生命周期:<br><strong>计划</strong>(产品经理)  <strong>-&gt; 需求</strong>(需求工程师) <strong>-&gt; 设计</strong>(架构师) <strong>-&gt; 构造(实现)</strong>(程序员) <strong>-&gt; 测试</strong>(程序员) <strong>-&gt; 部署</strong>(运维工程师) <strong>-&gt; 运维</strong>(运维工程师)</p>
+<h5 id="2-1-2-Traditional-Software-process-models"><a href="#2-1-2-Traditional-Software-process-models" class="headerlink" title="2.1.2 Traditional Software process models"></a>2.1.2 Traditional Software process models</h5><p>选择合适的过程模型的依据：<br>①用户参与程度，适应变化的能力<br>②开发效率，管理复杂度<br>③开发出的软件的质量</p>
+<p>传统软件过程模型:</p>
 <table>
-<tr>
-<td>
-Basic types
-</td>
-<td>
-Linear(线性过程)
-</td>
-<td>
-Iterative(迭代过程)
-</td>
-</tr>
-<tr>
-<td>
-Existing models
-</td>
-<td>
-Waterfall(瀑布过程，线性/整体推进（无迭代），阶段划分清楚，管理简单，无法适应需求，拓展-&gt;V字模型), Incremental(增量过程，线性推进（无迭代），增量式（多个瀑布的串行），比较容易适应需求的增加)
-</td>
-<td>
-Spiral(螺旋过程， 多轮迭代基本遵循瀑布模式，每轮迭代有明确的目标，遵循原型过程，进行严格的风险分析，方可进入下一轮迭代)
-</td>
-</tr>
+    <tr>
+        <td>Basic types</td>
+        <td>Linear(线性过程)</td>
+        <td>Iterative(迭代过程)</td>
+    </tr>
+    <tr>
+        <td>Existing models</td>
+        <td>Waterfall(瀑布过程，线性/整体推进（无迭代），阶段划分清楚，管理简单，无法适应需求，拓展->V字模型), 
+        Incremental(增量过程，线性推进（无迭代），增量式（多个瀑布的串行），比较容易适应需求的增加)</td>
+<td>Spiral(螺旋过程， 多轮迭代基本遵循瀑布模式，每轮迭代有明确的目标，遵循原型过程，进行严格的风险分析，方可进入下一轮迭代)</td>
+    </tr>
 </table>
-<blockquote>
-<p>迭代：开发出来会后有用户试用、评审，发现问题反馈给开发者，开发者修改原有的实现，继续交给用户评审。循环往复，直到用户满意，时间代价高，但开发质量高</p>
-</blockquote>
-<p>使用图示查看各个模型过程还是很直观的 瀑布模型 <img src="https://img-blog.csdn.net/20180612234707719?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 增量模型 <img src="https://img-blog.csdn.net/20180612234722624?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> V字模型 <img src="https://img-blog.csdn.net/20180612234729190?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 原型模型 <img src="https://img-blog.csdn.net/20180612234737692?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 螺旋模型 <img src="https://img-blog.csdn.net/2018061223474511?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
-<h5 id="agile-development-and-extreme-programmingxp">2.1.3 Agile development and eXtreme Programming(XP)</h5>
-敏捷开发和极限编程
+>迭代：开发出来会后有用户试用、评审，发现问题反馈给开发者，开发者修改原有的实现，继续交给用户评审。循环往复，直到用户满意，时间代价高，但开发质量高
+
+<p>使用图示查看各个模型过程还是很直观的<br>瀑布模型<br><img src="https://img-blog.csdn.net/20180612234707719?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>增量模型<br><img src="https://img-blog.csdn.net/20180612234722624?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>V字模型<br><img src="https://img-blog.csdn.net/20180612234729190?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>原型模型<br><img src="https://img-blog.csdn.net/20180612234737692?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>螺旋模型<br><img src="https://img-blog.csdn.net/2018061223474511?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<h5 id="2-1-3-Agile-development-and-eXtreme-Programming-XP"><a href="#2-1-3-Agile-development-and-eXtreme-Programming-XP" class="headerlink" title="2.1.3 Agile development and eXtreme Programming(XP)"></a>2.1.3 Agile development and eXtreme Programming(XP)</h5><p>敏捷开发和极限编程</p>
 <table>
-<tr>
-<td>
-Agile development（敏捷开发）
-</td>
-<td>
-eXtreme Programming（极限编程）
-</td>
-</tr>
-<tr>
-<td>
-通过快速迭代和小规模的持续改进，以快速适应变化；极限的用户参与，极限的小步骤迭代，极限的确认、验证
-</td>
-<td>
-Strengthen communication; start from simple; seek feedback; be brave in seeking truth from facts(近螺旋式开发)
-</td>
-</tr>
+    <tr>
+        <td>Agile development（敏捷开发）</td>
+        <td>eXtreme Programming（极限编程）</td>
+    </tr>
+        <tr>
+        <td>通过快速迭代和小规模的持续改进，以快速适应变化；极限的用户参与，极限的小步骤迭代，极限的确认、验证</td>
+        <td>Strengthen communication; start from simple; seek feedback; be brave in seeking truth from facts(近螺旋式开发)</td>
+    </tr>
 </table>
-<p>Waterfall vs Agile <img src="https://img-blog.csdn.net/20180612235330669?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
-<h5 id="software-configuration-managementscm">2.1.4 Software Configuration Management(SCM)</h5>
-<strong>Terminology(专业术语)</strong>
+Waterfall vs Agile
+![这里写图片描述](https://img-blog.csdn.net/20180612235330669?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70)
+
+<h5 id="2-1-4-Software-Configuration-Management-SCM"><a href="#2-1-4-Software-Configuration-Management-SCM" class="headerlink" title="2.1.4 Software Configuration Management(SCM)"></a>2.1.4 Software Configuration Management(SCM)</h5><p><strong>Terminology(专业术语)</strong></p>
 <table>
-<tr>
-<td>
-Software Configuration Management(SCM, 软件配置管理)
-</td>
-<td>
-Configuration Item(SCI, 软件配置项)
-</td>
-<td>
-Baselines(基线)
-</td>
-<td>
-CMDB(配置管理数据库)
-</td>
-<td>
-Versioning(版本控制)
-</td>
-</tr>
-<tr>
-<td>
-追踪和控制软件的变化
-</td>
-<td>
-软件中发生变化的基本单元(eg. 文件)
-</td>
-<td>
-软件持续变化过程中的&quot;稳定时刻&quot;(eg. 对外发布的版本)
-</td>
-<td>
-存储软件的各配置项随时间发生变化的信息+基线
-</td>
-<td>
-为软件的任一特定时刻(Moment)的形态指派一个唯一的编号, 作为&quot;身份标识&quot;
-</td>
-</tr>
-</table>
-<strong>Version Control System(VCS, 版本控制系统)</strong> &gt;<strong>重要性</strong>：回滚上一个版本；比较两个版本的差异；备份软件版本历史；获取备份；合并；多个开发者之间共享和协作；记录每个开发者的动作，便于&quot;审计&quot;。 &gt;<strong>terminology</strong>： &gt;仓库：即SCM中的CMDB &gt;工作拷贝：在开发者本地机器上的一份项目拷贝 &gt;变化：即code churm，两个版本之间的差异 &gt;HEAD：当前版本
-<table>
-<tr>
-<td>
-Local VCS(本地版本控制系统)
-</td>
-<td>
-Centralized VCS(集中式版本控制系统)
-</td>
-<td>
-Distributed VCS(分布式版本控制系统)
-</td>
-</tr>
-<tr>
-<td>
-仓库存储于开发者本地机器, 无法共享和协作
-</td>
-<td>
-仓库存储于独立的服务器, 支持多开发者之间的协作
-</td>
-<td>
-仓库存储于独立的服务器+每个开发者的本地机器
-</td>
-</tr>
-</table>
-<h5 id="git-github">2.1.5 Git &amp; GitHub</h5>
-<p>Git的结构、工作原理、基本指令 GitHub</p>
-<p><strong>Git管理软件演变过程中的变化</strong> <img src="https://img-blog.csdn.net/20180613144339685?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 这里按照图示，基本概述一下<strong>Git管理的相关指令操作</strong>： 要在本地创建一个仓库，首先需要<code>git init</code> 生成.git，.git保存所有版本控制数据，即本地的CMDB； 将工作目录（本地文件系统，workspace）文件加入暂存区，使用<code>git add file</code>（git add . 将当前目录下所有文件加入暂存区），此时状态为Staged，已暂存； 使用<code>git commit -m &quot;comment&quot;</code>将暂存区文件加入到本地仓库（local repository），此时状态为Committed，已提交； 将本地仓库同步到远程仓库使用<code>git push origin master</code> （master，主线）； 如果远程仓库发生了改变，需要先使用<code>git fetch</code> 同步本地仓库。</p>
-<p><strong>Git的管理变化</strong>，每个文件只保存一份，在每个版本中，如果发生改变则更改，否则使用前一个版本的文件，该版本中不显示，如下图： <img src="https://img-blog.csdn.net/20180613150336109?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
-<p><strong>Object Graph</strong> 版本之间的演化关系图，一条边A-&gt;B表征了“在版本A的基础上作出变化，形成了版本B”； 其中每次commit（提交），都是一个当前整个项目的快照，展示为一个树节点；同时包含一个日志信息，who，when，short log message，以hash值作为区别； 这里可以使用<code>git lol</code> 在git bash上得到演变树； <img src="https://img-blog.csdn.net/20180613152504724?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 下面是Git项目的历史演变构成一个<code>directed acyclic graph（DAG）</code>，保存在<code>.git</code>中，而使用<code>git commit</code>就是向该图中增加节点； <img src="https://img-blog.csdn.net/20180613150853102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 使用<code>git show commithash</code> 以展示某次提交的详细情况；</p>
-<p><strong>Branch and Merge（分支与合并）</strong> master为主线，其余为分支，可以将分支与主线进行合并； 可以使用<code>git checkout</code> 切换分支或恢复工作树文件；<code>git merge brname</code> 合并分支； <img src="https://img-blog.csdn.net/20180613151030741?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
-<p><strong>collaboration（合作）</strong> 主要涉及commit、push、merge、fetch等交互操作； <img src="https://img-blog.csdn.net/20180613151413528?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
-<p><strong>关于GItHub</strong> Git的web服务器 Basic process: commit， branch and merge Collaboration process: fork and pull request，issues</p>
-<h4 id="process-systems-and-tools">2.2 Process, Systems, and Tools</h4>
-<h5 id="general-process-of-sofrware-construction">2.2.1 General process of sofrware construction</h5>
-广义的软件构造过程: <strong>Design（设计） -&gt; Programming/refactoring（重构） -&gt; Debugging（调试） -&gt; Testing（测试） -&gt; Build（构建） -&gt;Release（发布）</strong>
-<table>
-<tr>
-<td>
-Programming/refactoring(编程/重构)
-</td>
-<td>
-Review and static code analysis(代码评审)
-</td>
-<td>
-Debugging(dumping and logging) and Testing(调试和测试)
-</td>
-<td>
-Dynamic code analysis/profiling(动态分析)
-</td>
-</tr>
-<tr>
-<td>
-重构: 在不改变功能的前提下优化代码
-</td>
-<td>
-Formal code review(正式代码评审会议); Lightweight code review(轻量级的代码评审, eg. Pair programming-结对编程); Static code analysis(利用工具进行的静态代码分析, eg. CheckStyle, FindBugs, PMD)
-</td>
-<td>
-测试：发现程序是否有错误; 调试: 定位错误, 发现错误根源
-</td>
-<td>
-executing programs, profiling(对代码的运行时状态和性能进行度量)
-</td>
-</tr>
-</table>
-<h5 id="narrow-sense-process-of-software-constructionbuild">2.2.2 Narrow-sense process of software construction（build）</h5>
-粗略理解build，就是从build-time到run-time，借助工具，将软件构造各阶段的活动&quot;自动化&quot;，提高构造效率； 狭义的软件构造过程(Build): <strong>Validate</strong>(验证) <strong>-&gt; Compile</strong>(编译) <strong>-&gt; Link</strong>(链接) <strong>-&gt; Test</strong>(测试) <strong>-&gt; Package</strong>(打包) <strong>-&gt;Install</strong>(部署) <strong>-&gt;Deploy</strong>(发布)
-<table>
-<tr>
-<td>
-Build system
-</td>
-<td>
-Build variants and build language
-</td>
-<td>
-Build tools
-</td>
-</tr>
-<tr>
-<td>
-components and process
-</td>
-<td>
-Makefile, build.xml
-</td>
-<td>
-Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持续集成）
-</td>
-</tr>
+    <tr>
+        <td>Software Configuration Management(SCM, 软件配置管理)</td>
+        <td>Configuration Item(SCI, 软件配置项)</td>
+        <td>Baselines(基线)</td>
+        <td>CMDB(配置管理数据库)</td>
+        <td>Versioning(版本控制)</td>
+    </tr>
+    <tr>
+        <td>追踪和控制软件的变化</td>
+        <td>软件中发生变化的基本单元(eg. 文件)</td>
+        <td>软件持续变化过程中的"稳定时刻"(eg. 对外发布的版本)</td>
+        <td>存储软件的各配置项随时间发生变化的信息+基线</td>
+        <td>为软件的任一特定时刻(Moment)的形态指派一个唯一的编号, 作为"身份标识"</td>
+    </tr>
 </table>
 
+<p><strong>Version Control System(VCS, 版本控制系统)</strong></p>
+<blockquote>
+<p><strong>重要性</strong>：回滚上一个版本；比较两个版本的差异；备份软件版本历史；获取备份；合并；多个开发者之间共享和协作；记录每个开发者的动作，便于”审计”。<br><strong>terminology</strong>：<br>仓库：即SCM中的CMDB<br>工作拷贝：在开发者本地机器上的一份项目拷贝<br>变化：即code churm，两个版本之间的差异<br>HEAD：当前版本</p>
+</blockquote>
+<table>
+    <tr>
+        <td>Local VCS(本地版本控制系统)</td>
+        <td>Centralized VCS(集中式版本控制系统)</td>
+        <td>Distributed VCS(分布式版本控制系统)</td>
+    </tr>
+        <tr>
+        <td>仓库存储于开发者本地机器, 无法共享和协作</td>
+        <td>仓库存储于独立的服务器, 支持多开发者之间的协作</td>
+        <td>仓库存储于独立的服务器+每个开发者的本地机器</td>
+    </tr>
+</table>
+
+<h5 id="2-1-5-Git-amp-GitHub"><a href="#2-1-5-Git-amp-GitHub" class="headerlink" title="2.1.5 Git &amp; GitHub"></a>2.1.5 Git &amp; GitHub</h5><p>Git的结构、工作原理、基本指令<br>GitHub</p>
+<p><strong>Git管理软件演变过程中的变化</strong><br><img src="https://img-blog.csdn.net/20180613144339685?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>这里按照图示，基本概述一下<strong>Git管理的相关指令操作</strong>：<br>要在本地创建一个仓库，首先需要<code>git init</code> 生成.git，.git保存所有版本控制数据，即本地的CMDB；<br>将工作目录（本地文件系统，workspace）文件加入暂存区，使用<code>git add file</code>（git add . 将当前目录下所有文件加入暂存区），此时状态为Staged，已暂存；<br>使用<code>git commit -m &quot;comment&quot;</code>将暂存区文件加入到本地仓库（local repository），此时状态为Committed，已提交；<br>将本地仓库同步到远程仓库使用<code>git push origin master</code> （master，主线）；<br>如果远程仓库发生了改变，需要先使用<code>git fetch</code> 同步本地仓库。</p>
+<p><strong>Git的管理变化</strong>，每个文件只保存一份，在每个版本中，如果发生改变则更改，否则使用前一个版本的文件，该版本中不显示，如下图：<br><img src="https://img-blog.csdn.net/20180613150336109?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/200/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>Object Graph</strong><br>版本之间的演化关系图，一条边A-&gt;B表征了“在版本A的基础上作出变化，形成了版本B”；<br>其中每次commit（提交），都是一个当前整个项目的快照，展示为一个树节点；同时包含一个日志信息，who，when，short log message，以hash值作为区别；<br>这里可以使用<code>git lol</code> 在git bash上得到演变树；<br><img src="https://img-blog.csdn.net/20180613152504724?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>下面是Git项目的历史演变构成一个<code>directed acyclic graph（DAG）</code>，保存在<code>.git</code>中，而使用<code>git commit</code>就是向该图中增加节点；<br><img src="https://img-blog.csdn.net/20180613150853102?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>使用<code>git show commithash</code> 以展示某次提交的详细情况；</p>
+<p><strong>Branch and Merge（分支与合并）</strong><br>master为主线，其余为分支，可以将分支与主线进行合并；<br>可以使用<code>git checkout</code> 切换分支或恢复工作树文件；<code>git merge brname</code> 合并分支；<br><img src="https://img-blog.csdn.net/20180613151030741?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>collaboration（合作）</strong><br>主要涉及commit、push、merge、fetch等交互操作；<br><img src="https://img-blog.csdn.net/20180613151413528?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+<p><strong>关于GItHub</strong><br>Git的web服务器<br>Basic process: commit， branch and merge<br>Collaboration process: fork and pull request，issues</p>
+<h4 id="2-2-Process-Systems-and-Tools"><a href="#2-2-Process-Systems-and-Tools" class="headerlink" title="2.2 Process, Systems, and Tools"></a>2.2 Process, Systems, and Tools</h4><h5 id="2-2-1-General-process-of-sofrware-construction"><a href="#2-2-1-General-process-of-sofrware-construction" class="headerlink" title="2.2.1 General process of sofrware construction"></a>2.2.1 General process of sofrware construction</h5><p>广义的软件构造过程:<br><strong>Design（设计） -&gt; Programming/refactoring（重构） -&gt; Debugging（调试） -&gt; Testing（测试） -&gt; Build（构建） -&gt;Release（发布）</strong></p>
+<table>
+    <tr>
+        <td>Programming/refactoring(编程/重构)</td>
+        <td>Review and static code analysis(代码评审)</td>
+        <td>Debugging(dumping and logging) and Testing(调试和测试)</td>
+        <td>Dynamic code analysis/profiling(动态分析)</td>
+    </tr>
+        <tr>
+        <td>重构: 在不改变功能的前提下优化代码</td>
+        <td>Formal code review(正式代码评审会议); Lightweight code review(轻量级的代码评审, eg. Pair programming-结对编程); Static code analysis(利用工具进行的静态代码分析, eg. CheckStyle, FindBugs, PMD)</td>
+        <td>测试：发现程序是否有错误; 调试: 定位错误, 发现错误根源</td>
+        <td>executing programs, profiling(对代码的运行时状态和性能进行度量)</td>
+    </tr>
+</table>
+
+<h5 id="2-2-2-Narrow-sense-process-of-software-construction（build）"><a href="#2-2-2-Narrow-sense-process-of-software-construction（build）" class="headerlink" title="2.2.2  Narrow-sense process of software construction（build）"></a>2.2.2  Narrow-sense process of software construction（build）</h5><p>粗略理解build，就是从build-time到run-time，借助工具，将软件构造各阶段的活动”自动化”，提高构造效率；<br>狭义的软件构造过程(Build):<br><strong>Validate</strong>(验证) <strong>-&gt; Compile</strong>(编译) <strong>-&gt; Link</strong>(链接) <strong>-&gt; Test</strong>(测试) <strong>-&gt; Package</strong>(打包) <strong>-&gt;Install</strong>(部署) <strong>-&gt;Deploy</strong>(发布)</p>
+<table>
+    <tr>
+        <td>Build system</td>
+        <td>Build variants and build language</td>
+        <td>Build tools</td>
+    </tr>
+        <tr>
+        <td>components and process</td>
+        <td>Makefile, build.xml</td>
+        <td>Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持续集成）</td>
+    </tr>
+</table>
     </div>
 
     
@@ -706,6 +645,7 @@ Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持
 
 
       
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -751,6 +691,26 @@ Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持
   </div>
 
       
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -787,8 +747,70 @@ Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持
   
 
   
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>

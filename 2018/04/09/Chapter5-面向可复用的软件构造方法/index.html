@@ -19,15 +19,15 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="目录 Chapter 5：Reusability-Oriented Software Construction Approaches 本章面向一个重要的外部质量指标：可复用性——如何构造出可在不同应用中重复使用的软件模块&#x2F;API？ #### 5.1 Metric, Morphology and External Observations of Reusability 本节探讨可复用软件的形态与特征">
+  <meta name="description" content="目录Chapter 5：Reusability-Oriented Software Construction Approaches本章面向一个重要的外部质量指标：可复用性——如何构造出可在不同应用中重复使用的软件模块&#x2F;API？ 5.1 Metric, Morphology and External Observations of Reusability本节探讨可复用软件的形态与特征考点：Progr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Chapter5-面向可复用的软件构造方法">
 <meta property="og:url" content="http://blog.khay.site/2018/04/09/Chapter5-%E9%9D%A2%E5%90%91%E5%8F%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="目录 Chapter 5：Reusability-Oriented Software Construction Approaches 本章面向一个重要的外部质量指标：可复用性——如何构造出可在不同应用中重复使用的软件模块&#x2F;API？ #### 5.1 Metric, Morphology and External Observations of Reusability 本节探讨可复用软件的形态与特征">
+<meta property="og:description" content="目录Chapter 5：Reusability-Oriented Software Construction Approaches本章面向一个重要的外部质量指标：可复用性——如何构造出可在不同应用中重复使用的软件模块&#x2F;API？ 5.1 Metric, Morphology and External Observations of Reusability本节探讨可复用软件的形态与特征考点：Progr">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2018-04-08T16:00:00.000Z">
 <meta property="article:modified_time" content="2019-09-08T03:52:41.000Z">
@@ -281,11 +281,6 @@ mjx-container[display="true"] + br {
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -342,7 +337,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#levels-and-morphology-of-reusable-components"><span class="nav-number">1.1.</span> <span class="nav-text">5.1.2 Levels and morphology of reusable components</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#external-observations-of-reusability"><span class="nav-number">1.2.</span> <span class="nav-text">5.1.3 External observations of reusability</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#construction-for-reuse"><span class="nav-number">2.</span> <span class="nav-text">5.2 Construction for Reuse</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#overloading%E9%87%8D%E8%BD%BD"><span class="nav-number">2.0.1.</span> <span class="nav-text">5.2.1.2 Overloading(重载)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#parametric-polymorphism-and-generic-programming%E5%8F%82%E6%95%B0%E5%A4%9A%E6%80%81%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B"><span class="nav-number">2.0.2.</span> <span class="nav-text">5.2.1.3 Parametric polymorphism and generic programming(参数多态与泛型编程)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#behavioral-subtyping-and-liskov-substitution-priciplelsp%E8%A1%8C%E4%B8%BA%E5%AD%90%E7%B1%BB%E5%9E%8B%E4%B8%8Eliskov%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99"><span class="nav-number">2.0.3.</span> <span class="nav-text">5.2.1.4 Behavioral subtyping and Liskov Substitution Priciple(LSP)(行为子类型与Liskov替换原则)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#composition-and-delegation%E7%BB%84%E5%90%88%E5%92%8C%E5%A7%94%E6%89%98"><span class="nav-number">2.0.4.</span> <span class="nav-text">5.2.1.5 Composition and delegation(组合和委托)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#api-design"><span class="nav-number">2.0.5.</span> <span class="nav-text">5.2.2.1 API design</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#framework-design"><span class="nav-number">2.0.6.</span> <span class="nav-text">5.2.2.2 Framework design</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#java-collection-frameworkjcf"><span class="nav-number">2.0.7.</span> <span class="nav-text">5.2.2.3 Java Collection Framework（JCF）</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-Metric-Morphology-and-External-Observations-of-Reusability"><span class="nav-number">2.</span> <span class="nav-text">5.1 Metric, Morphology and External Observations of Reusability</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-1-About-Reuse"><span class="nav-number">2.1.</span> <span class="nav-text">5.1.1 About Reuse</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-2-Levels-and-morphology-of-reusable-components"><span class="nav-number">2.2.</span> <span class="nav-text">5.1.2 Levels and morphology of reusable components</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-1-3-External-observations-of-reusability"><span class="nav-number">2.3.</span> <span class="nav-text">5.1.3 External observations of reusability</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-Construction-for-Reuse"><span class="nav-number">3.</span> <span class="nav-text">5.2 Construction for Reuse</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-1-Designing-reusable-classes"><span class="nav-number">3.1.</span> <span class="nav-text">5.2.1 Designing reusable classes</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-1-1-Inheritance-and-overriding-%E7%BB%A7%E6%89%BF%E5%92%8C%E9%87%8D%E5%86%99"><span class="nav-number">3.1.1.</span> <span class="nav-text">5.2.1.1 Inheritance and overriding(继承和重写)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-1-2-Overloading-%E9%87%8D%E8%BD%BD"><span class="nav-number">3.1.2.</span> <span class="nav-text">5.2.1.2 Overloading(重载)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-1-3-Parametric-polymorphism-and-generic-programming-%E5%8F%82%E6%95%B0%E5%A4%9A%E6%80%81%E4%B8%8E%E6%B3%9B%E5%9E%8B%E7%BC%96%E7%A8%8B"><span class="nav-number">3.1.3.</span> <span class="nav-text">5.2.1.3 Parametric polymorphism and generic programming(参数多态与泛型编程)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-1-4-Behavioral-subtyping-and-Liskov-Substitution-Priciple-LSP-%E8%A1%8C%E4%B8%BA%E5%AD%90%E7%B1%BB%E5%9E%8B%E4%B8%8ELiskov%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99"><span class="nav-number">3.1.4.</span> <span class="nav-text">5.2.1.4 Behavioral subtyping and Liskov Substitution Priciple(LSP)(行为子类型与Liskov替换原则)</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-1-5-Composition-and-delegation-%E7%BB%84%E5%90%88%E5%92%8C%E5%A7%94%E6%89%98"><span class="nav-number">3.1.5.</span> <span class="nav-text">5.2.1.5 Composition and delegation(组合和委托)</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#5-2-2-Designing-system-level-reusable-libraries-and-frameworks%EF%BC%88%E7%B3%BB%E7%BB%9F%E5%B1%82%E9%9D%A2%E5%A4%8D%E7%94%A8%EF%BC%89"><span class="nav-number">3.2.</span> <span class="nav-text">5.2.2 Designing system-level reusable libraries and frameworks（系统层面复用）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-2-1-API-design"><span class="nav-number">3.2.1.</span> <span class="nav-text">5.2.2.1 API design</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-2-2-Framework-design"><span class="nav-number">3.2.2.</span> <span class="nav-text">5.2.2.2 Framework design</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-2-2-3-Java-Collection-Framework%EF%BC%88JCF%EF%BC%89"><span class="nav-number">3.2.3.</span> <span class="nav-text">5.2.2.3 Java Collection Framework（JCF）</span></a></li></ol></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -460,6 +455,34 @@ mjx-container[display="true"] + br {
             </span>
 
           
+            <span id="/2018/04/09/Chapter5-%E9%9D%A2%E5%90%91%E5%8F%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="Chapter5-面向可复用的软件构造方法" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/04/09/Chapter5-%E9%9D%A2%E5%90%91%E5%8F%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/04/09/Chapter5-%E9%9D%A2%E5%90%91%E5%8F%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -468,414 +491,266 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="目录">目录</h4>
-<p><strong>Chapter 5：Reusability-Oriented Software Construction Approaches</strong> 本章面向一个重要的外部质量指标：可复用性——如何构造出可在不同应用中重复使用的软件模块/API？ #### 5.1 Metric, Morphology and External Observations of Reusability 本节探讨可复用软件的形态与特征 考点： Programming for/with reuse 白盒、黑盒框架的原理和实现 ##### 5.1.1 About Reuse &gt; 可复用性：不针对应用，而是针对多个引用场景。</p>
-<strong>Software reuse</strong>
+        <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><p><strong>Chapter 5：Reusability-Oriented Software Construction Approaches</strong><br>本章面向一个重要的外部质量指标：可复用性——如何构造出可在不同应用中重复使用的软件模块/API？</p>
+<h4 id="5-1-Metric-Morphology-and-External-Observations-of-Reusability"><a href="#5-1-Metric-Morphology-and-External-Observations-of-Reusability" class="headerlink" title="5.1 Metric, Morphology and External Observations of Reusability"></a>5.1 Metric, Morphology and External Observations of Reusability</h4><p>本节探讨可复用软件的形态与特征<br>考点：<br>Programming for/with reuse<br>白盒、黑盒框架的原理和实现</p>
+<h5 id="5-1-1-About-Reuse"><a href="#5-1-1-About-Reuse" class="headerlink" title="5.1.1 About Reuse"></a>5.1.1 About Reuse</h5><blockquote>
+<p>可复用性：不针对应用，而是针对多个引用场景。</p>
+</blockquote>
+<p><strong>Software reuse</strong></p>
 <table>
-<tr>
-<td colspan="2">
-Two perspectives of software reuse
-</td>
-</tr>
-<tr>
-<td>
-programming for reuse(面向复用编程，开发出可复用的软件-&gt;抽取共性，识别差异，设计继承树)
-</td>
-<td>
-programming with reuse(基于复用的编程，利用已有的可复用的软件搭建应用系统-&gt;搜索，选择适配)
-</td>
-</tr>
-<tr>
-<td>
-开发成本高于一般软件的成本：要有足够高的适应性；性能差些：针对更普适场景，缺少足够的针对性
-</td>
-<td>
-可复用软件库，对其进行有效的管理；往往无法拿来就用，需要适配
-</td>
-</tr>
+    <tr>
+        <td colspan="2">Two perspectives of software reuse</td>
+    </tr>
+    <tr>
+        <td>programming for reuse(面向复用编程，开发出可复用的软件->抽取共性，识别差异，设计继承树)</td>
+        <td>programming with reuse(基于复用的编程，利用已有的可复用的软件搭建应用系统->搜索，选择适配)</td>
+    </tr>
+    <tr>
+        <td>开发成本高于一般软件的成本：要有足够高的适应性；性能差些：针对更普适场景，缺少足够的针对性</td>
+        <td>可复用软件库，对其进行有效的管理；往往无法拿来就用，需要适配</td>
+    </tr>
 </table>
-<strong>Why reuse？</strong>
-<table>
-<tr>
-<td colspan="3">
-Why reuse?
-</td>
-</tr>
-<tr>
-<td>
-Reuse is <strong>cost-effective</strong> and with <strong>timeliness</strong>(降低成本和开发时间)
-</td>
-<td>
-Reuse produces <strong>reliable</strong> software(经过充分测试，<strong>可靠、稳定</strong>)
-</td>
-<td>
-Reuse yields <strong>standardization</strong>(<strong>标准化</strong>，在不同应用中保持一致)
-</td>
-</tr>
-</table>
-<p><strong>Measure resuability</strong> 复用的机会有多频繁？ 复用的场合有多少？ 复用的代价有多大？（搜索、获取；适配，扩展；实例化；与软件其他部分的互连）</p>
-<p>A software asset with high <strong>reusability</strong> should: – Brief (small size) and Simple (low complexity) <strong>小、简单</strong> – Portable and Standard Compliance <strong>与标准兼容</strong> – Adaptable and Flexible <strong>灵活可变</strong> – Extensibility <strong>可扩展</strong> – Generic and Parameterization <strong>泛型、参数化</strong> – Modularity <strong>模块化</strong> – Localization of volatile (changeable) design assumptions <strong>变化的局部性</strong> – Stability under changing requirements <strong>稳定</strong> – Rich documentation <strong>丰富的文档和帮助</strong></p>
-<h5 id="levels-and-morphology-of-reusable-components">5.1.2 Levels and morphology of reusable components</h5>
-<strong>Type of Code Reuse（代码复用的类型）</strong>
-<table>
-<tr>
-<td>
-White box reuse(白盒复用)
-</td>
-<td>
-Black box reuse(黑盒复用)
-</td>
-</tr>
-<tr>
-<td>
-源代码可见，可修改和扩展（复制已有代码当正在开发的系统，进行修改，可定制化程度高，对其修改增加了软件的复杂度，且需要对其内部充分的了解）
-</td>
-<td>
-源代码不可见，不能修改（只能通过API接口来使用，无法修改代码，简单、清晰，适应性差）
-</td>
-</tr>
-</table>
-<strong>Reuse Level（复用级别）</strong>
-<table>
-<tr>
-<td>
-Source code level reuse（源代码级别复用）
-</td>
-<td>
-Module-level reuse（模块级别复用）
-</td>
-<td>
-Library-level（库函数级别）
-</td>
-<td>
-System-level reuse（系统级别）
-</td>
-</tr>
-<tr>
-<td>
-methods, statements
-</td>
-<td>
-class/abstract class/interface
-</td>
-<td>
-API/package(.jar)
-</td>
-<td>
-framework(框架)
-</td>
-</tr>
-<tr>
-<td>
-Copy/paste；Exampel code search: ①grepcode.com ②github.com/search ③searchcode.com
-</td>
-<td>
-Approaches of reusing a class: inheritance(继承, override), delegation(委托，一个对象将某些功能传递给另一个对象)
-</td>
-<td>
-Libraries: A set of classes and methods(APIs) that provide reusable functionality.开发者构造可运行软件实体，其中涉及到对可复用库的调用
-</td>
-<td>
-框架：一组具体类、抽象类、及其之间的连接关系；开发者根据framework的规约，填充自己的代码进去，形成完整系统；<strong>Framework作为主程序</strong>加以执行，执行过程调用开发者所写的程序
-</td>
-</tr>
-</table>
-<strong>Details For Frameworks（关于框架）</strong>
-<table>
-<tr>
-<td colspan="2">
-framework
-</td>
-</tr>
-<tr>
-<td>
-Whitebox frameworks（白盒框架）
-</td>
-<td>
-Blackbox frameworks（黑盒框架）
-</td>
-</tr>
-<tr>
-<td>
-通过继承（inheritance）和动态绑定（dynamic binding）实现的可扩展性；通过继承（subclassing）框架基类并重写（overriding）预定义的hook(钩子)方法来扩展现有功能；通常使用诸如模板方法模式的设计模式来覆盖钩子方法
-</td>
-<td>
-通过为可插入框架的组件定义接口来实现可扩展性； 通过定义符合特定接口的组件来重用现有功能； 这些组件通过<strong>委托</strong>（delegation）与框架集成
-</td>
-</tr>
-<tr>
-<td>
-通过<strong>subclassing</strong>(继承)、<strong>override</strong>实现定制功能；允许扩展每个非私有方法；需要了解超类的实现；每次只有一个扩展；一起编译；通常称为开发框架
-</td>
-<td>
-通过<strong>plugin interface</strong>(<strong>delegation</strong>、<strong>composition</strong>)实现；允许扩展在接口中显示的功能；只需要了解界面；多个插件；通常提供更多的模块化；单独部署称为可能（.jar，.dll，...）；通常所谓的最终用户框架、平台
-</td>
-</tr>
-<tr>
-<td>
-程序执行的主体是开发者实现的<strong>子类</strong>
-</td>
-<td>
-程序执行的主体是<strong>framework</strong>
-</td>
-</tr>
-<tr>
-<td colspan="2">
-Domain Engineering（领域工程）：①定义域（domain）②分解和实施通用部件为框架③为可变部分提供插件接口和回调机制（callback）④获取大量反馈，并进行迭代
-</td>
-</tr>
-<tr>
-<td colspan="2">
-运行框架：①通过自身运行（eg. Eclipse）②通过继承运行（eg. Swing，JUnit，MapReduce，Servlets）③加载插件（Client写main函数，创造插件并传递给框架（白盒）；框架写main函数，client将插件名字作为命令或环境变量传递（黑盒））
-</td>
-</tr>
-</table>
-<h5 id="external-observations-of-reusability">5.1.3 External observations of reusability</h5>
-<table>
-<tr>
-<td>
-Type Variation(类型可变)
-</td>
-<td>
-Routine Grouping(功能分组)
-</td>
-<td>
-Implementation Variation(实现可变)
-</td>
-<td>
-Representation Independence(表示独立)
-</td>
-<td>
-Factoring Out Common Behaviors(共性抽取)
-</td>
-</tr>
-<tr>
-<td>
-泛型：适应不同的类型，且满足LSP
-</td>
-<td>
-提供完备的细粒度操作，保证功能的完整性，不同场景下复用不同的操作及其组合
-</td>
-<td>
-ADT有多种不同的实现，提供不同的representation和abstract function，但具有同样的specification(pre-condition,post-condition,invariants)，从而可以适应不同的应用场景
-</td>
-<td>
-内部实现可能会经常变化，但客户端不应受到影响，表示独立性、信息隐藏
-</td>
-<td>
-将共同的行为（共性）抽象出来，形成可复用实体
-</td>
-</tr>
-</table>
-<h4 id="construction-for-reuse">5.2 Construction for Reuse</h4>
-<p>从类、API、框架三个层面学习如何设计可复用软件实体的具体技术 本节考点： LSP 协变、反协变 数组的子类型化 泛型的子类型化 泛型中的通配符（?） Delegation Comparator和Comparable CRP原则 接口的组合 ##### 5.2.1 Designing reusable classes <strong>设计可复用的类</strong> <em>Already introduced in section 2.4 OOP</em> ###### 5.2.1.1 Inheritance and overriding(继承和重写)</p>
-<h6 id="overloading重载">5.2.1.2 Overloading(重载)</h6>
-<h6 id="parametric-polymorphism-and-generic-programming参数多态与泛型编程">5.2.1.3 Parametric polymorphism and generic programming(参数多态与泛型编程)</h6>
-<p><em>Important in this chapter</em></p>
-<h6 id="behavioral-subtyping-and-liskov-substitution-priciplelsp行为子类型与liskov替换原则">5.2.1.4 Behavioral subtyping and Liskov Substitution Priciple(LSP)(行为子类型与Liskov替换原则)</h6>
-<p><strong>子类型多态</strong>：客户端可用统一的方式处理不同类型的对象(static type checking) <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Cat extends Animal */</span></span><br><span class="line">Animal a = <span class="keyword">new</span> Animal();</span><br><span class="line">Animal c1 = <span class="keyword">new</span> Cat();</span><br><span class="line">Cat c2 = <span class="keyword">new</span> Cat();</span><br><span class="line"><span class="comment">/* 在可以使用a的场景，都可以用c1和c2代替而不会有任何问题 */</span></span><br><span class="line">a = c1;</span><br><span class="line">a = c2;</span><br></pre></td></tr></table></figure> 子类型在<strong>Java编译器</strong>中执行的规则： ①子类型可以<strong>增加方法</strong>，但<strong>不可删</strong> ②子类型需要实现抽象类型中的所有<strong>未实现方法</strong> ③子类型中重写的方法必须有相同或子类型的<strong>返回值</strong> ④子类型中重写的方法必须使用同样类型的<strong>参数</strong> ⑤子类型中重写的方法<strong>不能抛出额外的异常</strong> 特殊的行为： ⑥<strong>更强的不变量</strong>； ⑦<strong>更弱的前置条件</strong>； ⑧<strong>更强的后置条件</strong>；</p>
-<p><strong>Liskov Substitution Priciple(LSP)</strong>: Let q(x) be a property provable about objects x of type T, then q(y) should be provable for objects y of type S where S is a subtype of T. （对于T类型的对象x有q(x)成立，且S是T的子类型，则对于S类型的对象y有q(y)成立）</p>
-<p>LSP是子类型关系的一个特殊定义，称为<strong>强行为子类型</strong>。 在编程语言中遵循以下规则： ①前置条件不能强化 ②后置条件不能弱化 ③不变量要保持 ④子类型方法参数：逆变（反协变，越来越抽象） ⑤子类型方法的返回值：协变（越来越具体） ⑥异常类型：协变（越来越具体）</p>
-<table>
-<tr>
-<td>
-Covariance(协变)
-</td>
-<td>
-Contravariance(反协变、逆变)
-</td>
-<td colspan="2">
-两种特别的LSP
-</td>
-<td>
-Wildcards（通配符）
-</td>
-</tr>
-<tr>
-<td>
-父类型-&gt;子类型：越来越具体specification；<br />
-返回值类型：不变或变得更具体；<br />
-异常的类型：也是如此
-</td>
-<td>
-父类型-&gt;子类型：越来越具体specific； 参数类型：要相反的变化，要不变或越来越抽象
-</td>
-<td>
-数组中的LSP
-</td>
-<td>
-泛型中的LSP
-</td>
-<td>
-解决泛型中的LSP问题
-</td>
-</tr>
-<tr>
-<td>
-Example: ①返回值类型，Object a(){...} -&gt; String a(){...}<br />
-②异常类型，throws Throwable -&gt; throws IOException
-</td>
-<td>
-Example: ①参数类型，void c(String s){...} -&gt; void c(Object s){...}
-</td>
-<td>
-Arrays are covariant.(定义抽象类型可以放入具体类型，父类型可以放入子类型)<br />
 
-</td>
-<td>
-ArrayList&lt;Sting&amp;gt 是List&lt; Sting&amp;gt 子类型； List&lt;Sting&amp;gt 不是 List&lt;Object&amp;gt 子类型； 这个过程称为类型擦除（泛型不是协变的）
-</td>
-<td>
-List&lt;? extends T&amp;gt (Upper Bounded Wildcards，T的子类型) ； List&lt;Number&amp;gt 是 List&lt;?&amp;gt 子类型； List&lt;Number&amp;gt 是 List&lt;? extends Object&amp;gt 的子类型（Number是Object/Number等子类的子类型型）； List&lt;Object&amp;gt 是 List&lt;? super String/Number/Object&amp;gt 的子类型（Object是String/Object等任意类型父类的子类型）；
-</td>
-</tr>
-</table>
-<p>关于上述问题代码分析： ①子类型中参数类型协变；需要注意，如下情况不是子类型，因此是正确的 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void someMethod(Number n)&#123;...&#125;;</span><br><span class="line">someMethod(new  Integer(10);</span><br><span class="line">someMethod(new Double(10.1）;</span><br></pre></td></tr></table></figure> ②数组的LSP，需要注意子类型对象赋值和子类型引用赋值，前者正确，后者错误 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* T[]能保存T及T的子类型对象（子类型对象赋值）*&#x2F;</span><br><span class="line">       Number[] numbers &#x3D; new Number[2];</span><br><span class="line">        numbers[0] &#x3D; new Integer(10);</span><br><span class="line">        numbers[1] &#x3D; new Double(3.14);</span><br><span class="line">&#x2F;* 当将一个子类型数组赋值给父类型数组后，父类型数组只能保存该子类型元素，因为是子类型引用赋值*&#x2F;</span><br><span class="line">     Integer[] myInts &#x3D; &#123;1, 2, 3, 4&#125;;</span><br><span class="line">       Number[] myNumbers &#x3D; myInts;</span><br><span class="line">     myNumber[0] &#x3D; 3.14;  &#x2F;* 报错java.lang.ArrayStoreException *&#x2F;</span><br></pre></td></tr></table></figure> ③泛型中的LSP，泛型不是协变的 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* List&lt;Integer&gt;不是List&lt;Number&gt;的子类型，即使Integer是Number的子类型 *&#x2F;</span><br><span class="line">   List&lt;Integer&gt; myInts &#x3D; new ArrayList&lt;Integer&gt;();</span><br><span class="line"> myInts.add(1);</span><br><span class="line">    myInts.add(2);</span><br><span class="line">    List&lt;Number&gt; myNums &#x3D; myInts; &#x2F;* Type mismatch: cannot convert from List&lt;Integer&gt; to List&lt;Number&gt; *&#x2F;</span><br><span class="line"> myNums.add(3.14);</span><br><span class="line">&#x2F;* 作为方法参数时，也是错误的 *&#x2F;</span><br><span class="line">static long sum(List&lt;Number&gt; numbers) &#123;...&#125;</span><br><span class="line"> List&lt;Integer&gt; myInts &#x3D; asList(1,2,3,4,5);</span><br><span class="line">  List&lt;Long&gt; myLongs &#x3D; asList(1L, 2L, 3L, 4L, 5L);</span><br><span class="line">   List&lt;Double&gt; myDoubles &#x3D; asList(1.0, 2.0, 3.0, 4.0, 5.0);</span><br><span class="line">  &#x2F;* The method sum(List&lt;Number&gt;) is not applicable for the arguments (List&lt;Integer&#x2F;Long&#x2F;Double&gt;) *&#x2F;</span><br><span class="line">    sum(myInts);</span><br><span class="line">  sum(myLongs);</span><br><span class="line"> sum(myDoubles);</span><br></pre></td></tr></table></figure> ④通配符的应用，使用通配符的泛型的LSP <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Success */</span></span><br><span class="line">List&lt;? extends Integer&gt; intList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;? extends Number&gt; numList = intList;</span><br><span class="line"><span class="comment">/* failure,第一个为Number的子类型，第二个为Integer的子类型*/</span></span><br><span class="line">List&lt;? extends Number&gt; intList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;? extends Integer&gt; numList = intList;</span><br><span class="line"><span class="comment">/* 根据上述通配符的叙述，以下正确，其中T为任意类型 */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(List&lt;? <span class="keyword">super</span> T&gt; dest,List&lt;? extends T&gt; src)</span></span>&#123;...&#125;;</span><br><span class="line">List&lt;Number&gt; source = <span class="keyword">new</span> LinkedList&lt;&gt;(); <span class="comment">/* Number类型是T类型子类的子类型 */</span></span><br><span class="line">source.add(Float.valueOf(<span class="number">3</span>));</span><br><span class="line">source.add(Integer.valueOf(<span class="number">2</span>));</span><br><span class="line">source.add(Double.valueOf(<span class="number">1.1</span>));</span><br><span class="line">List&lt;Object&gt; dest = <span class="keyword">new</span> LinkedList&lt;&gt;(); <span class="comment">/* Object是T类型父类的子类型 */</span></span><br><span class="line">Collections.copy(dest,source);</span><br></pre></td></tr></table></figure></p>
-<h6 id="composition-and-delegation组合和委托">5.2.1.5 Composition and delegation(组合和委托)</h6>
-<strong>Delegation &amp; CRP原则</strong>
+<p><strong>Why reuse？</strong></p>
 <table>
-<tr>
-<td>
-Delegation(委托/委派)
-</td>
-<td>
-Composition Reuse Principle（CRP，复合重用原则，Or Composite over inheritance Principle）
-</td>
-</tr>
-<tr>
-<td>
-一个对象请求另一个对象的功能(Client调用Recevier，Recevier委派给Delegate；委派是复用的一种常见形式)；如果子类只需要复用父类中的一小部分方法，可以不需要使用继承，而是通过委派机制来实现
-</td>
-<td>
-类应该通过它们的组合（通过包含实现所需功能的其他类的实例）实现多态行为和代码重用，而不是从基类或父类继承；优先使用对象组合，而不是类继承
-</td>
-</tr>
-<tr>
-<td>
-establish delegation between two objects； A a = new A()； B b = new B(a)(Class B内部存在一个delegation link -&gt; private A a，如果B要使用A的foo()功能，则可以直接调用a.foo()实现)
-</td>
-<td>
-使用接口定义不同侧面的行为；接口之间通过extends（继承）实现行为的扩展（一个接口可以继承多个接口- &gt; 组合）；类implements（实现）接口（类的内部使用委派）
-</td>
-</tr>
+    <tr>
+        <td colspan="3">Why reuse?</td>
+    </tr>
+    <tr>
+        <td>Reuse is **cost-effective** and with **timeliness**(降低成本和开发时间)</td>
+        <td>Reuse produces **reliable** software(经过充分测试，**可靠、稳定**)</td>
+        <td>Reuse yields **standardization**(**标准化**，在不同应用中保持一致)</td>
+    </tr>
 </table>
-<strong>Types of delegation（三种委派方式）</strong>
+
+<p><strong>Measure resuability</strong><br>复用的机会有多频繁？<br>复用的场合有多少？<br>复用的代价有多大？（搜索、获取；适配，扩展；实例化；与软件其他部分的互连）</p>
+<p>A software asset with high <strong>reusability</strong> should:<br>– Brief (small size) and Simple (low complexity) <strong>小、简单</strong><br>– Portable and Standard Compliance <strong>与标准兼容</strong><br>– Adaptable and Flexible <strong>灵活可变</strong><br>– Extensibility <strong>可扩展</strong><br>– Generic and Parameterization <strong>泛型、参数化</strong><br>– Modularity <strong>模块化</strong><br>– Localization of volatile (changeable) design assumptions <strong>变化的局部性</strong><br>– Stability under changing requirements <strong>稳定</strong><br>– Rich documentation <strong>丰富的文档和帮助</strong></p>
+<h5 id="5-1-2-Levels-and-morphology-of-reusable-components"><a href="#5-1-2-Levels-and-morphology-of-reusable-components" class="headerlink" title="5.1.2 Levels and morphology of reusable components"></a>5.1.2 Levels and morphology of reusable components</h5><p><strong>Type of Code Reuse（代码复用的类型）</strong></p>
 <table>
-<tr>
-<td colspan="4">
-Types of delegation
-</td>
-</tr>
-<tr>
-<td>
-Use（A use B）
-</td>
-<td>
-Association（A has B）
-</td>
-<td colspan="2">
-Composition / aggregation（A owns N）
-</td>
-</tr>
-<tr>
-<td>
-Dependency（依赖，临时性的delegation）
-</td>
-<td>
-Association（关联，永久性的delegation）
-</td>
-<td>
-Composition（组合，更强的delegation）
-</td>
-<td>
-Aggregation（聚合）
-</td>
-</tr>
-<tr>
-<td>
-直接调用其他对象的方法（uses_a）
-</td>
-<td>
-这种关系是结构性的，因为它指定一种类型的对象与另一种类型的对象相连，并不代表行为（has_a）
-</td>
-<td>
-将简单对象或数据类型组合成更复杂的对象；该类有另一个作为属性/实例变量（内部创建实例对象，is_part_of）
-</td>
-<td>
-对象存在于另一个之外，在外部创建，所以它作为参数传递给构造者（has_a）
-</td>
-</tr>
+    <tr>
+        <td>White box reuse(白盒复用)</td>
+        <td>Black box reuse(黑盒复用)</td>
+    </tr>
+    <tr>
+        <td>源代码可见，可修改和扩展（复制已有代码当正在开发的系统，进行修改，可定制化程度高，对其修改增加了软件的复杂度，且需要对其内部充分的了解）</td>
+        <td>源代码不可见，不能修改（只能通过API接口来使用，无法修改代码，简单、清晰，适应性差）</td>
+    </tr>
 </table>
-<p><strong>Delegation示例</strong> Client调用Printer的print方法 Printer将print委托给RealPrinter <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RealPrinter</span> </span>&#123;</span><br><span class="line"> <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     System.out.println(<span class="string">&quot;The Delegate&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Printer</span> </span>&#123;</span><br><span class="line">   RealPrinter p = <span class="keyword">new</span> RealPrinter();  <span class="comment">/* 委托连接 */</span></span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     p.print(); <span class="comment">/* 委托 */</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">    Printer printer = <span class="keyword">new</span> Printer();</span><br><span class="line"> printer.print(); <span class="comment">/* The delegation */</span></span><br></pre></td></tr></table></figure></p>
-<p><strong>Composition示例</strong> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Heart</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line"> <span class="comment">/* 内部创建实例变量 */</span></span><br><span class="line">   <span class="keyword">private</span> Heart heart = <span class="keyword">new</span> Heart();</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">operation</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">/* 也可以在方法内创建实例 */</span></span><br><span class="line">        <span class="comment">// heart = new Heart();</span></span><br><span class="line">      heart.operation();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><strong>Aggregation（聚合）示例</strong> 对象存在于另一个之外，在外部创建，所以它作为参数传递给构造者 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Course</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> Student[] students;</span><br><span class="line">  <span class="comment">/* 外部参数传入 */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="title">addStudent</span> <span class="params">(Student s)</span> </span>&#123;</span><br><span class="line">        studtents.append(s);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> ##### 5.2.2 Designing system-level reusable libraries and frameworks（系统层面复用） 之所以<strong>library</strong>和<strong>framework</strong>被称为<strong>系统层面</strong>的复用，是因为它们不仅定义了1个可复用的接口/类，而是将某个完整系统中的<strong>所有可复用的接口/类</strong>都实现出来。并且定义了这些类之间的<strong>交互关系</strong>、<strong>调用关系</strong>，从而形成了系统整体的<strong>“架构”</strong>。</p>
-<h6 id="api-design">5.2.2.1 API design</h6>
-<ol type="1">
-<li>API should do one thing and do it well（努力做好一件事情；Good. Font，PrivateKey，ThreadFactory；Bad. BindingIteratorImplBase）</li>
-<li>API should be as small as possible but no smaller（越小越好）</li>
-<li>Implementation should not impact API（信息隐藏，用户不应该影响API）</li>
-<li>Documentation matters（文档遵循Chapter4的可读性）</li>
-<li>Consider performance consequences（性能良好）</li>
-<li>API must coexist peacefully with platform（友好性）</li>
-<li>Class design（最小化可变性；继承遵循LSP）</li>
-<li>Method design（编译时最好 - 静态类型、泛型）</li>
-</ol>
-<h6 id="framework-design">5.2.2.2 Framework design</h6>
-<p>Turn to 5.1.2</p>
-<h6 id="java-collection-frameworkjcf">5.2.2.3 Java Collection Framework（JCF）</h6>
-<p>Collection: an object that groups element</p>
-<strong>General Purpose Implementations</strong> Interface -&gt; Abstract Class -&gt; Class Collection Interface + Iterator Interface
+
+<p><strong>Reuse Level（复用级别）</strong></p>
 <table>
-<tr>
-<td colspan="2">
-</td>
-<td colspan="4">
-Implementations
-</td>
-<tr>
-<tr>
-<td colspan="2">
-</td>
-<td>
-Hash Table
-</td>
-<td>
-Resizable Array
-</td>
-<td>
-Balanced Tree
-</td>
-<td>
-Linked List
-</td>
-<tr>
-<tr>
-<td rowspan="5">
-Interfaces
-</td>
-<pre><code>&lt;td&gt;Set&lt;/td&gt;
-    &lt;td&gt;HashSet（O(1) access, no order guarantee）&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-    &lt;td&gt;TreeSet（O(log n) access, sorted）&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-&lt;tr&gt;
-&lt;tr&gt;
-    &lt;td&gt;List&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-    &lt;td&gt;ArrayList（O(1) random access, O(n) insert/remove）&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-    &lt;td&gt;LinkedList（O(n) random access, O(1) insert/remove）&lt;/td&gt;
-&lt;tr&gt;
-&lt;tr&gt;
-    &lt;td&gt;Map&lt;/td&gt;
-    &lt;td&gt;HashMap&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-    &lt;td&gt;TreeMap&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-&lt;tr&gt;</code></pre>
+    <tr>
+        <td>Source code level reuse（源代码级别复用）</td>
+        <td>Module-level reuse（模块级别复用）</td>
+        <td>Library-level（库函数级别）</td>
+        <td>System-level reuse（系统级别）</td>
+    </tr>
+    <tr>
+        <td>methods, statements</td>
+        <td>class/abstract class/interface</td>
+        <td>API/package(.jar)</td>
+        <td>framework(框架)</td>
+    </tr>
+    <tr>
+        <td>Copy/paste；Exampel code search: ①grepcode.com ②github.com/search ③searchcode.com</td>
+        <td>Approaches of reusing a class: inheritance(继承, override), delegation(委托，一个对象将某些功能传递给另一个对象)</td>
+        <td>Libraries: A set of classes and methods(APIs) that provide reusable functionality.开发者构造可运行软件实体，其中涉及到对可复用库的调用</td>
+        <td>框架：一组具体类、抽象类、及其之间的连接关系；开发者根据framework的规约，填充自己的代码进去，形成完整系统；**Framework作为主程序**加以执行，执行过程调用开发者所写的程序</td>
+    </tr>
 </table>
-<p><strong>Idioms（常用方法）</strong> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**** Set ****/</span></span><br><span class="line">    Set&lt;Type&gt; s1, s2;</span><br><span class="line">   <span class="keyword">boolean</span> isSubset = s1.containsAll(s2); <span class="comment">/* 子集合包含 */</span></span><br><span class="line">  Set&lt;Type&gt; union = <span class="keyword">new</span> HashSet&lt;&gt;(s1);</span><br><span class="line"> union = union.addAll(s2); <span class="comment">/* 集合交集 */</span></span><br><span class="line"> Set&lt;Type&gt; intersection = <span class="keyword">new</span> HashSet&lt;&gt;(s1);</span><br><span class="line">  intersection.retainAll(s2); <span class="comment">/* 集合并集 */</span></span><br><span class="line">   Set&lt;Type&gt; difference = <span class="keyword">new</span> HashSet&lt;&gt;(s1);</span><br><span class="line">    difference.removeAll(s2); <span class="comment">/* 集合差集 */</span></span><br><span class="line"> Collection&lt;Type&gt; c; </span><br><span class="line">    Collection&lt;Type&gt; noDups = <span class="keyword">new</span> HashSet&lt;&gt;(c); <span class="comment">/* 子类型 */</span></span><br><span class="line"><span class="comment">/**** List可交换和随机化的可重用算法 ****/</span></span><br><span class="line">   List&lt;Type&gt; a, b;</span><br><span class="line">    a.addAll(b); <span class="comment">//连接两个list</span></span><br><span class="line">  a.subList(from, to).clear(); <span class="comment">//Range-remove，删除该范围内所有元素</span></span><br><span class="line">   <span class="comment">// Range-extract，提取该范围内元素</span></span><br><span class="line">    List&lt;Type&gt; partView = a.subList(from, to);</span><br><span class="line">  List&lt;Type&gt; part = <span class="keyword">new</span> ArrayList&lt;&gt;(partView);</span><br><span class="line"> partView.clear();</span><br><span class="line"><span class="comment">/**** Map ****/</span></span><br><span class="line">   <span class="comment">// Iterate over all keys in Map m，迭代器遍历所有键值</span></span><br><span class="line">  Map&lt;Key, Val&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (iterator&lt;Key&gt; i = m.keySet().iterator(); i.hasNext(); )</span><br><span class="line">       System.out.println(i.next());</span><br><span class="line"> <span class="comment">// As of Java 5 (2004)，遍历</span></span><br><span class="line">    <span class="keyword">for</span> (Key k : m.keySet())</span><br><span class="line">     System.out.println(i.next());</span><br><span class="line"> <span class="comment">// &quot;Map algebra&quot;</span></span><br><span class="line">   Map&lt;Key, Val&gt; a, b;</span><br><span class="line"> <span class="keyword">boolean</span> isSubMap = a.entrySet().containsAll(b.entrySet()); <span class="comment">/* a键值集合是否包含b键值集合 */</span></span><br><span class="line"> Set&lt;Key&gt; commonKeys =<span class="keyword">new</span> HashSet&lt;&gt;(a.keySet()).retainAll(b.keySet); <span class="comment">/* 并集 */</span></span><br><span class="line">    <span class="comment">//Remove keys from a that have mappings in b</span></span><br><span class="line"> a.keySet().removeAll(b.keySet());</span><br></pre></td></tr></table></figure></p>
-<p>Unmodifiable Wrappers（不可更改包装）：匿名实现；静态工厂方法；每个核心接口一个；提供只读访问 - 不可变！ Synchronization Wrappers（同步包装）：线程安全的新方法 - 匿名实现，每个核心接口一个 - 静态工厂收集适当的类型 - 如果通过包装器进行所有访问，线程安全保证 - 必须手动同步迭代</p>
+
+<p><strong>Details For Frameworks（关于框架）</strong></p>
+<table>
+    <tr>
+        <td colspan="2">framework</td>
+    </tr>
+    <tr>
+        <td>Whitebox frameworks（白盒框架）</td>
+        <td>Blackbox frameworks（黑盒框架） </td>
+   </tr>
+   <tr>
+        <td>通过继承（inheritance）和动态绑定（dynamic binding）实现的可扩展性；通过继承（subclassing）框架基类并重写（overriding）预定义的hook(钩子)方法来扩展现有功能；通常使用诸如模板方法模式的设计模式来覆盖钩子方法</td>
+        <td>通过为可插入框架的组件定义接口来实现可扩展性； 通过定义符合特定接口的组件来重用现有功能； 这些组件通过**委托**（delegation）与框架集成</td>
+   </tr>
+       <tr>
+           <td>通过**subclassing**(继承)、**override**实现定制功能；允许扩展每个非私有方法；需要了解超类的实现；每次只有一个扩展；一起编译；通常称为开发框架</td>
+        <td>通过**plugin interface**(**delegation**、**composition**)实现；允许扩展在接口中显示的功能；只需要了解界面；多个插件；通常提供更多的模块化；单独部署称为可能（.jar，.dll，...）；通常所谓的最终用户框架、平台</td>
+    </tr>
+    <tr>
+        <td>程序执行的主体是开发者实现的**子类**</td>
+        <td>程序执行的主体是**framework**</td>
+    </tr>
+    <tr>
+        <td colspan="2">Domain Engineering（领域工程）：①定义域（domain）②分解和实施通用部件为框架③为可变部分提供插件接口和回调机制（callback）④获取大量反馈，并进行迭代</td>
+    </tr>
+    <tr>
+        <td colspan="2">运行框架：①通过自身运行（eg. Eclipse）②通过继承运行（eg. Swing，JUnit，MapReduce，Servlets）③加载插件（Client写main函数，创造插件并传递给框架（白盒）；框架写main函数，client将插件名字作为命令或环境变量传递（黑盒））</td>
+    </tr>
+</table>
+
+<h5 id="5-1-3-External-observations-of-reusability"><a href="#5-1-3-External-observations-of-reusability" class="headerlink" title="5.1.3 External observations of reusability"></a>5.1.3 External observations of reusability</h5><table>
+    <tr>
+        <td>Type Variation(类型可变)</td>
+        <td>Routine Grouping(功能分组)</td>
+        <td>Implementation Variation(实现可变)</td>
+        <td>Representation Independence(表示独立)</td>
+        <td>Factoring Out Common Behaviors(共性抽取)</td>
+    </tr>
+    <tr>
+        <td>泛型：适应不同的类型，且满足LSP</td>
+        <td>提供完备的细粒度操作，保证功能的完整性，不同场景下复用不同的操作及其组合</td>
+        <td>ADT有多种不同的实现，提供不同的representation和abstract function，但具有同样的specification(pre-condition,post-condition,invariants)，从而可以适应不同的应用场景</td>
+        <td>内部实现可能会经常变化，但客户端不应受到影响，表示独立性、信息隐藏</td>
+        <td>将共同的行为（共性）抽象出来，形成可复用实体</td>
+    </tr>
+</table>
+
+<h4 id="5-2-Construction-for-Reuse"><a href="#5-2-Construction-for-Reuse" class="headerlink" title="5.2 Construction for Reuse"></a>5.2 Construction for Reuse</h4><p>从类、API、框架三个层面学习如何设计可复用软件实体的具体技术<br>本节考点：<br>LSP<br>协变、反协变<br>数组的子类型化<br>泛型的子类型化<br>泛型中的通配符（?）<br>Delegation<br>Comparator和Comparable<br>CRP原则<br>接口的组合</p>
+<h5 id="5-2-1-Designing-reusable-classes"><a href="#5-2-1-Designing-reusable-classes" class="headerlink" title="5.2.1 Designing reusable classes"></a>5.2.1 Designing reusable classes</h5><p><strong>设计可复用的类</strong><br><em>Already introduced in section 2.4 OOP</em></p>
+<h6 id="5-2-1-1-Inheritance-and-overriding-继承和重写"><a href="#5-2-1-1-Inheritance-and-overriding-继承和重写" class="headerlink" title="5.2.1.1 Inheritance and overriding(继承和重写)"></a>5.2.1.1 Inheritance and overriding(继承和重写)</h6><h6 id="5-2-1-2-Overloading-重载"><a href="#5-2-1-2-Overloading-重载" class="headerlink" title="5.2.1.2 Overloading(重载)"></a>5.2.1.2 Overloading(重载)</h6><h6 id="5-2-1-3-Parametric-polymorphism-and-generic-programming-参数多态与泛型编程"><a href="#5-2-1-3-Parametric-polymorphism-and-generic-programming-参数多态与泛型编程" class="headerlink" title="5.2.1.3 Parametric polymorphism and generic programming(参数多态与泛型编程)"></a>5.2.1.3 Parametric polymorphism and generic programming(参数多态与泛型编程)</h6><p><em>Important in this chapter</em></p>
+<h6 id="5-2-1-4-Behavioral-subtyping-and-Liskov-Substitution-Priciple-LSP-行为子类型与Liskov替换原则"><a href="#5-2-1-4-Behavioral-subtyping-and-Liskov-Substitution-Priciple-LSP-行为子类型与Liskov替换原则" class="headerlink" title="5.2.1.4 Behavioral subtyping and Liskov Substitution Priciple(LSP)(行为子类型与Liskov替换原则)"></a>5.2.1.4 Behavioral subtyping and Liskov Substitution Priciple(LSP)(行为子类型与Liskov替换原则)</h6><p><strong>子类型多态</strong>：客户端可用统一的方式处理不同类型的对象(static type checking)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Cat extends Animal */</span></span><br><span class="line">Animal a = <span class="keyword">new</span> Animal();</span><br><span class="line">Animal c1 = <span class="keyword">new</span> Cat();</span><br><span class="line">Cat c2 = <span class="keyword">new</span> Cat();</span><br><span class="line"><span class="comment">/* 在可以使用a的场景，都可以用c1和c2代替而不会有任何问题 */</span></span><br><span class="line">a = c1;</span><br><span class="line">a = c2;</span><br></pre></td></tr></table></figure>
+<p>子类型在<strong>Java编译器</strong>中执行的规则：<br>①子类型可以<strong>增加方法</strong>，但<strong>不可删</strong><br>②子类型需要实现抽象类型中的所有<strong>未实现方法</strong><br>③子类型中重写的方法必须有相同或子类型的<strong>返回值</strong><br>④子类型中重写的方法必须使用同样类型的<strong>参数</strong><br>⑤子类型中重写的方法<strong>不能抛出额外的异常</strong><br>特殊的行为：<br>⑥<strong>更强的不变量</strong>；<br>⑦<strong>更弱的前置条件</strong>；<br>⑧<strong>更强的后置条件</strong>；</p>
+<p><strong>Liskov Substitution Priciple(LSP)</strong>: Let q(x) be a property provable about objects x of type T, then q(y) should be provable for objects y of type S where S is a subtype of T.<br>（对于T类型的对象x有q(x)成立，且S是T的子类型，则对于S类型的对象y有q(y)成立）</p>
+<p>LSP是子类型关系的一个特殊定义，称为<strong>强行为子类型</strong>。<br>在编程语言中遵循以下规则：<br>①前置条件不能强化<br>②后置条件不能弱化<br>③不变量要保持<br>④子类型方法参数：逆变（反协变，越来越抽象）<br>⑤子类型方法的返回值：协变（越来越具体）<br>⑥异常类型：协变（越来越具体）</p>
+<table>
+    <tr>
+        <td>Covariance(协变)</td>
+        <td>Contravariance(反协变、逆变)</td>
+        <td colspan="2">两种特别的LSP</td>
+        <td>Wildcards（通配符）</td>
+    </tr>
+    <tr>
+        <td>父类型->子类型：越来越具体specification；  
+        返回值类型：不变或变得更具体；  
+        异常的类型：也是如此</td>
+        <td>父类型->子类型：越来越具体specific；
+        参数类型：要相反的变化，要不变或越来越抽象</td>
+        <td>数组中的LSP</td>
+        <td>泛型中的LSP</td>
+        <td>解决泛型中的LSP问题</td>
+    </tr>
+    <tr>
+        <td>Example: ①返回值类型，Object a(){...} -> String a(){...}  
+        ②异常类型，throws Throwable -> throws IOException</td>
+        <td>Example: ①参数类型，void c(String s){...} -> void c(Object s){...}</td>
+        <td>Arrays are covariant.(定义抽象类型可以放入具体类型，父类型可以放入子类型)   
+        </td>
+        <td>ArrayList&lt;Sting&gt 是List&lt;
+        Sting&gt 子类型；
+        List&lt;Sting&gt  不是 List&lt;Object&gt 子类型；
+        这个过程称为类型擦除（泛型不是协变的）</td>
+        <td>List&lt;? extends T&gt (Upper Bounded Wildcards，T的子类型)    ；
+        List&lt;Number&gt 是 List&lt;?&gt  子类型；
+        List&lt;Number&gt 是 List&lt;? extends Object&gt  的子类型（Number是Object/Number等子类的子类型型）；
+        List&lt;Object&gt 是 List&lt;? super String/Number/Object&gt  的子类型（Object是String/Object等任意类型父类的子类型）；
+        </td>
+    </tr>
+</table>
+关于上述问题代码分析：
+①子类型中参数类型协变；需要注意，如下情况不是子类型，因此是正确的
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">void someMethod(Number n)&#123;...&#125;;</span><br><span class="line">someMethod(new  Integer(10);</span><br><span class="line">someMethod(new Double(10.1）;</span><br></pre></td></tr></table></figure>
+②数组的LSP，需要注意子类型对象赋值和子类型引用赋值，前者正确，后者错误
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* T[]能保存T及T的子类型对象（子类型对象赋值）*&#x2F;</span><br><span class="line">        Number[] numbers &#x3D; new Number[2];</span><br><span class="line">        numbers[0] &#x3D; new Integer(10);</span><br><span class="line">        numbers[1] &#x3D; new Double(3.14);</span><br><span class="line">&#x2F;* 当将一个子类型数组赋值给父类型数组后，父类型数组只能保存该子类型元素，因为是子类型引用赋值*&#x2F;</span><br><span class="line">        Integer[] myInts &#x3D; &#123;1, 2, 3, 4&#125;;</span><br><span class="line">        Number[] myNumbers &#x3D; myInts;</span><br><span class="line">        myNumber[0] &#x3D; 3.14;  &#x2F;* 报错java.lang.ArrayStoreException *&#x2F;</span><br></pre></td></tr></table></figure>
+③泛型中的LSP，泛型不是协变的
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* List&lt;Integer&gt;不是List&lt;Number&gt;的子类型，即使Integer是Number的子类型 *&#x2F;</span><br><span class="line">    List&lt;Integer&gt; myInts &#x3D; new ArrayList&lt;Integer&gt;();</span><br><span class="line">    myInts.add(1);</span><br><span class="line">    myInts.add(2);</span><br><span class="line">    List&lt;Number&gt; myNums &#x3D; myInts; &#x2F;* Type mismatch: cannot convert from List&lt;Integer&gt; to List&lt;Number&gt; *&#x2F;</span><br><span class="line">    myNums.add(3.14);</span><br><span class="line">&#x2F;* 作为方法参数时，也是错误的 *&#x2F;</span><br><span class="line">static long sum(List&lt;Number&gt; numbers) &#123;...&#125;</span><br><span class="line">    List&lt;Integer&gt; myInts &#x3D; asList(1,2,3,4,5);</span><br><span class="line">    List&lt;Long&gt; myLongs &#x3D; asList(1L, 2L, 3L, 4L, 5L);</span><br><span class="line">    List&lt;Double&gt; myDoubles &#x3D; asList(1.0, 2.0, 3.0, 4.0, 5.0);</span><br><span class="line">    &#x2F;* The method sum(List&lt;Number&gt;) is not applicable for the arguments (List&lt;Integer&#x2F;Long&#x2F;Double&gt;) *&#x2F;</span><br><span class="line">    sum(myInts);</span><br><span class="line">    sum(myLongs);</span><br><span class="line">    sum(myDoubles);</span><br></pre></td></tr></table></figure>
+④通配符的应用，使用通配符的泛型的LSP
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Success */</span></span><br><span class="line">List&lt;? extends Integer&gt; intList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;? extends Number&gt; numList = intList;</span><br><span class="line"><span class="comment">/* failure,第一个为Number的子类型，第二个为Integer的子类型*/</span></span><br><span class="line">List&lt;? extends Number&gt; intList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">List&lt;? extends Integer&gt; numList = intList;</span><br><span class="line"><span class="comment">/* 根据上述通配符的叙述，以下正确，其中T为任意类型 */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function"><span class="keyword">void</span> <span class="title">copy</span><span class="params">(List&lt;? <span class="keyword">super</span> T&gt; dest,List&lt;? extends T&gt; src)</span></span>&#123;...&#125;;</span><br><span class="line">List&lt;Number&gt; source = <span class="keyword">new</span> LinkedList&lt;&gt;(); <span class="comment">/* Number类型是T类型子类的子类型 */</span></span><br><span class="line">source.add(Float.valueOf(<span class="number">3</span>));</span><br><span class="line">source.add(Integer.valueOf(<span class="number">2</span>));</span><br><span class="line">source.add(Double.valueOf(<span class="number">1.1</span>));</span><br><span class="line">List&lt;Object&gt; dest = <span class="keyword">new</span> LinkedList&lt;&gt;(); <span class="comment">/* Object是T类型父类的子类型 */</span></span><br><span class="line">Collections.copy(dest,source);</span><br></pre></td></tr></table></figure>
+
+<h6 id="5-2-1-5-Composition-and-delegation-组合和委托"><a href="#5-2-1-5-Composition-and-delegation-组合和委托" class="headerlink" title="5.2.1.5 Composition and delegation(组合和委托)"></a>5.2.1.5 Composition and delegation(组合和委托)</h6><p><strong>Delegation &amp; CRP原则</strong></p>
+<table>
+    <tr>
+        <td>Delegation(委托/委派)</td>
+        <td>Composition Reuse Principle（CRP，复合重用原则，Or  Composite over inheritance Principle）</td>
+    </tr>
+    <tr>
+        <td>一个对象请求另一个对象的功能(Client调用Recevier，Recevier委派给Delegate；委派是复用的一种常见形式)；如果子类只需要复用父类中的一小部分方法，可以不需要使用继承，而是通过委派机制来实现</td>
+        <td>类应该通过它们的组合（通过包含实现所需功能的其他类的实例）实现多态行为和代码重用，而不是从基类或父类继承；优先使用对象组合，而不是类继承</td>
+    </tr>
+    <tr>
+        <td>establish delegation between two objects；
+        A a = new A()；
+        B b = new B(a)(Class B内部存在一个delegation link -> private A a，如果B要使用A的foo()功能，则可以直接调用a.foo()实现)</td>
+        <td>使用接口定义不同侧面的行为；接口之间通过extends（继承）实现行为的扩展（一个接口可以继承多个接口- > 组合）；类implements（实现）接口（类的内部使用委派）</td>
+    </tr>
+</table>
+
+<p><strong>Types of delegation（三种委派方式）</strong></p>
+<table>
+    <tr>
+        <td colspan="4">Types of delegation</td>
+    </tr>
+    <tr>
+        <td>Use（A use B）</td>
+        <td>Association（A has B）</td>
+        <td colspan="2">Composition / aggregation（A owns N）</td>
+    </tr>
+    <tr>
+        <td>Dependency（依赖，临时性的delegation）</td>
+        <td>Association（关联，永久性的delegation）</td>
+        <td>Composition（组合，更强的delegation）</td>
+        <td>Aggregation（聚合）</td>
+    </tr>
+    <tr>
+        <td>直接调用其他对象的方法（uses_a）</td>
+        <td>这种关系是结构性的，因为它指定一种类型的对象与另一种类型的对象相连，并不代表行为（has_a）</td>
+        <td>将简单对象或数据类型组合成更复杂的对象；该类有另一个作为属性/实例变量（内部创建实例对象，is_part_of）</td>
+        <td>对象存在于另一个之外，在外部创建，所以它作为参数传递给构造者（has_a）</td>
+    </tr>
+</table>
+
+<p><strong>Delegation示例</strong><br>Client调用Printer的print方法<br>Printer将print委托给RealPrinter</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RealPrinter</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;The Delegate&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Printer</span> </span>&#123;</span><br><span class="line">    RealPrinter p = <span class="keyword">new</span> RealPrinter();  <span class="comment">/* 委托连接 */</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        p.print(); <span class="comment">/* 委托 */</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">    Printer printer = <span class="keyword">new</span> Printer();</span><br><span class="line">    printer.print(); <span class="comment">/* The delegation */</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Composition示例</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Heart</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="comment">/* 内部创建实例变量 */</span></span><br><span class="line">    <span class="keyword">private</span> Heart heart = <span class="keyword">new</span> Heart();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">operation</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">/* 也可以在方法内创建实例 */</span></span><br><span class="line">        <span class="comment">// heart = new Heart();</span></span><br><span class="line">        heart.operation();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Aggregation（聚合）示例</strong><br>对象存在于另一个之外，在外部创建，所以它作为参数传递给构造者</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Course</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Student[] students;</span><br><span class="line">    <span class="comment">/* 外部参数传入 */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">addStudent</span> <span class="params">(Student s)</span> </span>&#123;</span><br><span class="line">        studtents.append(s);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="5-2-2-Designing-system-level-reusable-libraries-and-frameworks（系统层面复用）"><a href="#5-2-2-Designing-system-level-reusable-libraries-and-frameworks（系统层面复用）" class="headerlink" title="5.2.2 Designing system-level reusable libraries and frameworks（系统层面复用）"></a>5.2.2 Designing system-level reusable libraries and frameworks（系统层面复用）</h5><p>之所以<strong>library</strong>和<strong>framework</strong>被称为<strong>系统层面</strong>的复用，是因为它们不仅定义了1个可复用的接口/类，而是将某个完整系统中的<strong>所有可复用的接口/类</strong>都实现出来。并且定义了这些类之间的<strong>交互关系</strong>、<strong>调用关系</strong>，从而形成了系统整体的<strong>“架构”</strong>。</p>
+<h6 id="5-2-2-1-API-design"><a href="#5-2-2-1-API-design" class="headerlink" title="5.2.2.1 API design"></a>5.2.2.1 API design</h6><p>(1) API should do one thing and do it well（努力做好一件事情；Good. Font，PrivateKey，ThreadFactory；Bad. BindingIteratorImplBase）<br>(2) API should be as small as possible but no smaller（越小越好）<br>(3) Implementation should not impact API（信息隐藏，用户不应该影响API）<br>(4) Documentation matters（文档遵循Chapter4的可读性）<br>(5) Consider performance consequences（性能良好）<br>(6) API must coexist peacefully with platform（友好性）<br>(7) Class design（最小化可变性；继承遵循LSP）<br>(8) Method design（编译时最好 - 静态类型、泛型）</p>
+<h6 id="5-2-2-2-Framework-design"><a href="#5-2-2-2-Framework-design" class="headerlink" title="5.2.2.2 Framework design"></a>5.2.2.2 Framework design</h6><p>Turn to 5.1.2</p>
+<h6 id="5-2-2-3-Java-Collection-Framework（JCF）"><a href="#5-2-2-3-Java-Collection-Framework（JCF）" class="headerlink" title="5.2.2.3 Java Collection Framework（JCF）"></a>5.2.2.3 Java Collection Framework（JCF）</h6><p>Collection: an object that groups element</p>
+<p><strong>General Purpose Implementations</strong><br>Interface -&gt; Abstract Class -&gt; Class<br>Collection Interface + Iterator Interface</p>
+<table>
+    <tr>
+        <td colspan="2"></td>
+        <td colspan="4">Implementations</td>
+    <tr>
+    <tr>
+        <td colspan="2"></td>
+        <td>Hash Table</td>
+        <td>Resizable Array</td>
+        <td>Balanced Tree</td>
+        <td>Linked List</td>
+    <tr>
+    <tr>
+    <td rowspan="5">Interfaces</td>
+        <td>Set</td>
+        <td>HashSet（O(1) access, no order guarantee）</td>
+        <td></td>
+        <td>TreeSet（O(log n) access, sorted）</td>
+        <td></td>
+    <tr>
+    <tr>
+        <td>List</td>
+        <td></td>
+        <td>ArrayList（O(1) random access, O(n) insert/remove）</td>
+        <td></td>
+        <td>LinkedList（O(n) random access, O(1) insert/remove）</td>
+    <tr>
+    <tr>
+        <td>Map</td>
+        <td>HashMap</td>
+        <td></td>
+        <td>TreeMap</td>
+        <td></td>
+    <tr>
+</table>
+**Idioms（常用方法）**
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**** Set ****/</span></span><br><span class="line">    Set&lt;Type&gt; s1, s2;</span><br><span class="line">    <span class="keyword">boolean</span> isSubset = s1.containsAll(s2); <span class="comment">/* 子集合包含 */</span></span><br><span class="line">    Set&lt;Type&gt; union = <span class="keyword">new</span> HashSet&lt;&gt;(s1);</span><br><span class="line">    union = union.addAll(s2); <span class="comment">/* 集合交集 */</span></span><br><span class="line">    Set&lt;Type&gt; intersection = <span class="keyword">new</span> HashSet&lt;&gt;(s1);</span><br><span class="line">    intersection.retainAll(s2); <span class="comment">/* 集合并集 */</span></span><br><span class="line">    Set&lt;Type&gt; difference = <span class="keyword">new</span> HashSet&lt;&gt;(s1);</span><br><span class="line">    difference.removeAll(s2); <span class="comment">/* 集合差集 */</span></span><br><span class="line">    Collection&lt;Type&gt; c; </span><br><span class="line">    Collection&lt;Type&gt; noDups = <span class="keyword">new</span> HashSet&lt;&gt;(c); <span class="comment">/* 子类型 */</span></span><br><span class="line"><span class="comment">/**** List可交换和随机化的可重用算法 ****/</span></span><br><span class="line">    List&lt;Type&gt; a, b;</span><br><span class="line">    a.addAll(b); <span class="comment">//连接两个list</span></span><br><span class="line">    a.subList(from, to).clear(); <span class="comment">//Range-remove，删除该范围内所有元素</span></span><br><span class="line">    <span class="comment">// Range-extract，提取该范围内元素</span></span><br><span class="line">    List&lt;Type&gt; partView = a.subList(from, to);</span><br><span class="line">    List&lt;Type&gt; part = <span class="keyword">new</span> ArrayList&lt;&gt;(partView);</span><br><span class="line">    partView.clear();</span><br><span class="line"><span class="comment">/**** Map ****/</span></span><br><span class="line">    <span class="comment">// Iterate over all keys in Map m，迭代器遍历所有键值</span></span><br><span class="line">    Map&lt;Key, Val&gt; m;</span><br><span class="line">    <span class="keyword">for</span> (iterator&lt;Key&gt; i = m.keySet().iterator(); i.hasNext(); )</span><br><span class="line">        System.out.println(i.next());</span><br><span class="line">    <span class="comment">// As of Java 5 (2004)，遍历</span></span><br><span class="line">    <span class="keyword">for</span> (Key k : m.keySet())</span><br><span class="line">        System.out.println(i.next());</span><br><span class="line">    <span class="comment">// &quot;Map algebra&quot;</span></span><br><span class="line">    Map&lt;Key, Val&gt; a, b;</span><br><span class="line">    <span class="keyword">boolean</span> isSubMap = a.entrySet().containsAll(b.entrySet()); <span class="comment">/* a键值集合是否包含b键值集合 */</span></span><br><span class="line">    Set&lt;Key&gt; commonKeys =<span class="keyword">new</span> HashSet&lt;&gt;(a.keySet()).retainAll(b.keySet); <span class="comment">/* 并集 */</span></span><br><span class="line">    <span class="comment">//Remove keys from a that have mappings in b</span></span><br><span class="line">    a.keySet().removeAll(b.keySet());</span><br></pre></td></tr></table></figure>
+
+<p>Unmodifiable Wrappers（不可更改包装）：匿名实现；静态工厂方法；每个核心接口一个；提供只读访问 - 不可变！<br>Synchronization Wrappers（同步包装）：线程安全的新方法 - 匿名实现，每个核心接口一个 - 静态工厂收集适当的类型 - 如果通过包装器进行所有访问，线程安全保证 - 必须手动同步迭代</p>
 
     </div>
 
@@ -914,6 +789,7 @@ Interfaces
 
 
       
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -959,6 +835,26 @@ Interfaces
   </div>
 
       
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -995,8 +891,70 @@ Interfaces
   
 
   
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>

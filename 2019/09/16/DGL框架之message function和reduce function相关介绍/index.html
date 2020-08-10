@@ -19,7 +19,7 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="dgl框架message function和reduce function相关介绍">
@@ -286,11 +286,6 @@ mjx-container[display="true"] + br {
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -347,7 +342,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#dgl"><span class="nav-number">1.</span> <span class="nav-text">DGL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AAapi"><span class="nav-number">1.1.</span> <span class="nav-text">两个API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#builtin-message-passing-functions"><span class="nav-number">1.2.</span> <span class="nav-text">Builtin message passing functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#multigraphs"><span class="nav-number">1.3.</span> <span class="nav-text">MultiGraphs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reference"><span class="nav-number">1.4.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#DGL"><span class="nav-number">1.</span> <span class="nav-text">DGL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%A4%E4%B8%AAAPI"><span class="nav-number">1.1.</span> <span class="nav-text">两个API</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Builtin-message-passing-functions"><span class="nav-number">1.2.</span> <span class="nav-text">Builtin message passing functions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MultiGraphs"><span class="nav-number">1.3.</span> <span class="nav-text">MultiGraphs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">1.4.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -465,6 +460,34 @@ mjx-container[display="true"] + br {
             </span>
 
           
+            <span id="/2019/09/16/DGL%E6%A1%86%E6%9E%B6%E4%B9%8Bmessage%20function%E5%92%8Creduce%20function%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/" class="post-meta-item leancloud_visitors" data-flag-title="DGL框架之message function和reduce function相关介绍" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/09/16/DGL%E6%A1%86%E6%9E%B6%E4%B9%8Bmessage%20function%E5%92%8Creduce%20function%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/09/16/DGL%E6%A1%86%E6%9E%B6%E4%B9%8Bmessage%20function%E5%92%8Creduce%20function%E7%9B%B8%E5%85%B3%E4%BB%8B%E7%BB%8D/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
             <div class="post-description">dgl框架message function和reduce function相关介绍</div>
 
         </div>
@@ -474,9 +497,7 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="dgl">DGL</h2>
-<h3 id="两个api">两个API</h3>
-<p><img src="/images/dgl/data.png" /></p>
+        <h2 id="DGL"><a href="#DGL" class="headerlink" title="DGL"></a>DGL</h2><h3 id="两个API"><a href="#两个API" class="headerlink" title="两个API"></a>两个API</h3><p><img src="/images/dgl/data.png"></p>
 <ul>
 <li><strong>message function（消息函数）</strong></li>
 </ul>
@@ -485,42 +506,49 @@ mjx-container[display="true"] + br {
 <p>（2）用 <code>e.dst.data</code> 获得这条边<strong>目标节点</strong>的特征信息</p>
 <p>（3）用 <code>e.data</code> 获得这条边的特征信息</p>
 <p>消息函数可以获得出发节点和目标节点的特征信息，描述了需要发给目标节点做下一步计算的信息。</p>
-<p><img src="/images/dgl/message.png" /></p>
+<p><img src="/images/dgl/message.png"></p>
 <p>如上图，消息函数把节点1和节点2的信息都发送给节点3，可以发送的信息包括 v1、v2 和 v3 以及每条边上的消息。</p>
 <ul>
 <li><strong>reduce function（累和函数）</strong></li>
 </ul>
 <p>目标节点在获得其他节点以及边的特征信息之后，通过累和函数计算出一个新的表示。</p>
-<p><img src="/images/dgl/reduce.png" /></p>
+<p><img src="/images/dgl/reduce.png"></p>
 <p>如上图，累和函数获得了消息函数传递过来的信息 M13、M23 同时还有自身的节点信息。</p>
 <ul>
 <li>图神经网络案例</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GCNMessage</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;消息函数&quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, edges</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :param: edges, a batch of edges</span></span><br><span class="line"><span class="string">        :return: This computes a (batch of) message called &#x27;msg&#x27; </span></span><br><span class="line"><span class="string">           using the source node&#x27;s feature &#x27;h&#x27;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 源点的批量特征向量</span></span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;h&quot;</span>: edges.src[<span class="string">&quot;h&quot;</span>]&#125;</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GCNReduce</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;累和函数&quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, in_feats, out_feats</span>):</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.linear = nn.Linear(in_feats, out_feats)</span><br><span class="line">        self.activation = nn.ReLU()</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, nodes</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :param: nodes, a batch of nodes</span></span><br><span class="line"><span class="string">        :return: This computes the new &#x27;h&#x27; features </span></span><br><span class="line"><span class="string">          by summing received &#x27;msg&#x27; in each node&#x27;s mailbox</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 批量消息张量, nodes.mailbox[&quot;h&quot;]</span></span><br><span class="line">        accum = torch.sum(nodes.mailbox[<span class="string">&quot;h&quot;</span>], dim=<span class="number">1</span>)</span><br><span class="line">        h = self.linear(accum)</span><br><span class="line">        h = self.activation(h)</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;h&quot;</span>: h&#125;</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GCN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;GCN Layer&quot;&quot;&quot;</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, in_feats, out_feats</span>):</span></span><br><span class="line">        self.msg_func = GCNMessage()</span><br><span class="line">        self.reduce_func = GCNReduce(in_feats, out_feats)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, g, inputs</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :param: g, the graph</span></span><br><span class="line"><span class="string">        :param: inputs, the input node features</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># first set the node features</span></span><br><span class="line">        g.ndata[<span class="string">&quot;h&quot;</span>] = inputs</span><br><span class="line">        <span class="comment"># 全局更新</span></span><br><span class="line">        g.update_all(self.msg_func, self.reduce_func)</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Or</span></span><br><span class="line"><span class="string">        g.send(g.edges(), gcn_message)</span></span><br><span class="line"><span class="string">        g.recv(g.nodes(), gcn_reduce)</span></span><br><span class="line"><span class="string">        And there the gcn_message and gcn_reduce are functions.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># Get the &#x27;h&#x27; features and remove the node/edge states from the graph</span></span><br><span class="line">        <span class="keyword">return</span> g.ndata.pop(<span class="string">&quot;h&quot;</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GCNMessage</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;消息函数&quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, edges</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :param: edges, a batch of edges</span></span><br><span class="line"><span class="string">        :return: This computes a (batch of) message called &#x27;msg&#x27; </span></span><br><span class="line"><span class="string">            using the source node&#x27;s feature &#x27;h&#x27;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 源点的批量特征向量</span></span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;h&quot;</span>: edges.src[<span class="string">&quot;h&quot;</span>]&#125;</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GCNReduce</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;累和函数&quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, in_feats, out_feats</span>):</span></span><br><span class="line">        super().__init__()</span><br><span class="line">        self.linear = nn.Linear(in_feats, out_feats)</span><br><span class="line">        self.activation = nn.ReLU()</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, nodes</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :param: nodes, a batch of nodes</span></span><br><span class="line"><span class="string">        :return: This computes the new &#x27;h&#x27; features </span></span><br><span class="line"><span class="string">            by summing received &#x27;msg&#x27; in each node&#x27;s mailbox</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># 批量消息张量, nodes.mailbox[&quot;h&quot;]</span></span><br><span class="line">        accum = torch.sum(nodes.mailbox[<span class="string">&quot;h&quot;</span>], dim=<span class="number">1</span>)</span><br><span class="line">        h = self.linear(accum)</span><br><span class="line">        h = self.activation(h)</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;h&quot;</span>: h&#125;</span><br><span class="line">    </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GCN</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="string">&quot;&quot;&quot;GCN Layer&quot;&quot;&quot;</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, in_feats, out_feats</span>):</span></span><br><span class="line">        self.msg_func = GCNMessage()</span><br><span class="line">        self.reduce_func = GCNReduce(in_feats, out_feats)</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, g, inputs</span>):</span></span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :param: g, the graph</span></span><br><span class="line"><span class="string">        :param: inputs, the input node features</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># first set the node features</span></span><br><span class="line">        g.ndata[<span class="string">&quot;h&quot;</span>] = inputs</span><br><span class="line">        <span class="comment"># 全局更新</span></span><br><span class="line">        g.update_all(self.msg_func, self.reduce_func)</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Or</span></span><br><span class="line"><span class="string">        g.send(g.edges(), gcn_message)</span></span><br><span class="line"><span class="string">        g.recv(g.nodes(), gcn_reduce)</span></span><br><span class="line"><span class="string">        And there the gcn_message and gcn_reduce are functions.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="comment"># Get the &#x27;h&#x27; features and remove the node/edge states from the graph</span></span><br><span class="line">        <span class="keyword">return</span> g.ndata.pop(<span class="string">&quot;h&quot;</span>)</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>这里的累和函数：</p>
-<p><span class="math display">\[h^{new}_i = f ( \Sigma_{j \neq i}^N h_j )\]</span></p>
+<p>$$h^{new}<em>i = f ( \Sigma</em>{j \neq i}^N h_j )$$</p>
 </blockquote>
-<h3 id="builtin-message-passing-functions">Builtin message passing functions</h3>
-<p>DGL 的消息传递主要使用两个 API：</p>
+<h3 id="Builtin-message-passing-functions"><a href="#Builtin-message-passing-functions" class="headerlink" title="Builtin message passing functions"></a>Builtin message passing functions</h3><p>DGL 的消息传递主要使用两个 API：</p>
 <ul>
 <li><code>send(edges, message_func)</code> 用于计算沿着给定边的消息</li>
-<li><code>recv(nodes, reduce_func)</code> 用于收集进入节点的消息，执行聚集等操作</li>
+<li><code>recv(nodes, reduce_func)</code>  用于收集进入节点的消息，执行聚集等操作</li>
 </ul>
 <p>使用 <code>u</code>，<code>v</code> 和 <code>e</code>分别表示 source nodes，destination nodes 和 edges</p>
 <p>消息传递使用案例：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> dgl</span><br><span class="line"><span class="keyword">import</span> dgl.function <span class="keyword">as</span> fn</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"><span class="comment"># create a DGL Graph</span></span><br><span class="line">g = ...</span><br><span class="line"><span class="comment"># each node has feature size 10</span></span><br><span class="line">g.ndata[<span class="string">&#x27;h&#x27;</span>] = torch.randn((g.number_of_nodes(), <span class="number">10</span>))</span><br><span class="line"><span class="comment"># each edge has feature size 1</span></span><br><span class="line">g.edata[<span class="string">&#x27;w&#x27;</span>] = torch.randn((g.number_of_edges(), <span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># collect features from source nodes and aggregate them in destination nodes</span></span><br><span class="line">g.update_all(fn.copy_u(<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;m&#x27;</span>), fn.sum(<span class="string">&#x27;m&#x27;</span>, <span class="string">&#x27;h_sum&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># multiply source node features with edge weights and aggregate them in destination nodes</span></span><br><span class="line">g.update_all(fn.u_mul_e(<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;w&#x27;</span>, <span class="string">&#x27;m&#x27;</span>), fn.max(<span class="string">&#x27;m&#x27;</span>, <span class="string">&#x27;h_max&#x27;</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># compute edge embedding by multiplying source and destination node embeddings</span></span><br><span class="line">g.apply_edges(fn.u_mul_v(<span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;h&#x27;</span>, <span class="string">&#x27;w_new&#x27;</span>))</span><br></pre></td></tr></table></figure>
-<p>对于一元消息函数（e.g. <code>copy_u</code>）需要一个输入的特征名和一个输出的消息名；对于二元消息函数（e.g. <code>u_mul_e</code>）需要两个输入特征名和一个输出消息名。对于 <code>fn.u_mul_e('h', 'w', 'm')</code> 是按如下函数定义：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">udf_u_mul_e</span>(<span class="params">edges</span>):</span></span><br><span class="line">  <span class="keyword">return</span> &#123;<span class="string">&#x27;m&#x27;</span>: edges.src[<span class="string">&#x27;h&#x27;</span>] * edges.data[<span class="string">&#x27;w&#x27;</span>]&#125;</span><br></pre></td></tr></table></figure>
-<p>对于 reduce function，需要给出一个输入消息名和一个输出节点特征名，例如，<code>fn.max('m', 'h_max')</code> 是按如下定义：</p>
+
+<p>对于一元消息函数（e.g. <code>copy_u</code>）需要一个输入的特征名和一个输出的消息名；对于二元消息函数（e.g. <code>u_mul_e</code>）需要两个输入特征名和一个输出消息名。对于 <code>fn.u_mul_e(&#39;h&#39;, &#39;w&#39;, &#39;m&#39;)</code> 是按如下函数定义：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">udf_u_mul_e</span>(<span class="params">edges</span>):</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&#x27;m&#x27;</span>: edges.src[<span class="string">&#x27;h&#x27;</span>] * edges.data[<span class="string">&#x27;w&#x27;</span>]&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于 reduce function，需要给出一个输入消息名和一个输出节点特征名，例如，<code>fn.max(&#39;m&#39;, &#39;h_max&#39;)</code> 是按如下定义：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">udf_max</span>(<span class="params">nodes</span>):</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&#x27;h_max&#x27;</span>: torch.max(nodes.mailbox[<span class="string">&#x27;m&#x27;</span>], <span class="number">1</span>)[<span class="number">0</span>]&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="multigraphs">MultiGraphs</h3>
-<p>创建图时需要设置 <code>multigraph=True</code></p>
+
+
+
+<h3 id="MultiGraphs"><a href="#MultiGraphs" class="headerlink" title="MultiGraphs"></a>MultiGraphs</h3><p>创建图时需要设置 <code>multigraph=True</code></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">g_multi = dgl.DGLGraph(multigraph=<span class="literal">True</span>)</span><br><span class="line">g_multi.add_nodes(<span class="number">10</span>)</span><br><span class="line">g_multi.ndata[<span class="string">&#x27;x&#x27;</span>] = torch.randn(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># edges, [(1, 0), (2, 0), (3, 0), ..., (9, 0), (1, 0)]</span></span><br><span class="line"><span class="comment"># two edges on 1-&gt;0</span></span><br><span class="line">g_multi.add_edges(list(range(,, <span class="number">10</span>)), <span class="number">0</span>)</span><br><span class="line">g_multi.add_edges(<span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">g_multi.edata[<span class="string">&#x27;w&#x27;</span>] = torch.randn(<span class="number">10</span>, <span class="number">2</span>)</span><br><span class="line"><span class="comment"># set the first 1-&gt;0 edge&#x27;s data</span></span><br><span class="line">g_multi.edges[<span class="number">1</span>].data[<span class="string">&#x27;w&#x27;</span>] = torch.zeros(<span class="number">1</span>, <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-<p>MultiGraph 中的边没法通过节点 <span class="math inline">\(u\)</span> 和 <span class="math inline">\(v\)</span> 唯一确定，需要使用 <code>edge_id</code> 获取边的 id</p>
+
+<p>MultiGraph 中的边没法通过节点 $u$ 和 $v$ 唯一确定，需要使用 <code>edge_id</code> 获取边的 id</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tensor([0, 9])</span></span><br><span class="line">eid_10 = g_multi.edge_id(<span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">g_multi.edges[eid_10].data[<span class="string">&#x27;w&#x27;</span>] = torch.ones(len(eid_10), <span class="number">2</span>)</span><br></pre></td></tr></table></figure>
-<h3 id="reference">Reference</h3>
-<p><a target="_blank" rel="noopener" href="https://docs.dgl.ai/tutorials/basics/1_first.html">DGL at a Glance</a></p>
+
+
+
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><p><a target="_blank" rel="noopener" href="https://docs.dgl.ai/tutorials/basics/1_first.html">DGL at a Glance</a></p>
 <p><a target="_blank" rel="noopener" href="https://docs.dgl.ai/tutorials/basics/2_basics.html">DGL Basics</a></p>
 <p><a target="_blank" rel="noopener" href="https://docs.dgl.ai/features/builtin.html">Builtin message passing functions</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.jiqizhixin.com/articles/2019-05-31">DGL 作者答疑！关于 DGL 你想知道的都在这里</a></p>
@@ -563,6 +591,7 @@ mjx-container[display="true"] + br {
 
 
       
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -608,6 +637,26 @@ mjx-container[display="true"] + br {
   </div>
 
       
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -644,8 +693,70 @@ mjx-container[display="true"] + br {
   
 
   
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>

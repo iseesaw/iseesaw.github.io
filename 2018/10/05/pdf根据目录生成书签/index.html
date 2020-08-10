@@ -19,15 +19,15 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="1 准备 ①Adobe Acrobat ②Autobookmark插件 &gt;Step1 下载链接 &gt;Step2 关闭Adobe Acrobat后，直接安装，会自动添加到Adobe Acrobat &gt;（使用说明） ③Python3.6 ④pdf电子书的目录bookmarks.txt &gt;直接从目录复制（注意编码问题，可能乱码） &gt;或从豆瓣图书复制 2 得到书签标准文件 2.">
+  <meta name="description" content="1 准备①Adobe Acrobat②Autobookmark插件  Step1 下载链接Step2 关闭Adobe Acrobat后，直接安装，会自动添加到Adobe Acrobat（使用说明）  ③Python3.6④pdf电子书的目录bookmarks.txt  直接从目录复制（注意编码问题，可能乱码）或从豆瓣图书复制  2  得到书签标准文件2.1 bookmarks.txt标准文件所需目">
 <meta property="og:type" content="article">
 <meta property="og:title" content="pdf根据目录生成书签">
 <meta property="og:url" content="http://blog.khay.site/2018/10/05/pdf%E6%A0%B9%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E4%B9%A6%E7%AD%BE/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="1 准备 ①Adobe Acrobat ②Autobookmark插件 &gt;Step1 下载链接 &gt;Step2 关闭Adobe Acrobat后，直接安装，会自动添加到Adobe Acrobat &gt;（使用说明） ③Python3.6 ④pdf电子书的目录bookmarks.txt &gt;直接从目录复制（注意编码问题，可能乱码） &gt;或从豆瓣图书复制 2 得到书签标准文件 2.">
+<meta property="og:description" content="1 准备①Adobe Acrobat②Autobookmark插件  Step1 下载链接Step2 关闭Adobe Acrobat后，直接安装，会自动添加到Adobe Acrobat（使用说明）  ③Python3.6④pdf电子书的目录bookmarks.txt  直接从目录复制（注意编码问题，可能乱码）或从豆瓣图书复制  2  得到书签标准文件2.1 bookmarks.txt标准文件所需目">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdn.net/20181005211914480?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20181005213203255?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
@@ -284,11 +284,6 @@ mjx-container[display="true"] + br {
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
 
   </li>
-        <li class="menu-item menu-item-sitemap">
-
-    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
-
-  </li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -345,7 +340,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">1 准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%97%E5%88%B0%E4%B9%A6%E7%AD%BE%E6%A0%87%E5%87%86%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2 得到书签标准文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#bookmarks.txt%E6%A0%87%E5%87%86%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 bookmarks.txt标准文件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90"><span class="nav-number">3.</span> <span class="nav-text">3使用插件自动生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">4.</span> <span class="nav-text">4 其他</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%87%86%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">1 准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%BE%97%E5%88%B0%E4%B9%A6%E7%AD%BE%E6%A0%87%E5%87%86%E6%96%87%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">2  得到书签标准文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1-bookmarks-txt%E6%A0%87%E5%87%86%E6%96%87%E4%BB%B6"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 bookmarks.txt标准文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-%E6%AD%A3%E5%88%99%E8%BD%AC%E6%8D%A2%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 正则转换示例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E4%BD%BF%E7%94%A8%E6%8F%92%E4%BB%B6%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90"><span class="nav-number">3.</span> <span class="nav-text">3使用插件自动生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E5%85%B6%E4%BB%96"><span class="nav-number">4.</span> <span class="nav-text">4 其他</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -463,6 +458,34 @@ mjx-container[display="true"] + br {
             </span>
 
           
+            <span id="/2018/10/05/pdf%E6%A0%B9%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E4%B9%A6%E7%AD%BE/" class="post-meta-item leancloud_visitors" data-flag-title="pdf根据目录生成书签" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/10/05/pdf%E6%A0%B9%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E4%B9%A6%E7%AD%BE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/10/05/pdf%E6%A0%B9%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E4%B9%A6%E7%AD%BE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -471,18 +494,22 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="准备">1 准备</h4>
-<p>①Adobe Acrobat ②Autobookmark插件 &gt;Step1 <a target="_blank" rel="noopener" href="https://www.evermap.com/downloads.asp">下载链接</a> &gt;Step2 关闭Adobe Acrobat后，直接安装，会自动添加到Adobe Acrobat &gt;（<a target="_blank" rel="noopener" href="https://www.evermap.com/AutoBookmark/AutoBookmarkByTextStyle.pdf">使用说明</a>）</p>
-<p>③Python3.6 ④pdf电子书的目录bookmarks.txt &gt;直接从目录复制（注意编码问题，可能乱码） &gt;或从豆瓣图书复制</p>
-<h4 id="得到书签标准文件">2 得到书签标准文件</h4>
-<h5 id="bookmarks.txt标准文件">2.1 bookmarks.txt标准文件</h5>
-<p>所需目录格式，需要一、二级标题鲜明，第二级使用<strong>tab键</strong>缩进（Notepad中选中整体直接tab进行缩进，或shift+tab回缩），第三级类推 标题和页数之间使用<strong>英文逗号</strong>分割 格式示例： <img src="https://img-blog.csdn.net/20181005211914480?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述" /> ##### 2.2 正则转换示例 将一般形式的目录，如 1 Part1 . . . . . . . . . . . . . . . . . . . 1 1.1 Part1.1 . . . . . . . . . . . . . . . . . . . 3 1.2 Part1.2 . . . . . . . . . . . . . . . . . . . 5 1.3 Part1.3 . . . . . . . . . . . . . . . . . . . 6 2 Part2 . . . . . . . . . . . . . . . . . . . 9 2.1 Part2.1 . . . . . . . . . . . . . . . . . . . 11 2.2 Part2.2 . . . . . . . . . . . . . . . . . . . 21 转为如上标准格式 python正则代码参考</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">&#x27;test.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    raw_lines = f.readlines()</span><br><span class="line">lines = []</span><br><span class="line"><span class="comment"># 去掉中间逗点</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> raw_lines:</span><br><span class="line">    <span class="comment">#逗点之间使用了空格</span></span><br><span class="line">   pattern_dots = re.compile(<span class="string">r&#x27;(\s\.)+\s&#x27;</span>)</span><br><span class="line"> new_line = pattern_dots.sub(<span class="string">&#x27;,&#x27;</span>, line)</span><br><span class="line">  lines.append(new_line)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改绝对页数</span></span><br><span class="line">new_lines = []</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line"> pattern = re.compile(<span class="string">r&#x27;,\d+&#x27;</span>)</span><br><span class="line">   <span class="comment"># 提取页数</span></span><br><span class="line">   page = pattern.findall(line)</span><br><span class="line">  <span class="comment"># 将页数修改为正确的页数</span></span><br><span class="line">    new_page = int(page[<span class="number">0</span>][<span class="number">1</span>:]) + <span class="number">12</span></span><br><span class="line">  new_line = line.replace(page[<span class="number">0</span>],<span class="string">&#x27;,&#x27;</span>+str(new_page))</span><br><span class="line">  new_lines.append(new_line)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">&#x27;test_bookmarks.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  <span class="keyword">for</span> line <span class="keyword">in</span> new_lines:</span><br><span class="line">      f.write(line)</span><br></pre></td></tr></table></figure>
-<h4 id="使用插件自动生成">3使用插件自动生成</h4>
-<p>将pdf用Adobe Acrobat打开，依次选择 <img src="https://img-blog.csdn.net/20181005213203255?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述" /> 然后选择目录文件，点击OK生成 <img src="https://img-blog.csdn.net/20181005213417480?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述" /></p>
-<h4 id="其他">4 其他</h4>
-<p>Question1、使用Adobe Acrobat编辑pdf后，无法保存，出现“<strong>文档无法保存，读取文档时出现错误（153）</strong>” A：使用<strong>PDF-XChange_Editor</strong>打开pdf后，<strong>另存为</strong>新的文件，之后操作新的文件即可 <a target="_blank" rel="noopener" href="https://pdf-xchange.eu/DL/pdf-xchange-editor.htm">Download1</a> <a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_36962569/10702801">Download2</a></p>
-<p>Question2、关于pdf软件 PDF阅读，推荐Edge，轻便，带目录，可作标记 Adobe Acrobat 用于处理pdf，合并、生成标签等 PDF-XChange-Editor 可编辑处理，速度较快</p>
+        <h4 id="1-准备"><a href="#1-准备" class="headerlink" title="1 准备"></a>1 准备</h4><p>①Adobe Acrobat<br>②Autobookmark插件</p>
+<blockquote>
+<p>Step1 <a target="_blank" rel="noopener" href="https://www.evermap.com/downloads.asp">下载链接</a><br>Step2 关闭Adobe Acrobat后，直接安装，会自动添加到Adobe Acrobat<br>（<a target="_blank" rel="noopener" href="https://www.evermap.com/AutoBookmark/AutoBookmarkByTextStyle.pdf">使用说明</a>）</p>
+</blockquote>
+<p>③Python3.6<br>④pdf电子书的目录bookmarks.txt</p>
+<blockquote>
+<p>直接从目录复制（注意编码问题，可能乱码）<br>或从豆瓣图书复制</p>
+</blockquote>
+<h4 id="2-得到书签标准文件"><a href="#2-得到书签标准文件" class="headerlink" title="2  得到书签标准文件"></a>2  得到书签标准文件</h4><h5 id="2-1-bookmarks-txt标准文件"><a href="#2-1-bookmarks-txt标准文件" class="headerlink" title="2.1 bookmarks.txt标准文件"></a>2.1 bookmarks.txt标准文件</h5><p>所需目录格式，需要一、二级标题鲜明，第二级使用<strong>tab键</strong>缩进（Notepad中选中整体直接tab进行缩进，或shift+tab回缩），第三级类推<br>标题和页数之间使用<strong>英文逗号</strong>分割<br>格式示例：<br><img src="https://img-blog.csdn.net/20181005211914480?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"></p>
+<h5 id="2-2-正则转换示例"><a href="#2-2-正则转换示例" class="headerlink" title="2.2 正则转换示例"></a>2.2 正则转换示例</h5><p>将一般形式的目录，如<br>1 Part1 . . . . . . . . . . . . . . . . . . . 1<br>    1.1 Part1.1 . . . . . . . . . . . . . . . . . . . 3<br>    1.2 Part1.2 . . . . . . . . . . . . . . . . . . . 5<br>    1.3 Part1.3 . . . . . . . . . . . . . . . . . . . 6<br>2 Part2 . . . . . . . . . . . . . . . . . . . 9<br>    2.1 Part2.1 . . . . . . . . . . . . . . . . . . . 11<br>    2.2 Part2.2 . . . . . . . . . . . . . . . . . . . 21<br>转为如上标准格式<br>python正则代码参考</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">&#x27;test.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    raw_lines = f.readlines()</span><br><span class="line">lines = []</span><br><span class="line"><span class="comment"># 去掉中间逗点</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> raw_lines:</span><br><span class="line">    <span class="comment">#逗点之间使用了空格</span></span><br><span class="line">    pattern_dots = re.compile(<span class="string">r&#x27;(\s\.)+\s&#x27;</span>)</span><br><span class="line">    new_line = pattern_dots.sub(<span class="string">&#x27;,&#x27;</span>, line)</span><br><span class="line">    lines.append(new_line)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改绝对页数</span></span><br><span class="line">new_lines = []</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line">    pattern = re.compile(<span class="string">r&#x27;,\d+&#x27;</span>)</span><br><span class="line">    <span class="comment"># 提取页数</span></span><br><span class="line">    page = pattern.findall(line)</span><br><span class="line">    <span class="comment"># 将页数修改为正确的页数</span></span><br><span class="line">    new_page = int(page[<span class="number">0</span>][<span class="number">1</span>:]) + <span class="number">12</span></span><br><span class="line">    new_line = line.replace(page[<span class="number">0</span>],<span class="string">&#x27;,&#x27;</span>+str(new_page))</span><br><span class="line">    new_lines.append(new_line)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">&#x27;test_bookmarks.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> new_lines:</span><br><span class="line">        f.write(line)</span><br></pre></td></tr></table></figure>
+
+
+<h4 id="3使用插件自动生成"><a href="#3使用插件自动生成" class="headerlink" title="3使用插件自动生成"></a>3使用插件自动生成</h4><p>将pdf用Adobe Acrobat打开，依次选择<br><img src="https://img-blog.csdn.net/20181005213203255?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"><br>然后选择目录文件，点击OK生成<br><img src="https://img-blog.csdn.net/20181005213417480?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述"></p>
+<h4 id="4-其他"><a href="#4-其他" class="headerlink" title="4 其他"></a>4 其他</h4><p>Question1、使用Adobe Acrobat编辑pdf后，无法保存，出现“<strong>文档无法保存，读取文档时出现错误（153）</strong>”<br>A：使用<strong>PDF-XChange_Editor</strong>打开pdf后，<strong>另存为</strong>新的文件，之后操作新的文件即可<br><a target="_blank" rel="noopener" href="https://pdf-xchange.eu/DL/pdf-xchange-editor.htm">Download1</a><br><a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_36962569/10702801">Download2</a></p>
+<p>Question2、关于pdf软件<br>PDF阅读，推荐Edge，轻便，带目录，可作标记<br>Adobe Acrobat 用于处理pdf，合并、生成标签等<br>PDF-XChange-Editor 可编辑处理，速度较快</p>
 
     </div>
 
@@ -520,6 +547,7 @@ mjx-container[display="true"] + br {
 
 
       
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -565,6 +593,26 @@ mjx-container[display="true"] + br {
   </div>
 
       
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
 
 
 
@@ -601,8 +649,70 @@ mjx-container[display="true"] + br {
   
 
   
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
 
 </body>
 </html>
