@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+  </script>
+
+  <meta name="description" content="目录 2、面向可维护性的设计模式 2.1、创建型模式 2.1.1、factory（工厂模式） 虚拟构造器。 当client不知道要创建哪个具体类的实例，或者不想在client代码中指明要具体 创建的实例时，用工厂方法。 定义一个用于创建对象的接口，让其子类来决定实例化哪一个类，从而使一个 类的实例化延迟到其子类。 常规情况下，客户端直接创造具体对象 1Product p &#x3D; new Pr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（二）面向可维护性的Java设计模式">
+<meta property="og:url" content="http://blog.khay.site/2018/06/22/%EF%BC%88%E4%BA%8C%EF%BC%89%E9%9D%A2%E5%90%91%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="目录 2、面向可维护性的设计模式 2.1、创建型模式 2.1.1、factory（工厂模式） 虚拟构造器。 当client不知道要创建哪个具体类的实例，或者不想在client代码中指明要具体 创建的实例时，用工厂方法。 定义一个用于创建对象的接口，让其子类来决定实例化哪一个类，从而使一个 类的实例化延迟到其子类。 常规情况下，客户端直接创造具体对象 1Product p &#x3D; new Pr">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdn.net/20180622164824309?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180622170548518?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/2018062217065445?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/2018062218064281?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180622185446348?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180622191058856?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180622193202221?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180622193950854?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180622195556170?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180622195802150?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180622222354612?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180622221314449?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="article:published_time" content="2018-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-08T03:51:40.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="java设计模式">
+<meta property="article:tag" content="可维护性">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180622164824309?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+
+
+<link rel="canonical" href="http://blog.khay.site/2018/06/22/%EF%BC%88%E4%BA%8C%EF%BC%89%E9%9D%A2%E5%90%91%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>（二）面向可维护性的Java设计模式 | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.</span> <span class="nav-text">2、面向可维护性的设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">2.1、创建型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#factory%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1、factory（工厂模式）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#abstract-factory%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2、abstract factory（抽象工厂模式）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#builder%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3、builder（建造者模式）</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2.2、结构型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#bridge%E6%A1%A5%E6%8E%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1、bridge（桥接模式）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#proxy%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2、proxy（代理模式）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#composite%E7%BB%84%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3、composite（组合模式）</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A1%8C%E4%B8%BA%E7%B1%BB%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">2.3、行为类模式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#observer%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.3.1、observer（观察者模式）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#visitor%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.3.2、visitor（访问者模式）</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E7%8A%B6%E6%80%81%E7%9A%84%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.4.</span> <span class="nav-text">2.4、基于状态的模式</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#state%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.3.4、state（状态模式）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#memento%E5%A4%87%E5%BF%98%E5%BD%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.3.5、memento（备忘录模式）</span></a></li></ol></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2018/06/22/%EF%BC%88%E4%BA%8C%EF%BC%89%E9%9D%A2%E5%90%91%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          （二）面向可维护性的Java设计模式
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-22T00:00:00+08:00">2018-06-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:51:40" itemprop="dateModified" datetime="2019-09-08T11:51:40+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="目录">目录</h4>
+<h4 id="面向可维护性的设计模式">2、面向可维护性的设计模式</h4>
+<h5 id="创建型模式">2.1、创建型模式</h5>
+<h6 id="factory工厂模式">2.1.1、factory（工厂模式）</h6>
+<p>虚拟构造器。 当client不知道要创建哪个具体类的实例，或者不想在client代码中指明要具体 创建的实例时，用工厂方法。 定义一个用于创建对象的接口，让其子类来决定实例化哪一个类，从而使一个 类的实例化延迟到其子类。 常规情况下，客户端直接创造具体对象 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Product p &#x3D; new ProductTwo();</span><br></pre></td></tr></table></figure> 使用工厂模式下 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Product p &#x3D; new ConcreteTwo().makeObject();</span><br></pre></td></tr></table></figure> 体现了OCP原则—对扩展的开放，对修改已有代码的封闭。 继承树 <img src="https://img-blog.csdn.net/20180622164824309?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 父接口，轨迹 *&#x2F;</span><br><span class="line">public interface Trace &#123;</span><br><span class="line">  public void setDebug( boolean debug );</span><br><span class="line">    public void debug( String message );</span><br><span class="line">  public void error( String message );</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 子类1，文件轨迹 *&#x2F;</span><br><span class="line">public class FileTrace implements Trace &#123;</span><br><span class="line">    private boolean debug;</span><br><span class="line">    public FileTrace()&#123;...&#125;</span><br><span class="line"> public void setDebug( boolean debug ) &#123;...&#125;</span><br><span class="line"> public void debug( String message ) &#123;...&#125;</span><br><span class="line">   public void error( String message ) &#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 子类2，系统轨迹 *&#x2F;</span><br><span class="line">public class  SystemTrace implements Trace &#123;</span><br><span class="line">  private boolean debug;</span><br><span class="line">    public SystemTrace()&#123;...&#125;</span><br><span class="line">   public void setDebug( boolean debug ) &#123;...&#125;</span><br><span class="line"> public void debug( String message ) &#123;...&#125;</span><br><span class="line">   public void error( String message ) &#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 工厂接口，有多种实现形式，也可以有其他操作 *&#x2F;</span><br><span class="line">interface TraceFactory &#123;</span><br><span class="line"> public Trace getTrace();</span><br><span class="line">  public Trace getTrace(String type);</span><br><span class="line">   void otherOperation()&#123;&#125;;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 工厂子类实现1 *&#x2F;</span><br><span class="line">public class Factory1 implements TraceFactory &#123;</span><br><span class="line"> public Trace getTrace() &#123;</span><br><span class="line">        return new SystemTrace();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 工厂子类实现2，根据类型决定创建哪个具体产品  *&#x2F;</span><br><span class="line">public class Factory2 implements TraceFactory &#123;</span><br><span class="line"> public getTrace(String type) &#123;</span><br><span class="line">       if(type.equals(“file”)</span><br><span class="line">            return new FileTrace();</span><br><span class="line">       else if (type.equals(“system”)</span><br><span class="line">            return new SystemTrace();</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">    Trace log1 &#x3D; new Factory1().getTrace();</span><br><span class="line">  log1.setDebug(true);</span><br><span class="line">  log1.debug( &quot;entering log&quot; );</span><br><span class="line">   &#x2F;* 选择类型 *&#x2F;</span><br><span class="line">  Trace log2 &#x3D; new Factory2().getTrace(&quot;system&quot;);</span><br><span class="line">    log2.setDebug(false);</span><br><span class="line"> log2.debug(&quot;...&quot;);</span><br></pre></td></tr></table></figure> 工厂模式，有<strong>两个接口</strong>，第一个接口，是产品接口，然后有多个实现子类，实现了多种产品；第二个接口是工厂接口，可以有多个实现子类（每个子类只返回一种特定产品），或实现一个子类（根据输入选择，返回一种产品）。 还有一种<strong>静态工厂方法</strong>（工厂方法前加<code>static关键</code>字），既可以在ADT内部实现，也可以构造单独的工厂类。 创建对象时，不同使用<code>new</code> 关键字， <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Trace log1 &#x3D; TraceFactory1.getTrace();</span><br></pre></td></tr></table></figure></p>
+<h6 id="abstract-factory抽象工厂模式">2.1.2、abstract factory（抽象工厂模式）</h6>
+<p>抽象工厂模式：提供<strong>接口</strong>以创建<strong>一组相关/相互依赖</strong>的对象，但不需要指明其具体类。 继承树（有点乱） <img src="https://img-blog.csdn.net/20180622170548518?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 这个倒是好点 <img src="https://img-blog.csdn.net/2018062217065445?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 创建的不是一个完整产品，而是“产品族”（遵循<strong>固定搭配规则</strong>的多类产品的实例），得到的结果是：多个不同产品的object，各产品创建过程对client可见，但“搭配”不能改变。 本质上，Abstract Factory（使用组合、委托）是把多类产品的factory method（使用继承、子类型）组合在一起 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 抽象产品接口-窗口 *&#x2F;</span><br><span class="line">public interface Window&#123;</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 窗口实现1 *&#x2F;</span><br><span class="line">public class WindowOne implements Window&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 窗口实现2 *&#x2F;</span><br><span class="line">public class WindowTwo implements Window&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 抽象产品接口-滑块 *&#x2F;</span><br><span class="line">public interface Scrollbar&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 滑块实现1 *&#x2F;</span><br><span class="line">public class ScrollbarOne implements Scrollbar&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 滑块实现2 *&#x2F;</span><br><span class="line">public class ScrollbarTwo implements Scrollbar&#123;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 抽象工厂接口 *&#x2F;</span><br><span class="line">public interface AbstractWidgetFactory&#123;</span><br><span class="line"> public Window createWindow();</span><br><span class="line"> public Scrollbar createScrollbar();</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 工厂实现类1，WindowOne + ScrollbarOne *&#x2F;</span><br><span class="line">public class WidgetFactory1 extends AbstractWidgetFactory&#123;</span><br><span class="line"> public Window createWindow()&#123;</span><br><span class="line">        return new WindowOne();</span><br><span class="line">   &#125;</span><br><span class="line">    public Scrollbar createScrollbar()&#123;</span><br><span class="line">      return new ScrollbarOne();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 工厂实现类2，WindowTwo + ScrollbarTwo *&#x2F;</span><br><span class="line">public class WidgetFactory2 extends AbstractWidgetFactory&#123;</span><br><span class="line">  public Window createWindow()&#123;</span><br><span class="line">        return new WindowTwo();</span><br><span class="line">   &#125;</span><br><span class="line">    public Scrollbar createScrollbar()&#123;</span><br><span class="line">      return new ScrollbarTwo();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">public class GUIBuilder&#123;</span><br><span class="line">    public void buildWindow(AbstractWidgetFactory widgetFactory)&#123;</span><br><span class="line">        &#x2F;* 创建WindowOne + ScrollbarOne *&#x2F;</span><br><span class="line">        Window window &#x3D; widgetFactory1.createWindow();</span><br><span class="line">       Scrollbar scrollbar &#x3D; widgetFactory1.createScrollbar();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 可以很明显的看到，抽象工厂就多个工厂模式的组合，其组合是固定的。总共有三个接口，包括两个产品接口Window和Scrollbar，以及抽象工厂接口，两个产品接口分别两个实现类，抽象工厂有两个子类，分别是WindowOne+Scrollbar和WindowTwo+ScrollbarTwo。 需要注意的是，抽象工厂返回的是产品族，搭配是固定的，而且是分别返回（上述有一个返回Window的方法，和一个返回Scrollbar的方法）。</p>
+<h6 id="builder建造者模式">2.1.3、builder（建造者模式）</h6>
+创建复杂对象，包含多个组成部分。 继承树 <img src="https://img-blog.csdn.net/2018062218064281?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 产品，Pizza *&#x2F;</span><br><span class="line">class Pizza &#123;</span><br><span class="line">   &#x2F;* 三个part以三个属性体现 *&#x2F;</span><br><span class="line"> private String dough &#x3D; &quot;&quot;;</span><br><span class="line"> private String sauce &#x3D; &quot;&quot;;</span><br><span class="line"> private String topping &#x3D; &quot;&quot;;</span><br><span class="line">   public void setDough(String dough) &#123;</span><br><span class="line">     this.dough &#x3D; dough;</span><br><span class="line">  &#125;</span><br><span class="line">    public void setSauce(String sauce) &#123;</span><br><span class="line">     this.sauce &#x3D; sauce;</span><br><span class="line">  &#125;</span><br><span class="line">    public void setTopping(String topping) &#123;</span><br><span class="line">     this.topping &#x3D; topping;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* Builder抽象类 *&#x2F;</span><br><span class="line">abstract class PizzaBuilder &#123;</span><br><span class="line">    protected Pizza pizza;</span><br><span class="line">    public Pizza getPizza() &#123;</span><br><span class="line">        return pizza;</span><br><span class="line"> &#125;</span><br><span class="line">    public void createNewPizzaProduct() &#123;</span><br><span class="line">        pizza &#x3D; new Pizza();</span><br><span class="line"> &#125;</span><br><span class="line">    &#x2F;* 三个抽象方法，分别创建三个part *&#x2F;</span><br><span class="line"> public abstract void buildDough();</span><br><span class="line">    public abstract void buildSauce();</span><br><span class="line">    public abstract void buildTopping();</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* Builder1，子类，重写三个方法，分别构建三个parts *&#x2F;</span><br><span class="line">class SpicyPizzaBuilder extends PizzaBuilder &#123;</span><br><span class="line"> public void buildDough() &#123;</span><br><span class="line">       pizza.setDough(&quot;pan baked&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void buildSauce() &#123;</span><br><span class="line">       pizza.setSauce(&quot;hot&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">    public void buildTopping() &#123;</span><br><span class="line">     pizza.setTopping(&quot;pepperoni+salami&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* Builder2，子类，分别构建三个parts *&#x2F;</span><br><span class="line">class HawaiianPizzaBuilder extends PizzaBuilder &#123;</span><br><span class="line">   public void buildDough() &#123;</span><br><span class="line">       pizza.setDough(&quot;cross&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    public void buildSauce() &#123;</span><br><span class="line">       pizza.setSauce(&quot;mild&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">    public void buildTopping() &#123;</span><br><span class="line">     pizza.setTopping(&quot;ham+pineapple&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;*  Waiter，定义delegation的对象（某个Builder子类），</span><br><span class="line">* 并具体构建各部分，以及返回最终结果</span><br><span class="line">*&#x2F;</span><br><span class="line">class Waiter &#123;</span><br><span class="line">  private PizzaBuilder pizzaBuilder;</span><br><span class="line">    &#x2F;* 定义delegation对象 *&#x2F;</span><br><span class="line">    public void setPizzaBuilder(PizzaBuilder pb) &#123;</span><br><span class="line">       pizzaBuilder &#x3D; pb;</span><br><span class="line">   &#125;</span><br><span class="line">    public Pizza getPizza() &#123;</span><br><span class="line">        return pizzaBuilder.getPizza();</span><br><span class="line">   &#125;</span><br><span class="line">    &#x2F;* 构建各个部分，调用选择的Builder的方法 *&#x2F;</span><br><span class="line">    public void constructPizza() &#123;</span><br><span class="line">       pizzaBuilder.createNewPizzaProduct();</span><br><span class="line">     pizzaBuilder.buildDough();</span><br><span class="line">        pizzaBuilder.buildSauce();</span><br><span class="line">        pizzaBuilder.buildTopping();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">public class PizzaBuilderDemo &#123;</span><br><span class="line"> public static void main(String[] args) &#123;</span><br><span class="line">     Waiter waiter &#x3D; new Waiter();</span><br><span class="line">        &#x2F;* 分别创建两个建造者 *&#x2F;</span><br><span class="line">     PizzaBuilder hawaiianPizzabuilder &#x3D; new HawaiianPizzaBuilder();</span><br><span class="line">      PizzaBuilder spicyPizzaBuilder &#x3D; new SpicyPizzaBuilder();</span><br><span class="line">        &#x2F;* 选择建造者 *&#x2F;</span><br><span class="line">     waiter.setPizzaBuilder( hawaiianPizzabuilder );</span><br><span class="line">       &#x2F;* 进行构建，且构建细节完全隐藏 *&#x2F;</span><br><span class="line">        waiter.constructPizza();</span><br><span class="line">      &#x2F;* 返回构建对象 *&#x2F;</span><br><span class="line">        Pizza pizza &#x3D; waiter.getPizza();</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 分析上述代码，产品为Pizza类，有三个组件，三个方法分别为组件赋值；Builder抽象类，有一个产品实例，以及创建和返回产品的方法，三个构造组件的抽象方法；Builder 1和Builder2继承Builder抽象类，具体实现构建三个组件以及为Pizza属性赋值的方法；Director（即Waiter），具体构建产品，有一个Builder对象，以及设置Builder类型和返回Pizza（Builder中的）的方法，和一个构建函数（调用Builder的三个构建方法）。客户端，只用创建一个Waiter对象，以及选择一种Builder方式，将Builder方式传入Waiter对象，再调用Waiter的构建方法，最后得到Waiter返回的Pizza对象即可。 可以发现，Builder和之前的抽象工厂和模板有相似性，但有一定的差别：
+<table>
+<tr>
+<td colspan="2">
+抽象工厂 vs 建造者
+</td>
+<td colspan="2">
+模板模式 vs 建造者
+</td>
+</tr>
+<tr>
+<td>
+抽象工厂
+</td>
+<td>
+建造者
+</td>
+<td>
+模板模式
+</td>
+<td>
+建造者
+</td>
+</tr>
+<tr>
+<td>
+返回的时候产品族，具有固定的搭配规则，产品构建过程对client可见，客户端可以看到是如何组装的，但搭配不能变
+</td>
+<td>
+创建的是一个完整的产品，构建过程对client不可见，其实，抽象工厂中client的构建过程是在Director（组织者）中完成的，最终直接给客户端返回一个完整的产品
+</td>
+<td>
+目标是为了复用算法的公共结构（次序）（使用super直接只有模板中的代码过程）
+</td>
+<td>
+创建复杂的对象，灵活扩展
+</td>
+</tr>
+</table>
+<blockquote>
+
+</blockquote>
+<h5 id="结构型模式">2.2、结构型模式</h5>
+<h6 id="bridge桥接模式">2.2.1、bridge（桥接模式）</h6>
+Bridge是OOP最基本的structural pattern，通过delegation+inheritance建立两个具体类之间的关系（DIP依赖转置，抽象依赖于抽象） 继承树 <img src="https://img-blog.csdn.net/20180622185446348?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 桥接口 *&#x2F;</span><br><span class="line">public interface DrawAPI &#123;</span><br><span class="line">   public void drawCircle(int radius, int x, int y);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 桥子类1 *&#x2F;</span><br><span class="line">public class DrawRedCircle implements DrawAPI &#123;</span><br><span class="line"> @Override</span><br><span class="line"> public void drawCircle(int radius, int x, int y) &#123;</span><br><span class="line">       System.out.println(“Color: red &quot; + radius + x + y);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 桥子类2 *&#x2F;</span><br><span class="line">public class DrawGreenCircle implements DrawAPI &#123;</span><br><span class="line">  @Override</span><br><span class="line"> public void drawCircle(int radius, int x, int y) &#123;</span><br><span class="line">       System.out.println(“Color: green &quot; + radius + x + y);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 形状抽象类 *&#x2F;</span><br><span class="line">public abstract class Shape &#123;</span><br><span class="line"> protected DrawAPI drawAPI;</span><br><span class="line">    protected Shape(DrawAPI drawAPI)&#123;</span><br><span class="line">        this.drawAPI &#x3D; drawAPI;</span><br><span class="line">  &#125;</span><br><span class="line">    public abstract void draw();</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 具体形状子类-圆形 *&#x2F;</span><br><span class="line">public class Circle extends Shape &#123;</span><br><span class="line"> private int x, y, radius;</span><br><span class="line"> &#x2F;* 构造方法比父类多了几个参数，但相同的参数可以直接使用super赋值 *&#x2F;</span><br><span class="line"> public Circle(int x, int y, int radius, DrawAPI drawAPI) &#123;</span><br><span class="line">       super(drawAPI);</span><br><span class="line">       this.x &#x3D; x;</span><br><span class="line">      this.y &#x3D; y;</span><br><span class="line">      this.radius &#x3D; radius;</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;* 使用选择的桥画圆 *&#x2F;</span><br><span class="line">  public void draw() &#123;</span><br><span class="line">     drawAPI.drawCircle(radius,x,y);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">public class BridgePatternDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">     &#x2F;* 创建两个圆，分别传入桥1-红色和桥2-绿色 *&#x2F;</span><br><span class="line">     Shape redCircle &#x3D; new Circle(100,100, 10, new DrawRedCircle());</span><br><span class="line">      Shape greenCircle &#x3D; new Circle(100,100, 10, new DrawGreenCircle());</span><br><span class="line">      &#x2F;* 调用圆的画操作 *&#x2F;</span><br><span class="line">       redCircle.draw();</span><br><span class="line">     greenCircle.draw();</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 有一个桥接口，包含一个画圆的方法；两种实现接口的桥；一个抽象产品类（构造函数传入画圆操作），画圆的方法抽象；一个继承抽象产品类的子类（与父类构造函数不同）；客户端，构建产品，并且传入桥，然后调用产品的画操作。 与Strategy进行比较
+<table>
+<tr>
+<td>
+桥接模式
+</td>
+<td>
+策略模式
+</td>
+</tr>
+<tr>
+<td>
+强调双方的run time delegation linking，在运行时通过delegation加以组合， 并永久保存这种delegation关系。
+</td>
+<td>
+强调一方run-time使用另一方的“算法”，delegation是临时的
+</td>
+</tr>
+</table>
+<h6 id="proxy代理模式">2.2.2、proxy（代理模式）</h6>
+<p>某个对象比较“敏感”/“私密”/“贵重”，不希望被client直接访问到，故设置proxy，在二者之间建立防火墙。 继承树 <img src="https://img-blog.csdn.net/20180622191058856?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 接口 *&#x2F;</span><br><span class="line">public interface Image &#123;</span><br><span class="line">  void display();</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 子类 *&#x2F;</span><br><span class="line">public class RealImage implements Image &#123;</span><br><span class="line">   private String fileName;</span><br><span class="line">  public RealImage(String fileName)&#123;</span><br><span class="line">       this.fileName &#x3D; fileName;</span><br><span class="line">        loadFromDisk(fileName);</span><br><span class="line">   &#125;</span><br><span class="line">    @Override</span><br><span class="line"> public void display() &#123;…&#125;</span><br><span class="line">   &#x2F;* 每次创建都要装载，代价高 *&#x2F;</span><br><span class="line">  private void loadFromDisk(String fileName)&#123;…&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 代理 *&#x2F;</span><br><span class="line">public class ProxyImage implements Image &#123;</span><br><span class="line">  private Image realImage;</span><br><span class="line">  private String fileName;</span><br><span class="line">  &#x2F;* 不需要在构造时候从文件装载 *&#x2F;</span><br><span class="line"> public ProxyImage fileName)&#123;</span><br><span class="line">     this.fileName &#x3D; fileName;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line"> public void display() &#123;</span><br><span class="line">      &#x2F;* 加载代价高，如果发现装载，则delegation，否则装载 *&#x2F;</span><br><span class="line">     if(realImage &#x3D;&#x3D; null)&#123;</span><br><span class="line">         realImage &#x3D; new RealImage(fileName);</span><br><span class="line">     &#125;</span><br><span class="line">        realImage.display();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">Image image &#x3D; new ProxyImage(“pic.jpg&quot;);</span><br><span class="line">image.display(); </span><br></pre></td></tr></table></figure> 在客户端与实际产品类之间建立代理，通过判断，来进行下一步抉择（是否执行装载），可以降低代价。实现是，有一个产品接口，一个产品类，一个代理类，代理类中对于产品类中的高代价操作进行判断，看是否有执行的必要，若需要，则delegation到产品类中，否则进行下一步操作。</p>
+与适配器比较
+<table>
+<tr>
+<td>
+适配器模式
+</td>
+<td>
+代理模式
+</td>
+</tr>
+<tr>
+<td>
+消除不兼容，目的是B以客户端期望的同一方式与A建立联系（通过创建适配器，内部进行delegation）
+</td>
+<td>
+隔离对复杂对象的访问，降低难度、代价（例如例子），定位在访问、使用行为
+</td>
+</tr>
+</table>
+<h6 id="composite组合模式">2.2.3、composite（组合模式）</h6>
+继承树 <img src="https://img-blog.csdn.net/20180622193202221?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 组合实现类-雇员 *&#x2F;</span><br><span class="line">public class Employee &#123;</span><br><span class="line"> private String name;</span><br><span class="line">  &#x2F;* 下属 *&#x2F;</span><br><span class="line">    private List&lt;Employee&gt; subordinates;</span><br><span class="line">    public Employee(String name) &#123;</span><br><span class="line">       this.name &#x3D; name;</span><br><span class="line">        subordinates &#x3D; new ArrayList&lt;Employee&gt;();</span><br><span class="line">  &#125;</span><br><span class="line">    &#x2F;* 添加下属 *&#x2F;</span><br><span class="line">  public void add(Employee e) &#123;</span><br><span class="line">        subordinates.add(e);</span><br><span class="line">  &#125;</span><br><span class="line">    public void remove(Employee e) &#123;</span><br><span class="line">     subordinates.remove(e);</span><br><span class="line">   &#125;</span><br><span class="line">    public List&lt;Employee&gt; getSubordinates()&#123;</span><br><span class="line">       return subordinates;</span><br><span class="line">  &#125;</span><br><span class="line">    public String toString()&#123;…&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">    &#x2F;* 创建四个对象 *&#x2F;</span><br><span class="line">    Employee CEO &#x3D; new Employee(&quot;John&quot;);</span><br><span class="line">   Employee headSales &#x3D; new Employee(&quot;Robert&quot;);</span><br><span class="line">   Employee clerk1 &#x3D; new Employee(&quot;Laura&quot;);</span><br><span class="line">   Employee clerk2 &#x3D; new Employee(&quot;Bob&quot;);</span><br><span class="line"> &#x2F;* 添加两个下属 *&#x2F;</span><br><span class="line">    CEO.add(headSales);</span><br><span class="line">   CEO.add(headMarketing);</span><br><span class="line">   &#x2F;* 添加下属 *&#x2F;</span><br><span class="line">  headSales.add(clerk1);</span><br><span class="line">    clerk1.add(clerk2);</span><br><span class="line">   System.out.println(CEO);</span><br><span class="line">  for (Employee headEmployee : CEO.getSubordinates()) &#123;</span><br><span class="line">        System.out.println(headEmployee);</span><br><span class="line">     for (Employee employee : headEmployee.getSubordinates()) &#123;</span><br><span class="line">           System.out.println(employee);</span><br><span class="line">     &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure> 从客户端可以看出，具有明显的迭代特征；这种特征，主要依赖于组合实现类中的List数组，保存Employee对象，以及相关的操作。
+<table>
+<tr>
+<td>
+组合模式
+</td>
+<td>
+装饰器模式
+</td>
+</tr>
+<tr>
+<td>
+在同类型的对象之间建立起树型层次结构，一个上层对象可包含多个下层对象
+</td>
+<td>
+强调的是同类型之间的特性增加问题，他们之间是平等的，区别在于拥有特性的多少，每个装饰只作用于一个对象
+</td>
+</tr>
+</table>
+<h5 id="行为类模式">2.3、行为类模式</h5>
+<h6 id="observer观察者模式">2.3.1、observer（观察者模式）</h6>
+<p>继承树 <img src="https://img-blog.csdn.net/20180622193950854?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">* “粉丝”对“偶像”感兴趣，希望随时得知偶像的一举一动</span><br><span class="line">* 粉丝到偶像那里注册，偶像一旦有新闻发生，就推送给已注册的粉丝</span><br><span class="line">* （回调callback粉丝的特定功能）</span><br><span class="line">*&#x2F;</span><br><span class="line">&#x2F;* 主对象类-偶像 *&#x2F;</span><br><span class="line">public class Subject &#123;</span><br><span class="line"> &#x2F;* 维持一组粉丝 *&#x2F;</span><br><span class="line">    private List&lt;Observer&gt; observers &#x3D; new ArrayList&lt;Observer&gt;();</span><br><span class="line">    private int state;</span><br><span class="line">    public int getState() &#123; </span><br><span class="line">     return state; </span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;* 改变状态，并通知所有粉丝 *&#x2F;</span><br><span class="line">  public void setState(int state) &#123;</span><br><span class="line">        this.state &#x3D; state;</span><br><span class="line">      notifyAllObservers();</span><br><span class="line"> &#125;</span><br><span class="line">    &#x2F;* 注册粉丝 *&#x2F;</span><br><span class="line">  public void attach(Observer observer)&#123;</span><br><span class="line">       observers.add(observer); </span><br><span class="line"> &#125;</span><br><span class="line">    &#x2F;* 通知所有粉丝 *&#x2F;</span><br><span class="line">    public void notifyAllObservers()&#123;</span><br><span class="line">        for (Observer observer : observers) &#123;</span><br><span class="line">            &#x2F;* 回调粉丝的update方法，通知 *&#x2F;</span><br><span class="line">          observer.update();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 粉丝抽象接口 *&#x2F;</span><br><span class="line">public abstract class Observer &#123;</span><br><span class="line"> protected Subject subject;</span><br><span class="line">    public abstract void update();</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 粉丝实现子类 *&#x2F;</span><br><span class="line">public class BinaryObserver extends Observer&#123;</span><br><span class="line">    public BinaryObserver(Subject subject)&#123;</span><br><span class="line">      this.subject &#x3D; subject;</span><br><span class="line">      &#x2F;* 注册 *&#x2F;</span><br><span class="line">        this.subject.attach(this);</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;* 偶像回调的方法 *&#x2F;</span><br><span class="line">   @Override</span><br><span class="line"> public void update() &#123;</span><br><span class="line">       System.out.println( &quot;Binary String: &quot; + Integer.toBinaryString(subject.getState() ) );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">public class ObserverPatternDemo &#123;</span><br><span class="line">  public static void main(String[] args) &#123; </span><br><span class="line">        &#x2F;* 一个偶像 *&#x2F;</span><br><span class="line">      Subject subject &#x3D; new Subject();</span><br><span class="line">     &#x2F;* 三个粉丝 *&#x2F;</span><br><span class="line">      new HexaObserver(subject);</span><br><span class="line">        new OctalObserver(subject);</span><br><span class="line">       new BinaryObserver(subject);</span><br><span class="line">      &#x2F;* 更新状态 *&#x2F;</span><br><span class="line">      System.out.println(&quot;First state change: 15&quot;);</span><br><span class="line">       subject.setState(15);</span><br><span class="line">     System.out.println(&quot;Second state change: 10&quot;);</span><br><span class="line">      subject.setState(10);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 分析，一个偶像类，维持一组粉丝，当状态改变时，回调粉丝的<code>update</code>函数通知；另一方面，粉丝可以通过创建时，在偶像对象中注册。 在Java中提供了专门的接口， <code>Observable</code>抽象类，可以直接派生子类，构造偶像 <code>Observer</code>接口，实现该接口，构造粉丝 <img src="https://img-blog.csdn.net/20180622195556170?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<h6 id="visitor访问者模式">2.3.2、visitor（访问者模式）</h6>
+对特定类型的object的特定操作(visit)，在运行时将二者动态绑定到一起，该操作可以灵活更改，无需更改被visit的类。 本质上：将数据和作用于数据上的某种/些特定操作分离开来。 继承树 <img src="https://img-blog.csdn.net/20180622195802150?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 抽象对象接口 *&#x2F;</span><br><span class="line"> public interface ItemElement &#123;</span><br><span class="line">   public int accept(ShoppingCartVisitor visitor);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 实例对象子类Book *&#x2F;</span><br><span class="line">public class Book implements ItemElement&#123;</span><br><span class="line">   private double price;</span><br><span class="line"> ...</span><br><span class="line">   &#x2F;* 将处理数据的功能delegate到外部传入的visitor *&#x2F;</span><br><span class="line"> int accept(ShoppingCartVisitor visitor) &#123;</span><br><span class="line">        visitor.visit(this);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 实例对象子类- *&#x2F;</span><br><span class="line">public class Fruit implements ItemElement&#123;</span><br><span class="line">  private double weight;</span><br><span class="line">    ...</span><br><span class="line">   int accept(ShoppingCartVisitor visitor) &#123;</span><br><span class="line">        visitor.visit(this);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 清单Visitor接口 *&#x2F;</span><br><span class="line">public interface ShoppingCartVisitor &#123;</span><br><span class="line">  int visit(Book book);</span><br><span class="line"> int visit(Fruit fruit);</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* Visitor子类，返回价格 *&#x2F;</span><br><span class="line">public class ShoppingCartVisitorImpl implements ShoppingCartVisitor &#123;</span><br><span class="line">   public int visit(Book book) &#123;</span><br><span class="line">        int cost&#x3D;0;</span><br><span class="line">      if(book.getPrice() &gt; 50)&#123;</span><br><span class="line">         cost &#x3D; book.getPrice()-5;</span><br><span class="line">        &#125;else</span><br><span class="line">            cost &#x3D; book.getPrice();</span><br><span class="line">      System.out.println(&quot;Book ISBN::&quot;+book.getIsbnNumber() + &quot; cost &#x3D;&quot;+cost);</span><br><span class="line">     return cost;</span><br><span class="line">  &#125;</span><br><span class="line">    public int visit(Fruit fruit) &#123;</span><br><span class="line">      int cost &#x3D; fruit.getPricePerKg()*fruit.getWeight();</span><br><span class="line">      System.out.println(fruit.getName() + &quot; cost &#x3D; &quot;+cost);</span><br><span class="line">     return cost;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">public class ShoppingCartClient &#123;</span><br><span class="line">   public static void main(String[] args) &#123;</span><br><span class="line"> </span><br><span class="line">      ItemElement[] items &#x3D; new ItemElement[]&#123;</span><br><span class="line">        new Book(20, &quot;1234&quot;),new Book(100, &quot;5678&quot;),</span><br><span class="line">       new Fruit(10, 2, &quot;Banana&quot;), new Fruit(5, 5, &quot;Apple&quot;)&#125;;</span><br><span class="line">       &#x2F;* 计算价格 *&#x2F;</span><br><span class="line">      int total &#x3D; calculatePrice(items);</span><br><span class="line">       System.out.println(&quot;Total Cost &#x3D; &quot;+total);</span><br><span class="line">     &#125;</span><br><span class="line">    private static int calculatePrice(ItemElement[] items) &#123;</span><br><span class="line">     ShoppingCartVisitor visitor &#x3D; new ShoppingCartVisitorImpl();</span><br><span class="line">     int sum&#x3D;0;</span><br><span class="line">       for(ItemElement item : items)</span><br><span class="line">     &#x2F;* 传入visitor *&#x2F;</span><br><span class="line">         sum &#x3D; sum + item.accept(visitor);</span><br><span class="line">        return sum;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 分析，抽象货物接口，有一个accept方法，用来接收visitor；两个实现接口的类Book和Fruit，accpt方法，调用visitor的visit的方法，得到价格；一个购物清单访问者接口，访问者子类实现接口，实现visit方法，根据传入的对象，返回价格；客户端，创建一组货物，和一个访问者对象，将访问者对象传入每一个货物，计算价格。
+<table>
+<tr>
+<td colspan="2">
+访问者模式 vs 迭代器模式
+</td>
+<td colspan="2">
+访问者模式 vs 策略模式
+</td>
+</tr>
+<tr>
+<td>
+访问者模式
+</td>
+<td>
+迭代器模式
+</td>
+<td>
+访问者模式
+</td>
+<td>
+策略模式
+</td>
+</tr>
+<tr>
+<td>
+在特定的ADT上执行某种特定操作（accept(visitor)），但该操作不是在ADT内部实现，而是delegate到独立的visitor对象（visitor.visit(this)），客户端可灵活扩展、改变visitor的操作算法，而不影响ADT
+</td>
+<td>
+以遍历的方式访问集合数据而无需暴露其内部表示，将&quot;遍历&quot;这项操作delegate到外部的iterator（继承Iterable接口，实现iterator方法，继承Iterator接口实现一个自定义的iterator类）
+</td>
+<td>
+Visitor强调是的外部定义某种对ADT的操作，该操作于ADT自身关系不大（只是访问ADT），故ADT内部只需要开放accept(visitor)即可，client通过它设定visitor操作并在外部调用。
+</td>
+<td>
+Strategy则强调是对ADT内部某些要实现的功能的相应算法的灵活替换。这些算法是ADT功能的重要组成部分，只不过是delegate到外部strategy类而已。
+</td>
+</tr>
+<tr>
+<td colspan="2">
+...
+</td>
+<td colspan="2">
+visitor是站在外部client的角度，灵活增加对ADT的各种不同操作（哪怕ADT没实现该操作），strategy则是站在内部ADT的角度，灵活变化对其内部功能的不同配置。
+</td>
+</tr>
+</table>
+<h5 id="基于状态的模式">2.4、基于状态的模式</h5>
+<h6 id="state状态模式">2.3.4、state（状态模式）</h6>
+<p>继承树 <img src="https://img-blog.csdn.net/20180622222354612?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 状态接口 *&#x2F;</span><br><span class="line">&#x2F;&#x2F;状态接口</span><br><span class="line">public interface State &#123;</span><br><span class="line">  State move(char c);</span><br><span class="line">   boolean accept();</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 状态1 *&#x2F;</span><br><span class="line">class State1 implements State &#123;</span><br><span class="line">  static State1 instance &#x3D; new State1(); &#x2F;&#x2F;singleton模式</span><br><span class="line">   private State1() &#123;&#125;</span><br><span class="line"> public State move (char c) &#123;</span><br><span class="line">     switch (c) &#123;</span><br><span class="line">         case &#39;a&#39;: return State2.instance;</span><br><span class="line">         case &#39;b&#39;: return State1.instance;</span><br><span class="line">         default: throw new IllegalArgumentException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public boolean accept() &#123;</span><br><span class="line">        return false;</span><br><span class="line"> &#125; &#x2F;&#x2F;该状态非可接受状态</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 状态2 *&#x2F;</span><br><span class="line">class State2 implements State &#123;</span><br><span class="line">   static State2 instance &#x3D; new State2();</span><br><span class="line">   private State2() &#123;&#125;</span><br><span class="line"> public State move (char c) &#123;</span><br><span class="line">     switch (c) &#123;</span><br><span class="line">         case &#39;a&#39;: return State1.instance;</span><br><span class="line">         case &#39;b&#39;: return State1.instance;</span><br><span class="line">         default: throw new IllegalArgumentException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    public boolean accept() &#123;return true;&#125; &#x2F;&#x2F;此为接收状态</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 主类，状态转换 *&#x2F;</span><br><span class="line">class Context &#123;</span><br><span class="line">    State state; &#x2F;&#x2F;保存对象的状态</span><br><span class="line">  &#x2F;&#x2F;设置初始状态</span><br><span class="line">    public Context(State s) &#123;state &#x3D; s;&#125;</span><br><span class="line">   &#x2F;&#x2F;接收外部输入，开启状态转换</span><br><span class="line"> public void move(char c) &#123; state &#x3D; state.move(c); &#125;</span><br><span class="line">    &#x2F;&#x2F;判断是否达到合法的最终状态</span><br><span class="line"> public boolean accept() &#123; return state.accept(); &#125;</span><br><span class="line">  public State getState() &#123; return this.state; &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">public static void main(String[] args) &#123;</span><br><span class="line">  Context context &#x3D; new Context(new State1());</span><br><span class="line"> for (int i &#x3D; 0; i &lt; args.length; i++) &#123;</span><br><span class="line">      context.move(args[i]);</span><br><span class="line">        if(context.accept())</span><br><span class="line">          break;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 一个状态接口，两个实现状态接口的子类；一个执行状态转换的类；以及客户端，客户端输入状态，执行类状态改变，直到输入状态为接收状态，停止。 本质上就是delegation，将执行类中的状态转换委派到状态类中，状态类进行转换，并返回新的转换后的状态。</p>
+<h6 id="memento备忘录模式">2.3.5、memento（备忘录模式）</h6>
+<p>Originator：需要备忘的类； Caretaker：添加Originator的备忘记录和恢复； Memento：备忘录，记录Originator对象的历史状态。 继承树 <img src="https://img-blog.csdn.net/20180622221314449?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 备忘录，记录状态 *&#x2F;</span><br><span class="line">class Memento &#123;</span><br><span class="line"> private State state;</span><br><span class="line">  public Memento(State state) &#123;</span><br><span class="line">        this.state &#x3D; state;</span><br><span class="line">  &#125;</span><br><span class="line">    public State getState() &#123;</span><br><span class="line">        return state;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 主类，需要备忘的类 *&#x2F;</span><br><span class="line">class Originator &#123;</span><br><span class="line">    private State state;</span><br><span class="line">  public void setState(State state) &#123;</span><br><span class="line">      System.out.println(&quot;Originator: Setting state to &quot; + state.toString());</span><br><span class="line">     this.state &#x3D; state;</span><br><span class="line">  &#125;</span><br><span class="line">    public Memento save() &#123;</span><br><span class="line">      System.out.println(&quot;Originator: Saving to Memento.&quot;);</span><br><span class="line">       return new Memento(state);</span><br><span class="line">    &#125;</span><br><span class="line">    public void restore(Memento m) &#123;</span><br><span class="line">     state &#x3D; m.getState();</span><br><span class="line">        System.out.println(&quot;Originator: State after restoring from Memento: &quot; + state);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 记录所有的状态 *&#x2F;</span><br><span class="line">class Caretaker &#123;</span><br><span class="line">   private ArrayList&lt;Memento&gt; mementos &#x3D; new ArrayList&lt;&gt;();</span><br><span class="line"> public void addMemento(Memento m) &#123;</span><br><span class="line">      mementos.add(m);</span><br><span class="line">  &#125;</span><br><span class="line">    public Memento getMemento() &#123;</span><br><span class="line">        return mementos.get(1);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">public class Demonstration &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">     &#x2F;* 备忘类，保存历史状态 *&#x2F;</span><br><span class="line">        Caretaker caretaker &#x3D; new Caretaker();</span><br><span class="line">       &#x2F;* 主类 *&#x2F;</span><br><span class="line">        Originator originator &#x3D; new Originator();</span><br><span class="line">        &#x2F;* 设置状态，备忘状态 *&#x2F;</span><br><span class="line">     originator.setState(&quot;State1&quot;);</span><br><span class="line">      originator.setState(&quot;State2&quot;);</span><br><span class="line">      caretaker.addMemento( originator.save() );</span><br><span class="line">        originator.setState(&quot;State3&quot;);</span><br><span class="line">      caretaker.addMemento( originator.save() );</span><br><span class="line">        originator.setState(&quot;State4&quot;);</span><br><span class="line">      originator.restore( caretaker.getMemento() );</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 客户端创建一个主类（需要备忘的类），一个保存状态的类，当主类对象改变状态时，使用状态保存类保存。 保存状态的类可以有更多的操作，比如，可以状态回滚。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># java设计模式</a>
+              <a href="/tags/%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7/" rel="tag"># 可维护性</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/06/21/Chapter10-%E5%B9%B6%E5%8F%91%E5%92%8C%E5%88%86%E5%B8%83%E5%BC%8F%E7%BC%96%E7%A8%8B/" rel="prev" title="Chapter10-并发和分布式编程">
+                  <i class="fa fa-chevron-left"></i> Chapter10-并发和分布式编程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/22/%EF%BC%88%E4%B8%89%EF%BC%89%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="next" title="（三）面向性能调优的Java设计模式">
+                  （三）面向性能调优的Java设计模式 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

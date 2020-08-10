@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+  </script>
+
+  <meta name="description" content="前言：非常郁闷，写了第三遍了，无故404 学了五天了，熬夜搞出这份代码，虽然一度卡死几个小时，但结果是好的。 目录 第一部分 Selenium+Chrome爬取空间留言 1.1 使用说明 1.2 代码及注释 1.3 相关问题 第二部分 jieba进行分词 2.1 环境配置 2.2 代码 2.3 注意事项 第三部分 Word Art制作词云 3.1 注意事项 第一部分 Selenium+Chrome">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Python3.6爬虫学习记录】（九）模拟登陆QQ空间爬取好友所有留言并制作词云">
+<meta property="og:url" content="http://blog.khay.site/2017/08/17/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B9%9D%EF%BC%89%E6%A8%A1%E6%8B%9F%E7%99%BB%E9%99%86QQ%E7%A9%BA%E9%97%B4%E7%88%AC%E5%8F%96%E5%A5%BD%E5%8F%8B%E6%89%80%E6%9C%89%E7%95%99%E8%A8%80%E5%B9%B6%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="前言：非常郁闷，写了第三遍了，无故404 学了五天了，熬夜搞出这份代码，虽然一度卡死几个小时，但结果是好的。 目录 第一部分 Selenium+Chrome爬取空间留言 1.1 使用说明 1.2 代码及注释 1.3 相关问题 第二部分 jieba进行分词 2.1 环境配置 2.2 代码 2.3 注意事项 第三部分 Word Art制作词云 3.1 注意事项 第一部分 Selenium+Chrome">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img.blog.csdn.net/20170817153831882?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://img.blog.csdn.net/20170817154119140?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="article:published_time" content="2017-08-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-08T03:47:27.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="python">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="selenium">
+<meta property="article:tag" content="chrome">
+<meta property="article:tag" content="qq空间">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20170817153831882?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+
+
+<link rel="canonical" href="http://blog.khay.site/2017/08/17/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B9%9D%EF%BC%89%E6%A8%A1%E6%8B%9F%E7%99%BB%E9%99%86QQ%E7%A9%BA%E9%97%B4%E7%88%AC%E5%8F%96%E5%A5%BD%E5%8F%8B%E6%89%80%E6%9C%89%E7%95%99%E8%A8%80%E5%B9%B6%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【Python3.6爬虫学习记录】（九）模拟登陆QQ空间爬取好友所有留言并制作词云 | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%88%AC%E5%8F%96%E7%9A%84%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">爬取的文件</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2017/08/17/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B9%9D%EF%BC%89%E6%A8%A1%E6%8B%9F%E7%99%BB%E9%99%86QQ%E7%A9%BA%E9%97%B4%E7%88%AC%E5%8F%96%E5%A5%BD%E5%8F%8B%E6%89%80%E6%9C%89%E7%95%99%E8%A8%80%E5%B9%B6%E5%88%B6%E4%BD%9C%E8%AF%8D%E4%BA%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Python3.6爬虫学习记录】（九）模拟登陆QQ空间爬取好友所有留言并制作词云
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-08-17 00:00:00" itemprop="dateCreated datePublished" datetime="2017-08-17T00:00:00+08:00">2017-08-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:47:27" itemprop="dateModified" datetime="2019-09-08T11:47:27+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p><strong>前言：</strong>非常郁闷，写了第三遍了，无故404 学了五天了，熬夜搞出这份代码，虽然一度卡死几个小时，但结果是好的。</p>
+<p><strong>目录</strong> <strong>第一部分 Selenium+Chrome爬取空间留言</strong> 1.1 使用说明 1.2 代码及注释 1.3 相关问题 <strong>第二部分 jieba进行分词</strong> 2.1 环境配置 2.2 代码 2.3 注意事项 <strong>第三部分 Word Art制作词云</strong> 3.1 注意事项</p>
+<p><strong>第一部分 Selenium+Chrome爬取空间留言</strong> <strong>1.1 使用说明</strong> <strong>1.11 条件</strong> 使用快捷登陆，要提前登陆QQ 空间装扮不同的话，会出现element not visitable错误建议<code>time.sleep(10)</code>手动切换到留言板页面 需要输入爬取页面</p>
+<p><strong>1.2 代码及注释</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"># 抓取好友空间留言，需要人工填入页数</span><br><span class="line"># 自己空间需要改下相应element 的名字</span><br><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver.common.keys import Keys</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">import time</span><br><span class="line"># 页面滚动函数（可通用）</span><br><span class="line">def scroll(driver):</span><br><span class="line">    driver.execute_script(&quot;&quot;&quot;</span><br><span class="line">           (function () &#123;</span><br><span class="line">               var y &#x3D; document.body.scrollTop;</span><br><span class="line">               var step &#x3D; 100;</span><br><span class="line">               window.scroll(0, y);</span><br><span class="line">               function f() &#123;</span><br><span class="line">                   if (y &lt; document.body.scrollHeight) &#123;</span><br><span class="line">                       y +&#x3D; step;</span><br><span class="line">                       window.scroll(0, y);</span><br><span class="line">                       setTimeout(f, 50);</span><br><span class="line">                   &#125;</span><br><span class="line">                   else &#123;</span><br><span class="line">                       window.scroll(0, y);</span><br><span class="line">                       document.title +&#x3D; &quot;scroll-done&quot;;</span><br><span class="line">                   &#125;</span><br><span class="line">               &#125;</span><br><span class="line">               setTimeout(f, 1000);</span><br><span class="line">           &#125;)();</span><br><span class="line">           &quot;&quot;&quot;)</span><br><span class="line"># 模拟登陆以及爬取函数</span><br><span class="line">def crawlSays():</span><br><span class="line"> # 打开QQ好友空间</span><br><span class="line">    driver &#x3D; webdriver.Chrome()</span><br><span class="line">    driver.get(&#39;QQ好友空间网址&#39;)</span><br><span class="line">    # 等待跳转</span><br><span class="line">    time.sleep(2)</span><br><span class="line">    # 切换框架</span><br><span class="line">    driver.switch_to_frame(&#39;login_frame&#39;)</span><br><span class="line">    # 使用快捷方式模拟登陆，需要先登陆电脑QQ</span><br><span class="line">    driver.find_element_by_id(&#39;img_out_自己QQ号&#39;).click()</span><br><span class="line">    </span><br><span class="line">    time.sleep(4)</span><br><span class="line">    # 建议以下两行代码，使用手动切换到留言板页面，避免因空间布局不同而报错</span><br><span class="line">    # 同时，上面的休眠时间可以适当增加，保证自己手动操作及时</span><br><span class="line">    # 当然，也可以改写这两行代码</span><br><span class="line">    # 查看亲密度，点击我确定</span><br><span class="line">    driver.find_element_by_class_name(&#39;btn-fs-sure&#39;).click()</span><br><span class="line">    time.sleep(5)</span><br><span class="line">    elem_says &#x3D; driver.find_element_by_css_selector(&quot;a[tabindex&#x3D;&#39;1&#39;][title&#x3D;&#39;留言板&#39;]&quot;)</span><br><span class="line">    elem_says.click()</span><br><span class="line"></span><br><span class="line">  # 切换到默认页面</span><br><span class="line">    driver.switch_to.default_content()</span><br><span class="line"></span><br><span class="line">    page&#x3D;0 # 需要爬取的页数</span><br><span class="line">    number&#x3D;0  # 留言总个数</span><br><span class="line">    NoneName&#x3D;0 # 留言中匿名的个数只可自己查看）</span><br><span class="line">    # 创建分别保存姓名，留言的txt文件</span><br><span class="line">    with open(&#39;Says.txt&#39;,&#39;w&#39;) as f ,open(&#39;Names.txt&#39;,&#39;w&#39;) as f1:</span><br><span class="line">        while(page&lt;需要爬取的页数-1):</span><br><span class="line">            time.sleep(1)</span><br><span class="line">            # 页面滑到最低端，否则下一页没有显示，会报错</span><br><span class="line">            scroll(driver)</span><br><span class="line">            time.sleep(2)</span><br><span class="line">            #  转换框架</span><br><span class="line">            driver.switch_to_frame(&#39;app_canvas_frame&#39;)</span><br><span class="line">            # 读取网页</span><br><span class="line">            html &#x3D; driver.page_source</span><br><span class="line">            soup &#x3D; BeautifulSoup(html,&#39;lxml&#39;)</span><br><span class="line">            sayLis&#x3D;soup.find_all(&#39;li&#39;,class_&#x3D;&quot;bor3 hide_comment_tip&quot;)</span><br><span class="line">            try:</span><br><span class="line">                for sayLi in sayLis:</span><br><span class="line">                    try:</span><br><span class="line">                        name &#x3D; sayLi.find(class_&#x3D;&quot;c_tx q_namecard&quot;)[&quot;title&quot;]</span><br><span class="line">                        say &#x3D; sayLi.find(&#39;tbody&#39;).find(&#39;tr&#39;)</span><br><span class="line">                        f1.write(str(name) + &#39;\n&#39;)</span><br><span class="line">                        # 判断留言是否是图片，图片则不保存</span><br><span class="line">                        # 可以添加保存图片的代码</span><br><span class="line">                        if (say.string !&#x3D; None):</span><br><span class="line">                            f.write(say.string + &#39;\n&#39;)</span><br><span class="line">                        number +&#x3D; 1</span><br><span class="line">                    except Exception:</span><br><span class="line">                    # 计算私密留言的个数（好友不可见）</span><br><span class="line">                        print(&quot;None Name&quot;)</span><br><span class="line">                        NoneName+&#x3D;1</span><br><span class="line"></span><br><span class="line">                    print(number)</span><br><span class="line"></span><br><span class="line">            except Exception:</span><br><span class="line">                print(&#39;Something is wrong&#39;)</span><br><span class="line"></span><br><span class="line">            page +&#x3D; 1</span><br><span class="line">            # 点击下一页</span><br><span class="line">            # 使用.send_keys（&#39;\ n&#39;）来模拟点击并解决Chrome中的问题,显示的还是本页</span><br><span class="line">            # 最终模拟键盘点击send_keys(Keys.ENTER)，成功</span><br><span class="line">            driver.find_element_by_css_selector(&#39;[onclick&#x3D;&quot;QZBlog.Util.PageIndexManager.goPage(1);return false;&quot;]&#39;).send_keys(Keys.ENTER)</span><br><span class="line"></span><br><span class="line">            driver.switch_to.default_content()</span><br><span class="line">            print(&#39;page &#39;+str(page)+&#39; has print&#39;)</span><br><span class="line"></span><br><span class="line">    print(&#39;Sum of says is &#39;+str(number)+&#39; , None name are &#39;+str(NoneName))</span><br><span class="line">    print(&#39;That is all&#39;)</span><br><span class="line">    time.sleep(10)</span><br><span class="line">crawlSays()</span><br></pre></td></tr></table></figure>
+<p><strong>1.3 相关问题</strong></p>
+<p><strong>1.3.1 点击下一页的几种操作及报错原因（可以略过）</strong> 参考<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/11908249/debugging-element-is-not-clickable-at-point-error">Debugging “Element is not clickable at point” error</a> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># 报错AttributeError: module &#39;selenium.webdriver.support.expected_conditions&#39; has no attribute &#39;invisibilityOfElementLocated&#39;</span><br><span class="line">       elem_next &#x3D; driver.find_element_by_css_selector(&#39;[onclick&#x3D;&quot;QZBlog.Util.PageIndexManager.goPage(1);return false;&quot;]&#39;)</span><br><span class="line">       wait &#x3D; WebDriverWait(driver, 2)</span><br><span class="line">       wait.until(EC.invisibilityOfElementLocated(elem_next))</span><br><span class="line">       elem_next.click()</span><br></pre></td></tr></table></figure> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># &lt;&#x2F;iframe&gt; is not clickable at point (59, 0). Other element would receive the click: &lt;a class&#x3D;&quot;logo&quot; href&#x3D;&quot;&#x2F;&#x2F;user.qzone.qq.com&#x2F;1509321148&#x2F;&quot; title&#x3D;&quot;...&quot;&gt;QQ空间&lt;&#x2F;a&gt;</span><br><span class="line">      elem_next &#x3D; driver.find_element_by_css_selector(&#39;[onclick&#x3D;&quot;QZBlog.Util.PageIndexManager.goPage(1);return false;&quot;]&#39;)</span><br><span class="line">      action &#x3D; ActionChains(driver)</span><br><span class="line">      action.move_to_element(elem_next).click().perform()</span><br></pre></td></tr></table></figure> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">    # 报错selenium.common.exceptions.ElementNotVisibleException: Message: element not visible</span><br><span class="line">             driver.find_element_by_class_name(&#39;c_tx &#39;).click()</span><br><span class="line">&#96;&#96;&#96;    </span><br></pre></td></tr></table></figure> # 报错 selenium.common.exceptions.WebDriverException: Message: unknown error: Element <iframe>....... </iframe> is not clickable at point (59, 0). Other element would receive the click: <a class="logo" target="_blank" rel="noopener" href="//user.qzone.qq.com/1509321148/" title="...">QQ空间</a> elem_next = driver.find_element_by_css_selector('.textinput') action = ActionChains(driver) action.move_to_element(elem_next).click().send_keys(Keys.BACK_SPACE).send_keys(str(page)).perform() driver.find_element_by_class_name('bt_tx2').click() <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">**1.3.2 点击下一页的解决**</span><br><span class="line"> </span><br><span class="line">            # 使用.send_keys（&#39;\ n&#39;）来模拟点击并解决Chrome中的问题,显示的还是本页</span><br><span class="line">            # 最终模拟键盘点击.send_keys(Keys.ENTER)，成功</span><br><span class="line">            driver.find_element_by_css_selector(&#39;[onclick&#x3D;&quot;QZBlog.Util.PageIndexManager.goPage(1);return false;&quot;]&#39;).send_keys(Keys.ENTER)</span><br><span class="line">当然还有很多思路光页面上的操作都有三种，都可以进行模拟，但是要注意对应，小心报错，有一种简单的思路可以[参考思路](http:&#x2F;&#x2F;www.cnblogs.com&#x2F;lulu-beibei&#x2F;p&#x2F;6026468.html)</span><br><span class="line"></span><br><span class="line">**1.3.3遐想**</span><br><span class="line">自此，是想爬什么，爬什么，只需要模拟即可，不会模拟的直接sleep来手动操作。</span><br><span class="line">当然，挡路的是各种细节的处理，主要参考[Stack Overflow](https:&#x2F;&#x2F;stackoverflow.com&#x2F;)，直接搜索报错原因，然后查看评论，总会解决的</span><br><span class="line">然而爬虫手段还比较低劣，不能大量使用，效率还低</span><br><span class="line">往后呢，可以采用PhantomJS，还有多进程，分布式，框架的使用，学习保存方法，以及云服务器</span><br><span class="line"></span><br><span class="line">**第二部分 jieba进行分词**</span><br><span class="line">**2.1 环境配置**</span><br><span class="line">参考[在Python里安装Jieba中文分词组件](http:&#x2F;&#x2F;blog.csdn.net&#x2F;sanqima&#x2F;article&#x2F;details&#x2F;50965439)</span><br><span class="line"></span><br><span class="line">**2.2 代码**</span><br></pre></td></tr></table></figure> import jieba.analyse</p>
+<h1 id="爬取的文件">爬取的文件</h1>
+<p>path = 'D:Study.txt' file_in = open(path, 'r') content = file_in.read()</p>
+<p>try: #打开中文停词表 需要把停词表 格式改成utf-8 jieba.analyse.set_stop_words('D:Study.txt') tags = jieba.analyse.extract_tags(content, topK=100, withWeight=True) for v, n in tags: #权重是小数，为了凑整，乘了一万 print (v + '' + str(int(n * 10000)))</p>
+<p>finally: file_in.close()</p>
+<p>``` <strong>2.3 注意事项：</strong></p>
+<p>①下载与python匹配的jieba压缩包 ②使用半自动安装（切换到jieba所在文件夹），直接 <code>pip install jieba</code>可能出错 ③最重要的是，停用词表保存为 UTF-8 格式，否者报错</p>
+<p><strong>第三部分 Word Art制作词云</strong> <a target="_blank" rel="noopener" href="http://www.jianshu.com/p/6a285dfa3d87">用jieba分词提取关键词做漂亮的词云</a></p>
+<p><strong>3.1 注意事项：</strong> ①需要自己导入字体，可以在电脑开始那输入字体，会出现电脑已有的的字体，然后复制出来，粘贴到一个地方，就可以使用了</p>
+<p><strong>无图无真相，展示一下：</strong></p>
+<p>爬取的留言，效率比较低，测试，100页留言，基本得5分钟左右 后续可以改进，可以不用Chrome，改为PhantomJS，同时，删除一些不必要的休眠时间 <img src="http://img.blog.csdn.net/20170817153831882?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" /></p>
+<p>制作的词云，形状，图片，字体，颜色可以搭配 <img src="http://img.blog.csdn.net/20170817154119140?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" /></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+              <a href="/tags/%E7%88%AC%E8%99%AB/" rel="tag"># 爬虫</a>
+              <a href="/tags/selenium/" rel="tag"># selenium</a>
+              <a href="/tags/chrome/" rel="tag"># chrome</a>
+              <a href="/tags/qq%E7%A9%BA%E9%97%B4/" rel="tag"># qq空间</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/08/17/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AB%EF%BC%89Selenium%E6%A8%A1%E6%8B%9F%E7%99%BB%E5%BD%95%E6%96%B0%E6%B5%AA%E9%82%AE%E7%AE%B1%E5%B9%B6%E5%8F%91%E9%80%81%E9%82%AE%E4%BB%B6/" rel="prev" title="【Python3.6爬虫学习记录】（八）Selenium模拟登录新浪邮箱并发送邮件">
+                  <i class="fa fa-chevron-left"></i> 【Python3.6爬虫学习记录】（八）Selenium模拟登录新浪邮箱并发送邮件
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/" rel="next" title="【Python3.6爬虫学习记录】（十）爬取教务处成绩并保存到Excel文件中（哈工大）">
+                  【Python3.6爬虫学习记录】（十）爬取教务处成绩并保存到Excel文件中（哈工大） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false};
+  </script>
+
+  <meta name="description" content="目录 前言 介绍Scrapy框架的简单使用。文中首先通过Scrapy框架爬取网络图片，然后使用工具生成马赛克拼图。 虽然Scrapy的使用，网上教程很丰富，尤其参考链接1，这里，自己再走一遍流程，熟悉熟悉。 文中爬取LOL英雄皮肤，然后做一张马赛克拼图。 1、Scrapy框架应用 1.1、Scrapy准备 python环境，应该没什么问题。我使用的是Anaconda管理的python及相关库，一般">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【Python3.6爬虫学习记录】（十五）Scrapy爬虫框架的应用及马赛克拼图生成">
+<meta property="og:url" content="http://blog.khay.site/2018/06/12/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89Scrapy%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6%E7%9A%84%E5%BA%94%E7%94%A8%E5%8F%8A%E9%A9%AC%E8%B5%9B%E5%85%8B%E6%8B%BC%E5%9B%BE%E7%94%9F%E6%88%90/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="目录 前言 介绍Scrapy框架的简单使用。文中首先通过Scrapy框架爬取网络图片，然后使用工具生成马赛克拼图。 虽然Scrapy的使用，网上教程很丰富，尤其参考链接1，这里，自己再走一遍流程，熟悉熟悉。 文中爬取LOL英雄皮肤，然后做一张马赛克拼图。 1、Scrapy框架应用 1.1、Scrapy准备 python环境，应该没什么问题。我使用的是Anaconda管理的python及相关库，一般">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612151306333?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612150645224?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612153017108?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612154040441?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612154155168?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/20180612154849868?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/2018061215493986?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="og:image" content="https://img-blog.csdn.net/2018061215591026?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+<meta property="article:published_time" content="2018-06-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2019-09-08T03:52:10.000Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="scrapy">
+<meta property="article:tag" content="马赛克拼图">
+<meta property="article:tag" content="LOL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdn.net/20180612151306333?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
+
+
+<link rel="canonical" href="http://blog.khay.site/2018/06/12/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89Scrapy%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6%E7%9A%84%E5%BA%94%E7%94%A8%E5%8F%8A%E9%A9%AC%E8%B5%9B%E5%85%8B%E6%8B%BC%E5%9B%BE%E7%94%9F%E6%88%90/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>【Python3.6爬虫学习记录】（十五）Scrapy爬虫框架的应用及马赛克拼图生成 | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-sitemap">
+
+    <a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>Sitemap</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">2.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scrapy%E6%A1%86%E6%9E%B6%E5%BA%94%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">1、Scrapy框架应用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#scrapy%E5%87%86%E5%A4%87"><span class="nav-number">3.1.</span> <span class="nav-text">1.1、Scrapy准备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE%E5%8F%8A%E9%85%8D%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">1.2、创建项目及配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%BD%91%E9%A1%B5%E5%88%86%E6%9E%90%E5%8F%8A%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.3.</span> <span class="nav-text">1.3、网页分析及代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#spiders%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E7%BC%96%E5%86%99%E7%88%AC%E8%99%AB%E4%B8%BB%E9%A2%98%E4%BB%A3%E7%A0%81"><span class="nav-number">3.3.1.</span> <span class="nav-text">1.3.2 spiders文件夹中编写爬虫主题代码</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#pipeline-s.py%E4%B8%AD%E7%BC%96%E5%86%99%E6%95%B0%E6%8D%AE%E5%82%A8%E5%AD%98%E4%BB%A3%E7%A0%81"><span class="nav-number">3.3.2.</span> <span class="nav-text">1.3.3 pipeline s.py中编写数据储存代码</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#%E6%9B%B4%E6%94%B9setting%E6%96%87%E4%BB%B6"><span class="nav-number">3.3.3.</span> <span class="nav-text">1.3.4 更改setting文件</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E7%88%AC%E8%99%AB"><span class="nav-number">3.4.</span> <span class="nav-text">1.4、运行爬虫</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A9%AC%E8%B5%9B%E5%85%8B%E9%A3%8E%E6%A0%BC%E5%9B%BE%E7%89%87%E7%94%9F%E6%88%90"><span class="nav-number">4.</span> <span class="nav-text">2、马赛克风格图片生成</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">4.1.</span> <span class="nav-text">2.1、准备工作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E6%8B%BC%E5%9B%BE"><span class="nav-number">4.2.</span> <span class="nav-text">2.2、生成拼图</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2018/06/12/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%E4%BA%94%EF%BC%89Scrapy%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6%E7%9A%84%E5%BA%94%E7%94%A8%E5%8F%8A%E9%A9%AC%E8%B5%9B%E5%85%8B%E6%8B%BC%E5%9B%BE%E7%94%9F%E6%88%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【Python3.6爬虫学习记录】（十五）Scrapy爬虫框架的应用及马赛克拼图生成
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-06-12 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-12T00:00:00+08:00">2018-06-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:52:10" itemprop="dateModified" datetime="2019-09-08T11:52:10+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="目录">目录</h4>
+<h4 id="前言">前言</h4>
+<p>介绍Scrapy框架的简单使用。文中首先通过Scrapy框架爬取网络图片，然后使用工具生成马赛克拼图。 虽然Scrapy的使用，网上教程很丰富，尤其<a target="_blank" rel="noopener" href="https://cuiqingcai.com/3472.html">参考链接1</a>，这里，自己再走一遍流程，熟悉熟悉。 文中爬取<a target="_blank" rel="noopener" href="http://lol.qq.com/skin/">LOL英雄皮肤</a>，然后做一张马赛克拼图。</p>
+<h4 id="scrapy框架应用">1、Scrapy框架应用</h4>
+<h5 id="scrapy准备">1.1、Scrapy准备</h5>
+<p>python环境，应该没什么问题。我使用的是Anaconda管理的python及相关库，一般各种库都有，比较方便。 当然也需要安装Scrapy <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install Scrapy</span><br><span class="line">（Anaconda中直接使用）</span><br><span class="line">conda install Scrapy</span><br></pre></td></tr></table></figure> 验证安装完成，输入Scrapy，会有提示。</p>
+<h5 id="创建项目及配置">1.2、创建项目及配置</h5>
+<p>首先cmd到项目目录，输入（projectname为项目名称） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy startproject projectname</span><br></pre></td></tr></table></figure> 然后提示使用模板，按提示输入即可。 <img src="https://img-blog.csdn.net/20180612151306333?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 目录结构如下（盗的一张很好的图）， <img src="https://img-blog.csdn.net/20180612150645224?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p>这里有个问题，就是Scrapy不能在IDE中调试，解决办法是，在根目录即scrapy.cfg同级目录创建一个entrypoint.py文件，输入 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> scrapy.cmdline <span class="keyword">import</span> execute</span><br><span class="line">execute([<span class="string">&#x27;scrapy&#x27;</span>, <span class="string">&#x27;crawl&#x27;</span>, <span class="string">&#x27;projectname&#x27;</span>])</span><br></pre></td></tr></table></figure> 其中，运行时解析为scrapy crawl projectname</p>
+<h5 id="网页分析及代码实现">1.3、网页分析及代码实现</h5>
+<p>这里主要爬取 ###### 1.3.1 items.py 中定义存储的数据 包含英雄id，皮肤背景图集合（一个英雄有多个皮肤），头像集合（不同皮肤，头像不同） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import scrapy</span><br><span class="line"></span><br><span class="line">class LolSkinsItem(scrapy.Item):</span><br><span class="line">    # name of hero</span><br><span class="line">    id &#x3D; scrapy.Field()</span><br><span class="line">    # skins set set</span><br><span class="line">    bg_urls &#x3D; scrapy.Field()</span><br><span class="line">    # icons set of hero</span><br><span class="line">    icon_urls &#x3D; scrapy.Field()</span><br></pre></td></tr></table></figure></p>
+<h6 id="spiders文件夹中编写爬虫主题代码">1.3.2 spiders文件夹中编写爬虫主题代码</h6>
+<p>首先<strong>导入相关库</strong>，在这里使用正则表达式，匹配网页连接。 当然，如果爬取文字的网站，也可以使用beautifulsoup对源码进行解析（from bs4 import BeautifulSoup）。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from scrapy.http import Request</span><br><span class="line">from Scrapy.lol_skins.lol_skins.items import LolSkinsItem</span><br><span class="line">import scrapy</span><br><span class="line">import re</span><br></pre></td></tr></table></figure> 然后<strong>编写开始函数start_requests()</strong> 在down_skins类中（一下所有解析函数均定义在该类中） <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># self members</span></span><br><span class="line">name = <span class="string">&#x27;lol_skins&#x27;</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">start_requests</span>(<span class="params">self</span>):</span></span><br><span class="line">    index = <span class="string">&#x27;http://lol.qq.com/skin/&#x27;</span></span><br><span class="line">    <span class="keyword">yield</span> Request(index,self.parse)</span><br></pre></td></tr></table></figure> 这里最后一行尤为重要，主要是Request函数的使用，第一个参数index为访问网址，第二个参数表示调用函数parse()。就是访问index网站，然后将访问信息（网站源码）传递给parse函数进行下一次解析。</p>
+<p>编写<strong>初次解析函数parse()</strong> 这里使用正则表达式提取<a target="_blank" rel="noopener" href="http://lol.qq.com/skin/">首页</a> 中所有英雄的个人页面网址， <img src="https://img-blog.csdn.net/20180612153017108?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse</span>(<span class="params">self, response</span>):</span></span><br><span class="line">    url_regex = <span class="string">&#x27;http://lol.qq.com/act/3d/\d+&#x27;</span></span><br><span class="line">    pattern = re.compile(url_regex)</span><br><span class="line">    hero_url = pattern.findall(response.text)</span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> hero_url:</span><br><span class="line">        i = i + <span class="number">1</span></span><br><span class="line">        <span class="keyword">yield</span> Request(url,self.get_hero_skin,meta=&#123;<span class="string">&#x27;id&#x27;</span>:i&#125;)</span><br></pre></td></tr></table></figure> parse(self, response)，其中response为上次执行的响应返回，response.text即为返回的页面源码。 这里调用下一个执行函数get_hero_skin()，并且传递了一个额外数据参数meta={'id' : i}。</p>
+<p>编写<strong>二次解析函数get_hero_skin()</strong>获取皮肤网址 这里解析英雄的<a target="_blank" rel="noopener" href="http://lol.qq.com/act/3d/20120420329/">个人页面</a>，正则表达式获取头像和皮肤背景链接。 下面通过浏览器查看链接，这里为了观察，可以将该页面的的源码打印出来分析。 头像链接 <img src="https://img-blog.csdn.net/20180612154040441?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 皮肤背景链接 <img src="https://img-blog.csdn.net/20180612154155168?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_hero_skin</span>(<span class="params">self,response</span>):</span></span><br><span class="line">    bg_regex = <span class="string">&#x27;bg:&quot;http://ossweb-img.qq.com/upload/gameact/topic/[\w\_\-\/]+_Value_local.jpg&quot;&#x27;</span></span><br><span class="line">    icon_regex = <span class="string">&#x27;icon:&quot;http://ossweb-img.qq.com/upload/gameact/topic/[\w\_\-\/]+_Value_local.jpg&quot;&#x27;</span></span><br><span class="line">    bg_pattern = re.compile(bg_regex)</span><br><span class="line">    bgs = bg_pattern.findall(response.text)</span><br><span class="line">    icon_pattern = re.compile(icon_regex)</span><br><span class="line">    icons = icon_pattern.findall(response.text)</span><br><span class="line">    bgs_url = []</span><br><span class="line">    icons_url = []</span><br><span class="line">    <span class="keyword">for</span> bg <span class="keyword">in</span> bgs:</span><br><span class="line">        bgs_url.append(bg.split(<span class="string">&#x27;&quot;&#x27;</span>)[<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">for</span> icon <span class="keyword">in</span> icons:</span><br><span class="line">        icons_url.append(icon.split(<span class="string">&#x27;&quot;&#x27;</span>)[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    item = LolSkinsItem()</span><br><span class="line">    item[<span class="string">&#x27;id&#x27;</span>] = response.meta[<span class="string">&#x27;id&#x27;</span>]</span><br><span class="line">    item[<span class="string">&#x27;bg_urls&#x27;</span>] = bgs_url</span><br><span class="line">    item[<span class="string">&#x27;icon_urls&#x27;</span>] = icons_url</span><br><span class="line">    <span class="keyword">yield</span> item</span><br></pre></td></tr></table></figure> 这里需要注意最后几行，创建了一个LolSkinsItem的对象，然后对对象属性进行了赋值，最后返回。这里item对象，就是在items中定义的数据类型。</p>
+<p><strong>总体流程</strong> scrapy是一个分布式框架， 首先使用parse() index首页，提取所有英雄的个人页面；然后使用get_hero_skins()对每个英雄的个人页面进行解析，提取头像和皮肤背景链接，并且保存到定义的数据类型中。</p>
+<h6 id="pipeline-s.py中编写数据储存代码">1.3.3 pipeline s.py中编写数据储存代码</h6>
+<p>这里将get_hero_skins()中最后返回的item进行解析保存到本地 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LolSkinsPipeline</span>(<span class="params">object</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span>(<span class="params">self, item, spider</span>):</span></span><br><span class="line">        i = <span class="number">0</span></span><br><span class="line">        id = item[<span class="string">&#x27;id&#x27;</span>]</span><br><span class="line">        <span class="keyword">for</span> bg <span class="keyword">in</span> item[<span class="string">&#x27;bg_urls&#x27;</span>]:</span><br><span class="line">            i = i +<span class="number">1</span></span><br><span class="line">            image = requests.get(bg).content</span><br><span class="line">            <span class="keyword">with</span> open(<span class="string">&#x27;D:\PythonScripts\Scrapy\lol_skins\lol_skins\\bgs\\&#x27;</span>+str(id)+<span class="string">&#x27;_&#x27;</span>+str(i) +<span class="string">&#x27;.jpg&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(image)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> icon <span class="keyword">in</span> item[<span class="string">&#x27;icon_urls&#x27;</span>]:</span><br><span class="line">            i = i + <span class="number">1</span></span><br><span class="line">            image = requests.get(icon).content</span><br><span class="line">            <span class="keyword">with</span> open(<span class="string">&#x27;D:\PythonScripts\Scrapy\lol_skins\lol_skins\icons\\&#x27;</span> + str(id) + <span class="string">&#x27;_&#x27;</span> + str(i) + <span class="string">&#x27;.jpg&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                f.write(image)</span><br></pre></td></tr></table></figure></p>
+<h6 id="更改setting文件">1.3.4 更改setting文件</h6>
+<p>为了能够成功下载图片并保存需要将下面去掉下面的注释 <img src="https://img-blog.csdn.net/20180612154849868?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p>有些地方提示可以去掉下面的注释，就是保存页面缓存，下次访问更快。 确实会快，但占用内存很大，之前在本地运行，将整个项目上传服务器，没有成功，原因是在本地运行过，缓存高达几个G。 <img src="https://img-blog.csdn.net/2018061215493986?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<h5 id="运行爬虫">1.4、运行爬虫</h5>
+<p>运行entrypoint.py文件即可</p>
+<h4 id="马赛克风格图片生成">2、马赛克风格图片生成</h4>
+<h5 id="准备工作">2.1、准备工作</h5>
+<p><a href="https://link.zhihu.com/?target=http://www.fmedda.com/home">软件下载</a></p>
+<h5 id="生成拼图">2.2、生成拼图</h5>
+<p>1、新建图片数据库 ...到新数据库，命名 2、制作马赛克拼图 要求选择主题图片 选择拼图保存位置 选择分辨率</p>
+<p>生成图片 <img src="https://img-blog.csdn.net/2018061215591026?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="放逐之刃" /></p>
+<p>提示一下，如果分辨率选择过高，生成图片非常大（之前生成一张96M的图片）。 这里的图片数据库不是很好，生成的图片不是很清晰。相较而言，可以使用一些二次元图片，会更好一下（见参考链接）。</p>
+<p><strong>参考</strong>： <a target="_blank" rel="noopener" href="https://cuiqingcai.com/3472.html">小白进阶之Scrapy第一篇</a> <a target="_blank" rel="noopener" href="https://cuiqingcai.com/912.html">Python爬虫进阶三之Scrapy框架安装配置</a> <a href="%E5%88%A9%E7%94%A8%3Cem%3E%E7%88%AC%E8%99%AB%3C/em%3E%E6%8A%80%E6%9C%AF%E8%83%BD%E5%81%9A%E5%88%B0%E5%93%AA%E4%BA%9B%E5%BE%88%E9%85%B7%E5%BE%88%E6%9C%89%E8%B6%A3%E5%BE%88%E6%9C%89%E7%94%A8%E7%9A%84%E4%BA%8B%E6%83%85%EF%BC%9F%20-%20%E4%BB%8A%E6%99%9A%E7%9A%84%E9%A3%8E%E5%84%BF%E5%BE%88%E5%96%A7%E5%9A%A3%E7%9A%84%E5%9B%9E%E7%AD%94%20-%20%E7%9F%A5%E4%B9%8E%20https://www.zhihu.com/question/27621722/answer/269085034">利用爬虫技术能做到哪些很酷很有趣很有用的事情？</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/scrapy/" rel="tag"># scrapy</a>
+              <a href="/tags/%E9%A9%AC%E8%B5%9B%E5%85%8B%E6%8B%BC%E5%9B%BE/" rel="tag"># 马赛克拼图</a>
+              <a href="/tags/LOL/" rel="tag"># LOL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/06/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E5%8A%A8%E7%94%BB%EF%BC%88%E5%B0%8F%E7%90%83%E8%BF%90%E5%8A%A8%EF%BC%89%E6%95%88%E6%9E%9C/" rel="prev" title="Java多线程实现简单动画（小球运动）效果">
+                  <i class="fa fa-chevron-left"></i> Java多线程实现简单动画（小球运动）效果
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/" rel="next" title="Ubuntu云服务器部署静态网页、运行python脚本 ...">
+                  Ubuntu云服务器部署静态网页、运行python脚本 ... <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
