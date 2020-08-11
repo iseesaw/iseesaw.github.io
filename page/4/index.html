@@ -343,7 +343,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -356,7 +356,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-count">159</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -396,6 +396,538 @@ mjx-container[display="true"] + br {
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2018/05/31/Chapter8-%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/31/Chapter8-%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">Chapter8-面向性能的软件构造方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-31 00:00:00" itemprop="dateCreated datePublished" datetime="2018-05-31T00:00:00+08:00">2018-05-31</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:52:54" itemprop="dateModified" datetime="2019-09-08T11:52:54+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/05/31/Chapter8-%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="Chapter8-面向性能的软件构造方法" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/05/31/Chapter8-%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/05/31/Chapter8-%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E7%9A%84%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="目录">目录</h3>
+<strong>Chapter 8: Software Construction for Performance</strong> 第八章主要讲时空性能质量指标 内存管理模型：堆、栈 GC，root、reachable、unreachable、live、dead GC的四种基本算法 Java/JVM的内存管理模型：各区域、各区域的GC方法 JVM GC性能调优：参数配置、GC模式选择 Java性能调优工具：jstat, jmap,jhat, Visual VM, MAT Memory dump Stack trace Java代码调优的设计模式：singleton, prototype/cloneable,flyweight, object pool String constant pool 常见的Java I/O方法 #### 8.1、Metrics，Princple，and Methods of Construction for Performance 第一节主要讲时空性能的指标，以及一些提高性能的方法 ##### 8.1.1、Performance Metrics（性能度量指标）
+<table>
+<tr>
+<td>
+运行时程序性能
+</td>
+<td>
+Time performance（时间性能）
+</td>
+<td>
+Space performance（空间性能）
+</td>
+</tr>
+<tr>
+<td>
+细节
+</td>
+<td>
+①Execution time：每条指令、每个控制结构、整个程序的执行时间；②Distribution of execution time：不同语句或控制结构执行时间的分布情况；③Time battleneck（时间瓶颈）
+</td>
+<td>
+①Memory consumption：每个变量、每个复杂结构、整个程序的内存消耗；②Distribution of memory consumption：不同变量、数据结构的相对消耗；③Space bottleneck（空间瓶颈）④Evolution of memory consumption（内存随时间的变化）
+</td>
+</tr>
+<tr>
+<td>
+影响运行性能的因素
+</td>
+<td>
+①Algorithm（算法）；②Data structure（数据结构）；③Memory allocation（内存分配）；④Garbage collection（垃圾回收）
+</td>
+<td>
+①Basic statements（基本语句）；②Algorithm（算法）；③Data structure（数据结构）；④I/O（file，database，network communication，etc）；⑤Concurrency / multi-thread / lock（并行、多线程、锁）
+</td>
+</tr>
+<tr>
+<td>
+Code
+</td>
+<td>
+得到执行时间：long time = System.currentTimeMillis()，elapsedTime = stopTime - startTime
+</td>
+<td>
+得到内存消耗：Runtime runtime = Runtime.getRuntime()，runtime.gc()，long memory = runtime.totalMemory() - runtime.freeMemory()
+</td>
+</tr>
+</table>
+<h5 id="memory-performance存储性能">8.1.2、Memory Performance（存储性能）</h5>
+<h6 id="three-modes-of-object-management">8.1.2.1、Three modes of object management</h6>
+主要介绍三种基本的内存分配模型 差异在于：<strong>如何</strong>与<strong>何时</strong>在<strong>程序对象</strong>与<strong>内存对象</strong>之间<strong>建立联系</strong>。
+<table>
+<tr>
+<td>
+Memory Allocation
+</td>
+<td>
+Static allocation（静态分配）
+</td>
+<td colspan="2">
+Dynamic allocation（动态分配）
+</td>
+</tr>
+<tr>
+<td>
+Define
+</td>
+<td>
+静态内存分配，在编译阶段就已经确定好了内存分配
+</td>
+<td colspan="2">
+在运行时动态分配内存，建立新的内存对象（基于堆和栈的内存管理都是动态分配）
+</td>
+</tr>
+<tr>
+<td>
+Three Modes
+</td>
+<td>
+Static
+</td>
+<td>
+Stack-based
+</td>
+<td>
+Heap-based
+</td>
+</tr>
+<tr>
+<td>
+Details
+</td>
+<td>
+在将程序load进内存的时候或开始执行的时候，确定所有对象的分配；不支持递归，不支持动态创建的可变长的复杂数据类型
+</td>
+<td>
+栈存储方法调用以及方法执行中的局部数据；后进先出，无法支持复杂数据类型
+</td>
+<td>
+在一块内存里分为多个小块，每块包含一个对象，或者未被占用自；代码中的一个变量可以在不同时间被关联到不同的内存对象上，无法在编译阶段确定，同时内存对象也可以进一步指向其他对象；自由模式的内存管理，动态分配，可管理复杂的动态数据结构
+</td>
+</tr>
+<tr>
+<td>
+About
+</td>
+<td colspan="3">
+某些对象延续的时间比创建它的方法所延续的时间更长（因为方法返回后，栈清空，所以stack不行）；递归的数据结构，长度可变的数据结构（所以静态方法和stack都不行）；经常要使用不限定长度的数据结构（用堆进行管理）
+</td>
+</tr>
+<tr>
+<td>
+Space reclamation（内存回收）
+</td>
+<td>
+在静态内存分配模式下，无需进行内存回收：所有都是已确定的
+</td>
+<td>
+在栈上进行内存空间回收：按block（某个方法）整体进行
+</td>
+<td>
+在heap上进行内存空间回收，最复杂，无法提前预知某个object是否已经变得无用（在GC中将详情讲解）
+</td>
+</tr>
+</table>
+图解基于<strong>栈</strong>的分配模型 （注意方法<strong>参数</strong>时通过<strong>栈传递</strong>的） <img src="https://img-blog.csdn.net/20180619224228148?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 图解基于<strong>堆</strong>的分配模型 <img src="https://img-blog.csdn.net/20180619224236156?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> ###### 8.1.2.2、Java Memory Model 主要介绍java中的<strong>内存分配模型</strong>，java通过JVM（java虚拟机）进行基于<strong>堆和栈</strong>的管理内存
+<table>
+<tr>
+<td>
+Thread stack
+</td>
+<td>
+Heap
+</td>
+</tr>
+<tr>
+<td>
+每个运行在JVM中的线程都有自己的线程栈，管理其局部数据，各栈之间彼此不可见；所有局部的基本数据类型都在栈上创建；多线程之间传递数据，是通过赋值而非引用
+</td>
+<td>
+所有的对象（Object，eg. Byte，Integer，Long）都在堆上创建；即使是局部变量的object，也是在堆上创建；堆上创建的对象可被所有线程共享引用；如果两个线程调用同一个对象上的某个方法，他们分别保留该方法的局部变量的拷贝
+</td>
+</tr>
+<tr>
+<td>
+①基本数据类型的局部变量；②指向一个对象的局部变量；③一个对象可能包含方法，这些方法包含局部变量，这些局部变量存储在线程栈上；
+</td>
+<td>
+①所有对象（object）存储在堆上；②对象的基本类型成员变量也存储在堆上；③如果一个成员变量是指向一个对象的指针，这个成员变量存储在堆上；④静态类变量存储在堆上
+</td>
+</tr>
+</table>
+<h6 id="garbage-collection">8.1.2.3、Garbage Collection</h6>
+考点： GC，root、reachable、unreachable、live、dead GC的四种基本算法 ###### 8.1.2.3.1、Garbage Collection Terminology（GC相关术语） 对象之间的引用关系构成一个有向图： - 图的活动对象是可从根访问的对象。 - 执行计算的进程称为改变器（mutator），因为它被视为动态地改变对象图。
+<table>
+<tr>
+<td>
+root（根对象）
+</td>
+<td>
+reachable（可达对象）
+</td>
+<td>
+unreachable（不可达对象）
+</td>
+<td>
+live（活对象）
+</td>
+<td>
+dead（死对象）
+</td>
+</tr>
+<tr>
+<td>
+在系统执行期间的任何时刻，根的集合由以下对象组成：①系统的根对象 ②附加到本地实体的任何对象或当前正在执行的例程的正式参数（包括函数的本地实体结果）
+</td>
+<td colspan="2">
+根据对象的&quot;活性&quot;有无区分；根对象的所有孩子节点，直接或间接都是可到达的，其他任何对象都是不可达的
+</td>
+<td>
+从root可达
+</td>
+<td>
+从root不可达（需要注意的是，死对象可能存在其他对象的引用）
+</td>
+</tr>
+<tr>
+<td colspan="5">
+内存回收的首要问题是将可达对象与不可达对象分离开来
+</td>
+</tr>
+</table>
+<p id="definition-of-garbage-collection垃圾回收的定义">8.1.2.3.2、Definition of Garbage Collection（垃圾回收的定义）</p>
+<p>垃圾回收器根据对象的&quot;<strong>活性</strong>&quot;(从<strong>root的可达性</strong>)来决定是否回收该对象的内存，&quot;<strong>死</strong>&quot;的对象就是需要回收的&quot;垃圾&quot;。 垃圾回收GC：<strong>识别</strong>&quot;<strong>垃圾</strong>&quot;对象，把其<strong>占用</strong>的<strong>内存</strong>加以<strong>回收</strong>。 分为手动回收和自动回收两种方式。</p>
+<p>手动回收有以下几种方法： ①Defensive Programming（防御式编程）：复制对象，而非引用；在局部回收内存；浪费空间但是有用； ②Pairing Principle（配对原则）：使用<code>new()</code>创建，对应的使用<code>delete()</code>删除； ③Ownership Concept（所有权概念）； ④Monitoring Technique（检测技术）：使用<code>Malloc()</code>和<code>Free()</code>； ⑤Administrator technique （管理员技术）。</p>
+下面介绍自动回收GC方法： ####### 8.1.2.3.3、Basic Algorithms: Reference Counting, MarkSweep,Mark-Compact, and Copying（四种基本算法）
+<table>
+<tr>
+<td>
+类别
+</td>
+<td>
+Reference Counting（引用计数）
+</td>
+<td>
+MarkSweep（标记-清除）
+</td>
+<td>
+Mark-Compact（标记-整理，介绍较少）
+</td>
+<td>
+Copying（复制）
+</td>
+</tr>
+<tr>
+<td>
+基本思想
+</td>
+<td>
+为每个object存储一个计数RC，当有其他reference指向它时，RC++；当有其他reference与其断开时，RC--；如果RC==0，则回收它
+</td>
+<td>
+为每个object设定状态位（live/dead）并记录，即mark阶段；将标记为dead的对象进行清理，即sweep阶段
+</td>
+<td>
+首先标记每个object（使用mark-sweep的mark阶段），然后将所有标记为live的移到后面，最后将前面所有dead对象回收
+</td>
+<td>
+首先将堆分为Fromspace和Tospace两部分，然后在Tospace中为对象分配内存，当Tospace满时，将其中所有活对象复制到Fromspace中，回收Tospace中所有死对象，周期进行
+</td>
+</tr>
+<tr>
+<td>
+注意点
+</td>
+<td>
+递归释放：一旦对象的RC = 0，它就可以被释放。 但对象可能包含对其他对象的引用，在这个对象被释放之前，其引用的对象的RC应该改变。
+</td>
+<td>
+周期性进行mark，sweep，其中mark位置为对象首位（称为mark-bit）即可
+</td>
+<td>
+类似mark-sweep，多了整理操作，让之后堆使用更方便
+</td>
+<td>
+该GC策略与mark-compact的区别在于：不是在同一个区域内进行整 理，而是将live对象全部复制到另一个区域。
+</td>
+</tr>
+<tr>
+<td>
+优点
+</td>
+<td>
+简单、计算代价分散，“幽灵时间”短-&gt;0（一旦没有了引用，立即回收）
+</td>
+<td>
+全面：循环收集垃圾；在指针操作上没有运行时间开销；与mutator松耦合；不移动对象， 不会破坏任何mutator不变量，优化器友好，只需要引用每个要发现的活对象（而不需要找到每个引用）
+</td>
+<td>
+...
+</td>
+<td>
+免费压缩；所有对象大小的分配非常简单 ，空间检查是指针比较 ，只需增加空闲指针分配；只处理活对象（通常是堆的一小部分）；固定的空间开销 - 释放和扫描指针 - 转发地址可以写在用户数据上；全面：循环收集垃圾；简单实现合理高效的复制GC
+</td>
+</tr>
+<tr>
+<td>
+缺点
+</td>
+<td>
+不全面（容易漏掉循环引用的数据）、要持续不断的计算（代价高）、难以支持并发、等
+</td>
+<td>
+停止/开始会导致的停顿和漫长的僵尸时间（开始要遍历所有对象）；复杂性是O（heap）而不是O（live） ，在标记阶段访问每个活对象 ，所有活和死对象都在sweep阶段被访问；如果堆已满（经常发生），则需要Mark阶段需要大量标记；碎片和标记堆栈溢出是问题；跟踪收集器必须能够找到根对象（与引用计数不同）
+</td>
+<td>
+...
+</td>
+<td>
+停止和复制开销较大；对象的位置周期性改变；需要其他简单收集器两倍的地址空间；复制大型对象的成本；长期数据可能被重复复制；必须更新所有引用；移动对象可能会破坏mutator不变量；广度优先复制可能会干扰局部模式
+</td>
+</tr>
+</table>
+<p id="garbage-collection-in-jvm">8.1.2.3.4、Garbage Collection in JVM</p>
+考点：Java/JVM的内存管理模型：各区域、各区域的GC方法 <strong>Java GC</strong>将堆分为<strong>不同的区域</strong>，各区域采用<strong>不同的GC策略</strong>，以<strong>提高GC的效率</strong> 针对不同的区域，使用不同的GC策略 <img src="https://img-blog.csdn.net/20180620152644710?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" />
+<table>
+<tr>
+<td colspan="3">
+Young Generation（年轻代）
+</td>
+<td>
+Old Generation（年老代）
+</td>
+<td>
+Pernament Generation（永久代）
+</td>
+</tr>
+<tr>
+<td>
+Eden
+</td>
+<td>
+S0（From）
+</td>
+<td>
+S1（To）
+</td>
+<td>
+Old
+</td>
+<td>
+Perm
+</td>
+</tr>
+<tr>
+<td>
+java分配的对象在eden创建
+</td>
+<td colspan="2">
+对象存活空间，YGC后从Eden转移到该处
+</td>
+<td>
+minorGC从Young转移到该处
+</td>
+<td>
+保存VM和Java元数据比如Strings和类静态变量
+</td>
+</tr>
+<tr>
+<td colspan="3">
+只有一小部分对象可较长时间存活，故采用copy算法减少GC代价，具体就是在S0和S1之间相互拷贝；当没有足够空间时，使用minor GC进行垃圾收集；如果经过多次minor GC仍存活，将其copy到old generation
+</td>
+<td>
+这里的对象有很高的幸存度，使用Mark-Sweep或Mark-Compact算法；当没有足够空间时（Old generation满，意味无法进行下一次minor GC），启动full GC
+</td>
+<td>
+当perm generation满了之后，无法存储更多的元数据，也启动full GC
+</td>
+</tr>
+</table>
+<blockquote>
+<p><strong>minor GC</strong>和f<strong>ull GC</strong>是<strong>独立进行</strong>的，减少代价； <strong>minor GC</strong>仅发生在<strong>young generation</strong>； 只有当某个区域不能再为对象分配内存时（满），才启动GC。</p>
+</blockquote>
+<p id="garbage-collection-tuning-in-jvm">8.1.2.3.5、Garbage Collection Tuning in JVM</p>
+<p>考点：JVM GC性能调优：参数配置、GC模式选择 调整JVM的垃圾回收的<strong>特点</strong>： ①尽可能<strong>减少GC时间</strong>，一般<strong>不超过程序执行时间</strong>的<strong>5%</strong> ②一旦<strong>初始分配</strong>给程序的<strong>内存满</strong>了，就抛出<strong>内存溢出异常</strong>（OutOfMemoryError） ③在<strong>启动程序</strong>时，可为其<strong>配置内存分配的具体大小</strong></p>
+<p>调整JVM的垃圾回收的<strong>方法</strong> <strong>①</strong>确定<strong>堆的大小</strong> <strong>堆的大小</strong>决定着<strong>VM</strong>将会以<strong>何种频度</strong>进行<strong>GC</strong>、<strong>每次GC</strong>的<strong>时间</strong>多长；这两个指标具体取值多少为“优”，需要<strong>针对特定应用</strong>进行分析； <strong>较大的heap</strong>会导致<strong>较少</strong>发生<strong>GC</strong>，但每次GC<strong>时间很长</strong>；如果根据程序需要来设置<strong>内存需要的heap大小</strong>，则需要<strong>频繁GC</strong>，但<strong>每次GC</strong>的时间<strong>较短</strong>。 初始和最大的heap尺寸 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Java -Xms 1024M -Xmx 2048M</span><br></pre></td></tr></table></figure> <strong>heap尺寸</strong>可随<strong>时间变化</strong>，heap尺寸变化时需要<strong>full GC</strong> 具体设置 <img src="https://img-blog.csdn.net/20180531185304497?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> <img src="https://img-blog.csdn.net/20180531185314180?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> <strong>②</strong>选择<strong>GC模式</strong> <img src="https://img-blog.csdn.net/20180531185346667?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> <strong>③</strong> 使用<strong>verbose GC</strong>查看详细信息以确定堆的大小 eclipse-&gt;Run-&gt;Run Configuration-&gt;Arguments-&gt;VM arguments <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-server -Xms1024m -Xmx1024m -verbose:gc -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -Xloggc:gc.log</span><br></pre></td></tr></table></figure> <code>-verbose:gc</code>是必须写的，<code>-Xms1024m</code>为heap<strong>初始值</strong>，<code>-Xmx1024m</code>为heap<strong>最大值</strong>，-<code>XX:+PrintGCDetails</code>打印GC具体信息，<code>-Xloggc:gc.log</code>将GC信息保存到<strong>日志</strong>gc.log中 得到的数据中如下，其中<strong>Allocated Failed</strong>即为<strong>minor GC</strong>；<strong>Full GC</strong>时间应小于<strong>3-5s</strong> <img src="https://img-blog.csdn.net/20180620160140161?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="日志" /></p>
+<p><strong>④</strong>自动记录内存将要不足的情况 <strong>⑤</strong>手工请求GC <strong>⑥</strong>请求线程栈</p>
+<h5 id="algorithm-performance算法性能">8.1.3、Algorithm Performance（算法性能）</h5>
+<p>详情：《算法导论》</p>
+<h5 id="io-performanceio性能">8.1.4、I/O Performance（I/O性能）</h5>
+<p>I/O of software system Java I/O APIs <img src="https://img-blog.csdn.net/20180531190609677?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> Java nio APIs <img src="https://img-blog.csdn.net/20180531190742146?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 详情参考：<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/api/">javadoc</a></p>
+<h4 id="dynamic-program-analysis-methods-and-tools">8.2、Dynamic Program Analysis Methods and Tools</h4>
+本节，介绍如何利用工具对运行的<strong>程序性能</strong>进行<strong>动态监控</strong>，以发现<strong>性能瓶颈</strong>，并试图加以<strong>消除</strong>。 考点： Java性能调优工具：jstat, jmap,jhat, Visual VM, MAT Memory dump Stack trace
+<table>
+<tr>
+<td colspan="4">
+命令行分析工具
+</td>
+<td>
+JConsole
+</td>
+<td>
+Visual VM
+</td>
+<td>
+Memory Analyzer（MAT）
+</td>
+</tr>
+<tr>
+<td>
+jhat
+</td>
+<td>
+jmap
+</td>
+<td>
+jstat
+</td>
+<td>
+jstack
+</td>
+<td>
+JConsole
+</td>
+<td>
+Visual VM
+</td>
+<td>
+MAT
+</td>
+</tr>
+<tr>
+<td>
+导出heap dump，浏览、查询其中的对象分布情况
+</td>
+<td>
+输出内存中的对象分布情况
+</td>
+<td>
+获取JVM的heap使用和GC的性能统计数据
+</td>
+<td>
+获取java数据的stack trace
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td>
+获取heap dump的方法：在运行时使用jmap -dump，jconsole，hprof工具；jhat filenam在http://127.0.0.1:7000浏览和查询（使用OQL语言）heap dump
+</td>
+<td>
+使用jmap -dump:format=b,file=filename导出heap dump；jamp -heap得到heap的GC信息、堆配置、堆消耗总结；jmap -permstat得到permanent generation的数据分析
+</td>
+<td>
+使用jstat -gcutil输出heap个区域的占用情况
+</td>
+<td>
+使用jsp得到程序的pid，然后使用jstack得到程序运行时栈情况（– 定位线程出现长时间停顿的原因，如多线程间死锁、死循环、请求外部资源导致的长时间等待等。）
+</td>
+<td>
+GUI monitoring tool
+</td>
+<td>
+用法较多
+</td>
+<td>
+同样用来分析heap dump
+</td>
+</tr>
+<table>
+<h4 id="code-tuning-for-performance-optimization">8.3、Code Tuning for Performance Optimization</h4>
+<p>考点 Java代码调优的设计模式：singleton, prototype/cloneable,flyweight, object pool（下节分析） <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/80750952">String constant pool（字符串常量池）</a> <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/80753913">常见的Java I/O方法</a></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -769,7 +1301,7 @@ assert post-condition
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:54:22" itemprop="dateModified" datetime="2019-09-08T11:54:22+08:00">2019-09-08</time>
+                <time title="Modified: 2020-08-11 12:54:58" itemprop="dateModified" datetime="2020-08-11T12:54:58+08:00">2020-08-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1074,7 +1606,7 @@ $
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:54:16" itemprop="dateModified" datetime="2019-09-08T11:54:16+08:00">2019-09-08</time>
+                <time title="Modified: 2020-08-11 12:53:59" itemprop="dateModified" datetime="2020-08-11T12:53:59+08:00">2020-08-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1672,7 +2204,7 @@ Command
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:53:48" itemprop="dateModified" datetime="2019-09-08T11:53:48+08:00">2019-09-08</time>
+                <time title="Modified: 2020-08-11 12:53:56" itemprop="dateModified" datetime="2020-08-11T12:53:56+08:00">2020-08-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1777,7 +2309,7 @@ Command
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:47:08" itemprop="dateModified" datetime="2019-09-08T11:47:08+08:00">2019-09-08</time>
+                <time title="Modified: 2020-08-11 12:54:02" itemprop="dateModified" datetime="2020-08-11T12:54:02+08:00">2020-08-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1874,7 +2406,7 @@ Command
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:53:42" itemprop="dateModified" datetime="2019-09-08T11:53:42+08:00">2019-09-08</time>
+                <time title="Modified: 2020-08-11 12:53:53" itemprop="dateModified" datetime="2020-08-11T12:53:53+08:00">2020-08-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -3386,342 +3918,6 @@ The equals contract(重写equals()的契约), 1. Reflexive(<strong>自反</stron
 The hashCode contract(equals(Object) and hashCode return the same integer result，两个equal的objects，一定要有同样的hashcode，根据equal比较的内容来重写hashcode): ①Equal objects must have equal hash codes(override hashCode when override equals) ②不相等的对象可以映射为同样的hashCode，但性能会变差 ③除非一个object改变，否则hashCode不能改变
 </td>
 </tr>
-</table>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="iseesaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="iseesaw's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/" class="post-title-link" itemprop="url">Chapter1-软件构造的视图和质量指标</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-03-27 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-27T00:00:00+08:00">2018-03-27</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-20 10:53:17" itemprop="dateModified" datetime="2019-09-20T10:53:17+08:00">2019-09-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/" class="post-meta-item leancloud_visitors" data-flag-title="Chapter1-软件构造的视图和质量指标" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h3 id="chapter1">Chapter1</h3>
-<h4 id="multi-dimensional-views">1.1 Multi-Dimensional Views</h4>
-<p>从三个维度看软件系统的构成 用模型/视图描述软件系统 将软件构造看做不同视图之间的转换 ##### 1.1.1 Three dimensions</p>
-<table>
-<colgroup>
-<col style="width: 35%" />
-<col style="width: 35%" />
-<col style="width: 28%" />
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>By phares:</td>
-<td>build-time(构造阶段)</td>
-<td>run-time(运行阶段)</td>
-</tr>
-<tr class="even">
-<td>By dynamics:</td>
-<td>moment(特定时刻的软件形态)</td>
-<td>period(软件形态随时间点的变化)</td>
-</tr>
-<tr class="odd">
-<td>By levels:</td>
-<td>code(代码的逻辑组织, functions, classes, methods, interfaces)</td>
-<td>component(代码的物理组织, files, directories, packages, libraries)</td>
-</tr>
-</tbody>
-</table>
-<h5 id="eight-views">1.1.2 Eight views</h5>
-<table>
-<tr>
-<td>
-</td>
-<td colspan="2">
-Moment（特定时刻的软件状态）
-</td>
-<td colspan="2">
-Period（软件形态随时间的变化）
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-Code-level
-</td>
-<td>
-Component-level
-</td>
-<td>
-Code-level
-</td>
-<td>
-Component-level
-</td>
-</tr>
-<tr>
-<td rowspan="2">
-Build-time
-</td>
-<td rowspan="2">
-Source code（词汇层面，半结构化）, AST（语法层面，语法树，结构化）, Interface-Class-Attribute-Method(Class Diagram)（语义层面，类图，表达&quot;需求&quot;和&quot;设计&quot;思想，再转化成code）（代码的逻辑组织，function，classes，methods，interfaces）
-</td>
-<td rowspan="2">
-Packge, Sorurce, File, Static Linking（静态链接发生在构造阶段）, Library, Test Case(Component Diagram，UML图) Build Script（代码的物理组织，files，directories，packages，libraries）
-</td>
-<td rowspan="2">
-Code Churn(代码变化，增加，修改，删除，版本变更； eg. Git的commit显示修改)
-</td>
-<td rowspan="2">
-Software Configuration Item(SCI 配置项),Version(版本V 1.6.1.5，1.6为major，1为minor，5为patch；Verion Control System(VCS)；baseline，稳定版本)
-</td>
-</tr>
-<tr>
-</tr>
-<tr>
-<td rowspan="2">
-Run-time
-</td>
-<td rowspan="2">
-Code Snapshot(快照图，程序运行时内存里变 量层面的状态),Memory dump(内存信息转储)
-</td>
-<td rowspan="2">
-Package, Library, Dynamic linking（动态链接）, Configuration, Database, Middleware, Network, Hardware(Deployment Diagram)
-</td>
-<td>
-Execution trace(执行追踪，log记录程序执行的调用次序，考虑jstack的使用)
-</td>
-<td>
-Event log（系统层面的事件日志）
-</td>
-</tr>
-<tr>
-<td colspan="2">
-Procedure Call Graph, Message Graph (Sequence Diagram) Parallel and multithreads/processes Distributed processes
-</td>
-</tr>
-</table>
-<h5 id="transformations-in-software-construction">1.1.3 Transformations in Software Construction</h5>
-<img src="https://img-blog.csdn.net/20180612163939996?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" />
-<table>
-<tr>
-<td>
-Null -&gt;Code
-</td>
-<td>
-Code-&gt;Component
-</td>
-<td>
-Build-time-&gt;Run-time
-</td>
-<td>
-Moment-&gt;Period
-</td>
-</tr>
-<tr>
-<td>
-Programming/Coding (ADT / OOP)
-</td>
-<td>
-Design (ADT / OOP, Reusability(可重用性), Maintainability(可维护性))
-</td>
-<td>
-Install/deploy
-</td>
-<td>
-Refactoring(重构)
-</td>
-</tr>
-<tr>
-<td>
-Review, static analysis/checking(静态类型检查)
-</td>
-<td>
-Build : compile, static link, package, install, clean (Construction process)
-</td>
-<td>
-Debug, unit/integration testin (Robustness, 稳健性)
-</td>
-<td>
-Version control (SCM), Loading, dynamic linking, interpreting, execution (dumping, profiling, logging)
-</td>
-</tr>
-</table>
-<h4 id="quality-objectives">1.2 Quality Objectives</h4>
-软件构造过程中需要考虑的重要质量指标 面向质量指标的软件构造技术 ##### 1.2.1 Quality properties External quality factors
-<table>
-<tr>
-<td>
-Correctness(正确性)
-</td>
-<td>
-Robustness(健壮性)
-</td>
-<td>
-Extendibility(可拓展性)
-</td>
-<td>
-Reusability(可复用性)
-</td>
-<td>
-Compatibility(兼容性))
-</td>
-<td>
-Efficiency(有效性)
-</td>
-<td>
-Portability(可移植性)-
-</td>
-<td>
-Ease of use(简约性)
-</td>
-<td>
-Functionality(功能性)
-</td>
-<td>
-Timeliness(及时性)
-</td>
-</tr>
-<tr>
-<td>
-Conditional(分层，每一层保证自己的正确性，同时假设其下层是正确的), Testing and dubugging(测试和调试，消除不正确), Defensive programming(防御式编程，确保正确性), Formal approach(形式化方法，check，guarantee，ensure，形式化验证发现问题-自圆其说)（按照预先定义的&quot;规约&quot;执行，至高无上的质量指标）
-</td>
-<td>
-react appropriately to abnornal conditions(针对异常情况的处理，对规约定义之外的情形做出恰当反应)， Exception handling（出现异常时不能崩溃，未被specification覆盖的情况即为exception）
-</td>
-<td>
-Design simplicity(简约主义), Decentralization(分离主义)（对规约进行修改，是否能够容易应对）
-</td>
-<td>
-Don't Re-invent the Wheel（一次开发，多次使用，发现共性）
-</td>
-<td>
-Homogeneity of design(保持设计的同构性, standardized)
-</td>
-<td>
-balanced(折中优化, 保证正确性，过度优化导致软件不再适应变化和复用)
-</td>
-<td>
-various in hardware and software environments（方便在不同技术环境/硬件/操作系统之间移植）
-</td>
-<td>
-Structural simplicity, Know the user(容易学，安装，操作，监控，提供详细使用指南)
-</td>
-<td>
-Featurism(适当的功能，功能太多极为复杂，不灵活, Agile, SCM)
-</td>
-<td>
-In time（及时性，及时发布新版本）
-</td>
-</tr>
-</table>
-<blockquote>
-<p>Tradeoffs 正确的软件开发过程中，开发者应该将不同质量因素之间如何做出折中的设计决策和标准明确的写下来 虽然需要折中，但“正确性”绝不能与其他质量因素折中</p>
-</blockquote>
-<h5 id="five-key-quality-objectives">1.2.2 Five key quality objectives</h5>
-<table>
-<tr>
-<td>
-Understandability-Elegant and beautiful code(优雅性代码，可理解性)
-</td>
-<td>
-Reusability-Design for/with reuse(可复用)
-</td>
-<td>
-Maintainability and Adaptability -Low complexity(低复杂性，可维护性)
-</td>
-<td>
-Robustness-Robustness and correctness(健壮性, 正确性)
-</td>
-<td>
-Performance-Pertomance and efficiency(效率性)
-<td>
-</tr>
-<pre><code>&lt;tr&gt;
-    &lt;td&gt;代码的可理解性（命名，布局，注释，复杂度）（Code Review, Walkthrough-人工走查, Static Code Analysis）（ADT、函数规约），软件、项目的可理解性（包组织，文件组织，命令空间），（其他包括，重构，版本控制，日志trace）&lt;/td&gt;
-    &lt;td&gt;cheap for develop(开发成本低)；ADT/OOP，接口与实现分离；继承、重载、重写；组合，委派；多态；子类型和泛型；OO设计模式；API设计，库，框架&lt;/td&gt;
-    &lt;td&gt;ready for changes；模块化设计；聚合度、耦合度；SOLID，GRASP；OO设计模式；基于表格（switch，if表格）、状态（State设计模式）、语法（正则表达式）；SCM，version control&lt;/td&gt;
-    &lt;td&gt;safe from bug；异常、错误处理；断言（Assertion）；防御式编程；持续化集成；日志、内存转储分析；Debug测试&lt;/td&gt;
-    &lt;td&gt;efficient to run；代码调优（使用设计模式）；空间复杂性分析（内存管理）；时间复杂度（I/O性能）；内存转储分析；GC垃圾回收；分布式系统；使用多线程，并行；代码的性能分析调整&lt;td&gt;
-&lt;/tr&gt;</code></pre>
 </table>
 
       

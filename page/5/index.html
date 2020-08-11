@@ -343,7 +343,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">59</span>
+          <span class="site-state-item-count">60</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -356,7 +356,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">156</span>
+        <span class="site-state-item-count">159</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -396,6 +396,342 @@ mjx-container[display="true"] + br {
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/" class="post-title-link" itemprop="url">Chapter1-软件构造的视图和质量指标</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-27 00:00:00" itemprop="dateCreated datePublished" datetime="2018-03-27T00:00:00+08:00">2018-03-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-20 10:53:17" itemprop="dateModified" datetime="2019-09-20T10:53:17+08:00">2019-09-20</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/" class="post-meta-item leancloud_visitors" data-flag-title="Chapter1-软件构造的视图和质量指标" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/03/27/Chapter1-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E7%9A%84%E8%A7%86%E5%9B%BE%E5%92%8C%E8%B4%A8%E9%87%8F%E6%8C%87%E6%A0%87/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="chapter1">Chapter1</h3>
+<h4 id="multi-dimensional-views">1.1 Multi-Dimensional Views</h4>
+<p>从三个维度看软件系统的构成 用模型/视图描述软件系统 将软件构造看做不同视图之间的转换 ##### 1.1.1 Three dimensions</p>
+<table>
+<colgroup>
+<col style="width: 35%" />
+<col style="width: 35%" />
+<col style="width: 28%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>By phares:</td>
+<td>build-time(构造阶段)</td>
+<td>run-time(运行阶段)</td>
+</tr>
+<tr class="even">
+<td>By dynamics:</td>
+<td>moment(特定时刻的软件形态)</td>
+<td>period(软件形态随时间点的变化)</td>
+</tr>
+<tr class="odd">
+<td>By levels:</td>
+<td>code(代码的逻辑组织, functions, classes, methods, interfaces)</td>
+<td>component(代码的物理组织, files, directories, packages, libraries)</td>
+</tr>
+</tbody>
+</table>
+<h5 id="eight-views">1.1.2 Eight views</h5>
+<table>
+<tr>
+<td>
+</td>
+<td colspan="2">
+Moment（特定时刻的软件状态）
+</td>
+<td colspan="2">
+Period（软件形态随时间的变化）
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td>
+Code-level
+</td>
+<td>
+Component-level
+</td>
+<td>
+Code-level
+</td>
+<td>
+Component-level
+</td>
+</tr>
+<tr>
+<td rowspan="2">
+Build-time
+</td>
+<td rowspan="2">
+Source code（词汇层面，半结构化）, AST（语法层面，语法树，结构化）, Interface-Class-Attribute-Method(Class Diagram)（语义层面，类图，表达&quot;需求&quot;和&quot;设计&quot;思想，再转化成code）（代码的逻辑组织，function，classes，methods，interfaces）
+</td>
+<td rowspan="2">
+Packge, Sorurce, File, Static Linking（静态链接发生在构造阶段）, Library, Test Case(Component Diagram，UML图) Build Script（代码的物理组织，files，directories，packages，libraries）
+</td>
+<td rowspan="2">
+Code Churn(代码变化，增加，修改，删除，版本变更； eg. Git的commit显示修改)
+</td>
+<td rowspan="2">
+Software Configuration Item(SCI 配置项),Version(版本V 1.6.1.5，1.6为major，1为minor，5为patch；Verion Control System(VCS)；baseline，稳定版本)
+</td>
+</tr>
+<tr>
+</tr>
+<tr>
+<td rowspan="2">
+Run-time
+</td>
+<td rowspan="2">
+Code Snapshot(快照图，程序运行时内存里变 量层面的状态),Memory dump(内存信息转储)
+</td>
+<td rowspan="2">
+Package, Library, Dynamic linking（动态链接）, Configuration, Database, Middleware, Network, Hardware(Deployment Diagram)
+</td>
+<td>
+Execution trace(执行追踪，log记录程序执行的调用次序，考虑jstack的使用)
+</td>
+<td>
+Event log（系统层面的事件日志）
+</td>
+</tr>
+<tr>
+<td colspan="2">
+Procedure Call Graph, Message Graph (Sequence Diagram) Parallel and multithreads/processes Distributed processes
+</td>
+</tr>
+</table>
+<h5 id="transformations-in-software-construction">1.1.3 Transformations in Software Construction</h5>
+<img src="https://img-blog.csdn.net/20180612163939996?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" />
+<table>
+<tr>
+<td>
+Null -&gt;Code
+</td>
+<td>
+Code-&gt;Component
+</td>
+<td>
+Build-time-&gt;Run-time
+</td>
+<td>
+Moment-&gt;Period
+</td>
+</tr>
+<tr>
+<td>
+Programming/Coding (ADT / OOP)
+</td>
+<td>
+Design (ADT / OOP, Reusability(可重用性), Maintainability(可维护性))
+</td>
+<td>
+Install/deploy
+</td>
+<td>
+Refactoring(重构)
+</td>
+</tr>
+<tr>
+<td>
+Review, static analysis/checking(静态类型检查)
+</td>
+<td>
+Build : compile, static link, package, install, clean (Construction process)
+</td>
+<td>
+Debug, unit/integration testin (Robustness, 稳健性)
+</td>
+<td>
+Version control (SCM), Loading, dynamic linking, interpreting, execution (dumping, profiling, logging)
+</td>
+</tr>
+</table>
+<h4 id="quality-objectives">1.2 Quality Objectives</h4>
+软件构造过程中需要考虑的重要质量指标 面向质量指标的软件构造技术 ##### 1.2.1 Quality properties External quality factors
+<table>
+<tr>
+<td>
+Correctness(正确性)
+</td>
+<td>
+Robustness(健壮性)
+</td>
+<td>
+Extendibility(可拓展性)
+</td>
+<td>
+Reusability(可复用性)
+</td>
+<td>
+Compatibility(兼容性))
+</td>
+<td>
+Efficiency(有效性)
+</td>
+<td>
+Portability(可移植性)-
+</td>
+<td>
+Ease of use(简约性)
+</td>
+<td>
+Functionality(功能性)
+</td>
+<td>
+Timeliness(及时性)
+</td>
+</tr>
+<tr>
+<td>
+Conditional(分层，每一层保证自己的正确性，同时假设其下层是正确的), Testing and dubugging(测试和调试，消除不正确), Defensive programming(防御式编程，确保正确性), Formal approach(形式化方法，check，guarantee，ensure，形式化验证发现问题-自圆其说)（按照预先定义的&quot;规约&quot;执行，至高无上的质量指标）
+</td>
+<td>
+react appropriately to abnornal conditions(针对异常情况的处理，对规约定义之外的情形做出恰当反应)， Exception handling（出现异常时不能崩溃，未被specification覆盖的情况即为exception）
+</td>
+<td>
+Design simplicity(简约主义), Decentralization(分离主义)（对规约进行修改，是否能够容易应对）
+</td>
+<td>
+Don't Re-invent the Wheel（一次开发，多次使用，发现共性）
+</td>
+<td>
+Homogeneity of design(保持设计的同构性, standardized)
+</td>
+<td>
+balanced(折中优化, 保证正确性，过度优化导致软件不再适应变化和复用)
+</td>
+<td>
+various in hardware and software environments（方便在不同技术环境/硬件/操作系统之间移植）
+</td>
+<td>
+Structural simplicity, Know the user(容易学，安装，操作，监控，提供详细使用指南)
+</td>
+<td>
+Featurism(适当的功能，功能太多极为复杂，不灵活, Agile, SCM)
+</td>
+<td>
+In time（及时性，及时发布新版本）
+</td>
+</tr>
+</table>
+<blockquote>
+<p>Tradeoffs 正确的软件开发过程中，开发者应该将不同质量因素之间如何做出折中的设计决策和标准明确的写下来 虽然需要折中，但“正确性”绝不能与其他质量因素折中</p>
+</blockquote>
+<h5 id="five-key-quality-objectives">1.2.2 Five key quality objectives</h5>
+<table>
+<tr>
+<td>
+Understandability-Elegant and beautiful code(优雅性代码，可理解性)
+</td>
+<td>
+Reusability-Design for/with reuse(可复用)
+</td>
+<td>
+Maintainability and Adaptability -Low complexity(低复杂性，可维护性)
+</td>
+<td>
+Robustness-Robustness and correctness(健壮性, 正确性)
+</td>
+<td>
+Performance-Pertomance and efficiency(效率性)
+<td>
+</tr>
+<pre><code>&lt;tr&gt;
+    &lt;td&gt;代码的可理解性（命名，布局，注释，复杂度）（Code Review, Walkthrough-人工走查, Static Code Analysis）（ADT、函数规约），软件、项目的可理解性（包组织，文件组织，命令空间），（其他包括，重构，版本控制，日志trace）&lt;/td&gt;
+    &lt;td&gt;cheap for develop(开发成本低)；ADT/OOP，接口与实现分离；继承、重载、重写；组合，委派；多态；子类型和泛型；OO设计模式；API设计，库，框架&lt;/td&gt;
+    &lt;td&gt;ready for changes；模块化设计；聚合度、耦合度；SOLID，GRASP；OO设计模式；基于表格（switch，if表格）、状态（State设计模式）、语法（正则表达式）；SCM，version control&lt;/td&gt;
+    &lt;td&gt;safe from bug；异常、错误处理；断言（Assertion）；防御式编程；持续化集成；日志、内存转储分析；Debug测试&lt;/td&gt;
+    &lt;td&gt;efficient to run；代码调优（使用设计模式）；空间复杂性分析（内存管理）；时间复杂度（I/O性能）；内存转储分析；GC垃圾回收；分布式系统；使用多线程，并行；代码的性能分析调整&lt;td&gt;
+&lt;/tr&gt;</code></pre>
+</table>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1056,7 +1392,7 @@ OK，完美解决！<br />
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-10 17:27:48" itemprop="dateModified" datetime="2019-09-10T17:27:48+08:00">2019-09-10</time>
+                <time title="Modified: 2020-08-11 12:54:23" itemprop="dateModified" datetime="2020-08-11T12:54:23+08:00">2020-08-11</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1585,115 +1921,6 @@ OK，完美解决！<br />
 <p>####1-3 PhantomJS使用代理IP <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">#phantomjs selenium 如何动态修改代理</span><br><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver import DesiredCapabilities</span><br><span class="line">from selenium.webdriver.common.proxy import Proxy</span><br><span class="line">from selenium.webdriver.common.proxy import ProxyType</span><br><span class="line"></span><br><span class="line">def DynamicUsingIP():</span><br><span class="line">    proxy &#x3D; Proxy(</span><br><span class="line">        &#123;</span><br><span class="line">            &#39;proxyType&#39;: ProxyType.MANUAL,</span><br><span class="line">            &#39;httpProxy&#39;: &#39;210.38.1.134&#39;  # 代理ip和端口</span><br><span class="line">        &#125;</span><br><span class="line">    )</span><br><span class="line">    # 新建一个代理IP对象</span><br><span class="line">    desired_capabilities &#x3D; DesiredCapabilities.PHANTOMJS.copy()</span><br><span class="line">    # 加入代理IP</span><br><span class="line">    proxy.add_to_capabilities(desired_capabilities)</span><br><span class="line">    driver &#x3D; webdriver.PhantomJS(desired_capabilities&#x3D;desired_capabilities)</span><br><span class="line">    # 测试一下，打开使用的代理IP地址信息</span><br><span class="line">    driver.get(&#39;http:&#x2F;&#x2F;1212.ip138.com&#x2F;ic.asp&#39;)</span><br><span class="line">    print(driver.page_source)</span><br><span class="line">    # # 现在开始切换ip</span><br><span class="line">    # # 再新建一个ip</span><br><span class="line">    # proxy &#x3D; Proxy(</span><br><span class="line">    #     &#123;</span><br><span class="line">    #         &#39;proxyType&#39;: ProxyType.MANUAL,</span><br><span class="line">    #         &#39;httpProxy&#39;: &#39;ip:port&#39;  # 代理ip和端口</span><br><span class="line">    #     &#125;</span><br><span class="line">    # )</span><br><span class="line">    # # 再新建一个“期望技能”，（）</span><br><span class="line">    # desired_capabilities &#x3D; DesiredCapabilities.PHANTOMJS.copy()</span><br><span class="line">    # # 把代理ip加入到技能中</span><br><span class="line">    # proxy.add_to_capabilities(desired_capabilities)</span><br><span class="line">    # # 新建一个会话，并把技能传入</span><br><span class="line">    # driver.start_session(desired_capabilities)</span><br><span class="line">    # driver.get(&#39;http:&#x2F;&#x2F;httpbin.org&#x2F;ip&#39;)</span><br><span class="line">    # print(driver.page_source)</span><br><span class="line">    driver.quit()</span><br></pre></td></tr></table></figure> 参考链接： <a target="_blank" rel="noopener" href="http://www.jianshu.com/p/9d408e21dc3a">盘点selenium phantomJS使用的坑</a>（介绍PhantomJS相关的注意事项） <a target="_blank" rel="noopener" href="http://www.51testing.com/html/31/n-3716731.html">在Selenium中设置代理IP</a>（介绍多种设置方法） <a target="_blank" rel="noopener" href="http://www.cnblogs.com/fly-kaka/p/6483588.html">selenium phantomjs 设置代理ip方法</a> <a href="phantomjs%E5%92%8Cselenium%E8%AE%BE%E7%BD%AEproxy%E3%80%81headers" class="uri">phantomjs和selenium设置proxy、headers</a>（）</p>
 <p>###<strong>第二部分</strong>测试代理IP的可用性 ####2-1 未使用线程测试 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"># IP check，将可用的IP重新保存到IP</span><br><span class="line">def IPCheck():</span><br><span class="line">    IP &#x3D; []</span><br><span class="line">    SuccessIP &#x3D; []</span><br><span class="line">    # 读取文件</span><br><span class="line">    with open(&#39;IP.txt&#39;,&#39;r&#39;) as f:</span><br><span class="line">        for line in f:</span><br><span class="line">            IP.append(line[:-1])</span><br><span class="line">    # request模块使用代理</span><br><span class="line">    for ip in IP:</span><br><span class="line">        http &#x3D; &#39;http:&#x2F;&#x2F;&#39;+str(ip)</span><br><span class="line">        proxies &#x3D; &#123;</span><br><span class="line">            &quot;http&quot;: http</span><br><span class="line">        &#125;</span><br><span class="line">        time.sleep(10)</span><br><span class="line">        try:</span><br><span class="line">            r &#x3D; requests.get(&quot;http:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_36962569&#x2F;article&#x2F;details&#x2F;77387299&quot;, proxies&#x3D;proxies)</span><br><span class="line">        except:</span><br><span class="line">            print(str(ip)+&#39;---connect failed&#39;)</span><br><span class="line">        else:</span><br><span class="line">            SuccessIP.append(ip)</span><br><span class="line">            print(str(ip)+&#39;---success&#39;)</span><br><span class="line">    # 重新保存</span><br><span class="line">    n&#x3D;0</span><br><span class="line">    f&#x3D;open(&#39;IP.txt&#39;,&#39;w&#39;)</span><br><span class="line">    for ip in SuccessIP:</span><br><span class="line">        f.write(ip+&#39;\n&#39;)</span><br><span class="line">        n+&#x3D;1</span><br><span class="line">    f.close()</span><br><span class="line">    print(&#39;Total are &#39;+str(n)+&#39; successful IP&#39;)</span><br></pre></td></tr></table></figure> 速度非常慢，基本上测试50个，得用3分钟。而使用多线程，测试70个，仅用十来秒（真tn的快嘞）。 参考链接： <a target="_blank" rel="noopener" href="http://www.jianshu.com/p/588241a313e7">使用python验证代理ip是否可用</a></p>
 <p>####2-2 使用多线程测试 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"># 使用多线程验证IP 可用性</span><br><span class="line">def TreadCheckIP():</span><br><span class="line">    # 获得IP</span><br><span class="line">    proxys &#x3D; []</span><br><span class="line">    with open(&#39;IP.txt&#39;,&#39;r&#39;) as f:</span><br><span class="line">        for line in f:</span><br><span class="line">            proxys.append(line[:-1])</span><br><span class="line">    proxy_ip &#x3D; open(&#39;proxy_ip.txt&#39;, &#39;w&#39;)  # 新建一个储存有效IP的文档</span><br><span class="line">    lock &#x3D; threading.Lock()  # 建立一个锁</span><br><span class="line"></span><br><span class="line">    # 验证代理IP有效性的方法</span><br><span class="line">    def test(i):</span><br><span class="line">        socket.setdefaulttimeout(5)  # 设置全局超时时间</span><br><span class="line">        try:</span><br><span class="line">            http &#x3D; &#39;http:&#x2F;&#x2F;&#39; + str(proxys[i])</span><br><span class="line">            proxies &#x3D; &#123;</span><br><span class="line">                &quot;http&quot;: http</span><br><span class="line">            &#125;</span><br><span class="line">            r &#x3D; requests.get(&quot;http:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_36962569&#x2F;article&#x2F;details&#x2F;77387299&quot;, proxies&#x3D;proxies)</span><br><span class="line"></span><br><span class="line">            lock.acquire()  # 获得锁</span><br><span class="line">            print(proxys[i], &#39;is OK&#39;)</span><br><span class="line">            proxy_ip.write(&#39;%s\n&#39; % str(proxys[i]))  # 写入该代理IP</span><br><span class="line">            lock.release()  # 释放锁</span><br><span class="line">        except Exception as e:</span><br><span class="line">            lock.acquire()</span><br><span class="line">            print(proxys[i], e)</span><br><span class="line">            lock.release()</span><br><span class="line"></span><br><span class="line">    # 单线程验证</span><br><span class="line">    &#39;&#39;&#39;for i in range(len(proxys)):</span><br><span class="line">        test(i)&#39;&#39;&#39;</span><br><span class="line">    # 多线程验证</span><br><span class="line">    threads &#x3D; []</span><br><span class="line">    for i in range(len(proxys)):</span><br><span class="line">        thread &#x3D; threading.Thread(target&#x3D;test, args&#x3D;[i])</span><br><span class="line">        threads.append(thread)</span><br><span class="line">        thread.start()</span><br><span class="line">    # 阻塞主进程，等待所有子线程结束</span><br><span class="line">    for thread in threads:</span><br><span class="line">        thread.join()</span><br><span class="line">    proxy_ip.close()  # 关闭文件</span><br><span class="line"></span><br></pre></td></tr></table></figure> 关于多线程还不是很懂，自己还写不出来，后续继续了解学习。 参考链接： <a target="_blank" rel="noopener" href="http://www.cnblogs.com/sjzh/p/5990152.html">python爬虫成长之路（二）：抓取代理IP并多线程验证</a>（写的非常好）</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="iseesaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="iseesaw's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/" class="post-title-link" itemprop="url">【Python3.6爬虫学习记录】（十）爬取教务处成绩并保存到Excel文件中（哈工大）</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-08-18 00:00:00" itemprop="dateCreated datePublished" datetime="2017-08-18T00:00:00+08:00">2017-08-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:47:26" itemprop="dateModified" datetime="2019-09-08T11:47:26+08:00">2019-09-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="【Python3.6爬虫学习记录】（十）爬取教务处成绩并保存到Excel文件中（哈工大）" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/08/18/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%8D%81%EF%BC%89%E7%88%AC%E5%8F%96%E6%95%99%E5%8A%A1%E5%A4%84%E6%88%90%E7%BB%A9%E5%B9%B6%E4%BF%9D%E5%AD%98%E5%88%B0Excel%E6%96%87%E4%BB%B6%E4%B8%AD%EF%BC%88%E5%93%88%E5%B7%A5%E5%A4%A7%EF%BC%89/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>前言：</strong>基本上每天都会产生一点小想法，在实现的过程中，一步步解决问题，并产生新的想法，就比如，这次是保存为Excel文件。这感觉很美妙！</p>
-<p><strong>目录：</strong> <strong>一，安装并简单使用xlwt</strong> <strong>1.1 安装xlwt</strong> <strong>1.2 写入Excel代码</strong> <strong>1.3 拓展</strong> <strong>二，登陆教务处爬取成绩</strong> <strong>2.1 实现图解</strong> <strong>2.2 代码及注释</strong> <strong>2.3 相关问题</strong> <strong>三，More</strong> <strong>3.1 关于教务处的遐想</strong></p>
-<p><strong>一，安装并简单使用xlwt</strong> <strong>1.1 安装xlwt</strong><br />
-命令行输入 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install xlwt</span><br></pre></td></tr></table></figure></p>
-<p><strong>1.2 写入Excel代码</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">work &#x3D; Workbook()                    #创建一个工作簿</span><br><span class="line">sheet &#x3D; w.add_sheet(&#39;Hey, Hades&#39;)    #创建一个工作表sheet</span><br><span class="line">sheet.write(0,0,&#39;bit&#39;)               #在1行1列写入bit</span><br><span class="line">sheet.write(0,1,&#39;huang&#39;)           #在1行2列写入huang</span><br><span class="line">sheet.write(1,0,&#39;xuan&#39;)          #在2行1列写入xuan</span><br><span class="line">work.save(&#39;Test.xls&#39;)                 #保存</span><br></pre></td></tr></table></figure> 注意，和数组一样，Excel表格是从 0 行 0 列开始计数</p>
-<p><strong>1.3 拓展</strong> 有了写入，当然也有读取。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install xlrd</span><br></pre></td></tr></table></figure> 使用参考链接： <a target="_blank" rel="noopener" href="http://www.jb51.net/article/103761.htm">Python第三方库xlrd/xlwt的安装与读写Excel表格</a> <a target="_blank" rel="noopener" href="http://blog.csdn.net/xiaowanggedege/article/details/17146813">Python--使用xlwt将列表类型的数据写到Excel xls文件中--TxtToExcel</a> <a target="_blank" rel="noopener" href="http://blog.csdn.net/u013634684/article/details/48182491">window10下python的对elcel表格操作xlrd和xlwt模块的下载与安装及基本的使用</a></p>
-<p><strong>二，登陆教务处爬取成绩</strong> <strong>2.1 实现图解</strong> <img src="http://img.blog.csdn.net/20170818223030515?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" /> （多张图片合成GIF，也是现想到的，教程-&gt;<a target="_blank" rel="noopener" href="https://jingyan.baidu.com/article/3052f5a1c91f0497f31f862a.html">photoshop将多个图片合成制作gif</a>）</p>
-<p>Excel文件： <img src="http://img.blog.csdn.net/20170818222403230?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" /></p>
-<p><strong>2.2 代码及注释</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"># 由于放假回家，而登陆教务处需要校园网，所以采用SSL VPN登陆，到了学校，可以直接去掉前面的VPN登陆</span><br><span class="line"># 通过SSL vpn登陆教务处,爬取成绩并保存到Excel</span><br><span class="line"># SSL vpn地址 https:&#x2F;&#x2F;vpn.hit.edu.cn&#x2F;dana-na&#x2F;auth&#x2F;url_default&#x2F;welcome.cgi</span><br><span class="line"># 教务处网址 jwts.hit.edu.cn</span><br><span class="line">import xlwt</span><br><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver.common.by import By</span><br><span class="line">from selenium.webdriver.common.keys import Keys</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">import time</span><br><span class="line">import requests</span><br><span class="line">from selenium.webdriver.common.action_chains import ActionChains</span><br><span class="line">from selenium.webdriver.support.wait import WebDriverWait</span><br><span class="line"># 主要难点及错点在于各种按钮的点击</span><br><span class="line"></span><br><span class="line">def login_VPN():</span><br><span class="line">    # 打开SSL VPN</span><br><span class="line">    SSLVPN &#x3D; &#39;https:&#x2F;&#x2F;vpn.hit.edu.cn&#x2F;dana-na&#x2F;auth&#x2F;url_default&#x2F;welcome.cgi&#39;</span><br><span class="line">    driver &#x3D; webdriver.Chrome()</span><br><span class="line">    driver.get(SSLVPN)</span><br><span class="line">    # 输入用户密码</span><br><span class="line">    user &#x3D; driver.find_element_by_id(&#39;username&#39;)</span><br><span class="line">    username &#x3D; input(&#39;Enter your username : &#39;)</span><br><span class="line">    user.send_keys(username)</span><br><span class="line">    pwd &#x3D; driver.find_element_by_id(&#39;password&#39;)</span><br><span class="line">    password &#x3D; input(&#39;Enter your password : &#39;)</span><br><span class="line">    pwd.send_keys(password)</span><br><span class="line"></span><br><span class="line">    # 选择登陆账户类型 -&gt;下拉列表元素的定位</span><br><span class="line">    login &#x3D; driver.find_element_by_id(&#39;btnSubmit_6&#39;)</span><br><span class="line">    login.click()</span><br><span class="line"></span><br><span class="line">    # 成功登陆到网站；里面</span><br><span class="line">    driver.find_element_by_id(&#39;browseUrl&#39;).send_keys(&#39;jwts.hit.edu.cn&#39;)</span><br><span class="line">    driver.find_element_by_id(&#39;btnBrowse_3&#39;).click()</span><br><span class="line">    # 教务网登陆 通用身份登陆</span><br><span class="line">    time.sleep(1)</span><br><span class="line">     # 以后都借助Google 开发者，直接拷贝xpath定位</span><br><span class="line">    driver.find_element_by_xpath(&#39;&#x2F;&#x2F;*[@id&#x3D;&quot;dl&quot;]&#39;).click()</span><br><span class="line"></span><br><span class="line">    driver.find_element_by_id(&#39;username&#39;).send_keys(username)</span><br><span class="line">    driver.find_element_by_id(&#39;password&#39;).send_keys(password)</span><br><span class="line">    driver.find_element_by_xpath(&#39;&#x2F;&#x2F;*[@id&#x3D;&quot;casLoginForm&quot;]&#x2F;p[5]&#x2F;button&#39;).click()</span><br><span class="line"></span><br><span class="line">    # 先点击 成绩管理</span><br><span class="line">    driver.find_element_by_xpath(&#39;&#x2F;&#x2F;*[@id&#x3D;&quot;menu_7&quot;]&#x2F;span&#39;).click()</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    # 出现四个选项,选择个人成绩 -&gt; Message: element not visible</span><br><span class="line">    # xpath定位有问题&#x2F;&#x2F;*[@id&#x3D;&quot;closeBtn2&quot;]&#x2F;span[2]</span><br><span class="line">    # 原来是个超链接，用text定位</span><br><span class="line">    meGrade &#x3D; driver.find_element_by_link_text(&#39;个人成绩&#39;)</span><br><span class="line">    meGrade.click()</span><br><span class="line"></span><br><span class="line">    # 在出现的页面中选择期末成绩</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    driver.switch_to_frame(&#39;iframename&#39;)</span><br><span class="line">    driver.find_element_by_class_name(&#39;qmcx&#39;).click()</span><br><span class="line">    # 出现所有成绩页面</span><br><span class="line">    time.sleep(1)</span><br><span class="line">    page&#x3D;0</span><br><span class="line">    hang &#x3D; 0</span><br><span class="line">    # 创建Excel文件</span><br><span class="line">    MyGrades &#x3D; xlwt.Workbook()</span><br><span class="line">    sheet &#x3D; MyGrades.add_sheet(&#39;Grade&#39;,cell_overwrite_ok&#x3D;True)</span><br><span class="line">    while(page&lt;2):</span><br><span class="line">        soup &#x3D; BeautifulSoup(driver.page_source,&#39;lxml&#39;)</span><br><span class="line">        grades &#x3D; soup.find(class_&#x3D;&#39;list&#39;).find_all(&#39;tr&#39;)</span><br><span class="line">        for grade in grades:</span><br><span class="line">            line &#x3D; grade.get_text()</span><br><span class="line">            # 根据换行分割</span><br><span class="line">            ths &#x3D; line.split(&#39;\n&#39;)</span><br><span class="line">            lie&#x3D;0</span><br><span class="line">            for th in ths:</span><br><span class="line">                sheet.write(hang,lie,th)</span><br><span class="line">                lie+&#x3D;1</span><br><span class="line">            hang+&#x3D;1</span><br><span class="line">            # 最后一页，没有下一页</span><br><span class="line">        if(page!&#x3D;1):</span><br><span class="line">            driver.find_element_by_link_text(&#39;2&#39;).click()</span><br><span class="line">        page +&#x3D; 1</span><br><span class="line">        time.sleep(1)</span><br><span class="line"></span><br><span class="line">    # 保存Excel文件</span><br><span class="line">    MyGrades.save(&#39;Grades.xls&#39;)</span><br><span class="line">    # 退出</span><br><span class="line">    driver.switch_to_default_content()</span><br><span class="line">    driver.find_element_by_css_selector(&#39;[title&#x3D;&quot;Sign out&quot;]&#39;).click()</span><br><span class="line">    </span><br><span class="line">login_VPN()</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-<p><strong>2.3 相关问题</strong> ①Google开发者copy xpath 发现Google可以直接 右键-&gt; 检查-&gt; select选定页面element -&gt; 显示相应源码 -&gt; 右键copy -&gt; copy xpath 就这样，愉快的定位了，结果，，，坑死了 定位不唯一！！！终于发现，有时候还要自己修改，我‘好运’的碰到了。 <strong>warning</strong>，总的来说，只要有多个并列element（比如教务网的上的那一排选项），那么直接copy xpath是不可行了，需要修改或者再选别的定位方法。 ②关于存在超链接的定位 通过link文字精确定位元素 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a onclick&#x3D;&quot;return false;&quot; class&#x3D;&quot;lb&quot; name&#x3D;&quot;tj_login&quot; href&#x3D;&quot;https:&#x2F;&#x2F;passport.baidu.com&#x2F;v2&#x2F;?login&amp;tpl&#x3D;mn&amp;u&#x3D;http%3A%2F%2Fwww.baidu.com%2F&quot;&gt;登录&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure> 存在 href, 并且最后面是文本（也可以是父类中有href） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find_element_by_link_text(&quot;登录&quot;)</span><br></pre></td></tr></table></figure> 参考链接：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yufeihlf/p/5717291.html#test5">Selenuim+Python之元素定位总结及实例说明</a>（写的非常好，有时定位拿不准时就可以参考，该作者还写了一系列文章） 一些注意事项：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/yufeihlf/p/5689042.html">Python+Selenium定位不到元素常见原因及解决办法（报：NoSuchElementException）</a></p>
-<p>③ 关于下拉列表的处理 参考链接：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/vivianwzheng/p/6265921.html">Python Selenium下拉列表元素定位</a></p>
-<p>然而我的使用情况如下 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 选择登陆账户类型 -&gt;下拉列表元素的定位</span><br><span class="line"># 定位父元素select,然后通过tag name找到所有option，得到option元素的数组，</span><br><span class="line"># 然后通过数组索引定位，最后click.</span><br><span class="line"># 报错 AttributeError: &#39;list&#39; object has no attribute &#39;click&#39;</span><br><span class="line"></span><br><span class="line"># 用select方法</span><br><span class="line"># 报错 AttributeError: &#39;list&#39; object has no attribute &#39;tag_name&#39;</span><br><span class="line"># select &#x3D; Select(driver.find_elements_by_name(&#39;realm&#39;))</span><br><span class="line"># select.select_by_value(&#39;本科生&#39;)</span><br></pre></td></tr></table></figure> 最终解决如下，主要是先定位到下拉菜单父属性，再定位到选项 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(&#39;realm_17&#39;).find_element_by_css_selector(&#39;[value&#x3D;&quot;本科生&quot;]&#39;).click()</span><br></pre></td></tr></table></figure> ④点击出现，Message: element not visible 自信的用copy xpath直接定位，坑惨了，还是定位原因。。 不过还是参考了很多事例，前面也提到过处理方法，此处不再细说。</p>
-<p>⑤关于字符串分割及print的问题 开始准备直接打印到文本，然而由于打印的格式不满意，最终想到了Excel。 不过前面遇到了一些问题，也记载下来： 一个是打印列表的新用法啊 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 根据换行分割</span><br><span class="line">         ths &#x3D; line.split(&#39;\n&#39;)</span><br><span class="line">         # 直接打印</span><br><span class="line">         print(&#39;\t&#39;.join(ths))</span><br></pre></td></tr></table></figure> 另一个是print 自动换行打印，需要注意。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ths &#x3D; line.split(&#39;\n&#39;)</span><br><span class="line">for th in ths:</span><br><span class="line">      # print(th) 会自动换行，需要加上end&#x3D;&quot;&quot;才不会自动换行</span><br><span class="line">      print(&#39;%15s&#39;%th, end&#x3D;&quot;&quot;)</span><br></pre></td></tr></table></figure></p>
-<p><strong>三，More</strong> <strong>3.1 关于教务处的遐想</strong> 提到教务网，基本所有学计算机的都是从攻击本校教务处开始。当然，这有点难度，不过，从教务网搞到全校学生照片，找找校花，还是嘿嘿的。。 本来准备下午就开始行动的的，然而，由于放假回家，用不到校园网，而用SSLVPN去操作下载，实在麻烦，需要反复登陆才行。所以作罢，到学校再试。 思路，教务网找到自己照片，查看对应源码, 光标悬浮在src属性上，查看照片真正源码，在新页面打开便是照片。可以发现照片真正地址与学号有关（应该所有高校都是这样吧），然后采用循环（得到系列学号-&gt;照片地址），下载所有照片。（注意，要捕获异常，避免因为学号不存在而发生错误） 伪代码： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">def DownPictures():</span><br><span class="line">    xh&#x3D;xxxxxxxxxxx</span><br><span class="line">    urlHead &#x3D; &#39;https:&#x2F;&#x2F;vpn.hit.edu.cn&#x2F;xswhxx&#x2F;,DanaInfo&#x3D;jwts.hit.edu.cn+showPhoto?xh&#x3D;&#39;</span><br><span class="line">    url &#x3D; urlHead+str(xh)</span><br><span class="line">    driver &#x3D; webdriver.Chrome()</span><br><span class="line">    driver.get(url)</span><br><span class="line">    data &#x3D; requests.get(url).content</span><br><span class="line">    soup &#x3D;BeautifulSoup(data,&#39;lxml&#39;)</span><br><span class="line">    image &#x3D; soup.find(&#39;img&#39;)</span><br><span class="line">    number &#x3D; 000000000000</span><br><span class="line">    while(number&lt; stuNum)</span><br><span class="line">       try:</span><br><span class="line">          with open(str(xh)+&#39;.jpg&#39;,&#39;wb&#39;) as f:</span><br><span class="line">              f.write(img)</span><br><span class="line">              print(&#39;Picture of &#39;+str(xh)+&#39; has downloaded&#39;)</span><br><span class="line">        except Exception as e:</span><br><span class="line">            print(str(number)+e)</span><br><span class="line">       number+&#x3D;1</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
