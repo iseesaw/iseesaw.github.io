@@ -343,7 +343,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">60</span>
+          <span class="site-state-item-count">61</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -356,7 +356,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">159</span>
+        <span class="site-state-item-count">163</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -396,6 +396,129 @@ mjx-container[display="true"] + br {
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2018/07/02/%E4%BD%BF%E7%94%A8Apache+mod_wsgi%E9%83%A8%E7%BD%B2flask%E7%BD%91%E7%AB%99/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/07/02/%E4%BD%BF%E7%94%A8Apache+mod_wsgi%E9%83%A8%E7%BD%B2flask%E7%BD%91%E7%AB%99/" class="post-title-link" itemprop="url">使用Apache+mod_wsgi部署flask网站</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-07-02 00:00:00" itemprop="dateCreated datePublished" datetime="2018-07-02T00:00:00+08:00">2018-07-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-11 12:54:11" itemprop="dateModified" datetime="2020-08-11T12:54:11+08:00">2020-08-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/07/02/%E4%BD%BF%E7%94%A8Apache+mod_wsgi%E9%83%A8%E7%BD%B2flask%E7%BD%91%E7%AB%99/" class="post-meta-item leancloud_visitors" data-flag-title="使用Apache+mod_wsgi部署flask网站" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/07/02/%E4%BD%BF%E7%94%A8Apache+mod_wsgi%E9%83%A8%E7%BD%B2flask%E7%BD%91%E7%AB%99/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/07/02/%E4%BD%BF%E7%94%A8Apache+mod_wsgi%E9%83%A8%E7%BD%B2flask%E7%BD%91%E7%AB%99/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="写在前面">写在前面</h3>
+<p>本文使用Apache+mod_wsgi部署简单的flask网站。</p>
+<h3 id="ubuntu16.04">ubuntu16.04</h3>
+<p>设置二级域名访问flask网站。</p>
+<h4 id="配置">1、配置</h4>
+<p>主要分为一下几个部分 <code>app</code>配置：<code>/var/www/app</code>下<code>app.py</code>和<code>app.wsgi</code> <code>Apache virtualhost</code> 配置：<code>/etc/apache2/site-enabled</code>下<code>app.conf</code>，同时在<code>/etc/apache2/site-avaiable</code>下<code>app.conf</code></p>
+<p><strong>配置目录</strong> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- var/www</span><br><span class="line">   - html <span class="comment"># Apache默认Page</span></span><br><span class="line">    - app <span class="comment"># 创建application</span></span><br><span class="line">        - app.py <span class="comment"># applicaton</span></span><br><span class="line">        - app.wsgi <span class="comment"># 配置</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>app.py</strong> flask app文件 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="meta">@app.route(&quot;/&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span>():</span></span><br><span class="line">   <span class="keyword">return</span> <span class="string">&quot;hello&quot;</span></span><br><span class="line"><span class="keyword">if</span> __name__==<span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app.run()</span><br></pre></td></tr></table></figure></p>
+<p><strong>app.wsgi</strong> 运行flask app前运行 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">sys.path.insert(<span class="number">0</span>, <span class="string">&quot;/var/www/app&quot;</span>)</span><br><span class="line"><span class="keyword">from</span> app <span class="keyword">import</span> app <span class="keyword">as</span> application</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意：如果日志显示 No Module named flask；参考<a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000004687378">mod_wsgi (Apache)使用虚拟环境出现问题</a>修改；最好在 app.conf中加入python-path，直接在app.wsgi 启动虚拟环境可能报错</p>
+</blockquote>
+<p><strong>app.conf</strong> 添加<code>apache virtualhost</code> <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;virtualhost *:<span class="number">80</span>&gt;</span><br><span class="line">    ServerName app.seesaw.top</span><br><span class="line">  </span><br><span class="line">    WSGIDaemonProcess app threads=<span class="number">5</span> python-path=/var/www/app/env/lib/python3<span class="number">.6</span>/site-packages</span><br><span class="line">    WSGIScriptAlias / /var/www/app/app.wsgi</span><br><span class="line"></span><br><span class="line">    &lt;directory /var/www/app&gt;</span><br><span class="line">        WSGIProcessGroup app</span><br><span class="line">        WSGIApplicationGroup %&#123;GLOBAL&#125;</span><br><span class="line">        WSGIScriptReloading On</span><br><span class="line">        Order deny,allow</span><br><span class="line">        Allow <span class="keyword">from</span> all</span><br><span class="line">    &lt;/directory&gt;</span><br><span class="line">    ErrorLog $&#123;APACHE_LOG_DIR&#125;/app.error.log</span><br><span class="line">    LogLevel warn</span><br><span class="line">    CustomLog $&#123;APACHE_LOG_DIR&#125;/app.access.log combined</span><br><span class="line">&lt;/virtualhost&gt;</span><br></pre></td></tr></table></figure> 其中<code>python-path</code>需要填写虚拟环境位置，否则将无法加载模块 虚拟环境配置参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/MikeZhang/p/virtualenvPython_20150607.html">使用virtualenv搭建python3开发环境</a></p>
+<h4 id="二级域名设置">2、二级域名设置</h4>
+<p><img src="https://img-blog.csdnimg.cn/20190627220247552.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /> #### 3、github博客二级域名 域名解析设置 <img src="https://img-blog.csdnimg.cn/20190716112002333.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /> github设置<img src="https://img-blog.csdnimg.cn/20190716112226742.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /> 与在根目录下添加CNAME文件相同，其中CNAME文件中写入<code>blog.seesaw.top</code> #### 4、参考 <a target="_blank" rel="noopener" href="https://blog.csdn.net/Artprog/article/details/64906842">flask+mod_wsgi+apache站点部署（Ubuntu16.04）</a> <a target="_blank" rel="noopener" href="https://dormousehole.readthedocs.io/en/latest/deploying/mod_wsgi.html">mod_wsgi (Apache)</a> <a target="_blank" rel="noopener" href="https://eliyar.biz/deploy-a-flask-application-on-an-ubuntu-apache-server/">Ubuntu Apache Server 部署 Flask 程序</a> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/MikeZhang/p/virtualenvPython_20150607.html">使用virtualenv搭建python3开发环境</a></p>
+<h3 id="centos7">centos7</h3>
+<h4 id="安装配置apache">1、安装配置Apache</h4>
+<p>首先需要注意的是，Apache在centos上叫做httpd <strong>安装Apache服务</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install httpd</span><br></pre></td></tr></table></figure> <strong>配置Apache服务</strong> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;httpd&#x2F;conf&#x2F;httpd.conf</span><br></pre></td></tr></table></figure> 在#Listen 12.34.56.78:80下面模仿注释添加listen的IP地址或域名加上端口号 <strong>启动或关闭Apache服务</strong> 启动 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start httpd.service</span><br></pre></td></tr></table></figure> 关闭 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop httpd.service</span><br></pre></td></tr></table></figure> <strong>访问</strong> 访问服务器地址（配置中Listen的地址），默认显示Apache的测试页面。 /etc/httpd是httpd的根目录 /var/www/html下是放置请求页面的目录，直接把静态网页的index.html网页放在该目录下，访问服务器地址即可访问网站。</p>
+<h4 id="安装配置mod_wsgi">2、安装配置mod_wsgi</h4>
+<p>首先安装httpd-devel <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y httpd-devel</span><br></pre></td></tr></table></figure> 安装mod__wsgi <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install mod_wsgi</span><br></pre></td></tr></table></figure> 安装完成之后，mod_wsgi.so会在Apache的modules目录中 需要将mod_wsgi.so加载到httpd.conf <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;httpd&#x2F;conf&#x2F;httpd.conf</span><br></pre></td></tr></table></figure> 在最后添加 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LoadModule wsgi_module modules&#x2F;mod_wsgi.so</span><br></pre></td></tr></table></figure></p>
+<h4 id="部署flask">3、部署flask</h4>
+<p><strong>上传</strong> 首先使用将flask项目包上传到 /var/www/html下 推荐使用WinSCP <img src="https://img-blog.csdn.net/2018070216124122?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> <strong>配置app.wsgi</strong> 在/var/www/html/app下配置app.wsgi文件 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;var&#x2F;www&#x2F;html&#x2F;app&#x2F;app.wsgi</span><br></pre></td></tr></table></figure> 文件中写入 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">sys.path.insert(0, &#39;&#x2F;var&#x2F;www&#x2F;html&#x2F;app&#39;)</span><br><span class="line">from app import app as application</span><br></pre></td></tr></table></figure></p>
+<p><strong>配置wsgi.conf</strong> 在/etc/httpd/conf.d/下配置wsgi.conf 新建一个wsgi.conf文件 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;etc&#x2F;httpd&#x2F;conf.d&#x2F;wsgi.conf</span><br></pre></td></tr></table></figure> 在文件中输入 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#配置虚拟环境地址</span><br><span class="line">WSGIDaemonProcess app python-path&#x3D;&#x2F;var&#x2F;www&#x2F;app&#x2F;lib&#x2F;python3.6&#x2F;site-packages</span><br><span class="line">WSGIProcessGroup app</span><br><span class="line">#路由是&#x2F;app，通过访问服务器域名:端口&#x2F;app直接访问项目</span><br><span class="line">#&#x2F;var&#x2F;www&#x2F;app.wsgi是配置文件，下面的&#x2F;var&#x2F;www&#x2F;html&#x2F;app是项目包，其中有app.py文件</span><br><span class="line">WSGIScriptAlias &#x2F;app &#x2F;var&#x2F;www&#x2F;html&#x2F;app&#x2F;app.wsgi</span><br><span class="line"></span><br><span class="line">&lt;Directory &#x2F;var&#x2F;www&#x2F;html&#x2F;app&gt;</span><br><span class="line">    Require all granted</span><br><span class="line">&lt;&#x2F;Directory&gt;</span><br></pre></td></tr></table></figure></p>
+<p>其中需要注意，第一行使用了一个python虚拟环境，其中包含项目所需的所有包（包括flask），否则即使服务器上的python环境配置了flask环境，仍然无法使用，会报错找不到模块；这个问题时踩得最大的坑。</p>
+<p><strong>使用虚拟环境</strong> 下面介绍需要使用的虚拟环境，可以通过Pycharm获取，Pycharm每次创建项目，可以选择使用虚拟环境或本地环境。 也可以通过anaconda的conda来配置虚拟环境 创建python3.6虚拟环境，其中myenv是自己取得虚拟环境名 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda create -n myenv python&#x3D;3.6</span><br></pre></td></tr></table></figure> 给虚拟环境安装包 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda install -n myenv package</span><br></pre></td></tr></table></figure> 创建的虚拟环境在anaconda3/env下面，可以复制到项目中，在上面改为相应的位置即可</p>
+<p><strong>访问</strong> 使用服务器地址:端口，仍然显示的是/var/www/html/下的index页面 使用服务器:端口/路由（如上面的是12.34.56.78:80/app），显示的是flask网站</p>
+<p><strong>日志</strong> 使用下面命令访问网站的错误日志 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;var&#x2F;log&#x2F;httpd&#x2F;error_log</span><br></pre></td></tr></table></figure></p>
+<p><strong>使用域名</strong> 当然有域名的话，可以直接将域名解析到服务器地址，可以直接使用域名访问 解析参数配置如下 <img src="https://img-blog.csdn.net/201807021632409?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 访问/var/www/html/index.html <img src="https://img-blog.csdn.net/20180702163409157?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 访问/var/www/html/app下的flask项目 <img src="https://img-blog.csdn.net/20180702163416747?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1735,120 +1858,10 @@ Comment density（MCOMM%）
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2018/06/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E5%8A%A8%E7%94%BB%EF%BC%88%E5%B0%8F%E7%90%83%E8%BF%90%E5%8A%A8%EF%BC%89%E6%95%88%E6%9E%9C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="iseesaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="iseesaw's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E5%8A%A8%E7%94%BB%EF%BC%88%E5%B0%8F%E7%90%83%E8%BF%90%E5%8A%A8%EF%BC%89%E6%95%88%E6%9E%9C/" class="post-title-link" itemprop="url">Java多线程实现简单动画（小球运动）效果</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-06-09 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-09T00:00:00+08:00">2018-06-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:53:06" itemprop="dateModified" datetime="2019-09-08T11:53:06+08:00">2019-09-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/06/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E5%8A%A8%E7%94%BB%EF%BC%88%E5%B0%8F%E7%90%83%E8%BF%90%E5%8A%A8%EF%BC%89%E6%95%88%E6%9E%9C/" class="post-meta-item leancloud_visitors" data-flag-title="Java多线程实现简单动画（小球运动）效果" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2018/06/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E5%8A%A8%E7%94%BB%EF%BC%88%E5%B0%8F%E7%90%83%E8%BF%90%E5%8A%A8%EF%BC%89%E6%95%88%E6%9E%9C/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/06/09/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AE%9E%E7%8E%B0%E7%AE%80%E5%8D%95%E5%8A%A8%E7%94%BB%EF%BC%88%E5%B0%8F%E7%90%83%E8%BF%90%E5%8A%A8%EF%BC%89%E6%95%88%E6%9E%9C/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>###目录</p>
-<h4 id="多线程的两种实现方式">1、多线程的两种实现方式</h4>
-<h5 id="关于多线程理解">1.0、关于多线程理解</h5>
-<p>首先，严格按照操作系统理论来说，多线程并没有实现真正的同时进行。而是CPU将工作时间分成很多很短的时间片（Time slicing），每个时刻只能执行一个线程。 <img src="https://img-blog.csdn.net/20180609082019115?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="时间分片" /> 主要有两种方式实现多线程，一种是继承Thread类，一种是实现Runnable接口。两种方式，除了创建线程实例的方式有差异外，启动线程都是调用start方法。 ##### 1.1、Runnable Runnable接口中只有一个<code>void run()</code>方法，因此，实现Runnable接口需要实现run()方法。而启动多线程是通过将接口的实现类传入Thread进行实例化，然后调用start()方法。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class HelloRunnable implements Runnable &#123;</span><br><span class="line"> public void run() &#123;</span><br><span class="line">      System.out.println(&quot;Hello from a thread!&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">     (new Thread(new HelloRunnable())).start();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当然也可以通过<strong>匿名内部类</strong>实现临时的线程： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">new Thread(new Runnable() &#123;</span><br><span class="line">   public void run() &#123;</span><br><span class="line">      System.out.println(&quot;Hello from a thread!&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;).start(); </span><br></pre></td></tr></table></figure> <strong>Hint：</strong>由于类的继承是单一的，只能有一个父类，因此在类已经继承一个父类时，可以通过实现Runnable接口来实现线程。</p>
-<h5 id="thread">1.2、Thread</h5>
-<p>Thread类本身也是通过实现Runnable接口实现的： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class Thread extends Object implements Runnable</span><br></pre></td></tr></table></figure> 同样需要重写自己的run方法，启动线程也是调用start方法： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">public class HelloThread extends Thread &#123;</span><br><span class="line"> public void run() &#123;</span><br><span class="line">      System.out.println(&quot;Hello from a thread!&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">     HelloThread p &#x3D; new HelloThread();</span><br><span class="line">       p.start();</span><br><span class="line">    &#125;</span><br><span class="line">    public static void main(String args[]) &#123;</span><br><span class="line">     (new HelloThread()).start();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="实现动画效果的两种方式">2、实现动画效果的两种方式</h4>
-<h5 id="实现过程理解">2.0、实现过程理解</h5>
-<p>实现动画，就是让物体动起来，也就是说每次绘图时有规律的改变物体的位置即可。这里有两种实现方法，一种是将继承JPanel的类作为一个线程，一种是将物体类作为一个线程。两种方式实现效果差别不大，但前者更适用于多个物体一起改变位置的情况（同步），后者适用于物体各自改变位置的情况。 ##### 2.1、画板（JPanel）线程 创建一个类，继承JPanel类，实现Runnable接口。在其中重写paint方法，然后实现run()方法，run方法中调用repaint()方法，并使用循环和休眠来实现动画效果。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">package test;</span><br><span class="line"></span><br><span class="line">import java.awt.Graphics;</span><br><span class="line">import javax.swing.JFrame;</span><br><span class="line">import javax.swing.JPanel;</span><br><span class="line">&#x2F;**</span><br><span class="line"> * MyPanel.java.</span><br><span class="line"> * @author Kaiyan Zhang</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class MyPanel extends JPanel implements Runnable&#123;</span><br><span class="line">  int x &#x3D; 0,y &#x3D; 400;</span><br><span class="line">  @Override</span><br><span class="line">  public void paint(Graphics g)&#123;</span><br><span class="line">      super.paint(g);</span><br><span class="line">      g.drawOvel(x, y, 20, 20);</span><br><span class="line">  &#125;</span><br><span class="line">  @Override</span><br><span class="line">  public void run()&#123;</span><br><span class="line">      while(true)&#123;</span><br><span class="line">          if(x&gt;800)</span><br><span class="line">              x &#x3D; 0;</span><br><span class="line">          else</span><br><span class="line">              x &#x3D; x + 10;</span><br><span class="line">          this.repaint();</span><br><span class="line">          try &#123;</span><br><span class="line">            Thread.sleep(1000);</span><br><span class="line">          &#125; catch (InterruptedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void main(String [] args)&#123;</span><br><span class="line">      MyPanel p &#x3D; new MyPanel();</span><br><span class="line">      &#x2F;* panel thread, paint the monkey *&#x2F;</span><br><span class="line">      Thread panelThread &#x3D; new Thread(p);</span><br><span class="line">      JFrame frame &#x3D; new JFrame();</span><br><span class="line">      frame.add(p);</span><br><span class="line">      frame.setSize(800, 800);</span><br><span class="line">      frame.setLocationRelativeTo(null);</span><br><span class="line">      frame.setVisible(true);</span><br><span class="line">      frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span><br><span class="line">      &#x2F;* begin to paint *&#x2F;</span><br><span class="line">      panelThread.start();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 当然，需要绘制的物体也可以作为一个线程，每次改变位置，然后休眠，将物体传入MyPanel进行绘制。这里物体和MyPanel的休眠时间问题，后者的休眠时间更短一些，效果更好。 <strong>Hint:</strong> 重写paint方法时，一定要先调用父类的paint方法（super.paint(g)），这里后面才能使用repaint进行重写绘制。</p>
-<h5 id="物体object线程">2.2、物体（Object）线程</h5>
-<p>首先实现一个JPanel的子类MyPanel，在paint()方法中实现物体的绘制；然后创建一个运动物体类，继承Thread类，将MyPanel作为参数传入，实现run()方法，当然可以有一个位置成员变量，run方法中每次改变位置后，调用MyPanel.repaint()方法实现新的位置绘图，每次绘制后休眠一段时间。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">package test;</span><br><span class="line">import java.awt.Graphics;</span><br><span class="line">import javax.swing.JFrame;</span><br><span class="line">import javax.swing.JPanel;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * MyPanel.java.</span><br><span class="line"> * @author Kaiyan Zhang</span><br><span class="line"> *&#x2F;</span><br><span class="line">public class MyPanel extends JPanel &#123;</span><br><span class="line">  int x &#x3D; 0, y &#x3D; 400;</span><br><span class="line">  Ball b;</span><br><span class="line"></span><br><span class="line">  public MyPanel(Ball b) &#123;</span><br><span class="line">    this.b &#x3D; b;</span><br><span class="line">    b.start();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void paint(Graphics g) &#123;</span><br><span class="line">    super.paint(g);</span><br><span class="line">    g.drawOvel(b.x, b.y, 20, 20);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static void main(String[] args) &#123;</span><br><span class="line">    Ball b &#x3D; new Ball();</span><br><span class="line">    MyPanel p &#x3D; new MyPanel(b);</span><br><span class="line">    b.setPanel(p);</span><br><span class="line">    &#x2F;* panel thread, paint the monkey *&#x2F;</span><br><span class="line">    JFrame frame &#x3D; new JFrame();</span><br><span class="line">    frame.add(p);</span><br><span class="line">    frame.setSize(800, 800);</span><br><span class="line">    frame.setLocationRelativeTo(null);</span><br><span class="line">    frame.setVisible(true);</span><br><span class="line">    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Ball extends Thread &#123;</span><br><span class="line">  int x &#x3D; 0;</span><br><span class="line">  int y &#x3D; 400;</span><br><span class="line">  MyPanel p;</span><br><span class="line"></span><br><span class="line">  public void setPanel(MyPanel p) &#123;</span><br><span class="line">    this.p &#x3D; p;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void run() &#123;</span><br><span class="line">    while (true) &#123;</span><br><span class="line">      if (x &gt; 800) &#123;</span><br><span class="line">        x &#x3D; 0;</span><br><span class="line">      &#125; else &#123;</span><br><span class="line">        x &#x3D; x + 10;</span><br><span class="line">      &#125;</span><br><span class="line">      p.repaint();</span><br><span class="line">      try &#123;</span><br><span class="line">        sleep(100);</span><br><span class="line">      &#125; catch (InterruptedException e) &#123;</span><br><span class="line">        &#x2F;&#x2F; TODO Auto-generated catch block</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>这里给出一个之前写的泡泡龙的代码，每次只有一个球进行运动，即使用该方法实现的 <a target="_blank" rel="noopener" href="https://github.com/iseesaw/Bubble-Shoter">Bubble Shooter-使用线程实现泡泡龙</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
