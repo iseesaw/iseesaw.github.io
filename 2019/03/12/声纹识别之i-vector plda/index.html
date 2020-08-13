@@ -19,15 +19,15 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"iseesaw.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="最近做声纹识别的项目，要用到i-vector&#x2F;plad，通过查阅各种资料，大概弄清楚了整个过程的来龙去脉，在此记录一下。 整个过程为gmm-ubm -&gt; i-vector -&gt; plda gmm-ubm Steps: 1. 背景数据 -&gt; UBM -&gt; ubm&#39;s mean super-vector 2. UBM -&gt; 说话人多条注册语音 -&gt; MAP Adap">
+  <meta name="description" content="最近做声纹识别的项目，要用到i-vector&#x2F;plad，通过查阅各种资料，大概弄清楚了整个过程的来龙去脉，在此记录一下。整个过程为gmm-ubm -&gt; i-vector -&gt; plda gmm-ubmSteps:    背景数据 -&gt; UBM -&gt; ubm’s mean super-vector UBM -&gt; 说话人多条注册语音 -&gt; MAP Adaptatio">
 <meta property="og:type" content="article">
 <meta property="og:title" content="声纹识别之i-vector plda">
-<meta property="og:url" content="http://blog.khay.site/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/index.html">
+<meta property="og:url" content="https://iseesaw.github.io/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="最近做声纹识别的项目，要用到i-vector&#x2F;plad，通过查阅各种资料，大概弄清楚了整个过程的来龙去脉，在此记录一下。 整个过程为gmm-ubm -&gt; i-vector -&gt; plda gmm-ubm Steps: 1. 背景数据 -&gt; UBM -&gt; ubm&#39;s mean super-vector 2. UBM -&gt; 说话人多条注册语音 -&gt; MAP Adap">
+<meta property="og:description" content="最近做声纹识别的项目，要用到i-vector&#x2F;plad，通过查阅各种资料，大概弄清楚了整个过程的来龙去脉，在此记录一下。整个过程为gmm-ubm -&gt; i-vector -&gt; plda gmm-ubmSteps:    背景数据 -&gt; UBM -&gt; ubm’s mean super-vector UBM -&gt; 说话人多条注册语音 -&gt; MAP Adaptatio">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-03-11T16:00:00.000Z">
 <meta property="article:modified_time" content="2019-09-08T03:53:52.000Z">
@@ -39,7 +39,7 @@
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://blog.khay.site/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/">
+<link rel="canonical" href="https://iseesaw.github.io/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/">
 
 
 <script class="page-configurations">
@@ -338,7 +338,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#gmm-ubm"><span class="nav-number">1.</span> <span class="nav-text">gmm-ubm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#i-vector"><span class="nav-number">2.</span> <span class="nav-text">i-vector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plda"><span class="nav-number">3.</span> <span class="nav-text">plda</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#gmm-ubm"><span class="nav-number">1.</span> <span class="nav-text">gmm-ubm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#i-vector"><span class="nav-number">2.</span> <span class="nav-text">i-vector</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#plda"><span class="nav-number">3.</span> <span class="nav-text">plda</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -410,7 +410,7 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -492,68 +492,82 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>最近做声纹识别的项目，要用到i-vector/plad，通过查阅各种资料，大概弄清楚了整个过程的来龙去脉，在此记录一下。 整个过程为gmm-ubm -&gt; i-vector -&gt; plda</p>
-<h3 id="gmm-ubm">gmm-ubm</h3>
-<p>Steps:<br />
-1. 背景数据 -&gt; UBM -&gt; ubm's mean super-vector 2. UBM -&gt; 说话人多条注册语音 -&gt; MAP Adaptation -&gt; 说话人相关GMM 3. 说话人相关GMM -&gt; GMM super-vector(均值超矢量)</p>
-<p>Usage:<br />
-说话人测试语音 -&gt; 说话人相关GMM score -&gt; 阈值判断</p>
-<h3 id="i-vector">i-vector</h3>
-<p>给定说话人一段语音, 与之对应的高斯均值超矢量定义为: <span class="math display">\[s = m + T\omega\]</span> 其中:<br />
-- s (super-vector) + 给定说话人语音的高斯均值超矢量(用户相关GMM获得) - m (ubm's mean super-vector) + 通用背景模型(UBM)的高斯均值超矢量(与具体说话人及信道无关) - T (total-vavriability matrix) + 全局差异空间矩阵 - <span class="math inline">\(\omega\)</span> (i-vector) + 全局差异空间因子</p>
-<p>求解过程:</p>
+        <p>最近做声纹识别的项目，要用到i-vector/plad，通过查阅各种资料，大概弄清楚了整个过程的来龙去脉，在此记录一下。<br>整个过程为gmm-ubm -&gt; i-vector -&gt; plda</p>
+<h3 id="gmm-ubm"><a href="#gmm-ubm" class="headerlink" title="gmm-ubm"></a>gmm-ubm</h3><p>Steps:  </p>
+<ol>
+<li>背景数据 -&gt; UBM -&gt; ubm’s mean super-vector</li>
+<li>UBM -&gt; 说话人多条注册语音 -&gt; MAP Adaptation -&gt; 说话人相关GMM</li>
+<li>说话人相关GMM -&gt; GMM super-vector(均值超矢量)</li>
+</ol>
+<p>Usage:<br>说话人测试语音 -&gt; 说话人相关GMM score -&gt; 阈值判断</p>
+<h3 id="i-vector"><a href="#i-vector" class="headerlink" title="i-vector"></a>i-vector</h3><p>给定说话人一段语音, 与之对应的高斯均值超矢量定义为:<br>$$s = m + T\omega$$<br>其中:   </p>
 <ul>
-<li>全局差异空间矩阵T的估计
+<li>s (super-vector)<ul>
+<li>给定说话人语音的高斯均值超矢量(用户相关GMM获得)</li>
+</ul>
+</li>
+<li>m (ubm’s mean super-vector)<ul>
+<li>通用背景模型(UBM)的高斯均值超矢量(与具体说话人及信道无关)</li>
+</ul>
+</li>
+<li>T (total-vavriability matrix)<ul>
+<li>全局差异空间矩阵</li>
+</ul>
+</li>
+<li>$\omega$ (i-vector)<ul>
+<li>全局差异空间因子</li>
+</ul>
+</li>
+</ul>
+<p>求解过程:  </p>
 <ul>
+<li>全局差异空间矩阵T的估计<ul>
 <li>假设每一段语音都来自不同的说话人</li>
 <li>计算训练数据库中每个说话人对应的Baum-Welcn统计量</li>
 <li>EM算法迭代估计T矩阵(大概10次)</li>
-</ul></li>
-<li>i-vector提取
-<ul>
+</ul>
+</li>
+<li>i-vector提取<ul>
 <li>计算数据库中每个目标说话人对应的Baum-Welch统计量</li>
 <li>带入全局差异空间矩阵T</li>
-<li>计算<span class="math inline">\(\omega\)</span>的后验均值即为i-vector</li>
-</ul></li>
+<li>计算$\omega$的后验均值即为i-vector</li>
 </ul>
-<h3 id="plda">plda</h3>
-<p>i-vector包含说话人和信道的信息, 可以使用lda/plda减弱信道的影响</p>
-<p><span class="math display">\[X_{ij} = \mu + Fh_{i} + Gw_{ij} + \epsilon_{ij}\]</span> 其中:</p>
+</li>
+</ul>
+<h3 id="plda"><a href="#plda" class="headerlink" title="plda"></a>plda</h3><p>i-vector包含说话人和信道的信息, 可以使用lda/plda减弱信道的影响</p>
+<p>$$X_{ij} = \mu + Fh_{i} + Gw_{ij} + \epsilon_{ij}$$<br>其中:  </p>
 <ul>
-<li><span class="math inline">\(\mu + Fh_{i}\)</span> 信号部分, 描述说话人之间的差异(类间差异)
-<ul>
-<li><span class="math inline">\(\mu\)</span> 全体训练数据的均值</li>
+<li>$\mu + Fh_{i}$ 信号部分, 描述说话人之间的差异(类间差异)<ul>
+<li>$\mu$ 全体训练数据的均值</li>
 <li>F 身份空间, 包含用来表示各种说话人的信息</li>
-<li><span class="math inline">\(h_{i}\)</span> 具体的一个说话人的身份(说话人在身份空间中的位置)</li>
-</ul></li>
-<li><span class="math inline">\(Gw_{ij} + \epsilon_{ij}\)</span> 噪音部分, 描述同一说话人的不同语音之间的差异(类内差异)
-<ul>
-<li>G 误差空间, 包含可以用来表示同一说话人不同语音变化的信息</li>
-<li><span class="math inline">\(w_{ij}\)</span> 表示说话人的某一条语音在G空间中的位置</li>
-<li><span class="math inline">\(\epsilon_{ij}\)</span> 最后的残留噪声项, 表示尚未解释的东西</li>
-</ul></li>
+<li>$h_{i}$ 具体的一个说话人的身份(说话人在身份空间中的位置)</li>
 </ul>
-<p>用两个假象变量(<span class="math inline">\(\theta\)</span>, <span class="math inline">\(\Sigma\)</span>)描述一个语音的数据结构:<br />
-<span class="math display">\[\theta = [\mu, F, G, \Sigma]\]</span></p>
-<p><strong>plda模型训练</strong><br />
-目标就是输入一堆数据<span class="math inline">\(X_{ij}\)</span>(多个说话人多条语音), 使用EM迭代求解</p>
+</li>
+<li>$Gw_{ij} + \epsilon_{ij}$ 噪音部分, 描述同一说话人的不同语音之间的差异(类内差异)<ul>
+<li>G 误差空间, 包含可以用来表示同一说话人不同语音变化的信息</li>
+<li>$w_{ij}$ 表示说话人的某一条语音在G空间中的位置</li>
+<li>$\epsilon_{ij}$ 最后的残留噪声项, 表示尚未解释的东西</li>
+</ul>
+</li>
+</ul>
+<p>用两个假象变量($\theta$, $\Sigma$)描述一个语音的数据结构:<br>$$\theta = [\mu, F, G, \Sigma]$$</p>
+<p><strong>plda模型训练</strong><br>目标就是输入一堆数据$X_{ij}$(多个说话人多条语音), 使用EM迭代求解  </p>
 <ul>
-<li>均值处理
-<ul>
-<li>计算所有训练数据<span class="math inline">\(X_{ij}\)</span>的均值<span class="math inline">\(\mu\)</span>, 从训练数据中减去该均值<span class="math inline">\(X_{ij} = X_{ij} - \mu\)</span></li>
-<li>根据训练数据中的人数N, 计算N个人的均值<span class="math inline">\(N_{\mu}\)</span></li>
-</ul></li>
-<li>初始化
-<ul>
+<li>均值处理<ul>
+<li>计算所有训练数据$X_{ij}$的均值$\mu$, 从训练数据中减去该均值$X_{ij} = X_{ij} - \mu$</li>
+<li>根据训练数据中的人数N, 计算N个人的均值$N_{\mu}$</li>
+</ul>
+</li>
+<li>初始化<ul>
 <li>噪声空间G, 随机初始化</li>
-<li>身份空间F, 对每个人的均值数据<span class="math inline">\(N_{\mu}\)</span>进行PCA降维, 赋值给F</li>
-<li>方差<span class="math inline">\(\Sigma\)</span>初始化为常量</li>
-</ul></li>
+<li>身份空间F, 对每个人的均值数据$N_{\mu}$进行PCA降维, 赋值给F</li>
+<li>方差$\Sigma$初始化为常量</li>
+</ul>
+</li>
 <li>EM迭代优化</li>
 </ul>
-<p><strong>简化版plda</strong> <span class="math display">\[X_{ij} = \mu + Fh{i} + \epsilon_{ij}\]</span></p>
-<h3 id="reference">Reference</h3>
-<ul>
+<p><strong>简化版plda</strong><br>$$X_{ij} = \mu + Fh{i} + \epsilon_{ij}$$</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h3><ul>
 <li><a target="_blank" rel="noopener" href="https://projets-lium.univ-lemans.fr/sidekit/tutorial/sre10_iv.html">SIDEKIT库-Run an i-vector system</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38206214/article/details/81541497">I-Vector的推导详解</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38206214/article/details/81096092">声纹识别之I-Vector</a></li>

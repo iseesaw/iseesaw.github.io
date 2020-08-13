@@ -19,17 +19,17 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"iseesaw.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
   <meta name="description" content="PageRank的原理公式及DGL实现">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DGL框架之PageRank">
-<meta property="og:url" content="http://blog.khay.site/2019/09/20/DGL%E6%A1%86%E6%9E%B6%E4%B9%8BPageRank/index.html">
+<meta property="og:url" content="https://iseesaw.github.io/2019/09/20/DGL%E6%A1%86%E6%9E%B6%E4%B9%8BPageRank/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
 <meta property="og:description" content="PageRank的原理公式及DGL实现">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://blog.khay.site/images/dgl/kIMiuFb.png">
+<meta property="og:image" content="https://iseesaw.github.io/images/dgl/kIMiuFb.png">
 <meta property="article:published_time" content="2019-09-19T16:00:00.000Z">
 <meta property="article:modified_time" content="2020-08-11T04:52:49.227Z">
 <meta property="article:author" content="iseesaw">
@@ -37,10 +37,10 @@
 <meta property="article:tag" content="dgl">
 <meta property="article:tag" content="pagerank">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://blog.khay.site/images/dgl/kIMiuFb.png">
+<meta name="twitter:image" content="https://iseesaw.github.io/images/dgl/kIMiuFb.png">
 
 
-<link rel="canonical" href="http://blog.khay.site/2019/09/20/DGL%E6%A1%86%E6%9E%B6%E4%B9%8BPageRank/">
+<link rel="canonical" href="https://iseesaw.github.io/2019/09/20/DGL%E6%A1%86%E6%9E%B6%E4%B9%8BPageRank/">
 
 
 <script class="page-configurations">
@@ -339,7 +339,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#pagerank"><span class="nav-number">1.</span> <span class="nav-text">PageRank</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#PageRank"><span class="nav-number">1.</span> <span class="nav-text">PageRank</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -411,7 +411,7 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2019/09/20/DGL%E6%A1%86%E6%9E%B6%E4%B9%8BPageRank/">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2019/09/20/DGL%E6%A1%86%E6%9E%B6%E4%B9%8BPageRank/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -494,95 +494,82 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="pagerank">PageRank</h2>
-<blockquote>
+        <h2 id="PageRank"><a href="#PageRank" class="headerlink" title="PageRank"></a>PageRank</h2><blockquote>
 <p>主要是 PageRank 的 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/PageRank">wiki</a> 以及 <a target="_blank" rel="noopener" href="https://docs.dgl.ai/tutorials/basics/3_pagerank.html#sphx-glr-download-tutorials-basics-3-pagerank-py">dgl</a> 实现</p>
 </blockquote>
-<p>在 PageRank 的每次迭代中，每个节点首先将其 PageRank 值<strong>均匀地分散</strong>到下游节点（<span class="math inline">\(\frac{PV(v)}{D(v)}\)</span>）；每个节点的新的 PageRank 值是通过将其从<strong>邻居</strong>接收到的 PageRank 值进行<strong>聚合</strong>计算得到的，然后通过<strong>阻尼因子</strong>进行调整： <span class="math display">\[
-PV(u) = \frac{1 -d }{N} + d \times \sum \limits_{v \in N(u)} \frac{PV(v)}{D(v)}
-\]</span> 其中 <span class="math inline">\(N\)</span> 是图中的节点个数；<span class="math inline">\(D(v)\)</span> 是节点 <span class="math inline">\(v\)</span> 的出度（out-degreee）；<span class="math inline">\(N(u)\)</span> 是节点 <span class="math inline">\(u\)</span> 的邻居节点</p>
+<p>在 PageRank 的每次迭代中，每个节点首先将其 PageRank 值<strong>均匀地分散</strong>到下游节点（$\frac{PV(v)}{D(v)}$）；每个节点的新的 PageRank 值是通过将其从<strong>邻居</strong>接收到的 PageRank 值进行<strong>聚合</strong>计算得到的，然后通过<strong>阻尼因子</strong>进行调整：<br>$$<br>PV(u) = \frac{1 -d }{N} + d \times \sum \limits_{v \in N(u)} \frac{PV(v)}{D(v)}<br>$$<br>其中 $N$ 是图中的节点个数；$D(v)$ 是节点 $v$ 的出度（out-degreee）；$N(u)$ 是节点 $u$ 的邻居节点</p>
 <ul>
 <li><p><strong>Initialize</strong></p>
-<p>将每个节点的 PageRank 初始值设为 <span class="math inline">\(\frac{1}{N}\)</span>，并且将出度保存为节点特征</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g.ndata[<span class="string">&quot;pv&quot;</span>] = torch.ones(N) / N</span><br><span class="line">g.ndata[<span class="string">&quot;deg&quot;</span>] = g.out_degrees(g.nodes()).float()</span><br></pre></td></tr></table></figure></li>
+<p>将每个节点的 PageRank 初始值设为 $\frac{1}{N}$，并且将出度保存为节点特征</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g.ndata[<span class="string">&quot;pv&quot;</span>] = torch.ones(N) / N</span><br><span class="line">g.ndata[<span class="string">&quot;deg&quot;</span>] = g.out_degrees(g.nodes()).float()</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>Message Function</strong></p>
 <p>将节点的 PageRank 值除以出度，并将结果传递给它的邻居节点</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pagerank_message_func</span>(<span class="params">edges</span>):</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;pv&quot;</span> : edges.src[<span class="string">&quot;pv&quot;</span>] / edges.src[<span class="string">&quot;deg&quot;</span>]&#125;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pagerank_message_func</span>(<span class="params">edges</span>):</span></span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;pv&quot;</span> : edges.src[<span class="string">&quot;pv&quot;</span>] / edges.src[<span class="string">&quot;deg&quot;</span>]&#125;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>Reduce Function</strong></p>
 <p>从节点的 <code>mailbox</code> （<em>contains all incoming message features</em>）获得信息并聚合，从而计算新的 PageRank 值</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pagerank_reduce_func</span>(<span class="params">nodes</span>):</span></span><br><span class="line">    msgs = torch.sum(nodes.mailbox[<span class="string">&quot;pv&quot;</span>], dim=<span class="number">1</span>)</span><br><span class="line">    pv = (<span class="number">1</span> - DAMP) / N + DAMP * msgs</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="string">&quot;pv&quot;</span> : pv&#125;</span><br></pre></td></tr></table></figure>
+
 <blockquote>
-<p><img src="/images/dgl/kIMiuFb.png" /></p>
-</blockquote></li>
+<p><img src="/images/dgl/kIMiuFb.png"></p>
+</blockquote>
+</li>
 <li><p><strong>Iterations</strong></p>
 <p>注册 message function 和 reduce function</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">g.register_message_func(pagerank_message_func)</span><br><span class="line">g.register_reduce_func(pagerank_reduce_func)</span><br></pre></td></tr></table></figure>
+
 <ul>
 <li>针对某个节点的一次 PageRank 迭代</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pagerank_naive</span>(<span class="params">g</span>):</span></span><br><span class="line">    <span class="comment"># Phase #1: send out messages along all edges</span></span><br><span class="line">    <span class="keyword">for</span> u, v <span class="keyword">in</span> zip(*g.edges()):</span><br><span class="line">        g.send((u, v))</span><br><span class="line">    <span class="comment"># Phase #2: receive messages to compute new PageRank values</span></span><br><span class="line">    <span class="keyword">for</span> v <span class="keyword">in</span> g.nodes():</span><br><span class="line">        g.recv(v)</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><p><strong>improvement</strong></p>
-<p>批量操作（<em>compute on a batch of nodes or edges</em>）</p></li>
+<li><p><strong>improvement</strong> </p>
+<p>批量操作（<em>compute on a batch of nodes or edges</em>）</p>
+</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pagerank_batch</span>(<span class="params">g</span>):</span></span><br><span class="line">    g.send(g.edges())</span><br><span class="line">    g.recv(g.nodes())</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>The above code trigger message and reduce functions on multiple nodes and edges at once.</p>
 </blockquote>
 <ul>
-<li><p><strong>improvement</strong></p>
-<p>Level-2 APIs，将 <code>send</code> 和 <code>recv</code> 综合操作</p></li>
+<li><p><strong>improvement</strong> </p>
+<p>Level-2 APIs，将 <code>send</code> 和 <code>recv</code> 综合操作</p>
+</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pagerank_update</span>(<span class="params">g</span>):</span></span><br><span class="line">    g.update_all()</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li><p><strong>improvement</strong></p>
+<li><p><strong>improvement</strong> </p>
 <p>使用 DGL 内置函数</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> dgl.function <span class="keyword">as</span> fn</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pagerank_builtin</span>(<span class="params">g</span>):</span></span><br><span class="line">    g.ndata[<span class="string">&quot;pv&quot;</span>] = g.ndata[<span class="string">&quot;pv&quot;</span>] / g.ndata[<span class="string">&quot;deg&quot;</span>]</span><br><span class="line">    g.update_all(message_func=fn.copy_src(src=<span class="string">&quot;pv&quot;</span>, out=<span class="string">&quot;m&quot;</span>),</span><br><span class="line">                reduce_func=fn.sum(msg=<span class="string">&quot;m&quot;</span>, out=<span class="string">&quot;m_sum&quot;</span>))</span><br><span class="line">    g.ndata[<span class="string">&quot;pv&quot;</span>] = (<span class="number">1</span> - DAMP) / N + DAMP * g.ndata[<span class="string">&quot;m_sum&quot;</span>]</span><br></pre></td></tr></table></figure></li>
-</ul></li>
-<li><p><strong>Run</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> range(K):</span><br><span class="line">    <span class="comment">### version1</span></span><br><span class="line">    <span class="comment"># pagerank_naive(g)</span></span><br><span class="line">    <span class="comment"># pagerank_batch(g)</span></span><br><span class="line">    <span class="comment"># pagerank_update(g)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">### version2</span></span><br><span class="line">    pagerank_builtin(g)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># output g.ndata[&quot;pv&quot;]</span></span><br></pre></td></tr></table></figure></li>
-<li><p><strong>Additional, spMV</strong></p>
-<p>使用内置函数能够得到性能的提升，对于 PageRank，可以使用线性代数形式 <span class="math display">\[
-\mathbf{R}^k = \frac{1 - d}{N} \mathbf{1} + d \mathbf{A} * \mathbf{R}^{k-1}
-\]</span> <span class="math inline">\(\mathbf{R}^k\)</span> 是所有节点在第 k 次迭代时的 PageRank 值向量</p>
-<p><span class="math display">\[
-\mathbf{R} = 
-\left[
-\begin{matrix}
-PV(u_1) \\
-PV(u_2) \\
-\vdots \\
-Pv(u_N)
-\end{matrix}
-\right]
-\]</span> <span class="math inline">\(\mathbf{A}\)</span> 是图的稀疏邻接矩阵（sparse adjacency matrix）<br />
-<span class="math display">\[
-A = 
-\left[
-\begin{matrix}
-l(u_1, u_1) &amp; l(u_1, u_2) &amp; \cdots &amp; l(u_1, u_N) \\
-l(u_2, u_1) &amp; \ddots &amp;&amp; l(u_2, u_N) \\
-\vdots &amp;&amp; l(u_i, u_j) \\
-l(u_N, u_1) &amp; \cdots &amp;&amp; l(u_N, u_N)
-\end{matrix}
-\right]
-\]</span></p>
-<blockquote>
-<p>第 <span class="math inline">\(j\)</span> 列表示节点 <span class="math inline">\(u_j\)</span> 的所有出度节点</p>
-<p>第 <span class="math inline">\(i\)</span> 行表示节点 <span class="math inline">\(u_i\)</span> 的所有入度节点</p>
-</blockquote>
-<p>其中 <span class="math inline">\(l(u_i, u_j)\)</span> 表示 <span class="math display">\[
-l(u_i, u_j) = \left\{
-\begin{aligned}
-  \frac{1}{D(u_j)}, &amp;&amp; \text{if j links to i} \\
-  0, &amp;&amp; \text{otherwise}
-\end{aligned}
-\right .
-\]</span></p>
-<p>并且 <span class="math display">\[
-\sum \limits_{i=1}^N l(u_i, u_j) = 1
-\]</span></p></li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> dgl.function <span class="keyword">as</span> fn</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pagerank_builtin</span>(<span class="params">g</span>):</span></span><br><span class="line">    g.ndata[<span class="string">&quot;pv&quot;</span>] = g.ndata[<span class="string">&quot;pv&quot;</span>] / g.ndata[<span class="string">&quot;deg&quot;</span>]</span><br><span class="line">    g.update_all(message_func=fn.copy_src(src=<span class="string">&quot;pv&quot;</span>, out=<span class="string">&quot;m&quot;</span>),</span><br><span class="line">                reduce_func=fn.sum(msg=<span class="string">&quot;m&quot;</span>, out=<span class="string">&quot;m_sum&quot;</span>))</span><br><span class="line">    g.ndata[<span class="string">&quot;pv&quot;</span>] = (<span class="number">1</span> - DAMP) / N + DAMP * g.ndata[<span class="string">&quot;m_sum&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
 </ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>Run</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> range(K):</span><br><span class="line">    <span class="comment">### version1</span></span><br><span class="line">    <span class="comment"># pagerank_naive(g)</span></span><br><span class="line">    <span class="comment"># pagerank_batch(g)</span></span><br><span class="line">    <span class="comment"># pagerank_update(g)</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">### version2</span></span><br><span class="line">    pagerank_builtin(g)</span><br><span class="line">    </span><br><span class="line"><span class="comment"># output g.ndata[&quot;pv&quot;]</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Additional, spMV</strong></p>
+<p>使用内置函数能够得到性能的提升，对于 PageRank，可以使用线性代数形式<br>$$<br>\mathbf{R}^k = \frac{1 - d}{N} \mathbf{1} + d \mathbf{A} * \mathbf{R}^{k-1}<br>$$<br>$\mathbf{R}^k$ 是所有节点在第 k  次迭代时的 PageRank 值向量</p>
+<p>$$<br>\mathbf{R} =<br>\left[<br>\begin{matrix}<br>PV(u_1) \<br>PV(u_2) \<br>\vdots \<br>Pv(u_N)<br>\end{matrix}<br>\right]<br>$$<br>$\mathbf{A}$ 是图的稀疏邻接矩阵（sparse adjacency matrix）<br>$$<br>A =<br>\left[<br>\begin{matrix}<br>l(u_1, u_1) &amp; l(u_1, u_2) &amp; \cdots &amp; l(u_1, u_N) \<br>l(u_2, u_1) &amp; \ddots &amp;&amp; l(u_2, u_N) \<br>\vdots &amp;&amp; l(u_i, u_j) \<br>l(u_N, u_1) &amp; \cdots &amp;&amp; l(u_N, u_N)<br>\end{matrix}<br>\right]<br>$$</p>
+<blockquote>
+<p>第 $j$ 列表示节点 $u_j$ 的所有出度节点</p>
+<p>第 $i$ 行表示节点 $u_i$ 的所有入度节点</p>
+</blockquote>
+<p>其中 $l(u_i, u_j)$ 表示<br>$$<br>l(u_i, u_j) = \left{<br>\begin{aligned}</p>
+<pre><code>\frac&#123;1&#125;&#123;D(u_j)&#125;, &amp;&amp; \text&#123;if j links to i&#125; \\
+0, &amp;&amp; \text&#123;otherwise&#125;</code></pre>
+<p>\end{aligned}<br>\right .<br>$$</p>
+</li>
+</ul>
+<p>  并且<br>  $$<br>  \sum \limits_{i=1}^N l(u_i, u_j) = 1<br>  $$</p>
 
     </div>
 

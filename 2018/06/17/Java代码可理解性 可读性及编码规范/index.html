@@ -19,15 +19,15 @@
 
 <script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.khay.site","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"iseesaw.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="目录 0、写在前面 本文是软件构造系列文章Chapter4的总结，主要关注代码的可理解性&#x2F;可读性，以及编码规范。 1、可理解性的标准（alias：可读性） 1.1、Code quality measurement：WTFs&#x2F;min  （一群人在屋子里做code review， 传来WTF......） ##### 1.2、Metrics    WTFs&#x2F;minute   让评论代码的人有更少的疑问">
+  <meta name="description" content="目录0、写在前面本文是软件构造系列文章Chapter4的总结，主要关注代码的可理解性&#x2F;可读性，以及编码规范。 1、可理解性的标准（alias：可读性）1.1、Code quality measurement：WTFs&#x2F;min（一群人在屋子里做code review， 传来WTF……） 1.2、Metrics              WTFs&#x2F;minute         让评论代码的人有更少的疑">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java代码可理解性 可读性及编码规范">
-<meta property="og:url" content="http://blog.khay.site/2018/06/17/Java%E4%BB%A3%E7%A0%81%E5%8F%AF%E7%90%86%E8%A7%A3%E6%80%A7%20%E5%8F%AF%E8%AF%BB%E6%80%A7%E5%8F%8A%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:url" content="https://iseesaw.github.io/2018/06/17/Java%E4%BB%A3%E7%A0%81%E5%8F%AF%E7%90%86%E8%A7%A3%E6%80%A7%20%E5%8F%AF%E8%AF%BB%E6%80%A7%E5%8F%8A%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="目录 0、写在前面 本文是软件构造系列文章Chapter4的总结，主要关注代码的可理解性&#x2F;可读性，以及编码规范。 1、可理解性的标准（alias：可读性） 1.1、Code quality measurement：WTFs&#x2F;min  （一群人在屋子里做code review， 传来WTF......） ##### 1.2、Metrics    WTFs&#x2F;minute   让评论代码的人有更少的疑问">
+<meta property="og:description" content="目录0、写在前面本文是软件构造系列文章Chapter4的总结，主要关注代码的可理解性&#x2F;可读性，以及编码规范。 1、可理解性的标准（alias：可读性）1.1、Code quality measurement：WTFs&#x2F;min（一群人在屋子里做code review， 传来WTF……） 1.2、Metrics              WTFs&#x2F;minute         让评论代码的人有更少的疑">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdn.net/20180617175501734?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="article:published_time" content="2018-06-16T16:00:00.000Z">
@@ -37,7 +37,7 @@
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180617175501734?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70">
 
 
-<link rel="canonical" href="http://blog.khay.site/2018/06/17/Java%E4%BB%A3%E7%A0%81%E5%8F%AF%E7%90%86%E8%A7%A3%E6%80%A7%20%E5%8F%AF%E8%AF%BB%E6%80%A7%E5%8F%8A%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">
+<link rel="canonical" href="https://iseesaw.github.io/2018/06/17/Java%E4%BB%A3%E7%A0%81%E5%8F%AF%E7%90%86%E8%A7%A3%E6%80%A7%20%E5%8F%AF%E8%AF%BB%E6%80%A7%E5%8F%8A%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">
 
 
 <script class="page-configurations">
@@ -336,7 +336,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">0、写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E7%90%86%E8%A7%A3%E6%80%A7%E7%9A%84%E6%A0%87%E5%87%86alias%E5%8F%AF%E8%AF%BB%E6%80%A7"><span class="nav-number">3.</span> <span class="nav-text">1、可理解性的标准（alias：可读性）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#code-quality-measurementwtfsmin"><span class="nav-number">3.1.</span> <span class="nav-text">1.1、Code quality measurement：WTFs&#x2F;min</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#how-to-do-in-writing-understable-code"><span class="nav-number">3.2.</span> <span class="nav-text">1.3、How to do in writing understable code?</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E6%B3%A8%E9%87%8A%E6%96%87%E6%A1%A3"><span class="nav-number">4.</span> <span class="nav-text">2、代码中的注释文档</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#four-places-of-use-commentary"><span class="nav-number">4.1.</span> <span class="nav-text">2.1、Four places of use commentary</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%AA%E4%BB%A3%E7%A0%81pseudo-code"><span class="nav-number">5.</span> <span class="nav-text">3、伪代码（Pseudo-code）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83"><span class="nav-number">6.</span> <span class="nav-text">4、编码规范</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#naming"><span class="nav-number">6.1.</span> <span class="nav-text">4.1、– Naming</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#vertical-formatting-by-blank-lines%E4%BD%BF%E7%94%A8%E7%A9%BA%E7%99%BD%E8%A1%8C%E5%9E%82%E7%9B%B4%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">6.2.</span> <span class="nav-text">4.2、– Vertical formatting by blank lines（使用空白行垂直格式化）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#horizontal-formatting-white-spacing-indentation-line-wrapping%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%A0%BC%E7%BC%A9%E8%BF%9B%E6%B0%B4%E5%B9%B3%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">6.3.</span> <span class="nav-text">4.3、– Horizontal Formatting: White Spacing, Indentation, Line Wrapping（使用空格、缩进水平格式化）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#filepackage-organization%E5%8C%85%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%84%E7%BB%87"><span class="nav-number">6.4.</span> <span class="nav-text">4.4、– File&#x2F;Package organization（包文件的组织）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#automatic-code-formatting-in-ide"><span class="nav-number">6.5.</span> <span class="nav-text">4.5、– Automatic Code Formatting in IDE</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#following-a-standard-coding-stylesconventions"><span class="nav-number">6.6.</span> <span class="nav-text">4.6、– Following a standard coding styles&#x2F;conventions</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#using-checkstyle"><span class="nav-number">6.7.</span> <span class="nav-text">4.7、– Using CheckStyle</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0%E3%80%81%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">0、写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E5%8F%AF%E7%90%86%E8%A7%A3%E6%80%A7%E7%9A%84%E6%A0%87%E5%87%86%EF%BC%88alias%EF%BC%9A%E5%8F%AF%E8%AF%BB%E6%80%A7%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">1、可理解性的标准（alias：可读性）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1%E3%80%81Code-quality-measurement%EF%BC%9AWTFs-min"><span class="nav-number">3.1.</span> <span class="nav-text">1.1、Code quality measurement：WTFs&#x2F;min</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2%E3%80%81Metrics"><span class="nav-number">3.2.</span> <span class="nav-text">1.2、Metrics</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-3%E3%80%81How-to-do-in-writing-understable-code"><span class="nav-number">3.3.</span> <span class="nav-text">1.3、How to do in writing understable code?</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E6%B3%A8%E9%87%8A%E6%96%87%E6%A1%A3"><span class="nav-number">4.</span> <span class="nav-text">2、代码中的注释文档</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1%E3%80%81Four-places-of-use-commentary"><span class="nav-number">4.1.</span> <span class="nav-text">2.1、Four places of use commentary</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2%E3%80%81Special-comments-for-design"><span class="nav-number">4.2.</span> <span class="nav-text">2.2、Special comments for design</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E4%BC%AA%E4%BB%A3%E7%A0%81%EF%BC%88Pseudo-code%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">3、伪代码（Pseudo-code）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1%E3%80%81Six-Basic-Computer-Operations"><span class="nav-number">5.1.</span> <span class="nav-text">3.1、Six Basic Computer Operations</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83"><span class="nav-number">6.</span> <span class="nav-text">4、编码规范</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-1%E3%80%81%E2%80%93-Naming"><span class="nav-number">6.1.</span> <span class="nav-text">4.1、– Naming</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2%E3%80%81%E2%80%93-Vertical-formatting-by-blank-lines%EF%BC%88%E4%BD%BF%E7%94%A8%E7%A9%BA%E7%99%BD%E8%A1%8C%E5%9E%82%E7%9B%B4%E6%A0%BC%E5%BC%8F%E5%8C%96%EF%BC%89"><span class="nav-number">6.2.</span> <span class="nav-text">4.2、– Vertical formatting by blank lines（使用空白行垂直格式化）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3%E3%80%81%E2%80%93-Horizontal-Formatting-White-Spacing-Indentation-Line-Wrapping%EF%BC%88%E4%BD%BF%E7%94%A8%E7%A9%BA%E6%A0%BC%E3%80%81%E7%BC%A9%E8%BF%9B%E6%B0%B4%E5%B9%B3%E6%A0%BC%E5%BC%8F%E5%8C%96%EF%BC%89"><span class="nav-number">6.3.</span> <span class="nav-text">4.3、– Horizontal Formatting: White Spacing, Indentation, Line Wrapping（使用空格、缩进水平格式化）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4%E3%80%81%E2%80%93-File-Package-organization%EF%BC%88%E5%8C%85%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%84%E7%BB%87%EF%BC%89"><span class="nav-number">6.4.</span> <span class="nav-text">4.4、– File&#x2F;Package organization（包文件的组织）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-5%E3%80%81%E2%80%93-Automatic-Code-Formatting-in-IDE"><span class="nav-number">6.5.</span> <span class="nav-text">4.5、– Automatic Code Formatting in IDE</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-6%E3%80%81%E2%80%93-Following-a-standard-coding-styles-conventions"><span class="nav-number">6.6.</span> <span class="nav-text">4.6、– Following a standard coding styles&#x2F;conventions</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-7%E3%80%81%E2%80%93-Using-CheckStyle"><span class="nav-number">6.7.</span> <span class="nav-text">4.7、– Using CheckStyle</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -408,7 +408,7 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://blog.khay.site/2018/06/17/Java%E4%BB%A3%E7%A0%81%E5%8F%AF%E7%90%86%E8%A7%A3%E6%80%A7%20%E5%8F%AF%E8%AF%BB%E6%80%A7%E5%8F%8A%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2018/06/17/Java%E4%BB%A3%E7%A0%81%E5%8F%AF%E7%90%86%E8%A7%A3%E6%80%A7%20%E5%8F%AF%E8%AF%BB%E6%80%A7%E5%8F%8A%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -490,83 +490,64 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="目录">目录</h4>
-<h4 id="写在前面">0、写在前面</h4>
-<p>本文是软件构造系列文章Chapter4的总结，主要关注代码的可理解性/可读性，以及编码规范。</p>
-<h4 id="可理解性的标准alias可读性">1、可理解性的标准（alias：可读性）</h4>
-<h5 id="code-quality-measurementwtfsmin">1.1、<strong>Code quality measurement</strong>：WTFs/min</h5>
-<img src="https://img-blog.csdn.net/20180617175501734?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" /> （一群人在屋子里做code review， 传来WTF......） ##### 1.2、<strong>Metrics</strong>
-<table>
-<tr>
-<td>
-WTFs/minute
-</td>
-<td>
-让评论代码的人有更少的疑问和抱怨
-</td>
-</tr>
-<tr>
-<td>
-Length of names
-</td>
-<td>
-标识符（类名、变量名、方法名等）的长度（度量方式：所有标识符的平均长度）
-</td>
-</tr>
-<tr>
-<td>
-Name Uniqueness Ratio(UNIQ)
-</td>
-<td>
-命名独特性比例
-</td>
-</tr>
-<tr>
-<td>
-Complexity and LoC
-</td>
-<td>
-代码复杂度和代码行数
-</td>
-</tr>
-<tr>
-<td>
-Comment density（MCOMM%）
-</td>
-<td>
-注释的密度（百分比）
-</td>
-</tr>
+        <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><h4 id="0、写在前面"><a href="#0、写在前面" class="headerlink" title="0、写在前面"></a>0、写在前面</h4><p>本文是软件构造系列文章Chapter4的总结，主要关注代码的可理解性/可读性，以及编码规范。</p>
+<h4 id="1、可理解性的标准（alias：可读性）"><a href="#1、可理解性的标准（alias：可读性）" class="headerlink" title="1、可理解性的标准（alias：可读性）"></a>1、可理解性的标准（alias：可读性）</h4><h5 id="1-1、Code-quality-measurement：WTFs-min"><a href="#1-1、Code-quality-measurement：WTFs-min" class="headerlink" title="1.1、Code quality measurement：WTFs/min"></a>1.1、<strong>Code quality measurement</strong>：WTFs/min</h5><p><img src="https://img-blog.csdn.net/20180617175501734?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"><br>（一群人在屋子里做code review， 传来WTF……）</p>
+<h5 id="1-2、Metrics"><a href="#1-2、Metrics" class="headerlink" title="1.2、Metrics"></a>1.2、<strong>Metrics</strong></h5><table>
+    <tr>
+        <td>WTFs/minute</td>
+        <td>让评论代码的人有更少的疑问和抱怨</td>
+    </tr>
+    <tr>
+        <td>Length of names</td>
+        <td>标识符（类名、变量名、方法名等）的长度（度量方式：所有标识符的平均长度）</td>
+    </tr>
+    <tr>
+        <td>Name Uniqueness Ratio(UNIQ)</td>
+        <td>命名独特性比例</td>
+    </tr>
+    <tr>
+        <td>Complexity and LoC</td>
+        <td>代码复杂度和代码行数</td>
+    </tr>
+    <tr>
+        <td>Comment density（MCOMM%）</td>
+        <td>注释的密度（百分比）</td>
+    </tr>
 </table>
-<h5 id="how-to-do-in-writing-understable-code">1.3、<strong>How to do in writing understable code?</strong></h5>
-<p>Many many considerations: – Naming conventions (consisting naming scheme) 命名规范 – Limit line length and file length 代码行的最大长度、文件的最大LoC – Enough necessary comments 注释 – Code format such as Consistent Indentation, White space before and after names and operators, Code alignment, Separating blocks of code with space lines between them, etc 代码的布局：缩进、空行、对其、分块、等 – Avoid deep nesting (simple structural complexity) 避免多层嵌套—增加复杂度 – File and folder organization 文件和包的组织</p>
-<p><strong>经验：代码的可读性/可理解性很多时候比效率/性能更重要，不可读不可理解代码可能蕴含更多的错误。</strong> <strong>先写出可读易懂的代码，再去逐渐调优！</strong></p>
-<h4 id="代码中的注释文档">2、代码中的注释文档</h4>
-<h5 id="four-places-of-use-commentary">2.1、<strong>Four places of use commentary</strong></h5>
-<p>①Title comments（Documentation Comments） 介绍类的定义，重要的方法，宏定义（macro definitions），版权声明（copy right） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">* The Example class provides ...</span><br><span class="line">*&#x2F;</span><br><span class="line">public class Example &#123; ...</span><br></pre></td></tr></table></figure> ②Introductory comments 阐述类、方法、模块的目的 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">* purpose and usage of  a class</span><br><span class="line">* </span><br><span class="line">* @param parameter</span><br><span class="line">* @return  result</span><br><span class="line">* @throws exception</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure> ③Block comments <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line">* Here is a block comment.</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure> ④Single-Line / Trailing / End-Of-Line comments <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (a &#x3D;&#x3D; 2) &#123;</span><br><span class="line">return TRUE; &#x2F;* special case *&#x2F;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">return isPrime(a); &#x2F;* works only for odd a *&#x2F;</span><br></pre></td></tr></table></figure> ##### 2.2、<strong>Special comments for design</strong> – Specifications: <strong>pre-condition</strong> and <strong>post-condition</strong> (Lecture 2-2) – <strong>Rep Invariants (RI)</strong> (Lecture 2-3) – <strong>Abstract Function (AF)</strong> (Lecture 2-3) – <strong>Safety from Rep Exposure</strong> (Lecture 2-3) – <strong>Testing Strategy</strong> (Lecture 7-5) – How to ensure <strong>thread-safe</strong> (Lecture 10-1)</p>
-<h4 id="伪代码pseudo-code">3、伪代码（Pseudo-code）</h4>
-<p>用伪代码表达某个模块/算法的内部处理逻辑/流程 ##### 3.1、<strong>Six Basic Computer Operations</strong> 1. Receive information from outside（从外部获取信息）： <strong>Read</strong>，<strong>Get</strong> 2. Put out information to outside（打印外部信息）： <strong>Print</strong>， <strong>Write</strong>， <strong>Output</strong>，<strong>Display</strong>， etc 3. Perform arithmetic/computation（算法、计算）： <strong>Compute</strong>， <strong>Calculate</strong> 4. Assign value to a variable or memory location（赋值）： <strong>Set</strong>， <strong>Save</strong>，<strong>Store</strong> 5. Compare and select alternate actions（比较、选择）： <strong>If-Then-Else</strong> 6. Repeat a group of actions（循环）：<strong>For</strong>，<strong>While</strong>，<strong>Do/Until</strong></p>
-<h4 id="编码规范">4、编码规范</h4>
-<h5 id="naming">4.1、<strong>– Naming</strong></h5>
-<p>Use Intention-Revealing Names（名字意图明确） Example： methodsAreNamedWithCamelCaseLikeThis（方法名小写字母开头） variablesAreAlsoCamelCase（变量名小写字母开头） CONSTANTS_ARE_IN_ALL_CAPS_WITH_UNDERSCORES（常量全都大写，以下横线分割） ClassesAreCapitalized（类名以大写字母开头，大写字母分割） packages.are.lowercase.and.separated.by.dots（包名小写，&quot;.&quot;分割）</p>
-<h5 id="vertical-formatting-by-blank-lines使用空白行垂直格式化">4.2、<strong>– Vertical formatting by blank lines（使用空白行垂直格式化）</strong></h5>
-<p>①Length Limits（长度限制）  Limit the Number of Java Statements per Line to 1 – Multiple statement can hide code to the casual observer – Makes stepping through code difficult – Long lines cannot be handled well by many terminals and tools.  Limit the Length of Methods（方法的长度限制：大约30行） – A method should be about a “page of code” – Around 30 lines of code  Limit the Length of SourceFiles: in Java, file size is closelyrelated to class size.（每个源文件：通常200行，上限500行，文件越小越容易理解） – Typically 200 lines long, with an upper limit of 500 – Small files are easier to understand</p>
-<p>②Use Blank Lines to Organize Code（使用空白行组织代码） – Single blank lines（单空格行） • Between local variable declarations and the first code in a method（局部变量的声明和一个方法的第一行代码之间） • Before a block comment（注释块之前） • Between logical sections of code to improve readability（代码逻辑行之间） – Double blank lines（双空格行） • Between methods（方法之间） • Between class and interface definitions（类和接口的定义） • Between any other sections of a source file（源文件的每一节）</p>
-<h5 id="horizontal-formatting-white-spacing-indentation-line-wrapping使用空格缩进水平格式化">4.3、<strong>– Horizontal Formatting: White Spacing, Indentation, Line Wrapping（使用空格、缩进水平格式化）</strong></h5>
-<p>The old Hollerith limit of <strong>80</strong> is a bit arbitrary（每行宽为80个字母）</p>
-<p> Use horizontal <strong>white space</strong>（使用空格） – Before and after the assignment operators（在操作符号的前后使用空格） – Between the function names and the opening parenthesis（方法名和&quot;{&quot;之间使用空格）</p>
-<p> Code must be <strong>indented</strong> according to its nesting level（缩进） – The body of a function must be indented with respect to its header（方法本身和方法头要具有相对缩进） – the body of a for, while, or switch statement must be indented with respect to its first line, and similarly for if statements and other nested structures. （for、while、switch主体要有相对缩进）</p>
-<p> Wrapping Lines（换行） – Break after a comma.（在&quot;,&quot;后换行） – Break before an operator.（操作后换行） – Prefer higher-level breaks to lower-level breaks.（倾向于换行后每行字符尽量多且整齐） – Align the new line with the beginning of the expression at the same level on the previous line.（将新行与上一行中相同级别的表达式的开头对齐）</p>
-<h5 id="filepackage-organization包文件的组织">4.4、<strong>– File/Package organization（包文件的组织）</strong></h5>
-<p>①引用的库函数的顺序  Orders: – 1. Standard packages (java.io, java.util, etc.)（标准库函数、包） – 2.Third party packages such as com.ibm.xml.parser（第三方包） – 3. Your own packages（自己定义的包）  Within each group order the packages in alphabetic order（上述每一部分的顺序按字母表顺序排列）</p>
-<p>②每个类内部顺序 Ordering of Class Parts  1. Javadoc comments（java文档注释）  2. Class declaration statement（类声明语句）  3. Class-wide comments（类内部注释）  4. Class static variable declarations (public, protected, package,private)（类静态变量声明）  5. Class instance variable declarations (public, protected, package,private)（类实例变量声明）  6. Methods declarations（方法声明） – Constructors first（首先是构造函数） – Functional or alphabetical ordering（剩下的方法按功能或字母排序）</p>
-<p>③包结构顺序 Create a package of classes and interfaces project / src / com / mycompany / myproject / MyClass.java</p>
-<h5 id="automatic-code-formatting-in-ide">4.5、<strong>– Automatic Code Formatting in IDE</strong></h5>
-<p>IDE自动代码格式化（eg. Eclipse格式化快捷键 是 <strong>Ctrl + Shift + F</strong>，绝大多数IDE的格式化快捷键都与&quot;F&quot;有关）</p>
-<h5 id="following-a-standard-coding-stylesconventions">4.6、<strong>– Following a standard coding styles/conventions</strong></h5>
-<p>遵循标准代码风格 eg. Oracle's Java code convertions（收购了sun公司） 或者 Google's Java style guide</p>
-<h5 id="using-checkstyle">4.7、<strong>– Using CheckStyle</strong></h5>
-<p>使用CheckStyle</p>
+
+<h5 id="1-3、How-to-do-in-writing-understable-code"><a href="#1-3、How-to-do-in-writing-understable-code" class="headerlink" title="1.3、How to do in writing understable code?"></a>1.3、<strong>How to do in writing understable code?</strong></h5><p>Many many considerations:<br>    – Naming conventions (consisting naming scheme) 命名规范<br>    – Limit line length and file length 代码行的最大长度、文件的最大LoC<br>    – Enough necessary comments 注释<br>    – Code format such as Consistent Indentation, White space before and after names and operators, Code alignment, Separating blocks of code with space lines between them, etc 代码的布局：缩进、空行、对其、分块、等<br>    – Avoid deep nesting (simple structural complexity) 避免多层嵌套—增加复杂度<br>    – File and folder organization 文件和包的组织</p>
+<p><strong>经验：代码的可读性/可理解性很多时候比效率/性能更重要，不可读不可理解代码可能蕴含更多的错误。</strong><br><strong>先写出可读易懂的代码，再去逐渐调优！</strong></p>
+<h4 id="2、代码中的注释文档"><a href="#2、代码中的注释文档" class="headerlink" title="2、代码中的注释文档"></a>2、代码中的注释文档</h4><h5 id="2-1、Four-places-of-use-commentary"><a href="#2-1、Four-places-of-use-commentary" class="headerlink" title="2.1、Four places of use commentary"></a>2.1、<strong>Four places of use commentary</strong></h5><p>①Title comments（Documentation Comments）<br>介绍类的定义，重要的方法，宏定义（macro definitions），版权声明（copy right）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">* The Example class provides ...</span><br><span class="line">*&#x2F;</span><br><span class="line">public class Example &#123; ...</span><br></pre></td></tr></table></figure>
+<p>②Introductory comments<br>阐述类、方法、模块的目的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;**</span><br><span class="line">* purpose and usage of  a class</span><br><span class="line">* </span><br><span class="line">* @param parameter</span><br><span class="line">* @return  result</span><br><span class="line">* @throws exception</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure>
+<p>③Block comments</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;*</span><br><span class="line">* Here is a block comment.</span><br><span class="line">*&#x2F;</span><br></pre></td></tr></table></figure>
+<p>④Single-Line / Trailing / End-Of-Line comments</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (a &#x3D;&#x3D; 2) &#123;</span><br><span class="line">return TRUE; &#x2F;* special case *&#x2F;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">return isPrime(a); &#x2F;* works only for odd a *&#x2F;</span><br></pre></td></tr></table></figure>
+<h5 id="2-2、Special-comments-for-design"><a href="#2-2、Special-comments-for-design" class="headerlink" title="2.2、Special comments for design"></a>2.2、<strong>Special comments for design</strong></h5><p>– Specifications: <strong>pre-condition</strong> and <strong>post-condition</strong> (Lecture 2-2)<br>– <strong>Rep Invariants (RI)</strong> (Lecture 2-3)<br>– <strong>Abstract Function (AF)</strong> (Lecture 2-3)<br>– <strong>Safety from Rep Exposure</strong> (Lecture 2-3)<br>– <strong>Testing Strategy</strong> (Lecture 7-5)<br>– How to ensure <strong>thread-safe</strong> (Lecture 10-1)</p>
+<h4 id="3、伪代码（Pseudo-code）"><a href="#3、伪代码（Pseudo-code）" class="headerlink" title="3、伪代码（Pseudo-code）"></a>3、伪代码（Pseudo-code）</h4><p>用伪代码表达某个模块/算法的内部处理逻辑/流程</p>
+<h5 id="3-1、Six-Basic-Computer-Operations"><a href="#3-1、Six-Basic-Computer-Operations" class="headerlink" title="3.1、Six Basic Computer Operations"></a>3.1、<strong>Six Basic Computer Operations</strong></h5><ol>
+<li>Receive information from outside（从外部获取信息）： <strong>Read</strong>，<strong>Get</strong></li>
+<li>Put out information to outside（打印外部信息）： <strong>Print</strong>， <strong>Write</strong>， <strong>Output</strong>，<strong>Display</strong>， etc</li>
+<li>Perform arithmetic/computation（算法、计算）： <strong>Compute</strong>， <strong>Calculate</strong></li>
+<li>Assign value to a variable or memory location（赋值）： <strong>Set</strong>， <strong>Save</strong>，<strong>Store</strong></li>
+<li>Compare and select alternate actions（比较、选择）： <strong>If-Then-Else</strong></li>
+<li>Repeat a group of actions（循环）：<strong>For</strong>，<strong>While</strong>，<strong>Do/Until</strong></li>
+</ol>
+<h4 id="4、编码规范"><a href="#4、编码规范" class="headerlink" title="4、编码规范"></a>4、编码规范</h4><h5 id="4-1、–-Naming"><a href="#4-1、–-Naming" class="headerlink" title="4.1、– Naming"></a>4.1、<strong>– Naming</strong></h5><p>Use Intention-Revealing Names（名字意图明确）<br>Example：<br>methodsAreNamedWithCamelCaseLikeThis（方法名小写字母开头）<br>variablesAreAlsoCamelCase（变量名小写字母开头）<br>CONSTANTS_ARE_IN_ALL_CAPS_WITH_UNDERSCORES（常量全都大写，以下横线分割）<br>ClassesAreCapitalized（类名以大写字母开头，大写字母分割）<br>packages.are.lowercase.and.separated.by.dots（包名小写，”.”分割）</p>
+<h5 id="4-2、–-Vertical-formatting-by-blank-lines（使用空白行垂直格式化）"><a href="#4-2、–-Vertical-formatting-by-blank-lines（使用空白行垂直格式化）" class="headerlink" title="4.2、– Vertical formatting by blank lines（使用空白行垂直格式化）"></a>4.2、<strong>– Vertical formatting by blank lines（使用空白行垂直格式化）</strong></h5><p>①Length Limits（长度限制）<br> Limit the Number of Java Statements per Line to 1<br>    – Multiple statement can hide code to the casual observer<br>    – Makes stepping through code difficult<br>    – Long lines cannot be handled well by many terminals and tools.<br> Limit the Length of Methods（方法的长度限制：大约30行）<br>    – A method should be about a “page of code”<br>    – Around 30 lines of code<br> Limit the Length of SourceFiles: in Java, file size is closelyrelated to class size.（每个源文件：通常200行，上限500行，文件越小越容易理解）<br>    – Typically 200 lines long, with an upper limit of 500<br>    – Small files are easier to understand</p>
+<p>②Use Blank Lines to Organize Code（使用空白行组织代码）<br>– Single blank lines（单空格行）<br>    • Between local variable declarations and the first code in a method（局部变量的声明和一个方法的第一行代码之间）<br>    • Before a block comment（注释块之前）<br>    • Between logical sections of code to improve readability（代码逻辑行之间）<br>– Double blank lines（双空格行）<br>    • Between methods（方法之间）<br>    • Between class and interface definitions（类和接口的定义）<br>    • Between any other sections of a source file（源文件的每一节）</p>
+<h5 id="4-3、–-Horizontal-Formatting-White-Spacing-Indentation-Line-Wrapping（使用空格、缩进水平格式化）"><a href="#4-3、–-Horizontal-Formatting-White-Spacing-Indentation-Line-Wrapping（使用空格、缩进水平格式化）" class="headerlink" title="4.3、– Horizontal Formatting: White Spacing, Indentation, Line Wrapping（使用空格、缩进水平格式化）"></a>4.3、<strong>– Horizontal Formatting: White Spacing, Indentation, Line Wrapping（使用空格、缩进水平格式化）</strong></h5><p>The old Hollerith limit of <strong>80</strong> is a bit arbitrary（每行宽为80个字母）</p>
+<p>    Use horizontal <strong>white space</strong>（使用空格）<br>    – Before and after the assignment operators（在操作符号的前后使用空格）<br>    – Between the function names and the opening parenthesis（方法名和”{“之间使用空格）</p>
+<p> Code must be <strong>indented</strong> according to its nesting level（缩进）<br>    – The body of a function must be indented with respect to its header（方法本身和方法头要具有相对缩进）<br>    – the body of a for, while, or switch statement must be indented with respect to its first line, and similarly for if statements and other nested structures. （for、while、switch主体要有相对缩进）</p>
+<p>    Wrapping Lines（换行）<br>    – Break after a comma.（在”,”后换行）<br>    – Break before an operator.（操作后换行）<br>    – Prefer higher-level breaks to lower-level breaks.（倾向于换行后每行字符尽量多且整齐）<br>    – Align the new line with the beginning of the expression at the same level on the previous line.（将新行与上一行中相同级别的表达式的开头对齐）</p>
+<h5 id="4-4、–-File-Package-organization（包文件的组织）"><a href="#4-4、–-File-Package-organization（包文件的组织）" class="headerlink" title="4.4、– File/Package organization（包文件的组织）"></a>4.4、<strong>– File/Package organization（包文件的组织）</strong></h5><p>①引用的库函数的顺序<br> Orders:<br>    – 1. Standard packages (java.io, java.util, etc.)（标准库函数、包）<br>    – 2.Third party packages such as com.ibm.xml.parser（第三方包）<br>    – 3. Your own packages（自己定义的包）<br> Within each group order the packages in alphabetic order（上述每一部分的顺序按字母表顺序排列）</p>
+<p>②每个类内部顺序<br>Ordering of Class Parts<br> 1. Javadoc comments（java文档注释）<br> 2. Class declaration statement（类声明语句）<br> 3. Class-wide comments（类内部注释）<br> 4. Class static variable declarations (public, protected, package,private)（类静态变量声明）<br> 5. Class instance variable declarations (public, protected, package,private)（类实例变量声明）<br> 6. Methods declarations（方法声明）<br>    – Constructors first（首先是构造函数）<br>    – Functional or alphabetical ordering（剩下的方法按功能或字母排序）</p>
+<p>③包结构顺序<br>Create a package of classes and interfaces<br>project / src / com / mycompany / myproject / MyClass.java</p>
+<h5 id="4-5、–-Automatic-Code-Formatting-in-IDE"><a href="#4-5、–-Automatic-Code-Formatting-in-IDE" class="headerlink" title="4.5、– Automatic Code Formatting in IDE"></a>4.5、<strong>– Automatic Code Formatting in IDE</strong></h5><p>IDE自动代码格式化（eg. Eclipse格式化快捷键 是 <strong>Ctrl + Shift + F</strong>，绝大多数IDE的格式化快捷键都与”F”有关）</p>
+<h5 id="4-6、–-Following-a-standard-coding-styles-conventions"><a href="#4-6、–-Following-a-standard-coding-styles-conventions" class="headerlink" title="4.6、– Following a standard coding styles/conventions"></a>4.6、<strong>– Following a standard coding styles/conventions</strong></h5><p>遵循标准代码风格 eg. Oracle’s Java code convertions（收购了sun公司） 或者 Google’s Java style guide</p>
+<h5 id="4-7、–-Using-CheckStyle"><a href="#4-7、–-Using-CheckStyle" class="headerlink" title="4.7、– Using CheckStyle"></a>4.7、<strong>– Using CheckStyle</strong></h5><p>使用CheckStyle</p>
 
     </div>
 
