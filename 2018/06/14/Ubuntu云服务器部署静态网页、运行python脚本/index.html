@@ -22,12 +22,12 @@
     var CONFIG = {"hostname":"iseesaw.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="目录0、写在前面之前使用的是windows的服务器，现在换成了ubuntu系统。很多操作使用命令不清楚，期间遇到了许多坑，网上查了不少。但还是实现了一些简单的事情，在此把相关操作指令记录一下。大致为以下几部分使用远程连接，文件上传和下载；部署简单的静态网页，直接使用公网IP进行访问；7*24小时运行脚本–运行爬虫（使用Scrapy框架），运行微信防撤回脚本；延伸  …… 1、远程连接，文件上传下载">
+  <meta name="description" content="目录 0、写在前面 之前使用的是windows的服务器，现在换成了ubuntu系统。很多操作使用命令不清楚，期间遇到了许多坑，网上查了不少。但还是实现了一些简单的事情，在此把相关操作指令记录一下。 大致为以下几部分 使用远程连接，文件上传和下载； 部署简单的静态网页，直接使用公网IP进行访问； 7*24小时运行脚本--运行爬虫（使用Scrapy框架），运行微信防撤回脚本； 延伸 ...... 1、">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu云服务器部署静态网页、运行python脚本 ...">
 <meta property="og:url" content="https://iseesaw.github.io/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="目录0、写在前面之前使用的是windows的服务器，现在换成了ubuntu系统。很多操作使用命令不清楚，期间遇到了许多坑，网上查了不少。但还是实现了一些简单的事情，在此把相关操作指令记录一下。大致为以下几部分使用远程连接，文件上传和下载；部署简单的静态网页，直接使用公网IP进行访问；7*24小时运行脚本–运行爬虫（使用Scrapy框架），运行微信防撤回脚本；延伸  …… 1、远程连接，文件上传下载">
+<meta property="og:description" content="目录 0、写在前面 之前使用的是windows的服务器，现在换成了ubuntu系统。很多操作使用命令不清楚，期间遇到了许多坑，网上查了不少。但还是实现了一些简单的事情，在此把相关操作指令记录一下。 大致为以下几部分 使用远程连接，文件上传和下载； 部署简单的静态网页，直接使用公网IP进行访问； 7*24小时运行脚本--运行爬虫（使用Scrapy框架），运行微信防撤回脚本； 延伸 ...... 1、">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdn.net/20180614220758669?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/100/fill/I0JBQkFCMA==/dissolve/70">
 <meta property="og:image" content="https://img-blog.csdn.net/20180614221011768?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/100/fill/I0JBQkFCMA==/dissolve/70">
@@ -38,8 +38,8 @@
 <meta property="article:author" content="iseesaw">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="阿里云">
-<meta property="article:tag" content="脚本">
 <meta property="article:tag" content="ubuntu">
+<meta property="article:tag" content="脚本">
 <meta property="article:tag" content="远程连接">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://img-blog.csdn.net/20180614220758669?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/100/fill/I0JBQkFCMA==/dissolve/70">
@@ -344,7 +344,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0%E3%80%81%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">0、写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%EF%BC%8C%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD"><span class="nav-number">3.</span> <span class="nav-text">1、远程连接，文件上传下载</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-1%E3%80%81PuTTy"><span class="nav-number">3.1.</span> <span class="nav-text">1.1、PuTTy</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#1-2%E3%80%81WinSCP"><span class="nav-number">3.2.</span> <span class="nav-text">1.2、WinSCP</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5"><span class="nav-number">4.</span> <span class="nav-text">2、部署静态网页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC"><span class="nav-number">5.</span> <span class="nav-text">3、运行脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1%E3%80%81%E5%BE%AE%E4%BF%A1%E9%98%B2%E6%92%A4%E5%9B%9E%E8%84%9A%E6%9C%AC"><span class="nav-number">5.1.</span> <span class="nav-text">3.1、微信防撤回脚本</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-2%E3%80%81Scrapy%E7%88%AC%E8%99%AB%E8%84%9A%E6%9C%AC"><span class="nav-number">5.2.</span> <span class="nav-text">3.2、Scrapy爬虫脚本</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E2%80%A6"><span class="nav-number">6.</span> <span class="nav-text">4、…</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">0、写在前面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD"><span class="nav-number">3.</span> <span class="nav-text">1、远程连接，文件上传下载</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#winscp"><span class="nav-number">3.1.</span> <span class="nav-text">1.2、WinSCP</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5"><span class="nav-number">4.</span> <span class="nav-text">2、部署静态网页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E8%84%9A%E6%9C%AC"><span class="nav-number">5.</span> <span class="nav-text">3、运行脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#scrapy%E7%88%AC%E8%99%AB%E8%84%9A%E6%9C%AC"><span class="nav-number">5.1.</span> <span class="nav-text">3.2、Scrapy爬虫脚本</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#section"><span class="nav-number">6.</span> <span class="nav-text">4、...</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -498,29 +498,23 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h4 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h4><h4 id="0、写在前面"><a href="#0、写在前面" class="headerlink" title="0、写在前面"></a>0、写在前面</h4><p>之前使用的是windows的服务器，现在换成了ubuntu系统。很多操作使用命令不清楚，期间遇到了许多坑，网上查了不少。但还是实现了一些简单的事情，在此把相关操作指令记录一下。<br>大致为以下几部分<br>使用远程连接，文件上传和下载；<br>部署简单的静态网页，直接使用公网IP进行访问；<br>7*24小时运行脚本–运行爬虫（使用Scrapy框架），运行微信防撤回脚本；<br>延伸  ……</p>
-<h4 id="1、远程连接，文件上传下载"><a href="#1、远程连接，文件上传下载" class="headerlink" title="1、远程连接，文件上传下载"></a>1、远程连接，文件上传下载</h4><p>关于windows连接linux服务器的方式有很多，在此，介绍使用PuTTy进行远程连接，同时使用PuTTy自带的PSFTP进行文件上传下载，和使用WinSCP进行文件上传下载。</p>
-<h5 id="1-1、PuTTy"><a href="#1-1、PuTTy" class="headerlink" title="1.1、PuTTy"></a>1.1、PuTTy</h5><p><strong>使用PuTTy连接</strong><br>直接从<a target="_blank" rel="noopener" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">官网</a>下载安装。<br>输入公网IP和端口，进行连接；可以使用Saved Sessions将这个对话保存，下次就不用再输入IP；<br><img src="https://img-blog.csdn.net/20180614220758669?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/100/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>然后使用用户（阿里云初始为root）和密码登陆（阿里云要求密码首位大写）<br><img src="https://img-blog.csdn.net/20180614221011768?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/100/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
-<p><strong>使用PSFTP进行文件操作</strong><br>cd改变远程目录、lcd改变本地目录、ls查看远程文件列表、put上传文件、get下载文件等命令<br>cd, lcd操作同ubuntu中cd操作相同；put, get file即可上传下载文件；<br><img src="https://img-blog.csdn.net/20180614221532495?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"></p>
+        <h4 id="目录">目录</h4>
+<h4 id="写在前面">0、写在前面</h4>
+<p>之前使用的是windows的服务器，现在换成了ubuntu系统。很多操作使用命令不清楚，期间遇到了许多坑，网上查了不少。但还是实现了一些简单的事情，在此把相关操作指令记录一下。 大致为以下几部分 使用远程连接，文件上传和下载； 部署简单的静态网页，直接使用公网IP进行访问； 7*24小时运行脚本--运行爬虫（使用Scrapy框架），运行微信防撤回脚本； 延伸 ......</p>
+<h4 id="远程连接文件上传下载">1、远程连接，文件上传下载</h4>
+<p>关于windows连接linux服务器的方式有很多，在此，介绍使用PuTTy进行远程连接，同时使用PuTTy自带的PSFTP进行文件上传下载，和使用WinSCP进行文件上传下载。 ##### 1.1、PuTTy <strong>使用PuTTy连接</strong> 直接从<a target="_blank" rel="noopener" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">官网</a>下载安装。 输入公网IP和端口，进行连接；可以使用Saved Sessions将这个对话保存，下次就不用再输入IP； <img src="https://img-blog.csdn.net/20180614220758669?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/100/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 然后使用用户（阿里云初始为root）和密码登陆（阿里云要求密码首位大写） <img src="https://img-blog.csdn.net/20180614221011768?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/100/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p><strong>使用PSFTP进行文件操作</strong> cd改变远程目录、lcd改变本地目录、ls查看远程文件列表、put上传文件、get下载文件等命令 cd, lcd操作同ubuntu中cd操作相同；put, get file即可上传下载文件； <img src="https://img-blog.csdn.net/20180614221532495?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
 <p>参考：<a target="_blank" rel="noopener" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">putty windows上传文件到linux服务器 &amp; 从linux服务器 下载文件到 windows</a></p>
-<h5 id="1-2、WinSCP"><a href="#1-2、WinSCP" class="headerlink" title="1.2、WinSCP"></a>1.2、WinSCP</h5><p>简直堪称神器，可以直接拖拽文件进行上传和下载。<br>直接在<a target="_blank" rel="noopener" href="https://winscp.net/eng/download.php">官网</a>下载安装<br>使用用户和密码登陆即可<br><img src="https://img-blog.csdn.net/20180614221837844?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述"><br>可以直接在左右将文件进行拖拽，也可以点击操作进行文件夹的创建和文件删除操作。</p>
-<h4 id="2、部署静态网页"><a href="#2、部署静态网页" class="headerlink" title="2、部署静态网页"></a>2、部署静态网页</h4><p>在此使用Apache2部署网页<br>首先在服务器上 <a target="_blank" rel="noopener" href="https://blog.csdn.net/StepTimeNatural/article/details/78153740">配置Apache</a>将网页放在<code>var/www/html</code>下，其中index页必须直接在该目录下；<br>然后执行下面命令，就可以使用公网IP访问网页了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 start</span><br></pre></td></tr></table></figure>
-<p>也可以停止或重启Apache2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 stop</span><br><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 restart</span><br></pre></td></tr></table></figure>
-
-<h4 id="3、运行脚本"><a href="#3、运行脚本" class="headerlink" title="3、运行脚本"></a>3、运行脚本</h4><p>主要是关于python脚本的运行命令，以及查看执行状态命令，在网上查了不少，在此记录</p>
-<h5 id="3-1、微信防撤回脚本"><a href="#3-1、微信防撤回脚本" class="headerlink" title="3.1、微信防撤回脚本"></a>3.1、微信防撤回脚本</h5><p>参考<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/30675d75f23a">用python实现微信消息防撤回</a>代码即可<br>（有一个问题就是，该脚本时登陆的网页微信，如果此时登陆电脑微信，则网页微信被挤退，程序结束）<br>将代码文件上传到服务器，然后在该目录下执行下面操作即可（执行<code>script.py</code>文件，将运行结果输出到日志<code>out.log</code>）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup python -u script.py &gt; out.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-<p>使用下面命令查看运行状态，可以找到运行程序的PID，也可以kill程序，结束进程</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep python </span><br></pre></td></tr></table></figure>
-<p>下面操作可以查看磁盘文件大小</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">du -h filename #look the size of the file</span><br><span class="line">du -ha address #look the size of this address</span><br><span class="line">du -sh</span><br></pre></td></tr></table></figure>
-
-<h5 id="3-2、Scrapy爬虫脚本"><a href="#3-2、Scrapy爬虫脚本" class="headerlink" title="3.2、Scrapy爬虫脚本"></a>3.2、Scrapy爬虫脚本</h5><p>爬虫脚本上一篇博客讲到过，这里只讲脚本的运行；<br>有一个坑，就是在pycharm中的目录是以工作空间为根目录，所以在服务器上执行时，需要更改一下<code>import</code>的目录<br>执行爬虫脚本的命令如下，后台运行，结果输出到<code>out.log</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup scrapy crawl DingDian &gt; out.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
-
-<h4 id="4、…"><a href="#4、…" class="headerlink" title="4、…"></a>4、…</h4><p>有了上面的简单操作，当然可以延伸更多，尤其是运行脚本程序<br>有些计划<br>爬取一些有用的信息（实现rss推送更实用的信息，做一些简单整合）；然后用flask搭建一个简单的网站，可以简单的展示爬取的信息，并进行一些简单的交互；爬取大数据，结合深度学习进行一波分析，预测之类 …<br>学无止境，任重而道远</p>
+<h5 id="winscp">1.2、WinSCP</h5>
+<p>简直堪称神器，可以直接拖拽文件进行上传和下载。 直接在<a target="_blank" rel="noopener" href="https://winscp.net/eng/download.php">官网</a>下载安装 使用用户和密码登陆即可 <img src="https://img-blog.csdn.net/20180614221837844?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 可以直接在左右将文件进行拖拽，也可以点击操作进行文件夹的创建和文件删除操作。</p>
+<h4 id="部署静态网页">2、部署静态网页</h4>
+<p>在此使用Apache2部署网页 首先在服务器上 <a target="_blank" rel="noopener" href="https://blog.csdn.net/StepTimeNatural/article/details/78153740">配置Apache</a>将网页放在<code>var/www/html</code>下，其中index页必须直接在该目录下； 然后执行下面命令，就可以使用公网IP访问网页了 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 start</span><br></pre></td></tr></table></figure> 也可以停止或重启Apache2 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 stop</span><br><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 restart</span><br></pre></td></tr></table></figure></p>
+<h4 id="运行脚本">3、运行脚本</h4>
+<p>主要是关于python脚本的运行命令，以及查看执行状态命令，在网上查了不少，在此记录 ##### 3.1、微信防撤回脚本 参考<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/30675d75f23a">用python实现微信消息防撤回</a>代码即可 （有一个问题就是，该脚本时登陆的网页微信，如果此时登陆电脑微信，则网页微信被挤退，程序结束） 将代码文件上传到服务器，然后在该目录下执行下面操作即可（执行<code>script.py</code>文件，将运行结果输出到日志<code>out.log</code>） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup python -u script.py &gt; out.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure> 使用下面命令查看运行状态，可以找到运行程序的PID，也可以kill程序，结束进程 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep python </span><br></pre></td></tr></table></figure> 下面操作可以查看磁盘文件大小 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">du -h filename #look the size of the file</span><br><span class="line">du -ha address #look the size of this address</span><br><span class="line">du -sh</span><br></pre></td></tr></table></figure></p>
+<h5 id="scrapy爬虫脚本">3.2、Scrapy爬虫脚本</h5>
+<p>爬虫脚本上一篇博客讲到过，这里只讲脚本的运行； 有一个坑，就是在pycharm中的目录是以工作空间为根目录，所以在服务器上执行时，需要更改一下<code>import</code>的目录 执行爬虫脚本的命令如下，后台运行，结果输出到<code>out.log</code> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup scrapy crawl DingDian &gt; out.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure></p>
+<h4 id="section">4、...</h4>
+<p>有了上面的简单操作，当然可以延伸更多，尤其是运行脚本程序 有些计划 爬取一些有用的信息（实现rss推送更实用的信息，做一些简单整合）；然后用flask搭建一个简单的网站，可以简单的展示爬取的信息，并进行一些简单的交互；爬取大数据，结合深度学习进行一波分析，预测之类 ... 学无止境，任重而道远</p>
 
     </div>
 
@@ -532,8 +526,8 @@ mjx-container[display="true"] + br {
           <div class="post-tags">
               <a href="/tags/python/" rel="tag"># python</a>
               <a href="/tags/%E9%98%BF%E9%87%8C%E4%BA%91/" rel="tag"># 阿里云</a>
-              <a href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag"># 脚本</a>
               <a href="/tags/ubuntu/" rel="tag"># ubuntu</a>
+              <a href="/tags/%E8%84%9A%E6%9C%AC/" rel="tag"># 脚本</a>
               <a href="/tags/%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5/" rel="tag"># 远程连接</a>
           </div>
 

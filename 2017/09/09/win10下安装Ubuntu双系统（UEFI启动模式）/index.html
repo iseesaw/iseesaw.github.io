@@ -22,12 +22,12 @@
     var CONFIG = {"hostname":"iseesaw.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
   </script>
 
-  <meta name="description" content="目录前言由于 计算机系统 课程老师的推荐，准备尝试Ubuntu操作系统通常，可以在虚拟机，服务器，双系统使用Ubuntu系统。虽然已经有了服务器，但是比较卡，体验效果不佳；安装虚拟机会简单一些，但是‘要玩就玩最纯正的’（我就是从这句话开始折腾的），毅然决然的选择安装双系统。   配置说明网上的教程大致分成两种：①传统BIOS②uefi启动模式前者主要是win8以前的电脑，win8以上的系统基本都是">
+  <meta name="description" content="目录 前言 由于 计算机系统 课程老师的推荐，准备尝试Ubuntu操作系统 通常，可以在虚拟机，服务器，双系统使用Ubuntu系统。虽然已经有了服务器，但是比较卡，体验效果不佳；安装虚拟机会简单一些，但是‘要玩就玩最纯正的’（我就是从这句话开始折腾的），毅然决然的选择安装双系统。 配置说明 网上的教程大致分成两种： ①传统BIOS ②uefi启动模式 前者主要是win8以前的电脑，win8以上的系">
 <meta property="og:type" content="article">
 <meta property="og:title" content="win10下安装Ubuntu双系统（UEFI启动模式）">
 <meta property="og:url" content="https://iseesaw.github.io/2017/09/09/win10%E4%B8%8B%E5%AE%89%E8%A3%85Ubuntu%E5%8F%8C%E7%B3%BB%E7%BB%9F%EF%BC%88UEFI%E5%90%AF%E5%8A%A8%E6%A8%A1%E5%BC%8F%EF%BC%89/index.html">
 <meta property="og:site_name" content="iseesaw&#39;s blog">
-<meta property="og:description" content="目录前言由于 计算机系统 课程老师的推荐，准备尝试Ubuntu操作系统通常，可以在虚拟机，服务器，双系统使用Ubuntu系统。虽然已经有了服务器，但是比较卡，体验效果不佳；安装虚拟机会简单一些，但是‘要玩就玩最纯正的’（我就是从这句话开始折腾的），毅然决然的选择安装双系统。   配置说明网上的教程大致分成两种：①传统BIOS②uefi启动模式前者主要是win8以前的电脑，win8以上的系统基本都是">
+<meta property="og:description" content="目录 前言 由于 计算机系统 课程老师的推荐，准备尝试Ubuntu操作系统 通常，可以在虚拟机，服务器，双系统使用Ubuntu系统。虽然已经有了服务器，但是比较卡，体验效果不佳；安装虚拟机会简单一些，但是‘要玩就玩最纯正的’（我就是从这句话开始折腾的），毅然决然的选择安装双系统。 配置说明 网上的教程大致分成两种： ①传统BIOS ②uefi启动模式 前者主要是win8以前的电脑，win8以上的系">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://img.blog.csdn.net/20170909181826221?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="article:published_time" content="2017-09-08T16:00:00.000Z">
@@ -493,15 +493,27 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h3><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a><strong>前言</strong></h2><p>由于 计算机系统 课程老师的推荐，准备尝试Ubuntu操作系统<br>通常，可以在虚拟机，服务器，双系统使用Ubuntu系统。虽然已经有了服务器，但是比较卡，体验效果不佳；安装虚拟机会简单一些，但是‘要玩就玩最纯正的’（我就是从这句话开始折腾的），毅然决然的选择安装双系统。  </p>
-<h2 id="配置说明"><a href="#配置说明" class="headerlink" title="配置说明"></a><strong>配置说明</strong></h2><p>网上的教程大致分成两种：<br>①传统BIOS<br>②uefi启动模式<br>前者主要是win8以前的电脑，win8以上的系统基本都是支持后者<br>查看，win+r,msinfo32<br>可查看BIOS模式<br>本笔记本 ： IdeaPad700，win10，支持BIOS</p>
-<h2 id="折腾过程"><a href="#折腾过程" class="headerlink" title="折腾过程"></a><strong>折腾过程</strong></h2><p>前期准备，看了不少教程，开搞！折腾过程大致如下：<br>第一次使用传统BIOS（lengency BIOS），<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/34611974/answer/125205457?utm_source=com.tencent.tim&utm_medium=social">按照这个教程</a>较快的安装完成，结果开机直接进入win10。<br>继续百度，于是下载了一个easybcd，加入了Linux grub2的开机启动项。选择Ubuntu系统，出现下面问题：<br><img src="http://img.blog.csdn.net/20170909181826221?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述"><br>然后又开始百度，当时也不太清楚，格式化了磁盘。现在大致了解了一点，当时安装类型选的系统共存，导致一些问题，其次便是启动模式不对。（大致这样理解）<br>第二次，<a target="_blank" rel="noopener" href="http://m.blog.csdn.net/ysy950803/article/details/52643737">按照这个教程</a>，但是在磁盘分区后遇到了问题–无法卸载挂载点；卡在准备安装。在这次安装之前，还安装了一次，分区时，分出了一个biosgrub，结果安装失败，之后，改为efi系统分区。</p>
-<h2 id="完整的安装教程"><a href="#完整的安装教程" class="headerlink" title="完整的安装教程"></a><strong>完整的安装教程</strong></h2><p>个人大致步骤及问题:<br>①win10下分出一部分磁盘，使其处于未分配状态<br>②制作U盘启动盘<br>③进入BIOS，设置boot menu 为uefi模式，④关闭security boot (调为disable)，保存并退出<br>⑤F12选择U盘启动<br>⑥-1选择install Ubuntu进行安装，联网，安装类型选其它选项，进行分区，安装；如果遇到问题，比如，不能卸载以下挂载点，卡死在准备安装Ubuntu（有时确实需要等待一会），退出重进，选择试用<br>⑥-2选择try，试用，<br>解决无法卸载挂载点：Alt+Ctrl+T，输入sudo umount -l /cdrom(无法卸载的挂载点的文件名)<br>解决卡在准备安装Ubuntu（主要是在试用时安装会出现一直转圈），试用界面按f,之后在右下角那里输入nonacpi<br>之后安装，选择联网（由于学校是校内网，拔掉网线，用热点），第三方软件及安装更新都选择，继续<br>⑦分区，找到空闲，<br>第一，主分区，空间起始位置，交换空间，相当于虚拟内存，8192M，<br>第二，efi，逻辑分区，512M<br>第三，/home，逻辑分区，32G<br>第四，/usr，逻辑分区，32G<br>第五，/，逻辑分区，剩下所有<br>⑧安装引导，选择efi所在盘符<br>继续<br>⑨选择上海，图右边<br>⑩安装，update 那个地方会安装比较久，点击文字，查看安装详情，如果在刷新就是正常<br>十一，重启，拔掉U盘，<br>进入BIOS，开启security boot，保存<br>选择操作系统</p>
-<p>建议参考教程：<br><a target="_blank" rel="noopener" href="http://m.blog.csdn.net/ysy950803/article/details/52643737">无图教程</a><br><a target="_blank" rel="noopener" href="http://m.blog.csdn.net/DeMonliuhui/article/details/77483523">有图教程</a></p>
-<h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a><strong>后续</strong></h2><p>使用Ubuntu的问题<br>①引导界面   </p>
-<p>②win10和Ubuntu时间不一致  </p>
-<p>③相关软件安装  </p>
-<p>主要参考：<br><a target="_blank" rel="noopener" href="http://blog.csdn.net/DeMonliuhui/article/category/7111161">Ubuntu</a></p>
+        <h3 id="目录">目录</h3>
+<h2 id="前言"><strong>前言</strong></h2>
+<p>由于 计算机系统 课程老师的推荐，准备尝试Ubuntu操作系统<br />
+通常，可以在虚拟机，服务器，双系统使用Ubuntu系统。虽然已经有了服务器，但是比较卡，体验效果不佳；安装虚拟机会简单一些，但是‘要玩就玩最纯正的’（我就是从这句话开始折腾的），毅然决然的选择安装双系统。</p>
+<h2 id="配置说明"><strong>配置说明</strong></h2>
+<p>网上的教程大致分成两种： ①传统BIOS ②uefi启动模式 前者主要是win8以前的电脑，win8以上的系统基本都是支持后者 查看，win+r,msinfo32 可查看BIOS模式 本笔记本 ： IdeaPad700，win10，支持BIOS</p>
+<h2 id="折腾过程"><strong>折腾过程</strong></h2>
+<p>前期准备，看了不少教程，开搞！折腾过程大致如下：<br />
+第一次使用传统BIOS（lengency BIOS），<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/34611974/answer/125205457?utm_source=com.tencent.tim&amp;utm_medium=social">按照这个教程</a>较快的安装完成，结果开机直接进入win10。<br />
+继续百度，于是下载了一个easybcd，加入了Linux grub2的开机启动项。选择Ubuntu系统，出现下面问题： <img src="http://img.blog.csdn.net/20170909181826221?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="这里写图片描述" /> 然后又开始百度，当时也不太清楚，格式化了磁盘。现在大致了解了一点，当时安装类型选的系统共存，导致一些问题，其次便是启动模式不对。（大致这样理解）<br />
+第二次，<a target="_blank" rel="noopener" href="http://m.blog.csdn.net/ysy950803/article/details/52643737">按照这个教程</a>，但是在磁盘分区后遇到了问题--无法卸载挂载点；卡在准备安装。在这次安装之前，还安装了一次，分区时，分出了一个biosgrub，结果安装失败，之后，改为efi系统分区。</p>
+<h2 id="完整的安装教程"><strong>完整的安装教程</strong></h2>
+<p>个人大致步骤及问题: ①win10下分出一部分磁盘，使其处于未分配状态 ②制作U盘启动盘 ③进入BIOS，设置boot menu 为uefi模式，④关闭security boot (调为disable)，保存并退出 ⑤F12选择U盘启动 ⑥-1选择install Ubuntu进行安装，联网，安装类型选其它选项，进行分区，安装；如果遇到问题，比如，不能卸载以下挂载点，卡死在准备安装Ubuntu（有时确实需要等待一会），退出重进，选择试用 ⑥-2选择try，试用， 解决无法卸载挂载点：Alt+Ctrl+T，输入sudo umount -l /cdrom(无法卸载的挂载点的文件名) 解决卡在准备安装Ubuntu（主要是在试用时安装会出现一直转圈），试用界面按f,之后在右下角那里输入nonacpi 之后安装，选择联网（由于学校是校内网，拔掉网线，用热点），第三方软件及安装更新都选择，继续 ⑦分区，找到空闲， 第一，主分区，空间起始位置，交换空间，相当于虚拟内存，8192M， 第二，efi，逻辑分区，512M 第三，/home，逻辑分区，32G 第四，/usr，逻辑分区，32G 第五，/，逻辑分区，剩下所有 ⑧安装引导，选择efi所在盘符 继续 ⑨选择上海，图右边 ⑩安装，update 那个地方会安装比较久，点击文字，查看安装详情，如果在刷新就是正常 十一，重启，拔掉U盘， 进入BIOS，开启security boot，保存 选择操作系统</p>
+<p>建议参考教程：<br />
+<a target="_blank" rel="noopener" href="http://m.blog.csdn.net/ysy950803/article/details/52643737">无图教程</a> <a target="_blank" rel="noopener" href="http://m.blog.csdn.net/DeMonliuhui/article/details/77483523">有图教程</a></p>
+<h2 id="后续"><strong>后续</strong></h2>
+<p>使用Ubuntu的问题<br />
+①引导界面</p>
+<p>②win10和Ubuntu时间不一致</p>
+<p>③相关软件安装</p>
+<p>主要参考： <a target="_blank" rel="noopener" href="http://blog.csdn.net/DeMonliuhui/article/category/7111161">Ubuntu</a></p>
 
     </div>
 

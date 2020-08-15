@@ -343,7 +343,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#File-Browser"><span class="nav-number">2.</span> <span class="nav-text">File Browser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Apache2-%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">Apache2 正向代理</span></a></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#file-browser"><span class="nav-number">2.</span> <span class="nav-text">File Browser</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#apache2-%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">3.</span> <span class="nav-text">Apache2 正向代理</span></a></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -498,59 +498,40 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>之前有很多 Caddy + File Browser 搭建个人网盘的文章，但年初Caddy关闭了File Browser插件，笔者尝试了一些备用链接，最终失败。</p>
+        <h3 id="写在前面">写在前面</h3>
+<p>之前有很多 Caddy + File Browser 搭建个人网盘的文章，但年初Caddy关闭了File Browser插件，笔者尝试了一些备用链接，最终失败。</p>
 <p>同时，由于一直使用Apache作为Web服务器，管理多个站点，已经很熟练了，也踩了不少坑。最主要的是Apache可以方便的使用二级域名访问flask应用，见<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/80885396">使用Apache+mod_wsgi部署flask网站</a>。</p>
 <p>当然，File Browser可以直接作为主程序运行，使用 ip + 端口即可访问。由于Apache已经占用了80端口，并且自己有一个域名，因此想着使用二级域名访问File Browser。</p>
-<p>本文思路：</p>
-<ul>
-<li>安装 File Browser，可以使用 ip:port（如127.0.0.1:8088）访问</li>
-<li>使用 Apache 正向代理，此时可以使用 二级域名访问 File Browser（使用二级域名代理之前的ip:port）</li>
-</ul>
-<h3 id="File-Browser"><a href="#File-Browser" class="headerlink" title="File Browser"></a>File Browser</h3><p>主要参考<a target="_blank" rel="noopener" href="https://www.mivm.cn/filebrowser/">File Browser 安装及使用</a></p>
-<ul>
-<li>安装 <code>curl -fsSL https://filebrowser.xyz/get.sh | bash</code></li>
-</ul>
+<p>本文思路： - 安装 File Browser，可以使用 ip:port（如127.0.0.1:8088）访问 - 使用 Apache 正向代理，此时可以使用 二级域名访问 File Browser（使用二级域名代理之前的ip:port）</p>
+<h3 id="file-browser">File Browser</h3>
+<p>主要参考<a target="_blank" rel="noopener" href="https://www.mivm.cn/filebrowser/">File Browser 安装及使用</a> - 安装 <code>curl -fsSL https://filebrowser.xyz/get.sh | bash</code></p>
 <blockquote>
-<p>注意：在哪个文件夹下配置的，那么网盘显示的就是哪个文件夹内容</p>
+<p>注意：在哪个文件夹下配置的，那么网盘显示的就是哪个文件夹内容 - 配置 - 创建配置数据库 <code>filebrowser -d /etc/filebrowser.db config init</code> - 设置监听地址 <code>filebrowser -d /etc/filebrowser.db config set --address 0.0.0.0</code> - 设置监听端口 <code>filebrowser -d /etc/filebrowser.db config set --port 8088</code> - 设置语言环境 <code>filebrowser -d /etc/filebrowser.db config set --locale zh-cn</code> - 设置日志位置 <code>filebrowser -d /etc/filebrowser.db config set --log /var/log/filebrowser.log</code> - 添加一个用户 <code>filebrowser -d /etc/filebrowser.db users add root password --perm.admin</code>，之后使用 用户名：<code>root</code> ；密码：<code>password</code> 登录 - <a target="_blank" rel="noopener" href="https://docs.filebrowser.xyz/">更多配置</a> - 启动 <code>filebrowser -d /etc/filebrowser.db</code></p>
 </blockquote>
-<ul>
-<li>配置<ul>
-<li>创建配置数据库 <code>filebrowser -d /etc/filebrowser.db config init</code></li>
-<li>设置监听地址     <code>filebrowser -d /etc/filebrowser.db config set --address 0.0.0.0</code></li>
-<li>设置监听端口    <code>filebrowser -d /etc/filebrowser.db config set --port 8088</code></li>
-<li>设置语言环境     <code>filebrowser -d /etc/filebrowser.db config set --locale zh-cn</code></li>
-<li>设置日志位置     <code>filebrowser -d /etc/filebrowser.db config set --log /var/log/filebrowser.log</code></li>
-<li>添加一个用户     <code>filebrowser -d /etc/filebrowser.db users add root password --perm.admin</code>，之后使用 用户名：<code>root</code> ；密码：<code>password</code> 登录</li>
-<li><a target="_blank" rel="noopener" href="https://docs.filebrowser.xyz/">更多配置</a></li>
-</ul>
-</li>
-<li>启动 <code>filebrowser -d /etc/filebrowser.db</code></li>
-</ul>
 <blockquote>
 <p>注意：可以使用 screen 作为虚拟屏幕启动；screen 是十分简单好用的程序后台运行工具，请自行查询screen使用方法。</p>
 </blockquote>
-<p>经过以上配置，可以使用 ip:8088 访问File Browser<br><img src="https://img-blog.csdnimg.cn/20190828202546385.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
-<h3 id="Apache2-正向代理"><a href="#Apache2-正向代理" class="headerlink" title="Apache2 正向代理"></a>Apache2 正向代理</h3><p>Apache2 的安装使用和二级域名的解析见<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/80885396">使用Apache+mod_wsgi部署flask网站</a></p>
+<p>经过以上配置，可以使用 ip:8088 访问File Browser <img src="https://img-blog.csdnimg.cn/20190828202546385.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
+<h3 id="apache2-正向代理">Apache2 正向代理</h3>
+<p>Apache2 的安装使用和二级域名的解析见<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/80885396">使用Apache+mod_wsgi部署flask网站</a></p>
 <p>Apache2 正向代理主要参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/feiyafeiblog/p/6812792.html">Ubuntu下利用Apache转发模块实现反向代理</a></p>
 <ul>
 <li>配置Apache支持proxy和proxyreverse</li>
 </ul>
-<p>在Ubuntu系统下，Apache的配置文件在目录<code>/etc/apache2</code>下，里面会看到我们需要用到的两个目录：<br><code>mods-available</code>  Apache所有的模块<br><code>mods-enabled</code>   Apache所支持的模块</p>
+<p>在Ubuntu系统下，Apache的配置文件在目录<code>/etc/apache2</code>下，里面会看到我们需要用到的两个目录： <code>mods-available</code> Apache所有的模块 <code>mods-enabled</code> Apache所支持的模块</p>
 <p>接下来需要进入<code>mods-available</code> 找到 <code>proxy.load</code> 和 <code>proxy_http.load</code> 这两个模块，将这两个模块配置到 <code>mods-enabled</code></p>
-<p>输入命令<br><code>ln -s /etc/apache2/mods-available/proxy.load  /etc/apache2/mods-enabled/proxy.load</code><br><code>ln -s /etc/apache2/mods-available/proxy_http.load  /etc/apache2/mods-enabled/proxy_http.load</code></p>
+<p>输入命令 <code>ln -s /etc/apache2/mods-available/proxy.load  /etc/apache2/mods-enabled/proxy.load</code> <code>ln -s /etc/apache2/mods-available/proxy_http.load  /etc/apache2/mods-enabled/proxy_http.load</code></p>
 <ul>
 <li>配置虚拟主机</li>
 </ul>
-<p>同样也是在 <code>/etc/apache2</code> 下面有个关于虚拟主机的配置目录：<br><code>sites-available</code> 所有可用的虚拟主机<br><code>sites-enabled</code>  已经配置支持的主机</p>
+<p>同样也是在 <code>/etc/apache2</code> 下面有个关于虚拟主机的配置目录： <code>sites-available</code> 所有可用的虚拟主机 <code>sites-enabled</code> 已经配置支持的主机</p>
 <p>首先进入 <code>sites-available</code> 将 <code>000-default.conf</code> 拷贝并重命名为 <code>proxy.conf</code>，使用命令 <code>cp 000-default.conf proxy.conf</code></p>
-<p>编辑 <code>proxy.conf</code></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">    ServerName pan.khay.site <span class="comment">#代理的二级域名</span></span><br><span class="line">    ServerAdmin okhay@qq.com</span><br><span class="line"></span><br><span class="line">    ErrorLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">    CustomLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"></span><br><span class="line">    ProxyPass / http://123.207.198.7:8088/  <span class="comment"># 转发的主机与端口号</span></span><br><span class="line">    ProxyPassReverse / http://123.207.198.7:8088/ <span class="comment"># 如果有页面的重定向，不加此项会报错，此项正是反向代理</span></span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure>
-
+<p>编辑 <code>proxy.conf</code> <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">    ServerName pan.khay.site <span class="comment">#代理的二级域名</span></span><br><span class="line">    ServerAdmin okhay@qq.com</span><br><span class="line"></span><br><span class="line">    ErrorLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/error.log</span><br><span class="line">  CustomLog <span class="variable">$&#123;APACHE_LOG_DIR&#125;</span>/access.log combined</span><br><span class="line"></span><br><span class="line"> ProxyPass / http://123.207.198.7:8088/  <span class="comment"># 转发的主机与端口号</span></span><br><span class="line">  ProxyPassReverse / http://123.207.198.7:8088/ <span class="comment"># 如果有页面的重定向，不加此项会报错，此项正是反向代理</span></span><br><span class="line">&lt;/VirtualHost&gt;</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>注意：之后将修改的 <code>proxy.conf</code> 拷贝到 <code>sites-enabled</code>（<code>sites-enabled</code>里面没有的话将不起作用）</p>
 </blockquote>
 <p>最后，重启 Apache，<code>sudo /etc/init.d/apache2 restart</code></p>
-<p>经过以上配置，可以使用个人二级域名访问 File Browser<br><img src="https://img-blog.csdnimg.cn/20190828202616807.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"><br>File Browser界面<br><img src="https://img-blog.csdnimg.cn/2019082820440899.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述"></p>
+<p>经过以上配置，可以使用个人二级域名访问 File Browser <img src="https://img-blog.csdnimg.cn/20190828202616807.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /> File Browser界面 <img src="https://img-blog.csdnimg.cn/2019082820440899.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5,size_16,color_FFFFFF,t_70" alt="在这里插入图片描述" /></p>
 
     </div>
 

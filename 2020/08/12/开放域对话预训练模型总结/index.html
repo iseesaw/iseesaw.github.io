@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://iseesaw.github.io/images/DPLM/pre-training-dialogue-model-timeline.jpg">
 <meta property="og:image" content="https://iseesaw.github.io/images/DPLM/Transformer-Architecture-Variants.jpg">
 <meta property="article:published_time" content="2020-08-12T08:54:22.000Z">
-<meta property="article:modified_time" content="2020-08-12T12:41:34.022Z">
+<meta property="article:modified_time" content="2020-08-15T08:56:15.986Z">
 <meta property="article:author" content="iseesaw">
 <meta property="article:tag" content="回复生成">
 <meta property="article:tag" content="对话预训练">
@@ -341,7 +341,7 @@ mjx-container[display="true"] + br {
 
       <!--noindex-->
       <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E5%9F%9F%E5%AF%B9%E8%AF%9D%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">开放域对话预训练模型总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90"><span class="nav-number">1.1.</span> <span class="nav-text">相关资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.</span> <span class="nav-text">训练数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">模型架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.4.</span> <span class="nav-text">训练任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%A7%A3%E7%A0%81"><span class="nav-number">1.5.</span> <span class="nav-text">模型解码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E8%AF%84%E4%BC%B0"><span class="nav-number">1.6.</span> <span class="nav-text">效果评估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Fine-tune"><span class="nav-number">1.6.1.</span> <span class="nav-text">Fine-tune</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%84%E4%BB%B7%E6%96%B9%E5%BC%8F"><span class="nav-number">1.6.2.</span> <span class="nav-text">评价方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E6%9D%A5%E6%94%B9%E8%BF%9B"><span class="nav-number">1.7.</span> <span class="nav-text">未来改进</span></a></li></ol></li></ol></div>
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E6%94%BE%E5%9F%9F%E5%AF%B9%E8%AF%9D%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">开放域对话预训练模型总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90"><span class="nav-number">1.1.</span> <span class="nav-text">相关资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE"><span class="nav-number">1.2.</span> <span class="nav-text">训练数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">模型架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.4.</span> <span class="nav-text">训练任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%A7%A3%E7%A0%81"><span class="nav-number">1.5.</span> <span class="nav-text">模型解码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E8%AF%84%E4%BC%B0"><span class="nav-number">1.6.</span> <span class="nav-text">效果评估</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#fine-tune"><span class="nav-number">1.6.1.</span> <span class="nav-text">Fine-tune</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%84%E4%BB%B7%E6%96%B9%E5%BC%8F"><span class="nav-number">1.6.2.</span> <span class="nav-text">评价方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AA%E6%9D%A5%E6%94%B9%E8%BF%9B"><span class="nav-number">1.7.</span> <span class="nav-text">未来改进</span></a></li></ol></li></ol></div>
       </section>
       <!--/noindex-->
 
@@ -438,10 +438,16 @@ mjx-container[display="true"] + br {
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-08-12 16:54:22 / Modified: 20:41:34" itemprop="dateCreated datePublished" datetime="2020-08-12T16:54:22+08:00">2020-08-12</time>
+              <time title="Created: 2020-08-12 16:54:22" itemprop="dateCreated datePublished" datetime="2020-08-12T16:54:22+08:00">2020-08-12</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-15 16:56:15" itemprop="dateModified" datetime="2020-08-15T16:56:15+08:00">2020-08-15</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -490,389 +496,459 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="开放域对话预训练模型总结"><a href="#开放域对话预训练模型总结" class="headerlink" title="开放域对话预训练模型总结"></a>开放域对话预训练模型总结</h1><blockquote>
+        <h1 id="开放域对话预训练模型总结">开放域对话预训练模型总结</h1>
+<blockquote>
 <p>开放域对话预训练模型总结，主要包括 PLATO，DialoGPT，Meena，Blender，PLATO-2</p>
 <p>进行训练数据、模型架构、预训练任务、模型解码、结果评价等方面的对比</p>
 </blockquote>
-<p><img src="/images/DPLM/pre-training-dialogue-model-timeline.jpg"></p>
-<h2 id="相关资源"><a href="#相关资源" class="headerlink" title="相关资源"></a>相关资源</h2><blockquote>
+<p><img src="/images/DPLM/pre-training-dialogue-model-timeline.jpg" /></p>
+<h2 id="相关资源">相关资源</h2>
+<blockquote>
 <p>论文、官方博客新闻以及GitHub代码</p>
 </blockquote>
 <table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 46%" />
+<col style="width: 46%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Model</th>
 <th>Paper &amp; Blog</th>
 <th>GitHub</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>DialoGPT</td>
 <td><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1911.00536.pdf">DIALOGPT : Large-Scale Generative Pre-training for Conversational Response Generation</a><br><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/research/project/large-scale-pretraining-for-response-generation/">Microsoft Blog</a></td>
 <td><a target="_blank" rel="noopener" href="https://github.com/microsoft/DialoGPT">microsoft/DialoGPT</a><br><a target="_blank" rel="noopener" href="https://github.com/yangjianxin1/GPT2-chitchat">yangjianxin1/GPT2-chitchat</a></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Meena</td>
 <td><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2001.09977.pdf">Towards a Human-like Open-Domain Chatbot</a><br><a target="_blank" rel="noopener" href="https://ai.googleblog.com/2020/01/towards-conversational-agent-that-can.html">Google AI Blog</a></td>
 <td><a target="_blank" rel="noopener" href="https://github.com/google-research/google-research">google-research/meena</a></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Blender</td>
 <td><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2004.13637.pdf">Recipes for building an open-domain chatbot</a><br><a target="_blank" rel="noopener" href="https://parl.ai/projects/recipes/">ParlAI Docs</a></td>
 <td><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/ParlAI/tree/master/projects/blender">facebookresearch/ParlAI</a></td>
 </tr>
-<tr>
+<tr class="even">
 <td>PLATO</td>
 <td><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.07931.pdf">PLATO: Pre-trained Dialogue Generation Model with Discrete Latent Variable</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/c5OOCwOuZpm8qxbvgjZh8Q">Baidu AI</a></td>
 <td><a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/Research">PaddlePaddle/Research</a></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>PLATO-2</td>
 <td><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2006.16779">PLATO-2: Towards Building an Open-Domain Chatbot via Curriculum Learning</a><br><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ivLuoRHWrTM_5F5YVqtrtA">Baidu AI</a></td>
 <td><a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/Knover">PaddlePaddle/Knover</a></td>
 </tr>
-</tbody></table>
-<h2 id="训练数据"><a href="#训练数据" class="headerlink" title="训练数据"></a>训练数据</h2><blockquote>
+</tbody>
+</table>
+<h2 id="训练数据">训练数据</h2>
+<blockquote>
 <p>大规模类似对话数据预训练</p>
 </blockquote>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th><strong>Model</strong></th>
-<th><strong>Dataset  Size</strong></th>
-<th><strong>Dataset  Source</strong></th>
+<th><strong>Dataset Size</strong></th>
+<th><strong>Dataset Source</strong></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>DialoGPT</td>
 <td>147M samples（1.8B words）</td>
 <td>Reddit</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Meena</td>
-<td><em>341GB  text</em>（40B  words）</td>
+<td><em>341GB text</em>（40B words）</td>
 <td>Reddit</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Blender</td>
 <td>1.5B samples（88.8B words）</td>
 <td>Reddit</td>
 </tr>
-<tr>
+<tr class="even">
 <td>PLATO</td>
 <td>8.3M samples</td>
 <td>Twitter/Reddit</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>PLATO-2</td>
 <td>684M(EN)/1.2B(ZH) samples</td>
 <td>Reddit/Twitter (Chinese unk)</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
 <ul>
 <li><em>sample</em> 构造成 <em>(context, response)</em> 形式</li>
 <li>均使用 <strong>Byte-Level BPE tokenizations</strong></li>
-<li><strong>PLATO-2 中文数据</strong>（来自 <a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/Knover/issues/14#issuecomment-660826079">GitHub issue</a>）<ul>
+<li><strong>PLATO-2 中文数据</strong>（来自 <a target="_blank" rel="noopener" href="https://github.com/PaddlePaddle/Knover/issues/14#issuecomment-660826079">GitHub issue</a>）
+<ul>
 <li>考虑到不同的来源上文谈话的内容风格和话题差异比较大，为了保证训练语料的多样性和覆盖面，PLATO-2训练使用的中文数据来源是很丰富的（并不局限在一个数据集上），包括多个公开数据集，脱敏的社交媒体数据，以及人工标注数据</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 </blockquote>
-<h2 id="模型架构"><a href="#模型架构" class="headerlink" title="模型架构"></a>模型架构</h2><blockquote>
+<h2 id="模型架构">模型架构</h2>
+<blockquote>
 <p>图片来自<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1910.10683.pdf">T5论文</a></p>
-<p><img src="/images/DPLM/Transformer-Architecture-Variants.jpg"></p>
+<p><img src="/images/DPLM/Transformer-Architecture-Variants.jpg" /></p>
 </blockquote>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th><strong>Model</strong></th>
 <th><strong>Architecture</strong></th>
 <th><strong>Parameters</strong></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td><em>BERT</em></td>
 <td><em>Transformer Encoder</em></td>
 <td><em>110/340M (Chinese 110M)</em></td>
 </tr>
-<tr>
+<tr class="even">
 <td>DialoGPT</td>
-<td>Language  Model (GPT-2)</td>
+<td>Language Model (GPT-2)</td>
 <td>117/345/762M</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Meena</td>
-<td>Seq2Seq  Transformer (ET)</td>
+<td>Seq2Seq Transformer (ET)</td>
 <td>2.6B</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Blender</td>
 <td>PolyEncoder + Seq2Seq Transformer</td>
 <td>90M/2.7B/9.4B</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>PLATO</td>
-<td>Prefix  LM (UniLM)</td>
-<td>110M  (132M)</td>
+<td>Prefix LM (UniLM)</td>
+<td>110M (132M)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>PLATO-2</td>
-<td>Prefix  LM (UniLM)</td>
-<td>310M/1.6B (Chinese  333M)</td>
+<td>Prefix LM (UniLM)</td>
+<td>310M/1.6B (Chinese 333M)</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
 <ul>
-<li><strong>Retrieve and Refine Model</strong><ul>
-<li>Blender 中使用<strong>检索优化模型</strong>，在生成之前组合检索步骤，包括 Dialogue Retrieval 和 Knowledge Retrieval<ul>
-<li><strong>Dialogue retrieval</strong>，使用 PolyEncoder 检索回复，将检索回复拼接到输入之前<ul>
+<li><strong>Retrieve and Refine Model</strong>
+<ul>
+<li>Blender 中使用<strong>检索优化模型</strong>，在生成之前组合检索步骤，包括 Dialogue Retrieval 和 Knowledge Retrieval
+<ul>
+<li><strong>Dialogue retrieval</strong>，使用 PolyEncoder 检索回复，将检索回复拼接到输入之前
+<ul>
 <li>直接对话检索回复拼接到对话历史后面效果不好，需要随机替换为gold response，强迫生成模型从检索结果中 copy 词或者词组</li>
-</ul>
-</li>
-<li><strong>Knowledge retrieval</strong>，使用 <strong>Wizard Generative model</strong><ul>
+</ul></li>
+<li><strong>Knowledge retrieval</strong>，使用 <strong>Wizard Generative model</strong>
+<ul>
 <li>分别利用当前对话 topic（对话 topic 会事先告知）和最后两轮对话，各自检索出 top-K 的文章</li>
 <li>把所有文章各自分句，然后把各自文章的 title 追加到每个句子最前面，获得很多候选句子</li>
 <li>再利用 poly-encoder 结构的模型对候选句子排序，最终使用 top-1 的句子作为检索结果</li>
 <li>同时还会训练一个单独的分类器来判断是否需要从知识库中检索知识。回复某些对话 context 可以不需要额外知识，这时候就不用追加检索结果</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>UniLM 可以在 BERT 基础上改变 Mask 矩阵实现（上文使用双向 Attention，回复使用单向 Attention）<ul>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>UniLM 可以在 BERT 基础上改变 Mask 矩阵实现（上文使用双向 Attention，回复使用单向 Attention）
+<ul>
 <li>论文中经过各项任务的反复验证，UniLM 在同等规模参数量的情况下具有最佳的性价比</li>
 <li>PLATO 直接<strong>使用 BERT预训练模型参数初始化</strong>（然后再使用对话数据训练）</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 </blockquote>
-<h2 id="训练任务"><a href="#训练任务" class="headerlink" title="训练任务"></a>训练任务</h2><blockquote>
+<h2 id="训练任务">训练任务</h2>
+<blockquote>
 <p>Response Generation 为主要训练任务</p>
 </blockquote>
 <table>
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 40%" />
+<col style="width: 40%" />
+<col style="width: 12%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th><strong>Model</strong></th>
-<th><strong>Pre-training  Obejctive</strong></th>
-<th><strong>Loss  Function</strong></th>
+<th><strong>Pre-training Obejctive</strong></th>
+<th><strong>Loss Function</strong></th>
 <th><strong>Cost</strong></th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>DialoGPT</td>
 <td>Language modeling (+MMI)</td>
 <td>Cross-entropy Loss</td>
 <td>16 V100 -</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Meena</td>
 <td>Response generation</td>
 <td>Cross-entropy Loss</td>
 <td>TPU v3 Pod 30 days</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Blender</td>
-<td>Ranking for retrieval (+MLM)<br>Likelihood training for generation<br>Unlikelihood training for  generation</td>
-<td>Cross-entropy Loss  MLE</td>
+<td>Ranking for retrieval (+MLM)<br>Likelihood training for generation<br>Unlikelihood training for generation</td>
+<td>Cross-entropy Loss MLE</td>
 <td>-</td>
 </tr>
-<tr>
+<tr class="even">
 <td>PLATO</td>
 <td>Response generation<br>Latent act recognition<br>Response selection</td>
-<td>Negative log likelihood loss  (NLL)<br>Bag-Of-Words (BOW)<br>Loss  Binary Cross-entropy Loss</td>
+<td>Negative log likelihood loss (NLL)<br>Bag-Of-Words (BOW)<br>Loss Binary Cross-entropy Loss</td>
 <td>8 V100 32G 2 weeks</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>PLATO-2</td>
 <td>Ibid.<br>Response selection (+MLM)</td>
 <td>NLL/BOW+RCE/MLM</td>
 <td>64 V100 3 weeks</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
 <ul>
 <li><p><strong>DialoGPT</strong></p>
 <ul>
-<li><strong>Language Modeling</strong><br>$$<br>p(T|S) = \prod_{n=m+1}^N p (x_n | x_1, \cdots, x_{n-1})<br>$$</li>
-</ul>
-</li>
+<li><strong>Language Modeling</strong> <span class="math display">\[
+\begin{equation}
+p(T|S) = \prod_{n=m+1}^N p (x_n | x_1, \cdots, x_{n-1})
+\end{equation}
+\]</span></li>
+</ul></li>
 <li><p><strong>Blender</strong></p>
 <ul>
-<li><p><strong>Ranking for Retrieval</strong>，在检索中使用同一 batch 内其他回复作为反例</p>
-</li>
+<li><p><strong>Ranking for Retrieval</strong>，在检索中使用同一 batch 内其他回复作为反例</p></li>
 <li><p><strong>Likelihood Training for Generation</strong></p>
 <ul>
-<li>Given a dataset $\mathcal{D} = {(\mathbf{x}^{(i)}, \mathbf{y}^{(i)})}$, minimize</li>
+<li>Given a dataset <span class="math inline">\(\mathcal{D} = \{(\mathbf{x}^{(i)}, \mathbf{y}^{(i)})\}\)</span>, minimize</li>
 </ul>
-<p>$$<br>\mathcal{L}<em>{MLE}^{(i)} (p</em>{\theta}, \mathbf{x}^{(i)}, \mathbf{y}^{(i)}) = - \sum_{t=1}^{|y^{(i)}|} {\log p_{\theta}(y_t^{(i)} | \mathbf{x}^{(i)}, y_{&lt;t}^{(i)})}<br>$$</p>
+<p><span class="math display">\[
+\begin{equation}
+\mathcal{L}_{MLE}^{(i)} (p_{\theta}, \mathbf{x}^{(i)}, \mathbf{y}^{(i)}) = - \sum_{t=1}^{|y^{(i)}|} {\log p_{\theta}(y_t^{(i)} | \mathbf{x}^{(i)}, y_{&lt;t}^{(i)})}
+\end{equation}
+\]</span></p>
 <ul>
-<li>$\mathbf{x}^{(i)}$ 是输入对话历史，$\mathbf{y}^{(i)}$ 是对话回复</li>
-</ul>
-</li>
-<li><p><strong>$\alpha$-blending for retrieve and refine</strong></p>
+<li><span class="math inline">\(\mathbf{x}^{(i)}\)</span> 是输入对话历史，<span class="math inline">\(\mathbf{y}^{(i)}\)</span> 是对话回复</li>
+</ul></li>
+<li><p><strong><span class="math inline">\(\alpha\)</span>-blending for retrieve and refine</strong></p>
 <ul>
 <li>当添加检索结果后，MLE 的生成往往会忽视检索的结果</li>
-<li>训练阶段，随机将 $\alpha$ 比例的正确对话回复代替检索结果拼接（实现在检索和生成之间的平稳过渡）</li>
-</ul>
-</li>
+<li>训练阶段，随机将 <span class="math inline">\(\alpha\)</span> 比例的正确对话回复代替检索结果拼接（实现在检索和生成之间的平稳过渡）</li>
+</ul></li>
 <li><p><strong>Unlikelihood Training for Generation</strong></p>
 <ul>
-<li><p>提升正确token概率同时，降低其他token 的概率（惩罚项）；在选择负token时，选择容易组成常见n-gram的tokens；期望降低生成无意义回复的比例</p>
-</li>
-<li><p><strong>Unlikelihood Loss</strong> 在每步 $t$ 会惩罚一部分 token，记为 $\mathcal{C}<em>t$<br>$$<br>\mathcal{L}</em>{UL}^{(i)}(p_{\theta}, \mathcal{C}<em>{1:T}, \mathbf{x}, \mathbf{y}) = - \sum</em>{t=1}^{|y|} \sum_{y_c \in \mathcal{C}<em>{t}} \log (1 - p</em>{\theta}(y_c | \mathbf{x}, y_{&lt;t}))<br>$$</p>
-</li>
-<li><p>最终 Loss 为 MLE 和 UL 混合，混合比例为超参数<br>$$<br>\mathcal{L}<em>{ULE}^{(i)} = \mathcal{L}</em>{MLE}^{(i)} + \alpha \mathcal{L}_{UL}^{(i)}<br>$$</p>
-</li>
-</ul>
-</li>
-</ul>
-</li>
+<li><p>提升正确token概率同时，降低其他token 的概率（惩罚项）；在选择负token时，选择容易组成常见n-gram的tokens；期望降低生成无意义回复的比例</p></li>
+<li><p><strong>Unlikelihood Loss</strong> 在每步 <span class="math inline">\(t\)</span> 会惩罚一部分 token，记为 <span class="math inline">\(\mathcal{C}_t\)</span> <span class="math display">\[
+\begin{equation}
+\mathcal{L}_{UL}^{(i)}(p_{\theta}, \mathcal{C}_{1:T}, \mathbf{x}, \mathbf{y}) = - \sum_{t=1}^{|y|} \sum_{y_c \in \mathcal{C}_{t}} \log (1 - p_{\theta}(y_c | \mathbf{x}, y_{&lt;t}))
+\end{equation}
+\]</span></p></li>
+<li><p>最终 Loss 为 MLE 和 UL 混合，混合比例为超参数 <span class="math display">\[
+\begin{equation}
+\mathcal{L}_{ULE}^{(i)} = \mathcal{L}_{MLE}^{(i)} + \alpha \mathcal{L}_{UL}^{(i)}
+\end{equation}
+\]</span></p></li>
+</ul></li>
+</ul></li>
 <li><p><strong>PLATO</strong></p>
 <ul>
-<li><p><strong>Response Selection</strong> 和 <strong>Latent act Recognition</strong> 同时进行，使用双向注意力编码；负例从数据集中随机选择<br>$$<br>\mathcal{L}<em>{RS} = - \log p(l_r = 1 | c, r) - \log p(l_{r^\</em>}=0|c, r^_) \<br>p(l_r=1|c,r) = sigmoid(W_3 h_{[M]} + b_3)<br>$$</p>
+<li><p><strong>Response Selection</strong> 和 <strong>Latent act Recognition</strong> 同时进行，使用双向注意力编码；负例从数据集中随机选择</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\mathcal{L}_{RS} &amp;= - \log p(l_r = 1 | c, r) - \log p(l_{r^\_}=0|c, r^\_) \\
+p(l_r=1|c,r) &amp;= sigmoid(W_3 h_{[M]} + b_3)
+\end{aligned}
+\end{equation}
+\]</span></p>
 <ul>
-<li>其中 $h_{[M] \in \mathbb{R}^D}$ 是特殊 mask 标记的最后隐层状态表示（离散隐变量识别的实现中使用 <strong>Gumbel-Softmax</strong>，避免采样后梯度消失）</li>
-</ul>
-</li>
-<li><p><strong>response generation</strong> 使用单向注意力解码，计算  <strong>NLL loss</strong> 和 <strong>BOW loss</strong></p>
+<li>其中 <span class="math inline">\(h_{[M] \in \mathbb{R}^D}\)</span> 是特殊 mask 标记的最后隐层状态表示（离散隐变量识别的实现中使用 <strong>Gumbel-Softmax</strong>，避免采样后梯度消失）</li>
+</ul></li>
+<li><p><strong>response generation</strong> 使用单向注意力解码，计算 <strong>NLL loss</strong> 和 <strong>BOW loss</strong></p>
 <ul>
-<li><p>NLL loss<br>$$<br>\mathcal{L}<em>{NLL} = - \mathbb{E}</em>{z \sim p(\mathbf{z}|c, r)} \log p(r| c, z) \<br>= - \mathbb{E}<em>{z \sim p(\mathbf{z}|c, r)} \sum</em>{t=1}^T \log p(r_t| c, z, r_{&lt;t}) \<br>$$</p>
+<li><p>NLL loss</p>
+<p><span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\mathcal{L}_{NLL} &amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c, r)} \log p(r| c, z) \\
+&amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c, r)} \sum_{t=1}^T \log p(r_t| c, z, r_{&lt;t})
+\end{aligned}
+\end{equation}
+\]</span></p>
 <ul>
-<li>其中 $z$ 是 $(c,r)$ 的隐变量取值，通过概率分布$p(\mathbf{z}|c,r)$获得</li>
+<li>其中 <span class="math inline">\(z\)</span> 是 <span class="math inline">\((c,r)\)</span> 的隐变量取值，通过概率分布<span class="math inline">\(p(\mathbf{z}|c,r)\)</span>获得</li>
 </ul>
-<p>$$<br>p(\mathbf{z}|c,r) = softmax(W_1 h_{[M]} + b_1) \in \mathbb{R}^K<br>$$</p>
-</li>
-<li><p><strong>BOW loss</strong>（和NLL相比，BOW打乱了语序，促使离散隐变量学习目标回复的局部信息）<br>$$<br>\mathcal{L}<em>{BOW} = - \mathbb{E}</em>{z \sim p(\mathbf{z}|c,r)} \sum_{t=1}^T \log p(r_t|c,z) \<br>= - \mathbb{E}<em>{z \sim p(\mathbf{z}|c,r)} \sum</em>{t=1}^T \log \frac{e^{f_{r_t}}}{\sum_{v \in V} e^{f_v}}<br>$$</p>
+<p><span class="math display">\[
+\begin{equation}
+p(\mathbf{z}|c,r) = softmax(W_1 h_{[M]} + b_1) \in \mathbb{R}^K
+\end{equation}
+\]</span></p></li>
+<li><p><strong>BOW loss</strong>（和NLL相比，BOW打乱了语序，促使离散隐变量学习目标回复的局部信息） <span class="math display">\[
+\begin{equation}
+\begin{aligned}
+\mathcal{L}_{BOW} &amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c,r)} \sum_{t=1}^T \log p(r_t|c,z) \\
+&amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c,r)} \sum_{t=1}^T \log \frac{e^{f_{r_t}}}{\sum_{v \in V} e^{f_v}}
+\end{aligned}
+\end{equation}
+\]</span></p>
 <ul>
-<li>其中 $V$是整个词表，$f$ 是以非自回归的方式预测目标回复中的单词（$h_z$是离散隐变量的隐层表示）<br>$$<br>f = softmax(W_2 h_z + b_2) \in \mathbb{R}^{|V|}<br>$$</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>最终优化目标<br>$$<br>\mathcal{L}= \mathcal{L}<em>{NLL} + \mathcal{L}</em>{BOW} + \mathcal{L}_{RS}<br>$$</p>
-</li>
-</ul>
-</li>
-<li><p><strong>PLATO-2</strong> </p>
+<li>其中 <span class="math inline">\(V\)</span>是整个词表，<span class="math inline">\(f\)</span> 是以非自回归的方式预测目标回复中的单词（<span class="math inline">\(h_z\)</span>是离散隐变量的隐层表示） <span class="math display">\[
+\begin{equation}
+f = softmax(W_2 h_z + b_2) \in \mathbb{R}^{|V|}
+\end{equation}
+\]</span></li>
+</ul></li>
+</ul></li>
+<li><p>最终优化目标 <span class="math display">\[
+\begin{equation}
+\mathcal{L}= \mathcal{L}_{NLL} + \mathcal{L}_{BOW} + \mathcal{L}_{RS}
+\end{equation}
+\]</span></p></li>
+</ul></li>
+<li><p><strong>PLATO-2</strong></p>
 <ul>
 <li>采取了<strong>课程学习</strong>的方法，逐步优化参数，加快训练效率</li>
 <li><strong>PLATO-2</strong> 采用了 <strong>GPT-2 的前置正则化层</strong>的方式，以更好适应大规模训练的需求</li>
-<li>训练步骤<ul>
+<li>训练步骤
+<ul>
 <li><strong>第一步，PLATO-2 先训练了不含隐变量的模型。</strong>该模型进行的是简化的“一对一”建模，容易生成安全回复</li>
 <li><strong>第二步，在前一步模型基础上，添加上隐变量，然后同时训练 Generation + Recognition 和 Response Selection 两个不同模型。</strong>其中，<strong>Response Selection</strong> 模型在合适度预测的基础上，还添加了 <strong>Masked Language Model</strong> 作为辅助任务，以强化模型对语义的理解。</li>
-</ul>
-</li>
-</ul>
-</li>
+</ul></li>
+</ul></li>
 </ul>
 </blockquote>
-<h2 id="模型解码"><a href="#模型解码" class="headerlink" title="模型解码"></a>模型解码</h2><blockquote>
+<h2 id="模型解码">模型解码</h2>
+<blockquote>
 <p>几乎都在解码中尝试各种方式来提高回复生成的多样性</p>
 <p>各种解码方法参考 <a target="_blank" rel="noopener" href="https://huggingface.co/blog/how-to-generate">huggingface blog</a></p>
 </blockquote>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Model</th>
 <th>Decoding</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>DialoGPT</td>
 <td><strong>MMI</strong>（<strong>Top-K sampling</strong>）</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Meena</td>
 <td><strong>Sample-and-rank</strong>，Top-K-sampling（Sampling is better than Beam Search）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Blender</td>
 <td><strong>Beam Search</strong>（Length Controlling + Subsequence blocking）</td>
 </tr>
-<tr>
+<tr class="even">
 <td>PLATO</td>
 <td><strong>Beam Search</strong>（Response Selection）</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>PLATO-2</td>
 <td><strong>Beam Search</strong>（Response Coherence Estimation）</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
 <ul>
 <li><p><strong>Maximum mutual information(MMI)</strong></p>
 <ul>
-<li>使用预训练的后向模型来预测从给定回复 target 到对话历史 source 的生成概率 i.e., $P(Source|target)$</li>
+<li>使用预训练的后向模型来预测从给定回复 target 到对话历史 source 的生成概率 i.e., <span class="math inline">\(P(Source|target)\)</span></li>
 <li>MMI 倾向于惩罚枯燥乏味的回复，频繁和重复的回复会和许多上文关联，因此对于某些特殊的回复会返回较低的分数</li>
 <li>论文中使用 345M 的 GPT-2 medium model 作为 Backward model</li>
-</ul>
-</li>
+</ul></li>
 <li><p><strong>Sample-and-rank</strong></p>
 <blockquote>
 <p>强大的模型生成回复的 ppl 足够小，可以牺牲 ppl 来生成多样性回复</p>
 </blockquote>
-<ol>
+<ol type="1">
 <li>sample N independent candidate responses using plain random sampling with temperature T</li>
 <li>select the candidate response with the highest probability to use as the final output(Hinton et al., 2015)</li>
 </ol>
 <blockquote>
-<p> 给定当前所有单词的概率，T越大，概率分布越平缓，概率差距缩小，容易随机取到其他的单词</p>
+<p>给定当前所有单词的概率，T越大，概率分布越平缓，概率差距缩小，容易随机取到其他的单词</p>
 </blockquote>
-<p>$$<br>p_i = \frac{exp(z_i/T)}{\sum_j exp(z_i/T)}<br>$$</p>
-</li>
-</ul>
-<ul>
+<p><span class="math display">\[
+\begin{equation}
+p_i = \frac{exp(z_i/T)}{\sum_j exp(z_i/T)}
+\end{equation}
+\]</span></p></li>
 <li><p>Beam Search（Length Controlling，Subsequence Blocking）</p>
 <blockquote>
 <p>Beam Search改进方法较多，如果模型本身不够好，起到的作用很小（与 sampling 效果差不多）</p>
 </blockquote>
 <ul>
-<li>控制生成回复的最小长度<ul>
+<li>控制生成回复的最小长度
+<ul>
 <li>Minimum Length，设置最小长度阈值（20效果比不设置好）</li>
 <li>Predictive Length，额外训练回复长度分类器（&lt;10/20/30,&gt;30, poly-encoder），增大模型复杂度</li>
-</ul>
-</li>
+</ul></li>
 <li>屏蔽重复的子序列（Subsequence Blocking），不允许产生当前句子和前面对话（context）中已经存在的 3-grams（不显著）</li>
-</ul>
-</li>
+</ul></li>
 </ul>
 </blockquote>
-<h2 id="效果评估"><a href="#效果评估" class="headerlink" title="效果评估"></a>效果评估</h2><h3 id="Fine-tune"><a href="#Fine-tune" class="headerlink" title="Fine-tune"></a>Fine-tune</h3><blockquote>
+<h2 id="效果评估">效果评估</h2>
+<h3 id="fine-tune">Fine-tune</h3>
+<blockquote>
 <p>进行效果测试的下游任务</p>
 </blockquote>
 <table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 88%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Model</th>
 <th>Dataset</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>DialoGPT</td>
 <td>DSTC-7 Dialogue Generation Challenge<br>Reddit</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Meena</td>
 <td>-</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Blender</td>
 <td>ConvAI2<br>Wizard of Wikipedia(WoW)<br>Empathetic Dialogues<br>Blended SKill Talk</td>
 </tr>
-<tr>
+<tr class="even">
 <td>PLATO</td>
 <td>Persona-Chat<br>Daily Dialog<br>DSTC7-AVSD</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>PLATO-2</td>
 <td>-</td>
 </tr>
-</tbody></table>
-<h3 id="评价方式"><a href="#评价方式" class="headerlink" title="评价方式"></a>评价方式</h3><table>
+</tbody>
+</table>
+<h3 id="评价方式">评价方式</h3>
+<table>
 <thead>
-<tr>
+<tr class="header">
 <th>Model</th>
 <th>Static Evaluation</th>
 <th>Dynamic Evaluation</th>
@@ -881,7 +957,8 @@ mjx-container[display="true"] + br {
 <th>Desc</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>DialoGPT</td>
 <td>✔︎</td>
 <td>✘</td>
@@ -889,7 +966,7 @@ mjx-container[display="true"] + br {
 <td>✔︎</td>
 <td>fine-tuning</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Meena</td>
 <td>✔︎</td>
 <td>✔︎</td>
@@ -897,7 +974,7 @@ mjx-container[display="true"] + br {
 <td>✘</td>
 <td>human-bot chat SSA<br>PPL</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Blender</td>
 <td>✔︎</td>
 <td>✘</td>
@@ -905,7 +982,7 @@ mjx-container[display="true"] + br {
 <td>✔︎</td>
 <td>fine-tuning，self-chat</td>
 </tr>
-<tr>
+<tr class="even">
 <td>PLATO</td>
 <td>✔︎</td>
 <td>✘</td>
@@ -913,7 +990,7 @@ mjx-container[display="true"] + br {
 <td>✘</td>
 <td>fine-tuning</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>PLATO-2</td>
 <td>✔︎</td>
 <td>✔︎</td>
@@ -921,54 +998,62 @@ mjx-container[display="true"] + br {
 <td>✔︎</td>
 <td>self-chat，actual-eval</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 <blockquote>
 <ul>
-<li>Static Evaluation<ul>
+<li>Static Evaluation
+<ul>
 <li>输入预设的对话历史，要求模型预测回复（fine-tune）；自动评价+人工评价</li>
-</ul>
-</li>
-<li>Dynamic Evaluation<ul>
+</ul></li>
+<li>Dynamic Evaluation
+<ul>
 <li>和模型进行动态对话交互，根据机器人的每轮回复进行评分（一般打分区间为 {1,2,3}）</li>
 <li>（PLATO-2英文采用 Self-Chat方式，给定启动句，人工评估多轮对话效果；中文采用 Human-Bot Chat）</li>
-</ul>
-</li>
-<li>Pairwise Evaluation<ul>
+</ul></li>
+<li>Pairwise Evaluation
+<ul>
 <li>Human-Bot Chat 耗费人力、物力，采用机器人之间聊天的方式</li>
 <li>提供2组（machine-human/machine-machine）对话日志，（针对每组中的特定机器人）选择更有吸引力和接近人类的对话（ACTUAL-Eval，Self-Chat）</li>
-</ul>
-</li>
+</ul></li>
 <li>Meena 中提出 使用新的人工评价指标SSA（sensibleness and specificity avarage）；包括合理性（常识正确性、逻辑连贯性和一致性）和特定性（针对对话历史）；论文中证明 PPL 和 SSA 存在高度负相关性</li>
 </ul>
 </blockquote>
-<h2 id="未来改进"><a href="#未来改进" class="headerlink" title="未来改进"></a>未来改进</h2><table>
+<h2 id="未来改进">未来改进</h2>
+<table>
+<colgroup>
+<col style="width: 11%" />
+<col style="width: 88%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Model</th>
 <th>Challenge</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>DialoGPT</td>
 <td>-</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Meena</td>
 <td>SSA指标还可以加入其他的人类对话属性<br>包括幽默，同理心，深入的推理，问题解答和知识讨论技巧</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Blender</td>
 <td>倾向于使用高频词<br>倾向于生成重复信息（copy）<br>内容冲突和遗忘<br>无法深度对话（外部知识的使用）<br>无法深度理解<br>更长的对话仍然存在问题（低成本评测？）</td>
 </tr>
-<tr>
+<tr class="even">
 <td>PLATO</td>
 <td>-</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>PLATO-2</td>
 <td>探索强化学习应用</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
 
     </div>
 
