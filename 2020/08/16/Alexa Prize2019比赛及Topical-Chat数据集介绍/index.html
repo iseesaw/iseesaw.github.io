@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"iseesaw.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="本文将介绍 Alexa Prize Socialbot Challenge 2019 的比赛情况以及 Topical-Chat 数据集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Alexa Prize 2019 比赛及 Topical-Chat 数据集介绍">
+<meta property="og:url" content="https://iseesaw.github.io/2020/08/16/Alexa%20Prize2019%E6%AF%94%E8%B5%9B%E5%8F%8ATopical-Chat%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="本文将介绍 Alexa Prize Socialbot Challenge 2019 的比赛情况以及 Topical-Chat 数据集">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://iseesaw.github.io/images/alexa-prize/topic-popularity.png">
+<meta property="og:image" content="https://iseesaw.github.io/images/alexa-prize/Cobot-diagram-workflow.png">
+<meta property="og:image" content="https://iseesaw.github.io/images/alexa-prize/cobot-architecture.png">
+<meta property="og:image" content="https://iseesaw.github.io/images/alexa-prize/dialogue-act-intent-classification.png">
+<meta property="og:image" content="https://iseesaw.github.io/images/alexa-prize/topical-chat-gpt-model.png">
+<meta property="og:image" content="https://iseesaw.github.io/images/alexa-prize/topical-chat-topics.png">
+<meta property="og:image" content="https://iseesaw.github.io/images/alexa-prize/reddit-key.png">
+<meta property="og:image" content="https://iseesaw.github.io/images/alexa-prize/build-data.png">
+<meta property="article:published_time" content="2020-08-16T12:19:22.000Z">
+<meta property="article:modified_time" content="2020-08-16T12:23:25.080Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="Alexa Prize">
+<meta property="article:tag" content="Socialbot">
+<meta property="article:tag" content="Topical Chat">
+<meta property="article:tag" content="开放域对话">
+<meta property="article:tag" content="数据集">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://iseesaw.github.io/images/alexa-prize/topic-popularity.png">
+
+
+<link rel="canonical" href="https://iseesaw.github.io/2020/08/16/Alexa%20Prize2019%E6%AF%94%E8%B5%9B%E5%8F%8ATopical-Chat%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Alexa Prize 2019 比赛及 Topical-Chat 数据集介绍 | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#aelxa-prize-%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Aelxa Prize 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#alexa-prize-2019"><span class="nav-number">2.</span> <span class="nav-text">Alexa Prize 2019</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E5%AE%89%E6%8E%92"><span class="nav-number">2.1.</span> <span class="nav-text">时间安排</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AF%94%E8%B5%9B%E7%BB%93%E6%9E%9C"><span class="nav-number">2.2.</span> <span class="nav-text">比赛结果</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conversaton-bot-cobot"><span class="nav-number">3.</span> <span class="nav-text">Conversaton Bot (CoBot)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E5%9B%BE"><span class="nav-number">3.1.</span> <span class="nav-text">系统图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%B6%E6%9E%84%E5%9B%BE"><span class="nav-number">3.2.</span> <span class="nav-text">架构图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#topical-chat-%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">4.</span> <span class="nav-text">Topical Chat 数据集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D"><span class="nav-number">4.1.</span> <span class="nav-text">基本介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E6%9D%A5%E6%BA%90"><span class="nav-number">4.2.</span> <span class="nav-text">知识来源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E8%8E%B7%E5%8F%96"><span class="nav-number">4.3.</span> <span class="nav-text">数据获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%A4%BA%E4%BE%8B"><span class="nav-number">4.4.</span> <span class="nav-text">数据示例</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">167</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2020/08/16/Alexa%20Prize2019%E6%AF%94%E8%B5%9B%E5%8F%8ATopical-Chat%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Alexa Prize 2019 比赛及 Topical-Chat 数据集介绍
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-08-16 20:19:22 / Modified: 20:23:25" itemprop="dateCreated datePublished" datetime="2020-08-16T20:19:22+08:00">2020-08-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index"><span itemprop="name">NLP</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/08/16/Alexa%20Prize2019%E6%AF%94%E8%B5%9B%E5%8F%8ATopical-Chat%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D/" class="post-meta-item leancloud_visitors" data-flag-title="Alexa Prize 2019 比赛及 Topical-Chat 数据集介绍" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2020/08/16/Alexa%20Prize2019%E6%AF%94%E8%B5%9B%E5%8F%8ATopical-Chat%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/16/Alexa%20Prize2019%E6%AF%94%E8%B5%9B%E5%8F%8ATopical-Chat%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+            <div class="post-description">本文将介绍 Alexa Prize Socialbot Challenge 2019 的比赛情况以及 Topical-Chat 数据集</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p><a target="_blank" rel="noopener" href="https://developer.amazon.com/alexaprize">Alexa Prize Socialbot Challenge 2019</a></p>
+</blockquote>
+<h2 id="aelxa-prize-介绍">Aelxa Prize 介绍</h2>
+<p>Alexa 是为 Amazon Echo 提供支持的语音服务，它使客户仅使用语音即可以更直观的方式与周围的世界互动。</p>
+<p><strong>Alexa Prize Socialbot Grand Challenge</strong> 是一项旨在促进对话 AI 发展的大学生竞赛，比赛中要求参赛队伍开发一个<strong>社交机器人</strong>（将作为 Alexa 的一项技能），可以在<strong>热门话题和新闻事件</strong>上与人类进行连贯和持续的互动交流。</p>
+<p>参赛队伍的任务包括<strong>知识获取，自然语言理解，自然语言生成，上下文建模，常识推理和对话管理</strong>。具体来说，机器人需要具备的能力包括：1）自然的话题切换；2）合理地选择知识；3）能够将事实和观点（知识）融入到对话中。</p>
+<p>参赛队伍的机器人将与<strong>全美 Alexa 用户</strong>进行对话，并且 Alexa 用户可以进行<strong>打分和反馈</strong>，来将帮助参赛队伍改进算法。</p>
+<p>最终获胜的队伍将获得50万美金的大奖。</p>
+<h2 id="alexa-prize-2019">Alexa Prize 2019</h2>
+<p>Alexa Prize 从 2017 年开始，目前已经举办三届，第三届（即 Alexa Prize 2019）于不久前结束（2020年7月）。</p>
+<h3 id="时间安排">时间安排</h3>
+<p>Alexa Prize 2019 整个比赛持续一年多，具体时间安排如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th>时间</th>
+<th>事件</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2019年3月-5月</td>
+<td>队伍申请阶段</td>
+</tr>
+<tr class="even">
+<td>2019年6月</td>
+<td>宣布参赛队伍（10支）</td>
+</tr>
+<tr class="odd">
+<td>2019年12月</td>
+<td>向Alexa用户开放</td>
+</tr>
+<tr class="even">
+<td>2020年2月-3月</td>
+<td>四分之一决赛（9支）</td>
+</tr>
+<tr class="odd">
+<td>2020年3月-4月</td>
+<td>半决赛（5支）</td>
+</tr>
+<tr class="even">
+<td>2020年5月-7月</td>
+<td>决赛（3支）</td>
+</tr>
+<tr class="odd">
+<td>2020年7月</td>
+<td>专家团评审</td>
+</tr>
+</tbody>
+</table>
+<h3 id="比赛结果">比赛结果</h3>
+<p>半决赛期间，所有队伍的平均得分（Alexa 用户评分，最高5分）为 <strong>3.47 分</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>year</th>
+<th>average score</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2017</td>
+<td>2.91</td>
+</tr>
+<tr class="even">
+<td>2018</td>
+<td>3.19</td>
+</tr>
+<tr class="odd">
+<td>2019</td>
+<td>3.47</td>
+</tr>
+</tbody>
+</table>
+<p>来自埃默里大学的冠军队伍<strong>平均对话时长</strong>为 7分37秒</p>
+<table>
+<thead>
+<tr class="header">
+<th>award</th>
+<th>final score</th>
+<th>team</th>
+<th>school</th>
+<th>last</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>$500,000</td>
+<td>3.81</td>
+<td>Emora</td>
+<td>The Emory University</td>
+<td>#4</td>
+</tr>
+<tr class="even">
+<td>$100,000</td>
+<td>3.17</td>
+<td>Chirpy Cardinal</td>
+<td>Stanford University</td>
+<td>-</td>
+</tr>
+<tr class="odd">
+<td>$50,000</td>
+<td>3.14</td>
+<td>Alquist</td>
+<td>Czech Technical University</td>
+<td>#2</td>
+</tr>
+</tbody>
+</table>
+<p>Alexa 用户最感兴趣的话题（橙色）包括电影、科技和音乐；其中 Other 为其他主题，COVID-19 新冠病毒占比重较大</p>
+<p><img src="/images/alexa-prize/topic-popularity.png" style="zoom: 45%;" /></p>
+<p>比赛过程中，参赛队伍将获得 Amazon 官方支持，包括 研究经费，Alexa 设备，AWS 服务等。除此以外，本次比赛还提供了对话机器人工具包（CoBot）以及主题对话数据集（Topical-Chat）。</p>
+<h2 id="conversaton-bot-cobot">Conversaton Bot (CoBot)</h2>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1812.10757">Advancing the State of the Art in Open Domain Dialog Systems through the Alexa Prize</a></p>
+</blockquote>
+<h3 id="系统图">系统图</h3>
+<p>CoBot 是一个对话式机器人工具包，提供一系列的基本模块和预训练模型供参赛队伍使用，可以最大程度上减少参赛队伍在基础架构部署和扩展上耗费的精力。</p>
+<p>CoBot 的系统图和工作流程如下：</p>
+<ul>
+<li>Alexa Skill Kit 提供基本的语音技术功能，比如进行自动语音识别（ASR，automatic speech recognize）以及意图识别等功能</li>
+<li>AWS lambda 是 AWS 的无服务器接口，开发者可以定义基本的响应事件，来调用后续的触发模块</li>
+<li>AWS ECS 是 Amazon 的云服务，可以托管预训练等模型</li>
+<li>TTS 将文本转为语音（text-to-speech）</li>
+</ul>
+<p><img src="/images/alexa-prize/Cobot-diagram-workflow.png" /></p>
+<h3 id="架构图">架构图</h3>
+<p>CoBot 内置默认的处理流程，包括主题分类、情感识别和NER等 NLU 模块功能，Evi QA 服务，以及全局的状态管理器（用 key-value 形式保存在 DynamoDB 中），开发者可以在此基础上开发自定义功能及模块。</p>
+<p><img src="/images/alexa-prize/cobot-architecture.png" /></p>
+<ul>
+<li><p>Dialog Act and Topic Classification</p>
+<ul>
+<li><p>使用基于 层次RNN（HRNN）的主题和意图联合分类模型（单层 GRU）</p>
+<p><img src="/images/alexa-prize/dialogue-act-intent-classification.png" style="zoom:50%;" /></p></li>
+</ul></li>
+<li><p>Neural Response Generation</p>
+<ul>
+<li><p>基于 <a target="_blank" rel="noopener" href="https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf">GPT-2</a> 在 <a target="_blank" rel="noopener" href="https://m.media-amazon.com/images/G/01/amazon.jobs/3079_Paper._CB1565131710_.pdf">Topical-Chat 数据集</a>上训练融入知识的生成模型</p></li>
+<li><p>调用时，输入使用的知识以及对话历史，输出融入知识的回复</p>
+<p><img src="/images/alexa-prize/topical-chat-gpt-model.png" style="zoom:50%;" /></p></li>
+</ul></li>
+</ul>
+<h2 id="topical-chat-数据集">Topical Chat 数据集</h2>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://m.media-amazon.com/images/G/01/amazon.jobs/3079_Paper._CB1565131710_.pdf">Topical-Chat : Towards Knowledge-Grounded Open-Domain Conversations</a></p>
+</blockquote>
+<h3 id="基本介绍">基本介绍</h3>
+<p>Topical-Chat 是一个<strong>基于知识的人人对话数据集</strong>，其基础知识涵盖<strong>8个主题</strong>，包括<strong>多个知识来源</strong>（Washington Post Articles，Reddit fun facts，Wikipedia articles about entities）。</p>
+<p>每轮对话标注了<strong>说话人情感以及回复的质量</strong>，总共包括 <strong>10,000 个会话（conversation）</strong>，<strong>230, 000 轮对话（utterance）</strong>。</p>
+<p>对话中没有明确定义参与者的角色（Wizard of Wikipedia， WoW 中存在一个 Wizard 进行对话引导），更符合开放域真实对话特点。</p>
+<p>所有主题及对应的实体个数如下：</p>
+<p><img src="/images/alexa-prize/topical-chat-topics.png" style="zoom:50%;" /></p>
+<h3 id="知识来源">知识来源</h3>
+<p>知识库由三个原语构成：<strong>实体（entity），事实（fact）和文章（article）</strong>，获取过程如下：</p>
+<ul>
+<li><strong>实体选择（Entities Selection）</strong>
+<ul>
+<li>从前几届比赛用户的回复选择最受欢迎的 <strong>8 个主题共300个实体</strong>。</li>
+</ul></li>
+<li><strong>事实选择（Fact Selection）</strong>
+<ul>
+<li>获取 300个实体的 Wikipedia 引言部分，然后使用 Reddit 众包为每个实体构造 8-10 个有趣的事实（根据 Wikipedia 引言构造）；</li>
+<li>对于每个实体，构造两个版本的 Wikipedia 引导部分，第一个是包含引导部分第一句话的短版本（50词），第二个是使用 TextRank 生成引导部分的摘要介绍（150 词）。</li>
+</ul></li>
+<li><strong>文章选择（Article Selection）</strong>
+<ul>
+<li>获取 Washington Post 自2018年以来的文章（600-1000词），总共 3088篇文章，<strong>每篇文章至少包含三个上述的实体</strong>。</li>
+</ul></li>
+</ul>
+<p>知识集构造中，以article作为基础，并且构造多种信息不对称的知识集，并提供给对话双方使用（双方知识集可能不对称，模拟现实情况）。</p>
+<p>对话构造过程中，每个实体包含 wikipedia 的短介绍或者摘要介绍以及有趣的事实，过程中对当前回复进行情感标注（Angry, Disgusted, Fearful, Sad, Happy, Surprised, Curious to Dive Deeper, Neutral），以及对对话上一个回复的知识使用进行质量评估（Poor，Not Good，Passable，Good and Excellent）。</p>
+<h3 id="数据获取">数据获取</h3>
+<p>从 GitHub <a target="_blank" rel="noopener" href="https://github.com/alexa/Topical-Chat">alexa/Topical-Chat</a> 下载，需要构造知识源数据，过程如下：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.reddit.com/prefs/apps/">reddit 偏好设置</a> 创建 API Key</p>
+<blockquote>
+<p>参考 <a target="_blank" rel="noopener" href="https://github.com/alexa/Topical-Chat/issues/1">Instructions for getting Reddit API keys? #1</a></p>
+</blockquote>
+<p><img src="/images/alexa-prize/reddit-key.png" /></p></li>
+<li><p>运行命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Ensure that your Python Interpreter &gt;= 3.7</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/alexa/Topical-Chat.git</span><br><span class="line"><span class="built_in">cd</span> Topical-Chat/src</span><br><span class="line">pip install -r requirements.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># Building the data requires Reddit credentials. </span></span><br><span class="line"><span class="comment"># Please create your own Reddit API keys: https://www.reddit.com</span></span><br><span class="line">python3 build.py  --reddit_client_id CLIENT_ID --reddit_client_secret CLIENT_SECRET --reddit_user_agent USER_AGENT</span><br></pre></td></tr></table></figure></li>
+<li><p>构造过程（科学上网，用时2个小时）</p>
+<p><img src="/images/alexa-prize/build-data.png" /></p></li>
+</ul>
+<h3 id="数据示例">数据示例</h3>
+<p>数据集中包含 frequent 和 rare 两种验证集，前者中的实体在训练集中频繁出现，后者在训练集中较少甚至没有出现过。数据集统计数据如下：</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>Train</th>
+<th>Valid Freq.</th>
+<th>Valid Rare</th>
+<th>Test Freq.</th>
+<th>Test Rare</th>
+<th>All</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td># conversations</td>
+<td>8628</td>
+<td>539</td>
+<td>539</td>
+<td>539</td>
+<td>539</td>
+<td>10784</td>
+</tr>
+<tr class="even">
+<td># utterances</td>
+<td>188378</td>
+<td>11681</td>
+<td>11692</td>
+<td>11760</td>
+<td>11770</td>
+<td>235434</td>
+</tr>
+<tr class="odd">
+<td>average # turns per conversation</td>
+<td>21.8</td>
+<td>21.6</td>
+<td>21.7</td>
+<td>21.8</td>
+<td>21.8</td>
+<td>21.8</td>
+</tr>
+<tr class="even">
+<td>average length of utterance</td>
+<td>19.5</td>
+<td>19.8</td>
+<td>19.8</td>
+<td>19.5</td>
+<td>19.5</td>
+<td>19.6</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>对话文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&lt;conversation_id&gt;: &#123;</span><br><span class="line"> <span class="string">&quot;article_url&quot;</span>: &lt;article url&gt;,</span><br><span class="line"> <span class="string">&quot;config&quot;</span>: &lt;config&gt;, <span class="comment"># one of A,B,C, D</span></span><br><span class="line">    <span class="string">&quot;content&quot;</span>: [ <span class="comment"># ordered list of conversation turns</span></span><br><span class="line">      &#123; </span><br><span class="line">       <span class="string">&quot;agent&quot;</span>: <span class="string">&quot;agent_1&quot;</span>, <span class="comment"># or “agent_2”,</span></span><br><span class="line">      <span class="string">&quot;message&quot;</span> : &lt;message text&gt;,</span><br><span class="line">      </span><br><span class="line">    <span class="comment"># Angry, Disgusted, Fearful, Sad, Happy, Surprised, Curious to Dive Deeper, Neutral</span></span><br><span class="line">     <span class="string">&quot;sentiment&quot;</span>: &lt;text&gt;, </span><br><span class="line">      </span><br><span class="line">    <span class="comment"># Factual Section 1-3, Article Section 1-4 and/or Personal Knowledge</span></span><br><span class="line">      <span class="string">&quot;knowledge_source&quot;</span> : [<span class="string">&quot;AS1&quot;</span>, <span class="string">&quot;Personal Knowledge&quot;</span>,...], </span><br><span class="line">      </span><br><span class="line">        <span class="string">&quot;turn_rating&quot;</span>: <span class="string">&quot;Poor&quot;</span>, <span class="comment"># Note: changed from number to actual annotated text</span></span><br><span class="line">      &#125;,…</span><br><span class="line">  ],</span><br><span class="line">    <span class="string">&quot;conversation_rating&quot;</span>: &#123;</span><br><span class="line">       <span class="string">&quot;agent_1&quot;</span>: <span class="string">&quot;Good&quot;</span>, <span class="comment"># Poor, Not Good, Passable, Good and Excellent</span></span><br><span class="line">        <span class="string">&quot;agent_2&quot;</span>: <span class="string">&quot;Excellent&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">  ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>知识集合</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">&lt;conversation_id&gt; : &#123;</span><br><span class="line">    <span class="string">&quot;config&quot;</span> : &lt;config&gt;,</span><br><span class="line">    <span class="string">&quot;agent_1&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;FS1&quot;</span>: &#123;</span><br><span class="line">           <span class="string">&quot;entity&quot;</span>: &lt;entity name&gt;,</span><br><span class="line">           <span class="string">&quot;shortened_wiki_lead_section&quot;</span>: &lt;section text&gt;,</span><br><span class="line">           <span class="string">&quot;fun_facts&quot;</span>: [ &lt;fact1_text&gt;, &lt;fact2_text&gt;,...]</span><br><span class="line">          &#125;,</span><br><span class="line">        <span class="string">&quot;FS2&quot;</span>: &#123;...&#125;</span><br><span class="line">     &#125;,</span><br><span class="line">    <span class="string">&quot;agent_2&quot;</span>: &#123;</span><br><span class="line">         <span class="string">&quot;FS1&quot;</span>: &#123;</span><br><span class="line">             <span class="string">&quot;entity&quot;</span>: &lt;entity name&gt;,</span><br><span class="line">             <span class="string">&quot;shortened_wiki_lead_section&quot;</span>: &lt;section text&gt;,</span><br><span class="line">             <span class="string">&quot;fun_facts&quot;</span>: [ &lt;fact1_text&gt;, &lt;fact2_text&gt;,...],</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="string">&quot;FS2&quot;</span>: &#123;...&#125;</span><br><span class="line">      &#125;,</span><br><span class="line">    <span class="string">&quot;article&quot;</span>: &#123;</span><br><span class="line">          <span class="string">&quot;url&quot;</span>: &lt;url&gt;,</span><br><span class="line">          <span class="string">&quot;headline&quot;</span> : &lt;headline text&gt;,</span><br><span class="line">          <span class="string">&quot;AS1&quot;</span>: &lt;section <span class="number">1</span> text&gt;,</span><br><span class="line">          <span class="string">&quot;AS2&quot;</span>: &lt;section <span class="number">2</span> text&gt;,</span><br><span class="line">          <span class="string">&quot;AS3&quot;</span>: &lt;section <span class="number">3</span> text&gt;,</span><br><span class="line">          <span class="string">&quot;AS4&quot;</span>: &lt;section <span class="number">4</span> text&gt;</span><br><span class="line">     &#125;</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Alexa-Prize/" rel="tag"># Alexa Prize</a>
+              <a href="/tags/Socialbot/" rel="tag"># Socialbot</a>
+              <a href="/tags/Topical-Chat/" rel="tag"># Topical Chat</a>
+              <a href="/tags/%E5%BC%80%E6%94%BE%E5%9F%9F%E5%AF%B9%E8%AF%9D/" rel="tag"># 开放域对话</a>
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E9%9B%86/" rel="tag"># 数据集</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/08/12/%E5%BC%80%E6%94%BE%E5%9F%9F%E5%AF%B9%E8%AF%9D%E9%A2%84%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B%E6%80%BB%E7%BB%93/" rel="prev" title="开放域对话预训练模型总结">
+                  <i class="fa fa-chevron-left"></i> 开放域对话预训练模型总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
