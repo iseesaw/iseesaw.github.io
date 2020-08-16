@@ -343,7 +343,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -396,6 +396,113 @@ mjx-container[display="true"] + br {
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2018/10/05/pdf%E6%A0%B9%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E4%B9%A6%E7%AD%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/10/05/pdf%E6%A0%B9%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E4%B9%A6%E7%AD%BE/" class="post-title-link" itemprop="url">pdf根据目录生成书签</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-10-05 00:00:00" itemprop="dateCreated datePublished" datetime="2018-10-05T00:00:00+08:00">2018-10-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:53:10" itemprop="dateModified" datetime="2019-09-08T11:53:10+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/10/05/pdf%E6%A0%B9%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E4%B9%A6%E7%AD%BE/" class="post-meta-item leancloud_visitors" data-flag-title="pdf根据目录生成书签" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/10/05/pdf%E6%A0%B9%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E4%B9%A6%E7%AD%BE/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/10/05/pdf%E6%A0%B9%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E4%B9%A6%E7%AD%BE/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="准备">1 准备</h4>
+<p>①Adobe Acrobat ②Autobookmark插件 &gt;Step1 <a target="_blank" rel="noopener" href="https://www.evermap.com/downloads.asp">下载链接</a> &gt;Step2 关闭Adobe Acrobat后，直接安装，会自动添加到Adobe Acrobat &gt;（<a target="_blank" rel="noopener" href="https://www.evermap.com/AutoBookmark/AutoBookmarkByTextStyle.pdf">使用说明</a>）</p>
+<p>③Python3.6 ④pdf电子书的目录bookmarks.txt &gt;直接从目录复制（注意编码问题，可能乱码） &gt;或从豆瓣图书复制</p>
+<h4 id="得到书签标准文件">2 得到书签标准文件</h4>
+<h5 id="bookmarks.txt标准文件">2.1 bookmarks.txt标准文件</h5>
+<p>所需目录格式，需要一、二级标题鲜明，第二级使用<strong>tab键</strong>缩进（Notepad中选中整体直接tab进行缩进，或shift+tab回缩），第三级类推 标题和页数之间使用<strong>英文逗号</strong>分割 格式示例： <img src="https://img-blog.csdn.net/20181005211914480?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述" /> ##### 2.2 正则转换示例 将一般形式的目录，如 1 Part1 . . . . . . . . . . . . . . . . . . . 1 1.1 Part1.1 . . . . . . . . . . . . . . . . . . . 3 1.2 Part1.2 . . . . . . . . . . . . . . . . . . . 5 1.3 Part1.3 . . . . . . . . . . . . . . . . . . . 6 2 Part2 . . . . . . . . . . . . . . . . . . . 9 2.1 Part2.1 . . . . . . . . . . . . . . . . . . . 11 2.2 Part2.2 . . . . . . . . . . . . . . . . . . . 21 转为如上标准格式 python正则代码参考</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">&#x27;test.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    raw_lines = f.readlines()</span><br><span class="line">lines = []</span><br><span class="line"><span class="comment"># 去掉中间逗点</span></span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> raw_lines:</span><br><span class="line">    <span class="comment">#逗点之间使用了空格</span></span><br><span class="line">   pattern_dots = re.compile(<span class="string">r&#x27;(\s\.)+\s&#x27;</span>)</span><br><span class="line"> new_line = pattern_dots.sub(<span class="string">&#x27;,&#x27;</span>, line)</span><br><span class="line">  lines.append(new_line)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改绝对页数</span></span><br><span class="line">new_lines = []</span><br><span class="line"><span class="keyword">for</span> line <span class="keyword">in</span> lines:</span><br><span class="line"> pattern = re.compile(<span class="string">r&#x27;,\d+&#x27;</span>)</span><br><span class="line">   <span class="comment"># 提取页数</span></span><br><span class="line">   page = pattern.findall(line)</span><br><span class="line">  <span class="comment"># 将页数修改为正确的页数</span></span><br><span class="line">    new_page = int(page[<span class="number">0</span>][<span class="number">1</span>:]) + <span class="number">12</span></span><br><span class="line">  new_line = line.replace(page[<span class="number">0</span>],<span class="string">&#x27;,&#x27;</span>+str(new_page))</span><br><span class="line">  new_lines.append(new_line)</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">&#x27;test_bookmarks.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  <span class="keyword">for</span> line <span class="keyword">in</span> new_lines:</span><br><span class="line">      f.write(line)</span><br></pre></td></tr></table></figure>
+<h4 id="使用插件自动生成">3使用插件自动生成</h4>
+<p>将pdf用Adobe Acrobat打开，依次选择 <img src="https://img-blog.csdn.net/20181005213203255?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述" /> 然后选择目录文件，点击OK生成 <img src="https://img-blog.csdn.net/20181005213417480?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里插入图片描述" /></p>
+<h4 id="其他">4 其他</h4>
+<p>Question1、使用Adobe Acrobat编辑pdf后，无法保存，出现“<strong>文档无法保存，读取文档时出现错误（153）</strong>” A：使用<strong>PDF-XChange_Editor</strong>打开pdf后，<strong>另存为</strong>新的文件，之后操作新的文件即可 <a target="_blank" rel="noopener" href="https://pdf-xchange.eu/DL/pdf-xchange-editor.htm">Download1</a> <a target="_blank" rel="noopener" href="https://download.csdn.net/download/qq_36962569/10702801">Download2</a></p>
+<p>Question2、关于pdf软件 PDF阅读，推荐Edge，轻便，带目录，可作标记 Adobe Acrobat 用于处理pdf，合并、生成标签等 PDF-XChange-Editor 可编辑处理，速度较快</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -644,112 +751,6 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2018/06/22/%EF%BC%88%E4%B8%89%EF%BC%89%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="iseesaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="iseesaw's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/22/%EF%BC%88%E4%B8%89%EF%BC%89%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">（三）面向性能调优的Java设计模式</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-22T00:00:00+08:00">2018-06-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:51:44" itemprop="dateModified" datetime="2019-09-08T11:51:44+08:00">2019-09-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/06/22/%EF%BC%88%E4%B8%89%EF%BC%89%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-meta-item leancloud_visitors" data-flag-title="（三）面向性能调优的Java设计模式" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2018/06/22/%EF%BC%88%E4%B8%89%EF%BC%89%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/06/22/%EF%BC%88%E4%B8%89%EF%BC%89%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="目录">目录</h4>
-<h4 id="面向代码调优的设计模式">3、面向代码调优的设计模式</h4>
-<p>本质：减少对象的创建，尽量使用已经创建的对象 ##### 3.1、singleton（单例模式） 强制client只能创建一个object，避免因为new操作所带来的时空性能损失，也便于复用。 <img src="https://img-blog.csdn.net/20180622223434136?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line">  private static final Singleton instance &#x3D; null;</span><br><span class="line">  private Singleton() &#123;…&#125;</span><br><span class="line"> public static Singleton getInstance() &#123;</span><br><span class="line">      &#x2F;* 通过判断，只创建一个实例 *&#x2F;</span><br><span class="line">      if (instance &#x3D;&#x3D; null)</span><br><span class="line">           instance &#x3D; new Singleton();</span><br><span class="line">      return instance;</span><br><span class="line">  &#125;</span><br><span class="line">    &#x2F;&#x2F; other operations and data</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 关于单例模式的判断和代理模式的例子，有类似之处，都是判断如果已经有了，则不再创建，直接返回，降低代价和空间。 <strong>Recall</strong> 在<code>state</code>模式中，两个状态是<code>static</code>的，当返回新状态时，返回<code>Statet2.instance</code>或<code>State1.instance</code>，保证始终只有两个状态实例。</p>
-<h5 id="prototype原型模式">3.2、prototype（原型模式）</h5>
-<p>通过克隆而非new来创建object。 继承树 <img src="https://img-blog.csdn.net/20180622230015555?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 创建实现Cloneable接口的抽象类，作为原型 *&#x2F;</span><br><span class="line">public abstract class Shape implements Cloneable &#123;</span><br><span class="line">  private String id;</span><br><span class="line">    protected String type;</span><br><span class="line">    abstract void draw();</span><br><span class="line"> public String getType()&#123; return type; &#125;</span><br><span class="line"> public String getId() &#123; return id; &#125;</span><br><span class="line">    public void setId(String id) &#123; this.id &#x3D; id;&#125;</span><br><span class="line">  &#x2F;* 实现clone方法 *&#x2F;</span><br><span class="line"> public Object clone() &#123;</span><br><span class="line">      Object clone &#x3D; null;</span><br><span class="line">     try &#123;</span><br><span class="line">            clone &#x3D; super.clone();</span><br><span class="line">       &#125; catch (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">        return clone;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 继承原型类 *&#x2F;</span><br><span class="line">public class Rectangle extends Shape &#123;</span><br><span class="line">    public Rectangle()&#123;</span><br><span class="line">      type &#x3D; &quot;Rectangle&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line"> public void draw() &#123;</span><br><span class="line"> ...</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 继承原型类 *&#x2F;</span><br><span class="line">public class Square extends Shape &#123;</span><br><span class="line">   public Square()&#123;</span><br><span class="line">     type &#x3D; &quot;Square&quot;;</span><br><span class="line">   &#125;</span><br><span class="line">    @Override</span><br><span class="line"> public void draw() &#123;</span><br><span class="line"> ...</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">   Shape rectangle &#x3D; new Rectangle();</span><br><span class="line">   Shape square &#x3D; new Square();</span><br><span class="line"> &#x2F;* 使用克隆 *&#x2F;</span><br><span class="line">  Shape clonedShape1 &#x3D; (Shape) rectangle.clone();</span><br><span class="line">  Shape clonedShape2 &#x3D; (Shape) square.clone();</span><br></pre></td></tr></table></figure> 分析，首先要实现一个原型抽象类，该抽象类实现<code>Cloneable</code>接口，重写<code>Object clone()</code>方法；然后两个继承原型的类，rectangle和square；客户端中创建分别创建两个原型子类的对象，之后再创建对象，直接使用对象的<code>clone()</code>方法获得对象即可。</p>
-<p>需要注意的是<code>Cloneable</code>的<code>clone</code>操作默认实现的是<strong>浅复制</strong>，对象内部的变量都是直接填充的，可能会出现内存泄露。</p>
-<p>实现<code>Cloneable</code>接口时，仅仅实现<code>Cloneable</code>不够，还需要<code>override</code> <code>clone()</code>方法并将<code>public</code>。因为<code>Object.clone()</code>是<code>protected</code>：它可以被同包(java.lang)下以及它 (java.lang.Object)的子类访问。自定义类无法直接使用<code>Object.clone()</code>：没有访问权限(invisible)，故需要<code>override</code>。</p>
-<h5 id="flyweight轻量模式">3.3、flyweight（轻量模式）</h5>
-<p>该模式允许在应用中不同部分共享使用objects，降低大量objects带来的时空代价。 内部状态和外部状态， 内部特征：不管在什么场合使用该object，内部特征都不变； 外部特征：不是固定的，需要在不同场合分别计算并产生变化。 继承树 <img src="https://img-blog.csdn.net/20180622224925516?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 外特征 *&#x2F;</span><br><span class="line">public enum Color &#123;Red, Green, Blank, Blue, Yellow&#125;</span><br><span class="line">&#x2F;* 可共享对象的抽象接口 *&#x2F;</span><br><span class="line">public interface IAlien &#123;</span><br><span class="line"> String Shape &#x3D; null; &#x2F;&#x2F;内部特征</span><br><span class="line">    String getShape();</span><br><span class="line">    Color getColor(int madLevel); &#x2F;&#x2F;外部特征</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 可共享对象类，Large Shape *&#x2F;</span><br><span class="line">class LargeAlien implements IAlien&#123;</span><br><span class="line">  private String shape &#x3D; &quot;Large Shape&quot;;</span><br><span class="line">  public String getShape() &#123;</span><br><span class="line">       return shape;</span><br><span class="line"> &#125;</span><br><span class="line">    &#x2F;* 设置外部特征 *&#x2F;</span><br><span class="line">    public Color getColor(int madLevel) &#123;</span><br><span class="line">        if (madLevel &#x3D;&#x3D; 0)</span><br><span class="line">          return Color.Green;</span><br><span class="line">       else if (madLevel &#x3D;&#x3D; 1)</span><br><span class="line">         return Color.Red;</span><br><span class="line">     else</span><br><span class="line">          return Color.Blue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 可共享对象，Little Shape *&#x2F;</span><br><span class="line">class LittleAlien implements IAlien &#123;</span><br><span class="line">    private String shape &#x3D; &quot;Little Shape&quot;;</span><br><span class="line"> public String getShape() &#123;</span><br><span class="line">       return shape;</span><br><span class="line"> &#125;</span><br><span class="line">    public Color getColor(int madLevel) &#123;</span><br><span class="line">        if (madLevel &#x3D;&#x3D; 0)</span><br><span class="line">          return Color.Red;</span><br><span class="line">     else if (madLevel &#x3D;&#x3D; 1)</span><br><span class="line">         return Color.Blue;</span><br><span class="line">        else</span><br><span class="line">          return Color.Green;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 工厂，可共享对象的索引，维护所有对象，根据client请求返回相应的对象 *&#x2F;</span><br><span class="line">public class AlienFactory &#123;</span><br><span class="line">    private Map&lt;String, IAlien&gt; list &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">  public void SaveAlien(String index, IAlien alien) &#123;</span><br><span class="line">      list.put(index,alien);</span><br><span class="line">    &#125;</span><br><span class="line">    public IAlien GetAlien(String index) &#123;</span><br><span class="line">       return list.get(index);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">   &#x2F;* 工厂方法，保存两个对象 *&#x2F;</span><br><span class="line">   AlienFactory factory &#x3D; new AlienFactory();</span><br><span class="line">   factory.SaveAlien(&quot;LargeAlien&quot;, new LargeAlien());</span><br><span class="line">  factory.SaveAlien(&quot;LittleAlien&quot;, new LittleAlien());</span><br><span class="line">    &#x2F;* 根据索引从工厂取出对象 *&#x2F;</span><br><span class="line">   IAlien a &#x3D; factory.GetAlien(&quot;LargeAlien&quot;);</span><br><span class="line"> IAlien b &#x3D; factory.GetAlien(&quot;LittleAlien&quot;);</span><br><span class="line">    &#x2F;* 内部特征 *&#x2F;</span><br><span class="line">  System.out.println(&quot;Showing intrinsic states...&quot;);</span><br><span class="line">  System.out.println(&quot;Alien of type LargeAlien is &quot; + a.getShape());</span><br><span class="line">  System.out.println(&quot;Alien of type LittleAlien is &quot; + b.getShape());</span><br><span class="line"> &#x2F;* 外部特征 *&#x2F;</span><br><span class="line">  System.out.println(&quot;Showing extrinsic states...&quot;);</span><br><span class="line">  System.out.println(&quot;Alien of type LargeAlien is &quot; + a.getColor(0).toString());</span><br><span class="line">  System.out.println(&quot;Alien of type LargeAlien is &quot; + a.getColor(1).toString());</span><br><span class="line">  System.out.println(&quot;Alien of type LittleAlien is &quot; + b.getColor(0).toString());</span><br><span class="line"> System.out.println(&quot;Alien of type LittleAlien is &quot; + b.getColor(1).toString());</span><br></pre></td></tr></table></figure> 总体来看，有一个共享对象接口，以及两个实现接口的类，包括内部特征（已经确定）和外部特征（根据传入参数，确定特征）；一个工厂方法，保存所有的共享对象，根据传入索引返回共享对象；客户端调用时，可以传入参数，选择不同的外在特征，使得一个共享对象可以表现出不同的外在特征，而内在特征相同。</p>
-<h5 id="object-pool对象池">3.4、object pool（对象池）</h5>
-<p>很多时候，object不用了就直接扔掉，需要时再new一个新object。对象复用：不要扔掉object，留着后续复用。 代价：原本可被GC的对象，现在要留在pool中，导致内存浪费——用空间换时间。 继承树 <img src="https://img-blog.csdn.net/20180622231044786?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;vector pool，管理所有的实例对象</span><br><span class="line">public static VectorPoolMgr vectorPoolMgr &#x3D; new VectorPoolMgr(25);</span><br><span class="line">...</span><br><span class="line">public void someMethod( ) &#123;</span><br><span class="line">  &#x2F;&#x2F;Get a new Vector. We only use the vector to do some stuff</span><br><span class="line"> &#x2F;&#x2F;within this method, and then we dump the vector (i.e., it</span><br><span class="line"> &#x2F;&#x2F;is not returned or assigned to a state variable)</span><br><span class="line">  &#x2F;&#x2F;so this is a perfect candidate for reusing Vectors.</span><br><span class="line">   &#x2F;&#x2F;Use a factory method instead of &#39;new Vector( )&#39;</span><br><span class="line">   &#x2F;* 从vector pool中取出一个对象，而不是使用new *&#x2F;</span><br><span class="line">  Vector v &#x3D; vectorPoolMgr.getVector();</span><br><span class="line">    &#x2F;* 对对象的属性进行修改 *&#x2F;</span><br><span class="line">    ... &#x2F;&#x2F;do vector manipulation stuff</span><br><span class="line">  &#x2F;&#x2F;and the extra work is that we have to explicitly tell the</span><br><span class="line"> &#x2F;&#x2F;pool manager that we have finished with the vector</span><br><span class="line">    &#x2F;* 返回对象 *&#x2F;</span><br><span class="line">  vectorPoolMgr.returnVector(v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 类似一个工厂方法，对象池管理所有废弃的对象，当需要一个新的对象时，从对象池中出去即可，取出后可以对属性进行修改配置，然后返回。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2018/06/22/%EF%BC%88%E4%B8%80%EF%BC%89%E9%9D%A2%E5%90%91%E5%A4%8D%E7%94%A8%E6%80%A7%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -849,6 +850,112 @@ mjx-container[display="true"] + br {
 <h6 id="iterator迭代器模式">1.2.3、Iterator（迭代器模式）</h6>
 <p>Iterable接口：实现该接口的集合对象是可迭代遍历的： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public interface Iterable&lt;T&gt; &#123;</span><br><span class="line"> ...</span><br><span class="line">   Iterator&lt;T&gt; iterator();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> Iterator接口：迭代器，具有三个方法： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public interface Iterator&lt;E&gt; &#123;</span><br><span class="line">  boolean hasNext();</span><br><span class="line">    E next();</span><br><span class="line"> void remove();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>让自己的集合类实现<code>Iterable</code> 接口，并实现自己的独特<code>Iterator</code>(<code>hasNext</code>, <code>next</code>, <code>remove</code>)，允许客户端利用这个迭代器进行显式或隐式的迭代遍历： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* for-each遍历 *&#x2F;</span><br><span class="line">for (E e : collection) &#123; … &#125;</span><br><span class="line">&#x2F;* 使用迭代器对象 *&#x2F;</span><br><span class="line">Iterator&lt;E&gt; iter &#x3D; collection.iterator();</span><br><span class="line">while(iter.hasNext()) &#123; … &#125;</span><br></pre></td></tr></table></figure> 继承树 <img src="https://img-blog.csdn.net/20180622162959800?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 实现Iterable接口 *&#x2F;</span><br><span class="line">public class Pair&lt;E&gt; implements Iterable&lt;E&gt; &#123;</span><br><span class="line">   private final E first, second;</span><br><span class="line">    public Pair(E f, E s) &#123;</span><br><span class="line">      first &#x3D; f; </span><br><span class="line">      second &#x3D; s; </span><br><span class="line"> &#125;</span><br><span class="line">    public Iterator&lt;E&gt; iterator() &#123;</span><br><span class="line">        return new PairIterator();</span><br><span class="line">    &#125;</span><br><span class="line">    &#x2F;* 实现iterator接口，包含三个方法 *&#x2F;</span><br><span class="line">   private class PairIterator implements Iterator&lt;E&gt; &#123;</span><br><span class="line">        private boolean seenFirst &#x3D; false, seenSecond &#x3D; false;</span><br><span class="line">      public boolean hasNext() &#123;</span><br><span class="line">           return !seenSecond; </span><br><span class="line">      &#125;</span><br><span class="line">        public E next() &#123;</span><br><span class="line">            if (!seenFirst) &#123;</span><br><span class="line">                 seenFirst &#x3D; true; </span><br><span class="line">                return first;</span><br><span class="line">           &#125;</span><br><span class="line">            if (!seenSecond) &#123; </span><br><span class="line">              seenSecond &#x3D; true;</span><br><span class="line">               return second; </span><br><span class="line">           &#125;</span><br><span class="line">            throw new NoSuchElementException();</span><br><span class="line">       &#125;</span><br><span class="line">        public void remove() &#123;</span><br><span class="line">           throw new UnsupportedOperationException();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">   Pair&lt;String&gt; pair &#x3D; new Pair&lt;String&gt;(&quot;foo&quot;, &quot;bar&quot;);</span><br><span class="line">  for (String s : pair) &#123; … &#125;</span><br></pre></td></tr></table></figure> 这个模式主要是实现自己的集合类，使其具有使用迭代器的功能。 实现过程是：自己的集合类实现<code>Iterable</code>接口，实现<code>iterator</code>方法，该方法要返回一个<code>Iterator</code>对象，该对象可以通过实现<code>Iterator</code>接口（实现其中的<code>hasNext()</code>，<code>next()</code>，<code>remove()</code>方法。）来定制。 需要注意的是，过程中统一使用<strong>泛型</strong>，可以方便任意类型参数使用。 关于迭代器，有一个易错点，就是，使用迭代器遍历时，无法正常使用集合本身的删除操作，此时需要使用<code>iterator</code>的<code>remove</code>操作（在讲内存快照时具体分析过）。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2018/06/22/%EF%BC%88%E4%B8%89%EF%BC%89%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/22/%EF%BC%88%E4%B8%89%EF%BC%89%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-title-link" itemprop="url">（三）面向性能调优的Java设计模式</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-22T00:00:00+08:00">2018-06-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:51:44" itemprop="dateModified" datetime="2019-09-08T11:51:44+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/06/22/%EF%BC%88%E4%B8%89%EF%BC%89%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="post-meta-item leancloud_visitors" data-flag-title="（三）面向性能调优的Java设计模式" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/06/22/%EF%BC%88%E4%B8%89%EF%BC%89%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/06/22/%EF%BC%88%E4%B8%89%EF%BC%89%E9%9D%A2%E5%90%91%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84Java%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="目录">目录</h4>
+<h4 id="面向代码调优的设计模式">3、面向代码调优的设计模式</h4>
+<p>本质：减少对象的创建，尽量使用已经创建的对象 ##### 3.1、singleton（单例模式） 强制client只能创建一个object，避免因为new操作所带来的时空性能损失，也便于复用。 <img src="https://img-blog.csdn.net/20180622223434136?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public class Singleton &#123;</span><br><span class="line">  private static final Singleton instance &#x3D; null;</span><br><span class="line">  private Singleton() &#123;…&#125;</span><br><span class="line"> public static Singleton getInstance() &#123;</span><br><span class="line">      &#x2F;* 通过判断，只创建一个实例 *&#x2F;</span><br><span class="line">      if (instance &#x3D;&#x3D; null)</span><br><span class="line">           instance &#x3D; new Singleton();</span><br><span class="line">      return instance;</span><br><span class="line">  &#125;</span><br><span class="line">    &#x2F;&#x2F; other operations and data</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 关于单例模式的判断和代理模式的例子，有类似之处，都是判断如果已经有了，则不再创建，直接返回，降低代价和空间。 <strong>Recall</strong> 在<code>state</code>模式中，两个状态是<code>static</code>的，当返回新状态时，返回<code>Statet2.instance</code>或<code>State1.instance</code>，保证始终只有两个状态实例。</p>
+<h5 id="prototype原型模式">3.2、prototype（原型模式）</h5>
+<p>通过克隆而非new来创建object。 继承树 <img src="https://img-blog.csdn.net/20180622230015555?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 创建实现Cloneable接口的抽象类，作为原型 *&#x2F;</span><br><span class="line">public abstract class Shape implements Cloneable &#123;</span><br><span class="line">  private String id;</span><br><span class="line">    protected String type;</span><br><span class="line">    abstract void draw();</span><br><span class="line"> public String getType()&#123; return type; &#125;</span><br><span class="line"> public String getId() &#123; return id; &#125;</span><br><span class="line">    public void setId(String id) &#123; this.id &#x3D; id;&#125;</span><br><span class="line">  &#x2F;* 实现clone方法 *&#x2F;</span><br><span class="line"> public Object clone() &#123;</span><br><span class="line">      Object clone &#x3D; null;</span><br><span class="line">     try &#123;</span><br><span class="line">            clone &#x3D; super.clone();</span><br><span class="line">       &#125; catch (CloneNotSupportedException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line">        return clone;</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 继承原型类 *&#x2F;</span><br><span class="line">public class Rectangle extends Shape &#123;</span><br><span class="line">    public Rectangle()&#123;</span><br><span class="line">      type &#x3D; &quot;Rectangle&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    @Override</span><br><span class="line"> public void draw() &#123;</span><br><span class="line"> ...</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 继承原型类 *&#x2F;</span><br><span class="line">public class Square extends Shape &#123;</span><br><span class="line">   public Square()&#123;</span><br><span class="line">     type &#x3D; &quot;Square&quot;;</span><br><span class="line">   &#125;</span><br><span class="line">    @Override</span><br><span class="line"> public void draw() &#123;</span><br><span class="line"> ...</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">   Shape rectangle &#x3D; new Rectangle();</span><br><span class="line">   Shape square &#x3D; new Square();</span><br><span class="line"> &#x2F;* 使用克隆 *&#x2F;</span><br><span class="line">  Shape clonedShape1 &#x3D; (Shape) rectangle.clone();</span><br><span class="line">  Shape clonedShape2 &#x3D; (Shape) square.clone();</span><br></pre></td></tr></table></figure> 分析，首先要实现一个原型抽象类，该抽象类实现<code>Cloneable</code>接口，重写<code>Object clone()</code>方法；然后两个继承原型的类，rectangle和square；客户端中创建分别创建两个原型子类的对象，之后再创建对象，直接使用对象的<code>clone()</code>方法获得对象即可。</p>
+<p>需要注意的是<code>Cloneable</code>的<code>clone</code>操作默认实现的是<strong>浅复制</strong>，对象内部的变量都是直接填充的，可能会出现内存泄露。</p>
+<p>实现<code>Cloneable</code>接口时，仅仅实现<code>Cloneable</code>不够，还需要<code>override</code> <code>clone()</code>方法并将<code>public</code>。因为<code>Object.clone()</code>是<code>protected</code>：它可以被同包(java.lang)下以及它 (java.lang.Object)的子类访问。自定义类无法直接使用<code>Object.clone()</code>：没有访问权限(invisible)，故需要<code>override</code>。</p>
+<h5 id="flyweight轻量模式">3.3、flyweight（轻量模式）</h5>
+<p>该模式允许在应用中不同部分共享使用objects，降低大量objects带来的时空代价。 内部状态和外部状态， 内部特征：不管在什么场合使用该object，内部特征都不变； 外部特征：不是固定的，需要在不同场合分别计算并产生变化。 继承树 <img src="https://img-blog.csdn.net/20180622224925516?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 外特征 *&#x2F;</span><br><span class="line">public enum Color &#123;Red, Green, Blank, Blue, Yellow&#125;</span><br><span class="line">&#x2F;* 可共享对象的抽象接口 *&#x2F;</span><br><span class="line">public interface IAlien &#123;</span><br><span class="line"> String Shape &#x3D; null; &#x2F;&#x2F;内部特征</span><br><span class="line">    String getShape();</span><br><span class="line">    Color getColor(int madLevel); &#x2F;&#x2F;外部特征</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 可共享对象类，Large Shape *&#x2F;</span><br><span class="line">class LargeAlien implements IAlien&#123;</span><br><span class="line">  private String shape &#x3D; &quot;Large Shape&quot;;</span><br><span class="line">  public String getShape() &#123;</span><br><span class="line">       return shape;</span><br><span class="line"> &#125;</span><br><span class="line">    &#x2F;* 设置外部特征 *&#x2F;</span><br><span class="line">    public Color getColor(int madLevel) &#123;</span><br><span class="line">        if (madLevel &#x3D;&#x3D; 0)</span><br><span class="line">          return Color.Green;</span><br><span class="line">       else if (madLevel &#x3D;&#x3D; 1)</span><br><span class="line">         return Color.Red;</span><br><span class="line">     else</span><br><span class="line">          return Color.Blue;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 可共享对象，Little Shape *&#x2F;</span><br><span class="line">class LittleAlien implements IAlien &#123;</span><br><span class="line">    private String shape &#x3D; &quot;Little Shape&quot;;</span><br><span class="line"> public String getShape() &#123;</span><br><span class="line">       return shape;</span><br><span class="line"> &#125;</span><br><span class="line">    public Color getColor(int madLevel) &#123;</span><br><span class="line">        if (madLevel &#x3D;&#x3D; 0)</span><br><span class="line">          return Color.Red;</span><br><span class="line">     else if (madLevel &#x3D;&#x3D; 1)</span><br><span class="line">         return Color.Blue;</span><br><span class="line">        else</span><br><span class="line">          return Color.Green;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 工厂，可共享对象的索引，维护所有对象，根据client请求返回相应的对象 *&#x2F;</span><br><span class="line">public class AlienFactory &#123;</span><br><span class="line">    private Map&lt;String, IAlien&gt; list &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">  public void SaveAlien(String index, IAlien alien) &#123;</span><br><span class="line">      list.put(index,alien);</span><br><span class="line">    &#125;</span><br><span class="line">    public IAlien GetAlien(String index) &#123;</span><br><span class="line">       return list.get(index);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">&#x2F;* 客户端 *&#x2F;</span><br><span class="line">   &#x2F;* 工厂方法，保存两个对象 *&#x2F;</span><br><span class="line">   AlienFactory factory &#x3D; new AlienFactory();</span><br><span class="line">   factory.SaveAlien(&quot;LargeAlien&quot;, new LargeAlien());</span><br><span class="line">  factory.SaveAlien(&quot;LittleAlien&quot;, new LittleAlien());</span><br><span class="line">    &#x2F;* 根据索引从工厂取出对象 *&#x2F;</span><br><span class="line">   IAlien a &#x3D; factory.GetAlien(&quot;LargeAlien&quot;);</span><br><span class="line"> IAlien b &#x3D; factory.GetAlien(&quot;LittleAlien&quot;);</span><br><span class="line">    &#x2F;* 内部特征 *&#x2F;</span><br><span class="line">  System.out.println(&quot;Showing intrinsic states...&quot;);</span><br><span class="line">  System.out.println(&quot;Alien of type LargeAlien is &quot; + a.getShape());</span><br><span class="line">  System.out.println(&quot;Alien of type LittleAlien is &quot; + b.getShape());</span><br><span class="line"> &#x2F;* 外部特征 *&#x2F;</span><br><span class="line">  System.out.println(&quot;Showing extrinsic states...&quot;);</span><br><span class="line">  System.out.println(&quot;Alien of type LargeAlien is &quot; + a.getColor(0).toString());</span><br><span class="line">  System.out.println(&quot;Alien of type LargeAlien is &quot; + a.getColor(1).toString());</span><br><span class="line">  System.out.println(&quot;Alien of type LittleAlien is &quot; + b.getColor(0).toString());</span><br><span class="line"> System.out.println(&quot;Alien of type LittleAlien is &quot; + b.getColor(1).toString());</span><br></pre></td></tr></table></figure> 总体来看，有一个共享对象接口，以及两个实现接口的类，包括内部特征（已经确定）和外部特征（根据传入参数，确定特征）；一个工厂方法，保存所有的共享对象，根据传入索引返回共享对象；客户端调用时，可以传入参数，选择不同的外在特征，使得一个共享对象可以表现出不同的外在特征，而内在特征相同。</p>
+<h5 id="object-pool对象池">3.4、object pool（对象池）</h5>
+<p>很多时候，object不用了就直接扔掉，需要时再new一个新object。对象复用：不要扔掉object，留着后续复用。 代价：原本可被GC的对象，现在要留在pool中，导致内存浪费——用空间换时间。 继承树 <img src="https://img-blog.csdn.net/20180622231044786?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 举例 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;vector pool，管理所有的实例对象</span><br><span class="line">public static VectorPoolMgr vectorPoolMgr &#x3D; new VectorPoolMgr(25);</span><br><span class="line">...</span><br><span class="line">public void someMethod( ) &#123;</span><br><span class="line">  &#x2F;&#x2F;Get a new Vector. We only use the vector to do some stuff</span><br><span class="line"> &#x2F;&#x2F;within this method, and then we dump the vector (i.e., it</span><br><span class="line"> &#x2F;&#x2F;is not returned or assigned to a state variable)</span><br><span class="line">  &#x2F;&#x2F;so this is a perfect candidate for reusing Vectors.</span><br><span class="line">   &#x2F;&#x2F;Use a factory method instead of &#39;new Vector( )&#39;</span><br><span class="line">   &#x2F;* 从vector pool中取出一个对象，而不是使用new *&#x2F;</span><br><span class="line">  Vector v &#x3D; vectorPoolMgr.getVector();</span><br><span class="line">    &#x2F;* 对对象的属性进行修改 *&#x2F;</span><br><span class="line">    ... &#x2F;&#x2F;do vector manipulation stuff</span><br><span class="line">  &#x2F;&#x2F;and the extra work is that we have to explicitly tell the</span><br><span class="line"> &#x2F;&#x2F;pool manager that we have finished with the vector</span><br><span class="line">    &#x2F;* 返回对象 *&#x2F;</span><br><span class="line">  vectorPoolMgr.returnVector(v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 类似一个工厂方法，对象池管理所有废弃的对象，当需要一个新的对象时，从对象池中出去即可，取出后可以对属性进行修改配置，然后返回。</p>
 
       
     </div>
@@ -1726,118 +1833,6 @@ Comment density（MCOMM%）
 <p>遵循标准代码风格 eg. Oracle's Java code convertions（收购了sun公司） 或者 Google's Java style guide</p>
 <h5 id="using-checkstyle">4.7、<strong>– Using CheckStyle</strong></h5>
 <p>使用CheckStyle</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="iseesaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="iseesaw's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/" class="post-title-link" itemprop="url">Ubuntu云服务器部署静态网页、运行python脚本 ...</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-06-14 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-14T00:00:00+08:00">2018-06-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-11 12:54:15" itemprop="dateModified" datetime="2020-08-11T12:54:15+08:00">2020-08-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/" class="post-meta-item leancloud_visitors" data-flag-title="Ubuntu云服务器部署静态网页、运行python脚本 ..." title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="目录">目录</h4>
-<h4 id="写在前面">0、写在前面</h4>
-<p>之前使用的是windows的服务器，现在换成了ubuntu系统。很多操作使用命令不清楚，期间遇到了许多坑，网上查了不少。但还是实现了一些简单的事情，在此把相关操作指令记录一下。 大致为以下几部分 使用远程连接，文件上传和下载； 部署简单的静态网页，直接使用公网IP进行访问； 7*24小时运行脚本--运行爬虫（使用Scrapy框架），运行微信防撤回脚本； 延伸 ......</p>
-<h4 id="远程连接文件上传下载">1、远程连接，文件上传下载</h4>
-<p>关于windows连接linux服务器的方式有很多，在此，介绍使用PuTTy进行远程连接，同时使用PuTTy自带的PSFTP进行文件上传下载，和使用WinSCP进行文件上传下载。 ##### 1.1、PuTTy <strong>使用PuTTy连接</strong> 直接从<a target="_blank" rel="noopener" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">官网</a>下载安装。 输入公网IP和端口，进行连接；可以使用Saved Sessions将这个对话保存，下次就不用再输入IP； <img src="https://img-blog.csdn.net/20180614220758669?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/100/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 然后使用用户（阿里云初始为root）和密码登陆（阿里云要求密码首位大写） <img src="https://img-blog.csdn.net/20180614221011768?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/100/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
-<p><strong>使用PSFTP进行文件操作</strong> cd改变远程目录、lcd改变本地目录、ls查看远程文件列表、put上传文件、get下载文件等命令 cd, lcd操作同ubuntu中cd操作相同；put, get file即可上传下载文件； <img src="https://img-blog.csdn.net/20180614221532495?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
-<p>参考：<a target="_blank" rel="noopener" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">putty windows上传文件到linux服务器 &amp; 从linux服务器 下载文件到 windows</a></p>
-<h5 id="winscp">1.2、WinSCP</h5>
-<p>简直堪称神器，可以直接拖拽文件进行上传和下载。 直接在<a target="_blank" rel="noopener" href="https://winscp.net/eng/download.php">官网</a>下载安装 使用用户和密码登陆即可 <img src="https://img-blog.csdn.net/20180614221837844?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 可以直接在左右将文件进行拖拽，也可以点击操作进行文件夹的创建和文件删除操作。</p>
-<h4 id="部署静态网页">2、部署静态网页</h4>
-<p>在此使用Apache2部署网页 首先在服务器上 <a target="_blank" rel="noopener" href="https://blog.csdn.net/StepTimeNatural/article/details/78153740">配置Apache</a>将网页放在<code>var/www/html</code>下，其中index页必须直接在该目录下； 然后执行下面命令，就可以使用公网IP访问网页了 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 start</span><br></pre></td></tr></table></figure> 也可以停止或重启Apache2 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 stop</span><br><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 restart</span><br></pre></td></tr></table></figure></p>
-<h4 id="运行脚本">3、运行脚本</h4>
-<p>主要是关于python脚本的运行命令，以及查看执行状态命令，在网上查了不少，在此记录 ##### 3.1、微信防撤回脚本 参考<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/30675d75f23a">用python实现微信消息防撤回</a>代码即可 （有一个问题就是，该脚本时登陆的网页微信，如果此时登陆电脑微信，则网页微信被挤退，程序结束） 将代码文件上传到服务器，然后在该目录下执行下面操作即可（执行<code>script.py</code>文件，将运行结果输出到日志<code>out.log</code>） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup python -u script.py &gt; out.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure> 使用下面命令查看运行状态，可以找到运行程序的PID，也可以kill程序，结束进程 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep python </span><br></pre></td></tr></table></figure> 下面操作可以查看磁盘文件大小 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">du -h filename #look the size of the file</span><br><span class="line">du -ha address #look the size of this address</span><br><span class="line">du -sh</span><br></pre></td></tr></table></figure></p>
-<h5 id="scrapy爬虫脚本">3.2、Scrapy爬虫脚本</h5>
-<p>爬虫脚本上一篇博客讲到过，这里只讲脚本的运行； 有一个坑，就是在pycharm中的目录是以工作空间为根目录，所以在服务器上执行时，需要更改一下<code>import</code>的目录 执行爬虫脚本的命令如下，后台运行，结果输出到<code>out.log</code> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup scrapy crawl DingDian &gt; out.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure></p>
-<h4 id="section">4、...</h4>
-<p>有了上面的简单操作，当然可以延伸更多，尤其是运行脚本程序 有些计划 爬取一些有用的信息（实现rss推送更实用的信息，做一些简单整合）；然后用flask搭建一个简单的网站，可以简单的展示爬取的信息，并进行一些简单的交互；爬取大数据，结合深度学习进行一波分析，预测之类 ... 学无止境，任重而道远</p>
 
       
     </div>

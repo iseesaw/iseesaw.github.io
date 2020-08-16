@@ -343,7 +343,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">62</span>
+          <span class="site-state-item-count">63</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -396,6 +396,118 @@ mjx-container[display="true"] + br {
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/" class="post-title-link" itemprop="url">Ubuntu云服务器部署静态网页、运行python脚本 ...</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-06-14 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-14T00:00:00+08:00">2018-06-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-11 12:54:15" itemprop="dateModified" datetime="2020-08-11T12:54:15+08:00">2020-08-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/" class="post-meta-item leancloud_visitors" data-flag-title="Ubuntu云服务器部署静态网页、运行python脚本 ..." title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2018/06/14/Ubuntu%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E3%80%81%E8%BF%90%E8%A1%8Cpython%E8%84%9A%E6%9C%AC/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h4 id="目录">目录</h4>
+<h4 id="写在前面">0、写在前面</h4>
+<p>之前使用的是windows的服务器，现在换成了ubuntu系统。很多操作使用命令不清楚，期间遇到了许多坑，网上查了不少。但还是实现了一些简单的事情，在此把相关操作指令记录一下。 大致为以下几部分 使用远程连接，文件上传和下载； 部署简单的静态网页，直接使用公网IP进行访问； 7*24小时运行脚本--运行爬虫（使用Scrapy框架），运行微信防撤回脚本； 延伸 ......</p>
+<h4 id="远程连接文件上传下载">1、远程连接，文件上传下载</h4>
+<p>关于windows连接linux服务器的方式有很多，在此，介绍使用PuTTy进行远程连接，同时使用PuTTy自带的PSFTP进行文件上传下载，和使用WinSCP进行文件上传下载。 ##### 1.1、PuTTy <strong>使用PuTTy连接</strong> 直接从<a target="_blank" rel="noopener" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">官网</a>下载安装。 输入公网IP和端口，进行连接；可以使用Saved Sessions将这个对话保存，下次就不用再输入IP； <img src="https://img-blog.csdn.net/20180614220758669?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/100/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 然后使用用户（阿里云初始为root）和密码登陆（阿里云要求密码首位大写） <img src="https://img-blog.csdn.net/20180614221011768?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/100/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p><strong>使用PSFTP进行文件操作</strong> cd改变远程目录、lcd改变本地目录、ls查看远程文件列表、put上传文件、get下载文件等命令 cd, lcd操作同ubuntu中cd操作相同；put, get file即可上传下载文件； <img src="https://img-blog.csdn.net/20180614221532495?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
+<p>参考：<a target="_blank" rel="noopener" href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html">putty windows上传文件到linux服务器 &amp; 从linux服务器 下载文件到 windows</a></p>
+<h5 id="winscp">1.2、WinSCP</h5>
+<p>简直堪称神器，可以直接拖拽文件进行上传和下载。 直接在<a target="_blank" rel="noopener" href="https://winscp.net/eng/download.php">官网</a>下载安装 使用用户和密码登陆即可 <img src="https://img-blog.csdn.net/20180614221837844?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 可以直接在左右将文件进行拖拽，也可以点击操作进行文件夹的创建和文件删除操作。</p>
+<h4 id="部署静态网页">2、部署静态网页</h4>
+<p>在此使用Apache2部署网页 首先在服务器上 <a target="_blank" rel="noopener" href="https://blog.csdn.net/StepTimeNatural/article/details/78153740">配置Apache</a>将网页放在<code>var/www/html</code>下，其中index页必须直接在该目录下； 然后执行下面命令，就可以使用公网IP访问网页了 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 start</span><br></pre></td></tr></table></figure> 也可以停止或重启Apache2 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 stop</span><br><span class="line">sudo &#x2F;etc&#x2F;init.d&#x2F;apache2 restart</span><br></pre></td></tr></table></figure></p>
+<h4 id="运行脚本">3、运行脚本</h4>
+<p>主要是关于python脚本的运行命令，以及查看执行状态命令，在网上查了不少，在此记录 ##### 3.1、微信防撤回脚本 参考<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/30675d75f23a">用python实现微信消息防撤回</a>代码即可 （有一个问题就是，该脚本时登陆的网页微信，如果此时登陆电脑微信，则网页微信被挤退，程序结束） 将代码文件上传到服务器，然后在该目录下执行下面操作即可（执行<code>script.py</code>文件，将运行结果输出到日志<code>out.log</code>） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup python -u script.py &gt; out.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure> 使用下面命令查看运行状态，可以找到运行程序的PID，也可以kill程序，结束进程 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep python </span><br></pre></td></tr></table></figure> 下面操作可以查看磁盘文件大小 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">du -h filename #look the size of the file</span><br><span class="line">du -ha address #look the size of this address</span><br><span class="line">du -sh</span><br></pre></td></tr></table></figure></p>
+<h5 id="scrapy爬虫脚本">3.2、Scrapy爬虫脚本</h5>
+<p>爬虫脚本上一篇博客讲到过，这里只讲脚本的运行； 有一个坑，就是在pycharm中的目录是以工作空间为根目录，所以在服务器上执行时，需要更改一下<code>import</code>的目录 执行爬虫脚本的命令如下，后台运行，结果输出到<code>out.log</code> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup scrapy crawl DingDian &gt; out.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure></p>
+<h4 id="section">4、...</h4>
+<p>有了上面的简单操作，当然可以延伸更多，尤其是运行脚本程序 有些计划 爬取一些有用的信息（实现rss推送更实用的信息，做一些简单整合）；然后用flask搭建一个简单的网站，可以简单的展示爬取的信息，并进行一些简单的交互；爬取大数据，结合深度学习进行一波分析，预测之类 ... 学无止境，任重而道远</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2589,273 +2701,6 @@ Command
     <div class="post-body" itemprop="articleBody">
           <p>研修课上讲了两个例子，融合一下。 主要演示大致的过程： 导入-&gt;拆分-&gt;训练-&gt;模型报告<br />
 以及几个重要问题： ①标签二值化 ②网格搜索法调参 ③k折交叉验证 ④增加噪声特征（之前涉及） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">from sklearn import datasets</span><br><span class="line">#从cross_validation导入会出现warning，说已弃用</span><br><span class="line">from sklearn.model_selection import train-test_split</span><br><span class="line">from sklearn.grid_search import GridSearchCV</span><br><span class="line">from sklearn.metrics import classification_report</span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line">import sklearn.exceptioins</span><br><span class="line">#导入鸢尾花数据集</span><br><span class="line">iris &#x3D; datasets.load_iris()</span><br><span class="line">#将数据集拆分为训练集和测试集各一半</span><br><span class="line">#其中X为数据特征（花萼、花瓣的高度宽度），为150*4的矩阵</span><br><span class="line">#Y为鸢尾花种类（0, 1, 2三种），为150*1矩阵</span><br><span class="line">#如果使用标签二值化， 将0, 1, 2表示为100 010 001</span><br><span class="line">#使用y.label_binarize(y, classes[0, 1, 2]),变为150*3矩阵</span><br><span class="line">X_train, X_test, y_train, y_test &#x3D; train_test_split(</span><br><span class="line">iris.data, iris.target, test_size&#x3D;0.5, random_state&#x3D;0)</span><br><span class="line">#set the parameters by cross_validation</span><br><span class="line">turn_parameters &#x3D; [&#123;&#39;kernel&#39; : [&#39;rbf&#39;, &#39;gamma&#39; : [1e-3, 1e - 4, &#39;C&#39;:[1,10,100,1000]&#125;,  </span><br><span class="line">&#123;&#39;kernel&#39;:[&#39;linear&#39;], &#39;C&#39;:[1,10,100,1000]&#125;</span><br><span class="line">]</span><br><span class="line">#clf分离器</span><br><span class="line">#使用网格搜索法调超参数</span><br><span class="line">#训练集做5折交叉验证</span><br><span class="line">clf &#x3D; GridSearchCV(SVC(C&#x3D;1), turned_parameters, cv&#x3D;5, scoring&#x3D;&#39;%s_weighted&#39; % score)</span><br><span class="line">#用前一半train数据再做5折交叉验证</span><br><span class="line">#因为之前的train_test_split已经分割为2份了</span><br><span class="line">#fit-拟合</span><br><span class="line">clf.fit(X_train, y_train)</span><br><span class="line">#超参数</span><br><span class="line">print(clf.best_params_)</span><br><span class="line">#得分</span><br><span class="line">for params, mean_score, scores in clf.gird_scores_:</span><br><span class="line">  print(&quot;%.3f (+&#x2F;-%.0.03f) for %r&quot; % (mean_score, scores.std()*1.96,params))</span><br><span class="line">#分类报告</span><br><span class="line">y_true, y_pred &#x3D; y_test, clf.predict(X_test)</span><br><span class="line">print(classification_report(y_true, y_pred))</span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2018/04/15/%E5%88%86%E7%B1%BB%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%92%8C%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="iseesaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="iseesaw's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/04/15/%E5%88%86%E7%B1%BB%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%92%8C%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/" class="post-title-link" itemprop="url">分类评价指标和回归评价指标及python实现</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-04-15 00:00:00" itemprop="dateCreated datePublished" datetime="2018-04-15T00:00:00+08:00">2018-04-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-11 12:53:53" itemprop="dateModified" datetime="2020-08-11T12:53:53+08:00">2020-08-11</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DL/" itemprop="url" rel="index"><span itemprop="name">DL</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/04/15/%E5%88%86%E7%B1%BB%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%92%8C%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/" class="post-meta-item leancloud_visitors" data-flag-title="分类评价指标和回归评价指标及python实现" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2018/04/15/%E5%88%86%E7%B1%BB%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%92%8C%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/04/15/%E5%88%86%E7%B1%BB%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%92%8C%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E5%8F%8Apython%E5%AE%9E%E7%8E%B0/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="目录">目录</h4>
-<h4 id="概念">1、概念</h4>
-性能度量（评价）指标，主分为两大类：<br />
- 1）分类评价指标（classification），主要分析，离散的，整数的。其具体指标包括accuracy(准确率)，precision(精确率)，recall(召回率)，F值，P-R曲线，ROC曲线和AUC。  2）回归评价指标（regression），主要分析整数和实数之间的关系。其具体指标包括可释方差得分(explianed_variance_score)，平均绝对误差MAE(mean_absolute_error)，均方误差MSE(mean-squared_error)，均方根差RMSE，交叉熵lloss(Log loss，cross-entropy loss)，R方值(确定系数，r2_score)。 ##### 1.1、前提 &gt; 假设只有两类-正类（positive）和负类（negative），通常以关注的类为正类，其他类为负类（故多类问题亦可归纳为两类）<br />
-&gt;混淆矩阵（Confusion matrix）如下
-<table>
-<tr>
-<td>
-实际类别
-</td>
-<td colspan="4">
-预测类别
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td>
-正
-</td>
-<td>
-负
-</td>
-<td>
-总结
-</td>
-</tr>
-<tr>
-<td>
-正
-</td>
-<td>
-TP
-</td>
-<td>
-FN
-</td>
-<td>
-P(实际为正)
-</td>
-</tr>
-<tr>
-<td>
-负
-</td>
-<td>
-FP
-</td>
-<td>
-TN
-</td>
-<td>
-N(实际为负)
-</td>
-</tr>
-</table>
-<blockquote>
-表中AB模式：第一个表示预测结果的对错，第二个表示预测的类别。如TP表示，True Positive，即正确的预测为正类；FN表示，False Negative，即错误的预测为了负类。 #### 2、评价指标（性能度量） ##### 2.1、分类评价指标 ###### 2.1.1 值指标-Accuracy、Precision、Recall、F值
-<table>
-<tr>
-<td>
-度量
-</td>
-<td>
-Accuracy(准确率)
-</td>
-<td>
-Precision(精确率)
-</td>
-<td>
-Recall(召回率)
-</td>
-<td>
-F值
-</td>
-</tr>
-<tr>
-<td>
-定义
-</td>
-<td>
-正确分类的样本数与总样本数之比（预测为垃圾短信中真正的垃圾短信的比例）
-</td>
-<td>
-判定为正例中真正正例数与判定为正例数之比（所有真的垃圾短信被分类求正确找出来的比例）
-</td>
-<td>
-被正确判定为正例数与总正例数之比
-</td>
-<td>
-准确率与召回率的调和平均F<sub><span class="math inline">\(\beta\)</span></sub>-score
-</td>
-</tr>
-<tr>
-<td>
-表示
-</td>
-<td>
-accuracy=<span class="math display">\[\frac{TP+TN}{P+N}\]</span>
-</td>
-<td>
-precision=<span class="math display">\[\frac{TP}{TP+FP}\]</span>
-</td>
-<td>
-recall=<span class="math display">\[\frac{TP}{P}\]</span>
-</td>
-<td>
-F<sub><span class="math inline">\(\beta\)</span></sub> - score = <span class="math display">\[\frac{(1+\beta^2)*precision*recall}{\beta^2*precision+recall}\]</span>
-</td>
-</tr>
-</table>
-<p>1.precision也常称为查准率，recall称为查全率 2.比较常用的是F1， <span class="math display">\[\frac{1}{F1}=\frac{1}{2}*(\frac{1}{P}+\frac{1}{R})\]</span></p>
-</blockquote>
-<p>python3.6代码实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#调用sklearn库中的指标求解</span><br><span class="line">from sklearn import metrics</span><br><span class="line">from sklearn.metrics import precision_recall_curve</span><br><span class="line">from sklearn.metrics import average_precision_score</span><br><span class="line">from sklearn.metrics import accuracy_score</span><br><span class="line">#给出分类结果</span><br><span class="line">y_pred &#x3D; [0, 1, 0, 0]</span><br><span class="line">y_true &#x3D; [0, 1, 1, 1]</span><br><span class="line">print(&quot;accuracy_score:&quot;, accuracy_score(y_true, y_pred))</span><br><span class="line">print(&quot;precision_score:&quot;, metrics.precision_score(y_true, y_pred))</span><br><span class="line">print(&quot;recall_score:&quot;, metrics.recall_score(y_true, y_pred))</span><br><span class="line">print(&quot;f1_score:&quot;, metrics.f1_score(y_true, y_pred))</span><br><span class="line">print(&quot;f0.5_score:&quot;, metrics.fbeta_score(y_true, y_pred, beta&#x3D;0.5))</span><br><span class="line">print(&quot;f2_score:&quot;, metrics.fbeta_score(y_true, y_pred, beta&#x3D;2.0))</span><br></pre></td></tr></table></figure>
-<h6 id="相关曲线-p-r曲线roc曲线及auc值">2.1.2 相关曲线-P-R曲线、ROC曲线及AUC值</h6>
-1）P-R曲线 步骤：    1、从高到低将&quot;score&quot;值排序并依次作为阈值threshold；    2、对于每个阈值，&quot;score&quot;值大于或等于这个threshold的测试样本被认为正例，其他为负例。从而形成一组预测数。 eg. <img src="https://img-blog.csdn.net/20180415083022415?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 将0.9作为阈值，则第1个测试样本为正例，2、3、4、5为负例 得到
-<table>
-<tr>
-<td>
-</td>
-<td>
-预测为正例
-</td>
-<td>
-预测为负例
-</td>
-<td>
-总计
-</td>
-</tr>
-<tr>
-<td>
-正例(score大于阈值)
-</td>
-<td>
-0.9
-</td>
-<td>
-0.1
-</td>
-<td>
-1
-</td>
-</tr>
-<tr>
-<td>
-负例(score小于阈值)
-</td>
-<td>
-0.2+0.3+0.3+0.35 = 1.15
-</td>
-<td>
-0.8+0.7+0.7+0.65 = 2.85
-</td>
-<td>
-4
-</td>
-</tr>
-<tr>
-<td colspan="4">
-precision=<span class="math display">\[\frac{0.9}{0.9+1.15}\]</span><br />
-recall=<span class="math display">\[\frac{0.9}{1}\]</span>
-</td>
-</tr>
-</table>
-<blockquote>
-<p>在阈值以下的部分，当作负例，则预测为负例的取值情况是正确预测值，即如果本身是正例，则取TP；如果本身是负例，则取TN，其都为预测分值。 python实现伪代码 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#precision和recall的求法如上</span><br><span class="line">#主要介绍一下python画图的库</span><br><span class="line">import matplotlib.pyplot ad plt</span><br><span class="line">#主要用于矩阵运算的库</span><br><span class="line">import numpy as np</span><br><span class="line">#导入iris数据及训练见前一博文</span><br><span class="line">...</span><br><span class="line">#加入800个噪声特征，增加图像的复杂度</span><br><span class="line">#将150*800的噪声特征矩阵与150*4的鸢尾花数据集列合并</span><br><span class="line">X &#x3D; np.c_[X, np.random.RandomState(0).randn(n_samples, 200*n_features)]</span><br><span class="line">#计算precision，recall得到数组</span><br><span class="line">for i in range(n_classes):</span><br><span class="line"> #计算三类鸢尾花的评价指标， _作为临时的名称使用</span><br><span class="line"> precision[i], recall[i], _ &#x3D; precision_recall_curve(y_test[:, i], y_score[:,i])</span><br><span class="line">#plot作图</span><br><span class="line">plt.clf()</span><br><span class="line">for i in range(n_classes):</span><br><span class="line">  plt.plot(recall[i], precision[i])</span><br><span class="line">plt.xlim([0.0, 1.0])</span><br><span class="line">plt.ylim([0.0, 1.05])</span><br><span class="line">plt.xlabel(&quot;Recall&quot;)</span><br><span class="line">plt.ylabel(&quot;Precision&quot;)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure> 将上述代码补充完整后得到鸢尾花数据集的P-R曲线 <img src="https://img-blog.csdn.net/20180415091130263?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 2）ROC曲线 横轴：假正例率 fp rate = FP / N 纵轴：真正例率 tp rate = TP / N 步骤：    1、从高到低将&quot;score&quot;值排序并依次作为阈值threshold；    2、对于每个阈值，&quot;score&quot;值大于或等于这个threshold的测试样本被认为正例，其他为负例。从而形成一组预测数。 同P-R曲线计算类似，不再赘述 鸢尾花数据集的ROC图像为 <img src="https://img-blog.csdn.net/20180415091607872?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> AUC（Area Under Curve）定义为ROC曲线下的面积 AUC值提供了分类器的一个整体数值。通常AUC越大，分类器更好，取值为[0, 1]</p>
-</blockquote>
-<h5 id="回归评价指标">2.2、回归评价指标</h5>
-<p>1）可释方差得分 <img src="https://img-blog.csdn.net/20180415092501785?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 2）平均绝对误差 MAE （Mean absolute error） <img src="https://img-blog.csdn.net/2018041509251027?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 3）均方差 MSE （Mean squared error） <img src="https://img-blog.csdn.net/20180415092551928?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> <img src="https://img-blog.csdn.net/20180415092624750?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 4）logistics回归损失 <img src="https://img-blog.csdn.net/20180415092647350?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 5）一致性评价 - pearson相关系数法 <img src="https://img-blog.csdn.net/20180415092711915?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> python代码实现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.metrics import log_loss</span><br><span class="line">log_loss(y_true, y_pred)</span><br><span class="line">from scipy.stats import pearsonr</span><br><span class="line">pearsonr(rater1, rater2)</span><br><span class="line">from sklearn.metrics import cohen_kappa_score</span><br><span class="line">cohen_kappa_score(rater1, rater2)</span><br></pre></td></tr></table></figure>
 
       
     </div>
