@@ -343,20 +343,20 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">64</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">167</span>
+        <span class="site-state-item-count">169</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -404,13 +404,33 @@ mjx-container[display="true"] + br {
     <div class="posts-collapse">
       <div class="collection-title">
         
-        <span class="collection-header">Nice! 63 posts in total. Keep on posting.</span>
+        <span class="collection-header">Nice! 64 posts in total. Keep on posting.</span>
       </div>
 
       
     <div class="collection-year">
       <span class="collection-header">2017</span>
     </div>
+
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2017-08-14T00:00:00+08:00"
+              content="2017-08-14">
+          08-14
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%9B%9B%EF%BC%89%E7%88%AC%E5%8F%96%E7%99%BE%E5%BA%A6%E8%B4%B4%E5%90%A7%E6%9F%90%E5%B8%96%E5%AD%90%E5%86%85%E5%AE%B9%E5%8F%8A%E5%9B%BE%E7%89%87/" itemprop="url">
+            <span itemprop="name">【Python3.6爬虫学习记录】（四）爬取百度贴吧某帖子内容及图片</span>
+          </a>
+      </div>
+
+      
+    </header>
+  </article>
 
   <article itemscope itemtype="http://schema.org/Article">
     <header class="post-header">
@@ -583,6 +603,19 @@ mjx-container[display="true"] + br {
 
 
 
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.6.4/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
 
 
   
