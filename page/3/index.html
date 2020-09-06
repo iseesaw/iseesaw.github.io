@@ -343,7 +343,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -356,7 +356,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">169</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -396,6 +396,169 @@ mjx-container[display="true"] + br {
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/" class="post-title-link" itemprop="url">声纹识别之i-vector plda</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-12 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-12T00:00:00+08:00">2019-03-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:53:52" itemprop="dateModified" datetime="2019-09-08T11:53:52+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SR/" itemprop="url" rel="index"><span itemprop="name">SR</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/" class="post-meta-item leancloud_visitors" data-flag-title="声纹识别之i-vector plda" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>最近做声纹识别的项目，要用到i-vector/plad，通过查阅各种资料，大概弄清楚了整个过程的来龙去脉，在此记录一下。 整个过程为gmm-ubm -&gt; i-vector -&gt; plda</p>
+<h3 id="gmm-ubm">gmm-ubm</h3>
+<p>Steps:<br />
+1. 背景数据 -&gt; UBM -&gt; ubm's mean super-vector 2. UBM -&gt; 说话人多条注册语音 -&gt; MAP Adaptation -&gt; 说话人相关GMM 3. 说话人相关GMM -&gt; GMM super-vector(均值超矢量)</p>
+<p>Usage:<br />
+说话人测试语音 -&gt; 说话人相关GMM score -&gt; 阈值判断</p>
+<h3 id="i-vector">i-vector</h3>
+<p>给定说话人一段语音, 与之对应的高斯均值超矢量定义为: <span class="math display">\[s = m + T\omega\]</span> 其中:<br />
+- s (super-vector) + 给定说话人语音的高斯均值超矢量(用户相关GMM获得) - m (ubm's mean super-vector) + 通用背景模型(UBM)的高斯均值超矢量(与具体说话人及信道无关) - T (total-vavriability matrix) + 全局差异空间矩阵 - <span class="math inline">\(\omega\)</span> (i-vector) + 全局差异空间因子</p>
+<p>求解过程:</p>
+<ul>
+<li>全局差异空间矩阵T的估计
+<ul>
+<li>假设每一段语音都来自不同的说话人</li>
+<li>计算训练数据库中每个说话人对应的Baum-Welcn统计量</li>
+<li>EM算法迭代估计T矩阵(大概10次)</li>
+</ul></li>
+<li>i-vector提取
+<ul>
+<li>计算数据库中每个目标说话人对应的Baum-Welch统计量</li>
+<li>带入全局差异空间矩阵T</li>
+<li>计算<span class="math inline">\(\omega\)</span>的后验均值即为i-vector</li>
+</ul></li>
+</ul>
+<h3 id="plda">plda</h3>
+<p>i-vector包含说话人和信道的信息, 可以使用lda/plda减弱信道的影响</p>
+<p><span class="math display">\[X_{ij} = \mu + Fh_{i} + Gw_{ij} + \epsilon_{ij}\]</span> 其中:</p>
+<ul>
+<li><span class="math inline">\(\mu + Fh_{i}\)</span> 信号部分, 描述说话人之间的差异(类间差异)
+<ul>
+<li><span class="math inline">\(\mu\)</span> 全体训练数据的均值</li>
+<li>F 身份空间, 包含用来表示各种说话人的信息</li>
+<li><span class="math inline">\(h_{i}\)</span> 具体的一个说话人的身份(说话人在身份空间中的位置)</li>
+</ul></li>
+<li><span class="math inline">\(Gw_{ij} + \epsilon_{ij}\)</span> 噪音部分, 描述同一说话人的不同语音之间的差异(类内差异)
+<ul>
+<li>G 误差空间, 包含可以用来表示同一说话人不同语音变化的信息</li>
+<li><span class="math inline">\(w_{ij}\)</span> 表示说话人的某一条语音在G空间中的位置</li>
+<li><span class="math inline">\(\epsilon_{ij}\)</span> 最后的残留噪声项, 表示尚未解释的东西</li>
+</ul></li>
+</ul>
+<p>用两个假象变量(<span class="math inline">\(\theta\)</span>, <span class="math inline">\(\Sigma\)</span>)描述一个语音的数据结构:<br />
+<span class="math display">\[\theta = [\mu, F, G, \Sigma]\]</span></p>
+<p><strong>plda模型训练</strong><br />
+目标就是输入一堆数据<span class="math inline">\(X_{ij}\)</span>(多个说话人多条语音), 使用EM迭代求解</p>
+<ul>
+<li>均值处理
+<ul>
+<li>计算所有训练数据<span class="math inline">\(X_{ij}\)</span>的均值<span class="math inline">\(\mu\)</span>, 从训练数据中减去该均值<span class="math inline">\(X_{ij} = X_{ij} - \mu\)</span></li>
+<li>根据训练数据中的人数N, 计算N个人的均值<span class="math inline">\(N_{\mu}\)</span></li>
+</ul></li>
+<li>初始化
+<ul>
+<li>噪声空间G, 随机初始化</li>
+<li>身份空间F, 对每个人的均值数据<span class="math inline">\(N_{\mu}\)</span>进行PCA降维, 赋值给F</li>
+<li>方差<span class="math inline">\(\Sigma\)</span>初始化为常量</li>
+</ul></li>
+<li>EM迭代优化</li>
+</ul>
+<p><strong>简化版plda</strong> <span class="math display">\[X_{ij} = \mu + Fh{i} + \epsilon_{ij}\]</span></p>
+<h3 id="reference">Reference</h3>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://projets-lium.univ-lemans.fr/sidekit/tutorial/sre10_iv.html">SIDEKIT库-Run an i-vector system</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38206214/article/details/81541497">I-Vector的推导详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38206214/article/details/81096092">声纹识别之I-Vector</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38206214/article/details/81115275">声纹识别之PLDA</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/robingao1994/article/details/81905558">PLDA的原理和em训练</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1677,119 +1840,6 @@ JVM通常运行单一进程，但也可以创建新的进程（使用ProcessBuil
 <img src="https://img-blog.csdn.net/20180620230414226?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /><figcaption>这里写图片描述</figcaption>
 </figure>
 <p>参考： <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/api/">javadoc</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2018/06/20/%E4%BB%8EJava%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E8%B0%88%E8%B5%B7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="iseesaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="iseesaw's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/20/%E4%BB%8EJava%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E8%B0%88%E8%B5%B7/" class="post-title-link" itemprop="url">从Java字符串常量池谈起</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-06-20 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-20T00:00:00+08:00">2018-06-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:53:36" itemprop="dateModified" datetime="2019-09-08T11:53:36+08:00">2019-09-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/06/20/%E4%BB%8EJava%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E8%B0%88%E8%B5%B7/" class="post-meta-item leancloud_visitors" data-flag-title="从Java字符串常量池谈起" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2018/06/20/%E4%BB%8EJava%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E8%B0%88%E8%B5%B7/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/06/20/%E4%BB%8EJava%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%B8%B8%E9%87%8F%E6%B1%A0%E8%B0%88%E8%B5%B7/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="目录">目录</h4>
-<h4 id="写在前面">0、写在前面</h4>
-<p>本节主要分析String Constant Pool（<strong>SCP</strong>），即<strong>字符串常量池</strong>；该内容原属于<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/80382927">软件构造系列文章Chapter8</a>，由于比较重要，在此特别分析。</p>
-<h4 id="字符串常量池介绍">1、字符串常量池介绍</h4>
-<p><strong>字符串常量池</strong>是<strong>Heap中</strong>包含<strong>字符串对象引用</strong>的<strong>特殊内存</strong>区域。</p>
-<h4 id="创建字符串的两种方式">2、创建字符串的两种方式</h4>
-<p>创建一个字符串有两种方式 （1）使用字面量（保存在字符串常量池中，所有相同内容的字符串引用相同） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s &#x3D; &quot;java&quot;;</span><br></pre></td></tr></table></figure> 每当我们创建<strong>字面量</strong>时，<strong>JVM</strong>都会检查<strong>字符串常量池</strong>。如果该字符串<strong>已存在</strong>于池中，则会提取其<strong>引用</strong>。 -如果该字符串<strong>不在</strong>池中，则会在其中<strong>创建</strong>一个<strong>新的</strong>字符串对象。</p>
-<p>（2）使用关键字<code>new</code>（保存在heap，即使内容相同，引用也不同） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s &#x3D; new String(&quot;java&quot;);</span><br></pre></td></tr></table></figure> 当我们使用<strong>new关键字</strong>创建字符串时，它会保存到<strong>堆中</strong>。 举个例子 <img src="https://img-blog.csdn.net/20180620163135329?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 其中<code>s1==s2</code>结果为<code>true</code>，引用相同；<code>s1==s3</code>结果为<code>false</code>，引用不同；当然<code>s1.equals(s2)</code>和<code>s1.equals(s3)</code>均为<code>true</code>，因为字符串本身相同。</p>
-<p><strong>esp.</strong> <code>intern()</code> 可以将new创建的String对象转为字面量。 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">String a = <span class="keyword">new</span> String(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">String b = a;</span><br><span class="line">String c = <span class="string">&quot;a&quot;</span>;</span><br><span class="line"><span class="comment">/* false, 此时b是堆中的a的引用, c在字符串常量池 */</span></span><br><span class="line">System.out.println(b == c);</span><br><span class="line"></span><br><span class="line">b = a.intern();</span><br><span class="line"><span class="comment">/* true, b引用字符串常量池中的c */</span></span><br><span class="line">System.out.println(b == c);</span><br><span class="line"></span><br><span class="line"><span class="comment">/* false, a.intern()操作没有改变a对象 */</span></span><br><span class="line">System.out.println(a == c);</span><br></pre></td></tr></table></figure> 调用方法<code>a.intern()</code>的时候会返回<code>&quot;a&quot;</code>，但是这个方法会首先检查字符串常量池池中是否有<code>&quot;a&quot;</code>这个字符串，如果存在则返回这个字符串的引用，否则就将这个字符串添加到字符串池中，然会返回这个字符串的引用。</p>
-<h4 id="string-stringbuilder-stringbuffer">3、String &amp; StringBuilder &amp; StringBuffer</h4>
-<p>考虑如下代码 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String s &#x3D; &quot;&quot;;</span><br><span class="line">for(int i &#x3D; 0; i &lt; 1000; i++)&#123;</span><br><span class="line">    s &#x3D; s + &quot;a&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> <code>s = s + &quot;a&quot;</code>会在字符串常量池中创建<code>&quot;a&quot;</code>, <code>&quot;aa&quot;</code>, <code>&quot;aaa&quot;</code>, ...，产生大量的临时对象，十分耗费空间。 引入<code>StringBuilder</code>， <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">StringBuilder s &#x3D; new StringBuilder();</span><br><span class="line">for(int i &#x3D; 0; i &lt; 1000; i++)&#123;</span><br><span class="line">  s.append(&quot;a&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure> 总共只创建了一个<code>String</code>对象。 引入<code>StringBuffer</code>， <code>StringBuffer</code>与<code>StringBuilder</code>几乎没有差别，主要在于<code>StringBuffer</code>成员方法前多了关键字<code>synchronized</code>，因此是线程安全的。</p>
-<h4 id="q-a">4、Q &amp; A</h4>
-<p>由于字符串常量池存在，可以很大程度上节省空间，因此会有一些特殊情况。</p>
-<p>Q：<code>String s = &quot;a&quot; + &quot;b&quot;</code>创建了几个String对象？ A：一个。&quot;a&quot;, &quot;b&quot; 都是常量，在编译的时候直接优化为一个常量&quot;ab&quot;。</p>
-<p>Q：<code>String s = new  String(&quot;a&quot;)</code>创建了几个String对象？ A：<strong>两个</strong>，首先创建一个<strong>字面量&quot;a&quot;</strong>，然后将字面量&quot;s&quot;作为参数，创建一个<strong>字符串对象s</strong>。（其实在栈上还有一个指向s的<strong>引用</strong>，不过，不是字符串对象）</p>
-<p>Q： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s &#x3D; new String(&quot;a&quot; + &quot;b&quot;);</span><br></pre></td></tr></table></figure> Line 3会创建几个String对象？ A：两个，编译器优化直接创建字面量&quot;ab&quot;，之后创建s对象。</p>
-<p>Q： <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String a &#x3D; &quot;s&quot; + new String();</span><br><span class="line">String b &#x3D; &quot;s&quot; + new String();</span><br><span class="line">System.out.println(a &#x3D;&#x3D; b)</span><br></pre></td></tr></table></figure> A：打印结果为<code>false</code>，此时a和b为两个字符串对象。</p>
-<p>参考： <a target="_blank" rel="noopener" href="http://www.runoob.com/java/java-string-intern.html">Java intern() 方法</a> <a target="_blank" rel="noopener" href="https://www.cnblogs.com/dolphin0520/p/3778589.html">探秘Java中的String、StringBuilder以及StringBuffer</a> <a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/420513409.html">String s=&quot;a&quot;+&quot;b&quot;+&quot;c&quot; 创建了几个对象</a>（评论很有意思） <a target="_blank" rel="noopener" href="https://blog.csdn.net/smile0198/article/details/22438551">String s=new String(&quot;abc&quot;) 创建了几个对象?</a> <a target="_blank" rel="noopener" href="https://droidyue.com/blog/2014/08/30/java-details-string-concatenation/">Java细节：字符串的拼接</a> <a target="_blank" rel="noopener" href="https://droidyue.com/blog/2014/12/21/string-literal-pool-in-java/">Java中的字符串常量池</a></p>
 
       
     </div>

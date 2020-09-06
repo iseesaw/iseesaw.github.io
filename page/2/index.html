@@ -343,7 +343,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -356,7 +356,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">169</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -396,6 +396,109 @@ mjx-container[display="true"] + br {
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2019/09/04/Pytorch%E7%AC%94%E8%AE%B0%20%E4%B9%8B%20torch.nn%20%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/09/04/Pytorch%E7%AC%94%E8%AE%B0%20%E4%B9%8B%20torch.nn%20%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B/" class="post-title-link" itemprop="url">Pytorch笔记 之 torch.nn 模块简介</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-09-04 00:00:00" itemprop="dateCreated datePublished" datetime="2019-09-04T00:00:00+08:00">2019-09-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-11 12:51:50" itemprop="dateModified" datetime="2020-08-11T12:51:50+08:00">2020-08-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PyTorch/" itemprop="url" rel="index"><span itemprop="name">PyTorch</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/09/04/Pytorch%E7%AC%94%E8%AE%B0%20%E4%B9%8B%20torch.nn%20%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B/" class="post-meta-item leancloud_visitors" data-flag-title="Pytorch笔记 之 torch.nn 模块简介" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/09/04/Pytorch%E7%AC%94%E8%AE%B0%20%E4%B9%8B%20torch.nn%20%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/09/04/Pytorch%E7%AC%94%E8%AE%B0%20%E4%B9%8B%20torch.nn%20%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>torch.nn 模块简介翻译</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/09/04/Pytorch%E7%AC%94%E8%AE%B0%20%E4%B9%8B%20torch.nn%20%E6%A8%A1%E5%9D%97%E7%AE%80%E4%BB%8B/">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1329,169 +1432,6 @@ mjx-container[display="true"] + br {
 <li><code>dfs(idx+1)</code>是内运算，将<code>idx</code>传入<code>dfs</code>函数，在执行函数内部代码之前进行<code>+1</code>操作，函数返回后<code>idx</code>不改变；</li>
 <li><code>dfs(idx++)</code>是后运算，将<code>idx</code>传入<code>dfs</code>函数，然后函数返回之后再进行<code>+1</code>操作；</li>
 <li><code>dfs(++idx)</code>是先运算，先进行<code>+1</code>操作，然后再将结果传入<code>dfs</code>函数。</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="iseesaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="iseesaw's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/" class="post-title-link" itemprop="url">声纹识别之i-vector plda</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-03-12 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-12T00:00:00+08:00">2019-03-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:53:52" itemprop="dateModified" datetime="2019-09-08T11:53:52+08:00">2019-09-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SR/" itemprop="url" rel="index"><span itemprop="name">SR</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/" class="post-meta-item leancloud_visitors" data-flag-title="声纹识别之i-vector plda" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/03/12/%E5%A3%B0%E7%BA%B9%E8%AF%86%E5%88%AB%E4%B9%8Bi-vector%20plda/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>最近做声纹识别的项目，要用到i-vector/plad，通过查阅各种资料，大概弄清楚了整个过程的来龙去脉，在此记录一下。 整个过程为gmm-ubm -&gt; i-vector -&gt; plda</p>
-<h3 id="gmm-ubm">gmm-ubm</h3>
-<p>Steps:<br />
-1. 背景数据 -&gt; UBM -&gt; ubm's mean super-vector 2. UBM -&gt; 说话人多条注册语音 -&gt; MAP Adaptation -&gt; 说话人相关GMM 3. 说话人相关GMM -&gt; GMM super-vector(均值超矢量)</p>
-<p>Usage:<br />
-说话人测试语音 -&gt; 说话人相关GMM score -&gt; 阈值判断</p>
-<h3 id="i-vector">i-vector</h3>
-<p>给定说话人一段语音, 与之对应的高斯均值超矢量定义为: <span class="math display">\[s = m + T\omega\]</span> 其中:<br />
-- s (super-vector) + 给定说话人语音的高斯均值超矢量(用户相关GMM获得) - m (ubm's mean super-vector) + 通用背景模型(UBM)的高斯均值超矢量(与具体说话人及信道无关) - T (total-vavriability matrix) + 全局差异空间矩阵 - <span class="math inline">\(\omega\)</span> (i-vector) + 全局差异空间因子</p>
-<p>求解过程:</p>
-<ul>
-<li>全局差异空间矩阵T的估计
-<ul>
-<li>假设每一段语音都来自不同的说话人</li>
-<li>计算训练数据库中每个说话人对应的Baum-Welcn统计量</li>
-<li>EM算法迭代估计T矩阵(大概10次)</li>
-</ul></li>
-<li>i-vector提取
-<ul>
-<li>计算数据库中每个目标说话人对应的Baum-Welch统计量</li>
-<li>带入全局差异空间矩阵T</li>
-<li>计算<span class="math inline">\(\omega\)</span>的后验均值即为i-vector</li>
-</ul></li>
-</ul>
-<h3 id="plda">plda</h3>
-<p>i-vector包含说话人和信道的信息, 可以使用lda/plda减弱信道的影响</p>
-<p><span class="math display">\[X_{ij} = \mu + Fh_{i} + Gw_{ij} + \epsilon_{ij}\]</span> 其中:</p>
-<ul>
-<li><span class="math inline">\(\mu + Fh_{i}\)</span> 信号部分, 描述说话人之间的差异(类间差异)
-<ul>
-<li><span class="math inline">\(\mu\)</span> 全体训练数据的均值</li>
-<li>F 身份空间, 包含用来表示各种说话人的信息</li>
-<li><span class="math inline">\(h_{i}\)</span> 具体的一个说话人的身份(说话人在身份空间中的位置)</li>
-</ul></li>
-<li><span class="math inline">\(Gw_{ij} + \epsilon_{ij}\)</span> 噪音部分, 描述同一说话人的不同语音之间的差异(类内差异)
-<ul>
-<li>G 误差空间, 包含可以用来表示同一说话人不同语音变化的信息</li>
-<li><span class="math inline">\(w_{ij}\)</span> 表示说话人的某一条语音在G空间中的位置</li>
-<li><span class="math inline">\(\epsilon_{ij}\)</span> 最后的残留噪声项, 表示尚未解释的东西</li>
-</ul></li>
-</ul>
-<p>用两个假象变量(<span class="math inline">\(\theta\)</span>, <span class="math inline">\(\Sigma\)</span>)描述一个语音的数据结构:<br />
-<span class="math display">\[\theta = [\mu, F, G, \Sigma]\]</span></p>
-<p><strong>plda模型训练</strong><br />
-目标就是输入一堆数据<span class="math inline">\(X_{ij}\)</span>(多个说话人多条语音), 使用EM迭代求解</p>
-<ul>
-<li>均值处理
-<ul>
-<li>计算所有训练数据<span class="math inline">\(X_{ij}\)</span>的均值<span class="math inline">\(\mu\)</span>, 从训练数据中减去该均值<span class="math inline">\(X_{ij} = X_{ij} - \mu\)</span></li>
-<li>根据训练数据中的人数N, 计算N个人的均值<span class="math inline">\(N_{\mu}\)</span></li>
-</ul></li>
-<li>初始化
-<ul>
-<li>噪声空间G, 随机初始化</li>
-<li>身份空间F, 对每个人的均值数据<span class="math inline">\(N_{\mu}\)</span>进行PCA降维, 赋值给F</li>
-<li>方差<span class="math inline">\(\Sigma\)</span>初始化为常量</li>
-</ul></li>
-<li>EM迭代优化</li>
-</ul>
-<p><strong>简化版plda</strong> <span class="math display">\[X_{ij} = \mu + Fh{i} + \epsilon_{ij}\]</span></p>
-<h3 id="reference">Reference</h3>
-<ul>
-<li><a target="_blank" rel="noopener" href="https://projets-lium.univ-lemans.fr/sidekit/tutorial/sre10_iv.html">SIDEKIT库-Run an i-vector system</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38206214/article/details/81541497">I-Vector的推导详解</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38206214/article/details/81096092">声纹识别之I-Vector</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38206214/article/details/81115275">声纹识别之PLDA</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/robingao1994/article/details/81905558">PLDA的原理和em训练</a></li>
 </ul>
 
       

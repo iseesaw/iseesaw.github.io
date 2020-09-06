@@ -343,7 +343,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -356,7 +356,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">169</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -396,6 +396,150 @@ mjx-container[display="true"] + br {
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2017/09/02/%E5%88%86%E5%88%AB%E4%BD%BF%E7%94%A8hexo%EF%BC%8Cjekyll%E5%9C%A8GitHub%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/09/02/%E5%88%86%E5%88%AB%E4%BD%BF%E7%94%A8hexo%EF%BC%8Cjekyll%E5%9C%A8GitHub%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" class="post-title-link" itemprop="url">分别使用hexo，jekyll在GitHub上搭建博客</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-09-02 00:00:00" itemprop="dateCreated datePublished" datetime="2017-09-02T00:00:00+08:00">2017-09-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-08-11 12:54:23" itemprop="dateModified" datetime="2020-08-11T12:54:23+08:00">2020-08-11</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web/" itemprop="url" rel="index"><span itemprop="name">Web</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2017/09/02/%E5%88%86%E5%88%AB%E4%BD%BF%E7%94%A8hexo%EF%BC%8Cjekyll%E5%9C%A8GitHub%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" class="post-meta-item leancloud_visitors" data-flag-title="分别使用hexo，jekyll在GitHub上搭建博客" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2017/09/02/%E5%88%86%E5%88%AB%E4%BD%BF%E7%94%A8hexo%EF%BC%8Cjekyll%E5%9C%A8GitHub%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2017/09/02/%E5%88%86%E5%88%AB%E4%BD%BF%E7%94%A8hexo%EF%BC%8Cjekyll%E5%9C%A8GitHub%E4%B8%8A%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><strong>前言</strong>：八月底，琢磨过搭建网站，然而最终无疾而终......不过还是借助GitHub搭建了个简单个人博客。<br />
+以对比的角度记录下，分别用hexo，jekyll搭建的概要，网上教程众多，也可以参考知乎的回答</p>
+<h2 id="目录">目录</h2>
+<h3 id="一-前期准备"><strong>一 前期准备</strong></h3>
+<h4 id="hexo环境配置"><strong>1-1 hexo环境配置</strong></h4>
+<p>需要安装git以及node.js，并且需要配置环境变量之类。 <a target="_blank" rel="noopener" href="http://www.jianshu.com/p/f9b213097c42">使用Github搭建Hexo技术博客托管在GitHub Pages上--安装教程</a> <a target="_blank" rel="noopener" href="http://gaoxianglyx.top/2017/01/04/%E6%90%AD%E5%BB%BAgithub%E5%8D%9A%E5%AE%A2%E6%AD%A5%E9%AA%A4%EF%BC%8C%E8%B6%85%E7%AE%80%E4%BE%BF/">使用Hexo搭建github博客步骤，超简便</a> <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/setup.html">hexo官网建站文档</a> 其中node搭建环境可以参考 <a target="_blank" rel="noopener" href="http://www.jianshu.com/p/03a76b2e7e00">Node.js安装及环境配置之Windows篇</a></p>
+<h4 id="jekyll环境配置"><strong>1-2 jekyll环境配置</strong></h4>
+<p>需要搭建ruby环境 <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/30018945">github上利用jekyll搭建自己的blog的操作顺序？</a> <a target="_blank" rel="noopener" href="http://www.cnfeat.com/blog/2014/05/10/how-to-build-a-blog/#%E5%9B%BE%E5%BA%8A">如何搭建一个独立博客——简明 GitHub Pages与 jekyll 教程</a></p>
+<h3 id="二-个性化设置"><strong>二 个性化设置</strong></h3>
+<p>在第一步中，分别创建相关文件，然后选择主题，hexo可以直接将主题复制到theme文件夹下；jekyll可以直接利用Git克隆喜欢的主题，文件命名为上面规定的形式。<br />
+之后就是修改config文件</p>
+<h4 id="hexo主题"><strong>2-1 hexo主题</strong></h4>
+<p><a target="_blank" rel="noopener" href="https://hexo.io/themes/">Themes</a></p>
+<h4 id="jekyll主题"><strong>2-2 jekyll主题</strong></h4>
+<p><a target="_blank" rel="noopener" href="http://jekyllthemes.org/page3/">Jekyll Themes</a></p>
+<h3 id="三-写博客"><strong>三 写博客</strong></h3>
+<h4 id="hexo推送博客操作"><strong>3-1 hexo推送博客操作</strong></h4>
+<ul>
+<li>添加 markdown 格式文章</li>
+<li>在本地仓库执行以下命令
+<ul>
+<li>本地预览依次执行
+<ul>
+<li><code>hexo clean</code></li>
+<li><code>hexo g</code></li>
+<li><code>hexo s</code></li>
+</ul></li>
+<li>上传Github，依次执行
+<ul>
+<li><code>hexo clean</code></li>
+<li><code>hexo g</code></li>
+<li><code>hexo d</code></li>
+<li><code>git add .</code></li>
+<li><code>git commit -m &quot;&quot;</code></li>
+<li><code>git push origin master</code></li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="jekyll推送博客操作"><strong>3-2 jekyll推送博客操作</strong></h4>
+<p>由于Github内置jekyll引擎，会自动渲染，因此更新只需要直接添加 markdown 格式博客即可</p>
+<p>同时，可以本地预览 <code>bundle exec jekyll serve</code></p>
+<h3 id="四-写在后面">四 写在后面</h3>
+<h4 id="使用sublime写博文"><strong>4-1 使用sublime写博文</strong></h4>
+<p>主要是安装相关插件，可能会遇到问题，Stack Overflow上有解决方案，或许需要添加相关代码</p>
+<h4 id="设置域名"><strong>4-2 设置域名</strong></h4>
+<p>首先购买域名，推荐万网<br />
+然后阿里云解析域名 记录类型 主机类型 解析线路 记录值 CNAME www 默认 username.github.io A @ 默认 151.101.77.147（使用cmd ping username.github.io 得到ip地址） 然后在username.github.io中新建文件CNAME，内容为域名，注意域名写为xxxx.com/cn/....，不论使用http://xxxx.com还是xxxx.com都可以搜到网站</p>
+<h4 id="注意事项"><strong>4-3 注意事项</strong></h4>
+<p>写新博文时，最好复制之前的博文md文件，避免出错 一定要本地预览，即生成静态网页，否则上传后，博客没有变化</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1353,122 +1497,6 @@ requests_session = requests.session() response = requests_session.post(url=url_l
 <p>②爬取某个回答的全文 <img src="http://img.blog.csdn.net/20170814204708821?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="源码" /> 使用下面的代码出现问题，并且打印storyPages为空 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">storyPages &#x3D; storyText.find_all(&#39;p&#39;)</span><br><span class="line">for storyPage in storyPages:</span><br><span class="line"> f.write(str(storyPage)+&#39;\n&#39;)</span><br></pre></td></tr></table></figure> 遂再次查看<a target="_blank" rel="noopener" href="http://cuiqingcai.com/1319.html">BeautifulSoup的使用教程</a>，改为以下用法 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for string in storyText.strings:</span><br><span class="line">                f.write(repr(string)+&#39;\n&#39;)</span><br></pre></td></tr></table></figure></p>
 <p>③未能爬起该页面下全部回答 <img src="http://img.blog.csdn.net/20170814204014309?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvcXFfMzY5NjI1Njk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="遇到的问题" /></p>
 <p>④获得url的源码的等价处理 使用cookie与不使用时，以下两个方法，打印，得到相同结果 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#当使用cookie时</span><br><span class="line">response &#x3D; opener.open(&#39;https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;25313930&#39;)</span><br><span class="line">html &#x3D; response.read()</span><br></pre></td></tr></table></figure> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#当不使用cookie时</span><br><span class="line">url &#x3D; &#39;http:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;82833d443e76&#39;</span><br><span class="line">html &#x3D; requests.get(url).content</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AD%EF%BC%89urllib%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95(header,%E4%BB%A3%E7%90%86,%E8%B6%85%E6%97%B6,%E8%AE%A4%E8%AF%81,%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="iseesaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="iseesaw's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AD%EF%BC%89urllib%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95(header,%E4%BB%A3%E7%90%86,%E8%B6%85%E6%97%B6,%E8%AE%A4%E8%AF%81,%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)/" class="post-title-link" itemprop="url">【Python3.6爬虫学习记录】（六）urllib详细使用方法(header,代理,超时,认证,异常处理)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-08-14 00:00:00" itemprop="dateCreated datePublished" datetime="2017-08-14T00:00:00+08:00">2017-08-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:47:31" itemprop="dateModified" datetime="2019-09-08T11:47:31+08:00">2019-09-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AD%EF%BC%89urllib%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95(header,%E4%BB%A3%E7%90%86,%E8%B6%85%E6%97%B6,%E8%AE%A4%E8%AF%81,%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)/" class="post-meta-item leancloud_visitors" data-flag-title="【Python3.6爬虫学习记录】（六）urllib详细使用方法(header,代理,超时,认证,异常处理)" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AD%EF%BC%89urllib%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95(header,%E4%BB%A3%E7%90%86,%E8%B6%85%E6%97%B6,%E8%AE%A4%E8%AF%81,%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/08/14/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E5%85%AD%EF%BC%89urllib%E8%AF%A6%E7%BB%86%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95(header,%E4%BB%A3%E7%90%86,%E8%B6%85%E6%97%B6,%E8%AE%A4%E8%AF%81,%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86)/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>基本解决了我的混乱的思路 python3 抓取网页资源的 N 种方法</p>
-<p>1、最简单</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import urllib.request</span><br><span class="line">response &#x3D; urllib.request.urlopen(‘http:&#x2F;&#x2F;python.org&#x2F;’)</span><br><span class="line">html &#x3D; response.read()</span><br></pre></td></tr></table></figure>
-<p>2、使用 Request</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import urllib.request</span><br><span class="line"></span><br><span class="line">req &#x3D; urllib.request.Request(‘http:&#x2F;&#x2F;python.org&#x2F;’)</span><br><span class="line">response &#x3D; urllib.request.urlopen(req)</span><br><span class="line">the_page &#x3D; response.read()</span><br></pre></td></tr></table></figure>
-<p>3、发送数据</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#! &#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">import urllib.parse</span><br><span class="line">import urllib.request</span><br><span class="line"></span><br><span class="line">url &#x3D; ‘http:&#x2F;&#x2F;localhost&#x2F;login.php’</span><br><span class="line">user_agent &#x3D; ‘Mozilla&#x2F;4.0 (compatible; MSIE 5.5; Windows NT)’</span><br><span class="line">values &#x3D; &#123;</span><br><span class="line">‘act’ : ‘login’,</span><br><span class="line">‘login[email]’ : ‘yzhang@i9i8.com’,</span><br><span class="line">‘login[password]’ : ‘123456’</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">data &#x3D; urllib.parse.urlencode(values)</span><br><span class="line">req &#x3D; urllib.request.Request(url, data)</span><br><span class="line">req.add_header(‘Referer’, ‘http:&#x2F;&#x2F;www.python.org&#x2F;’)</span><br><span class="line">response &#x3D; urllib.request.urlopen(req)</span><br><span class="line">the_page &#x3D; response.read()</span><br><span class="line"></span><br><span class="line">print(the_page.decode(“utf8”))</span><br></pre></td></tr></table></figure>
-<p>4、发送数据和header</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#! &#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">import urllib.parse</span><br><span class="line">import urllib.request</span><br><span class="line"></span><br><span class="line">url &#x3D; ‘http:&#x2F;&#x2F;localhost&#x2F;login.php’</span><br><span class="line">user_agent &#x3D; ‘Mozilla&#x2F;4.0 (compatible; MSIE 5.5; Windows NT)’</span><br><span class="line">values &#x3D; &#123;</span><br><span class="line">‘act’ : ‘login’,</span><br><span class="line">‘login[email]’ : ‘yzhang@i9i8.com’,</span><br><span class="line">‘login[password]’ : ‘123456’</span><br><span class="line">&#125;</span><br><span class="line">headers &#x3D; &#123; ‘User-Agent’ : user_agent &#125;</span><br><span class="line"></span><br><span class="line">data &#x3D; urllib.parse.urlencode(values)</span><br><span class="line">req &#x3D; urllib.request.Request(url, data, headers)</span><br><span class="line">response &#x3D; urllib.request.urlopen(req)</span><br><span class="line">the_page &#x3D; response.read()</span><br><span class="line"></span><br><span class="line">print(the_page.decode(“utf8”))</span><br></pre></td></tr></table></figure>
-<p>5、http 错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#! &#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">import urllib.request</span><br><span class="line"></span><br><span class="line">req &#x3D; urllib.request.Request(‘http:&#x2F;&#x2F;www.111cn.net ‘)</span><br><span class="line">try:</span><br><span class="line">urllib.request.urlopen(req)</span><br><span class="line">except urllib.error.HTTPError as e:</span><br><span class="line">print(e.code)</span><br><span class="line">print(e.read().decode(“utf8”))</span><br></pre></td></tr></table></figure>
-<p>6、异常处理1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#! &#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">from urllib.request import Request, urlopen</span><br><span class="line">from urllib.error import URLError, HTTPError</span><br><span class="line">req &#x3D; Request(“http:&#x2F;&#x2F;www.111cn.net &#x2F;”)</span><br><span class="line">try:</span><br><span class="line">response &#x3D; urlopen(req)</span><br><span class="line">except HTTPError as e:</span><br><span class="line">print(‘The server couldn’t fulfill the request.’)</span><br><span class="line">print(‘Error code: ‘, e.code)</span><br><span class="line">except URLError as e:</span><br><span class="line">print(‘We failed to reach a server.’)</span><br><span class="line">print(‘Reason: ‘, e.reason)</span><br><span class="line">else:</span><br><span class="line">print(“good!”)</span><br><span class="line">print(response.read().decode(“utf8”))</span><br></pre></td></tr></table></figure>
-<p>7、异常处理2</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#! &#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">from urllib.request import Request, urlopen</span><br><span class="line">from urllib.error import  URLError</span><br><span class="line">req &#x3D; Request(“http:&#x2F;&#x2F;www.111cn.net &#x2F;”)</span><br><span class="line">try:</span><br><span class="line">response &#x3D; urlopen(req)</span><br><span class="line">except URLError as e:</span><br><span class="line">if hasattr(e, ‘reason’):</span><br><span class="line">print(‘We failed to reach a server.’)</span><br><span class="line">print(‘Reason: ‘, e.reason)</span><br><span class="line">elif hasattr(e, ‘code’):</span><br><span class="line">print(‘The server couldn’t fulfill the request.’)</span><br><span class="line">print(‘Error code: ‘, e.code)</span><br><span class="line">else:</span><br><span class="line">print(“good!”)</span><br><span class="line">print(response.read().decode(“utf8”))</span><br></pre></td></tr></table></figure>
-<p>8、HTTP 认证</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">#! &#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">import urllib.request</span><br><span class="line"></span><br><span class="line"># create a password manager</span><br><span class="line">password_mgr &#x3D; urllib.request.HTTPPasswordMgrWithDefaultRealm()</span><br><span class="line"></span><br><span class="line"># Add the username and password.</span><br><span class="line"># If we knew the realm, we could use it instead of None.</span><br><span class="line">top_level_url &#x3D; “https:&#x2F;&#x2F;www.111cn.net &#x2F;”</span><br><span class="line">password_mgr.add_password(None, top_level_url, ‘rekfan’, ‘xxxxxx’)</span><br><span class="line"></span><br><span class="line">handler &#x3D; urllib.request.HTTPBasicAuthHandler(password_mgr)</span><br><span class="line"></span><br><span class="line"># create “opener” (OpenerDirector instance)</span><br><span class="line">opener &#x3D; urllib.request.build_opener(handler)</span><br><span class="line"></span><br><span class="line"># use the opener to fetch a URL</span><br><span class="line">a_url &#x3D; “https:&#x2F;&#x2F;www.111cn.net &#x2F;”</span><br><span class="line">x &#x3D; opener.open(a_url)</span><br><span class="line">print(x.read())</span><br><span class="line"></span><br><span class="line"># Install the opener.</span><br><span class="line"># Now all calls to urllib.request.urlopen use our opener.</span><br><span class="line">urllib.request.install_opener(opener)</span><br><span class="line"></span><br><span class="line">a &#x3D; urllib.request.urlopen(a_url).read().decode(‘utf8’)</span><br><span class="line">print(a)</span><br></pre></td></tr></table></figure>
-<p>9、使用代理</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#! &#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">import urllib.request</span><br><span class="line"></span><br><span class="line">proxy_support &#x3D; urllib.request.ProxyHandler(&#123;‘sock5’: ‘localhost:1080’&#125;)</span><br><span class="line">opener &#x3D; urllib.request.build_opener(proxy_support)</span><br><span class="line">urllib.request.install_opener(opener)</span><br><span class="line">a &#x3D; urllib.request.urlopen(“http:&#x2F;&#x2F;www.111cn.net “).read().decode(“utf8”)</span><br><span class="line">print(a)</span><br></pre></td></tr></table></figure>
-<p>10、超时</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#! &#x2F;usr&#x2F;bin&#x2F;env python3</span><br><span class="line"></span><br><span class="line">import socket</span><br><span class="line">import urllib.request</span><br><span class="line"></span><br><span class="line"># timeout in seconds</span><br><span class="line">timeout &#x3D; 2</span><br><span class="line">socket.setdefaulttimeout(timeout)</span><br><span class="line"></span><br><span class="line"># this call to urllib.request.urlopen now uses the default timeout</span><br><span class="line"># we have set in the socket module</span><br><span class="line">req &#x3D; urllib.request.Request(‘http:&#x2F;&#x2F;www.111cn.net &#x2F;’)</span><br><span class="line">a &#x3D; urllib.request.urlopen(req).read()</span><br><span class="line">print(a)</span><br></pre></td></tr></table></figure>
 
       
     </div>

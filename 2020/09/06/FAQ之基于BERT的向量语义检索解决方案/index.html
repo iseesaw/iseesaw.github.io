@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.0.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"iseesaw.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+
+  <meta name="description" content="一种基于BERT的语义检索解决方案，包括负采样、SiameseNetwork模型微调训练、模型蒸馏以及Web服务上线部署等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FAQ之基于BERT的向量语义检索解决方案">
+<meta property="og:url" content="https://iseesaw.github.io/2020/09/06/FAQ%E4%B9%8B%E5%9F%BA%E4%BA%8EBERT%E7%9A%84%E5%90%91%E9%87%8F%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/index.html">
+<meta property="og:site_name" content="iseesaw&#39;s blog">
+<meta property="og:description" content="一种基于BERT的语义检索解决方案，包括负采样、SiameseNetwork模型微调训练、模型蒸馏以及Web服务上线部署等">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://raw.githubusercontent.com/UKPLab/sentence-transformers/master/docs/img/SBERT_Siamese_Network.png">
+<meta property="article:published_time" content="2020-09-06T06:50:19.000Z">
+<meta property="article:modified_time" content="2020-09-06T07:13:26.093Z">
+<meta property="article:author" content="iseesaw">
+<meta property="article:tag" content="FAQ">
+<meta property="article:tag" content="语义检索">
+<meta property="article:tag" content="BERT">
+<meta property="article:tag" content="Transformers">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/UKPLab/sentence-transformers/master/docs/img/SBERT_Siamese_Network.png">
+
+
+<link rel="canonical" href="https://iseesaw.github.io/2020/09/06/FAQ%E4%B9%8B%E5%9F%BA%E4%BA%8EBERT%E7%9A%84%E5%90%91%E9%87%8F%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>FAQ之基于BERT的向量语义检索解决方案 | iseesaw's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
+    <script>
+      if (CONFIG.hostname === location.hostname) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-105146755-1');
+      }
+    </script>
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"] > svg a {
+  fill: blue;
+  stroke: blue;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">iseesaw's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">项目介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#faq-%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2"><span class="nav-number">1.1.</span> <span class="nav-text">FAQ 语义检索</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97%E6%A3%80%E7%B4%A2%E5%80%92%E6%8E%92%E7%B4%A2%E5%BC%95"><span class="nav-number">1.1.1.</span> <span class="nav-text">关键字检索（倒排索引）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#tf-idf"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">TF-IDF</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#bm25"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">BM25</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2%E8%AF%AD%E4%B9%89%E5%8F%AC%E5%9B%9E"><span class="nav-number">1.1.2.</span> <span class="nav-text">向量检索（语义召回）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#bert-as-service"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">Bert-as-service</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#sentence-transformers"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">Sentence-transformers</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#transformers"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">Transformers</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bert-%E5%BE%AE%E8%B0%83%E4%B8%8E%E8%92%B8%E9%A6%8F"><span class="nav-number">1.2.</span> <span class="nav-text">BERT 微调与蒸馏</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bertforsiamesenetwork"><span class="nav-number">1.2.1.</span> <span class="nav-text">BertForSiameseNetwork</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.2.</span> <span class="nav-text">损失函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="nav-number">1.2.3.</span> <span class="nav-text">数据集</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B4%9F%E9%87%87%E6%A0%B7"><span class="nav-number">1.2.4.</span> <span class="nav-text">负采样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fine-tune"><span class="nav-number">1.2.5.</span> <span class="nav-text">Fine-tune</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E8%92%B8%E9%A6%8F"><span class="nav-number">1.2.6.</span> <span class="nav-text">模型蒸馏</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#faq-web%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.</span> <span class="nav-text">FAQ Web服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#web-api"><span class="nav-number">1.3.1.</span> <span class="nav-text">Web API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#locust-%E5%8E%8B%E5%8A%9B%E6%B5%8B%E8%AF%95"><span class="nav-number">1.3.2.</span> <span class="nav-text">Locust 压力测试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%9C%E5%8F%8A%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">结果及分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%AE%E8%B0%83%E7%BB%93%E6%9E%9C"><span class="nav-number">2.1.</span> <span class="nav-text">微调结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E4%B9%89%E5%8F%AC%E5%9B%9E%E7%BB%93%E6%9E%9C"><span class="nav-number">2.2.</span> <span class="nav-text">语义召回结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web%E6%9C%8D%E5%8A%A1%E5%8E%8B%E6%B5%8B"><span class="nav-number">2.3.</span> <span class="nav-text">Web服务压测</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A"><span class="nav-number">3.</span> <span class="nav-text">更多</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2020/09/06/FAQ%E4%B9%8B%E5%9F%BA%E4%BA%8EBERT%E7%9A%84%E5%90%91%E9%87%8F%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FAQ之基于BERT的向量语义检索解决方案
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-09-06 14:50:19 / Modified: 15:13:26" itemprop="dateCreated datePublished" datetime="2020-09-06T14:50:19+08:00">2020-09-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NLP/" itemprop="url" rel="index"><span itemprop="name">NLP</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/09/06/FAQ%E4%B9%8B%E5%9F%BA%E4%BA%8EBERT%E7%9A%84%E5%90%91%E9%87%8F%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" class="post-meta-item leancloud_visitors" data-flag-title="FAQ之基于BERT的向量语义检索解决方案" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2020/09/06/FAQ%E4%B9%8B%E5%9F%BA%E4%BA%8EBERT%E7%9A%84%E5%90%91%E9%87%8F%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/06/FAQ%E4%B9%8B%E5%9F%BA%E4%BA%8EBERT%E7%9A%84%E5%90%91%E9%87%8F%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+            <div class="post-description">一种基于BERT的语义检索解决方案，包括负采样、SiameseNetwork模型微调训练、模型蒸馏以及Web服务上线部署等</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>一种 FAQ 向量语义检索解决方案</p>
+<ul>
+<li><p>[x] 基于 <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/"><strong>Sklearn Kmeans</strong></a> 聚类的<strong>负采样</strong></p></li>
+<li><p>[x] 基于 <a target="_blank" rel="noopener" href="https://huggingface.co/transformers/"><strong>Transformers</strong></a> 的 BertForSiameseNetwork（Bert <strong>双塔模型</strong>）<strong>微调训练</strong></p></li>
+<li><p>[x] 基于 <a target="_blank" rel="noopener" href="https://github.com/airaria/TextBrewer"><strong>TextBrewer</strong></a> 的<strong>模型蒸馏</strong></p></li>
+<li><p>[x] 基于 <a target="_blank" rel="noopener" href="https://fastapi.tiangolo.com/zh/"><strong>FastAPI</strong></a> 和 <a target="_blank" rel="noopener" href="https://locust.io/"><strong>Locust</strong></a> 的 <strong>WebAPI 服务</strong>以及<strong>压力测试</strong></p></li>
+</ul>
+<h2 id="项目介绍">项目介绍</h2>
+<p>FAQ 的处理流程一般为：</p>
+<ul>
+<li><strong>问题理解</strong>，对用户 query 进行改写以及向量表示</li>
+<li><strong>召回模块</strong>，在问题集上进行候选问题召回，获得 topk（基于关键字的倒排索引 vs 基于向量的语义召回）</li>
+<li><strong>排序模块</strong>，对 topk 进行精排序</li>
+</ul>
+<p>本项目着眼于 <strong>召回模块</strong> 的 <strong>向量检索</strong> 的实现，适用于 <strong>小规模 FAQ 问题集</strong>（候选问题集&lt;10万）的系统快速搭建</p>
+<h3 id="faq-语义检索">FAQ 语义检索</h3>
+<h4 id="关键字检索倒排索引">关键字检索（倒排索引）</h4>
+<p>传统召回模块<strong>基于关键字检索</strong></p>
+<ul>
+<li>计算关键字在问题集中的 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">TF-IDF</a> 以及<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Okapi_BM25">BM25</a> 得分，并建立<strong>倒排索引表</strong></li>
+<li>第三方库 <a target="_blank" rel="noopener" href="https://whoosh.readthedocs.io/en/latest/index.html">ElasticSearch</a>，<a target="_blank" rel="noopener" href="https://lucene.apache.org/pylucene/">Lucene</a>，<a target="_blank" rel="noopener" href="https://whoosh.readthedocs.io/en/latest/index.html">Whoosh</a></li>
+</ul>
+<h5 id="tf-idf">TF-IDF</h5>
+<p>给定文档集合 <span class="math inline">\(\mathcal{D} = \{d_1, d_2, d_3, \cdots, d_n\}\)</span> ，每个文档为 <span class="math inline">\(d_j = \{t_{1}, t_2, \cdots, t_m\}\)</span></p>
+<ul>
+<li><p><span class="math inline">\(TF\)</span>（Term Frequency）</p>
+<ul>
+<li><p>词频是指一个给定词语在该文档中出现的频率</p></li>
+<li><p>词频是词数（Term Count）的归一化，防止偏向长文档</p></li>
+<li><p>对于某一特定文档 <span class="math inline">\(d_j\)</span> 里的词语 <span class="math inline">\(t_i\)</span> ，其在该文档中出现次数为 <span class="math inline">\(n_{i,j}\)</span> ，则有 <span class="math display">\[
+TF_{i,j} = \frac{n_{i,j}}{\sum_k n_{k,j}}
+\]</span></p></li>
+</ul></li>
+<li><p><span class="math inline">\(IDF\)</span>（Inverse Document Frequency）</p>
+<ul>
+<li><p>逆文档频率用于衡量一个词语在所有文档中的重要性</p></li>
+<li><p>表示越多的文档中出现该词语， 则其重要性越低</p></li>
+<li><p>词语 <span class="math inline">\(t_i\)</span> 的 <span class="math inline">\(IDF\)</span> 得分如下，其中 <span class="math inline">\(|\{j: t_i \in d_j\}|\)</span> 表示包含词语 <span class="math inline">\(t_i\)</span> 的文档个数 <span class="math display">\[
+IDF_{i} = \lg \frac{|D|}{|\{j: t_i \in d_j\}|}
+\]</span></p></li>
+</ul></li>
+<li><p><span class="math inline">\(TF-IDF\)</span></p>
+<ul>
+<li>词语 <span class="math inline">\(t_i\)</span> 对于文档 <span class="math inline">\(d_j\)</span> 的重要程度得分为</li>
+</ul>
+<p><span class="math display">\[
+TF-IDF_{i,j} = TF_{i,j} \times IDF_{i}
+\]</span></p>
+<ul>
+<li>特定文档中的高词频，以及该词语在整个文档集合中的低文件频率，可以产生高权重的 TF-IDF 得分</li>
+<li>TF-IDF 倾向于过滤常见的词语，保留重要的词语</li>
+<li>计算简单，但是精度不高，且没有体现词语的位置信息</li>
+</ul></li>
+</ul>
+<h5 id="bm25">BM25</h5>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Okapi_BM25">Okapi BM25</a></p>
+</blockquote>
+<p>用于搜索相关性评估，设输入 <span class="math inline">\(Query=\{q_1, q_2, \cdots, q_N\}\)</span> ，<span class="math inline">\(BM25\)</span> 思想为计算 <span class="math inline">\(q_i\)</span> 与每个文档 <span class="math inline">\(d\)</span> 的相关性得分，然后将 <span class="math inline">\(Query\)</span> 中所有 <span class="math inline">\(q\)</span> 相对于 <span class="math inline">\(d\)</span> 的相关性得分加权求和，从而得到 <span class="math inline">\(Query\)</span> 与 <span class="math inline">\(d\)</span> 得相关性得分 <span class="math inline">\(BM25(Query, d)\)</span> <span class="math display">\[
+BM25(Query, d) = \sum_{i=1}^N w_i \times R(q_i, d)
+\]</span></p>
+<ul>
+<li><p>其中每个词语的权重 <span class="math inline">\(w_i\)</span> 可以用 <span class="math inline">\(IDF\)</span> 表示（与上述有所不同，进行了平滑等处理）</p>
+<p><span class="math display">\[
+w_i = IDF(q_i) = \lg \frac{N - n_{q_i} + 0.5}{n_{q_i} + 0.5}
+\]</span></p></li>
+<li><p>而词语对于文档的相关性得分 <span class="math inline">\(R(q_i, d)\)</span> 则为</p>
+<p><span class="math display">\[
+R(q_i, d) = \frac{f(q_i, d) \times (k_1 + 1)}{f(q_i, d) + k_1 \times (1 - b + b \times \frac{dl}{avgdl})}
+\]</span></p>
+<ul>
+<li>其中 <span class="math inline">\(f(q_i, d)\)</span> 为 <span class="math inline">\(q_i\)</span> 在文档 <span class="math inline">\(d\)</span> 中的词频</li>
+<li><p><span class="math inline">\(k_1, b\)</span> 为可调节参数，通常设置 <span class="math inline">\(k_1 \in [1.2, 2.0] , b = 0.75\)</span> ，<span class="math inline">\(b\)</span> 用于调节文本长度对相关性的影响</p></li>
+<li><p><span class="math inline">\(dl,avgdl\)</span> 分别问文档 <span class="math inline">\(d\)</span> 的长度和文档集 <span class="math inline">\(D\)</span> 中所有文档的平均长度</p></li>
+</ul></li>
+</ul>
+<h4 id="向量检索语义召回">向量检索（语义召回）</h4>
+<p>随着语义表示模型的增强、预训练模型的发展，基于 BERT 向量的<strong>语义检索</strong>得到广泛应用</p>
+<ul>
+<li>对候选问题集合进行向量编码，得到 <strong>corpus 向量矩阵</strong></li>
+<li>当用户输入 query 时，同样进行编码得到 <strong>query 向量表示</strong></li>
+<li>然后进行语义检索（矩阵操作，KNN，FAISS）</li>
+</ul>
+<p>本项目针对小规模 FAQ 问题集直接计算 query 和 corpus 向量矩阵的<strong>余弦相似度</strong>，从而获得 topk 候选问题 <span class="math display">\[
+score = \frac{V_{query} \cdot V_{corpus}}{||V_{query}|| \cdot ||V_{corpus}||}
+\]</span> <strong>句向量获取解决方案</strong></p>
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 5%" />
+<col style="width: 29%" />
+<col style="width: 32%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Python Lib</th>
+<th>Framework</th>
+<th>Desc</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a target="_blank" rel="noopener" href="https://github.com/hanxiao/bert-as-service">bert-as-serivce</a></td>
+<td>TensorFlow</td>
+<td>高并发服务调用，支持 fine-tune，较难拓展其他模型</td>
+<td><a target="_blank" rel="noopener" href="https://github.com/hanxiao/bert-as-service#getting-started">getting-started</a></td>
+</tr>
+<tr class="even">
+<td><a target="_blank" rel="noopener" href="https://www.sbert.net/index.html">Sentence-Transformers</a></td>
+<td>PyTorch</td>
+<td>接口简单易用，支持各种模型调用，支持 fine-turn（单GPU）</td>
+<td><a target="_blank" rel="noopener" href="https://www.sbert.net/docs/quickstart.html#quickstart">using-Sentence-Transformers-model</a><br /><a target="_blank" rel="noopener" href="https://github.com/UKPLab/sentence-transformers/issues/184#issuecomment-607069944">using-Transformers-model</a></td>
+</tr>
+<tr class="odd">
+<td>🤗 <a target="_blank" rel="noopener" href="https://github.com/huggingface/transformers/">Transformers</a></td>
+<td>PyTorch</td>
+<td>自定义程度高，支持各种模型调用，支持 fine-turn（多GPU）</td>
+<td><a target="_blank" rel="noopener" href="https://www.sbert.net/docs/usage/computing_sentence_embeddings.html#sentence-embeddings-with-transformers">sentence-embeddings-with-Transformers</a></td>
+</tr>
+</tbody>
+</table>
+<h5 id="bert-as-service">Bert-as-service</h5>
+<p><a target="_blank" rel="noopener" href="https://github.com/hanxiao/bert-as-service">bert-as-serivce</a> 是基于 Google 官方代码实现的 BERT 服务，可以本地或者HTTP请求进行句子编码</p>
+<p>其默认的句向量构造方案是取倒数第二层的隐状态值在token上的均值，即选用的层数是倒数第2层，池化策略是 REDUCE_MEAN</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 需要运行服务 bert-serving-start -model_dir /tmp/english_L-12_H-768_A-12/ -num_worker=4 </span></span><br><span class="line"><span class="keyword">from</span> bert_serving.client <span class="keyword">import</span> BertClient</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建客户端示例并进行编码</span></span><br><span class="line">bc = BertClient()</span><br><span class="line">bc.encode([<span class="string">&#x27;First do it&#x27;</span>, <span class="string">&#x27;then do it right&#x27;</span>, <span class="string">&#x27;then do it better&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<p>通过 HTTP 请求</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 运行 http 服务 bert-serving-start -model_dir=/YOUR_MODEL -http_port 8125</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line">reply = requests.post(<span class="string">&#x27;http://127.0.0.1:8125/encode&#x27;</span>,</span><br><span class="line">                     data=&#123;</span><br><span class="line">                        <span class="string">&quot;id&quot;</span>: <span class="number">123</span>,</span><br><span class="line">                        <span class="string">&quot;texts&quot;</span>: [<span class="string">&quot;hello world&quot;</span>, <span class="string">&quot;good day!&quot;</span>],</span><br><span class="line">                        <span class="string">&quot;is_tokenized&quot;</span>: false</span><br><span class="line">                    &#125;)</span><br><span class="line">reply.json()</span><br><span class="line"><span class="comment"># &#123;</span></span><br><span class="line"><span class="comment">#    &quot;id&quot;: 123,</span></span><br><span class="line"><span class="comment">#    &quot;results&quot;: [[768 float-list], [768 float-list]],</span></span><br><span class="line"><span class="comment">#    &quot;status&quot;: 200</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br></pre></td></tr></table></figure>
+<h5 id="sentence-transformers">Sentence-transformers</h5>
+<blockquote>
+<p>尽量使用最新版本，否则可能报错</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">torch                              1.6.0</span><br><span class="line">sentence-transformers              0.3.4</span><br><span class="line">transformers                       3.0.2</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.sbert.net/index.html">Sentence-Transformers</a> 是一个基于 <a target="_blank" rel="noopener" href="https://huggingface.co/transformers/">Transformers</a> 库的句向量表示 Python 框架，内置语义检索以及多种文本（对）相似度损失函数，可以较快的实现模型和语义检索，并提供多种<a target="_blank" rel="noopener" href="https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/">预训练的模型</a>，包括中文在内的多语言模型</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/">内置预训练的模型</a></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sentence_transformers <span class="keyword">import</span> SentenceTransformer, model</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载内置模型 (https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/)</span></span><br><span class="line">model = SentenceTransformer(<span class="string">&#x27;distilbert-multilingual-nli-stsb-quora-ranking&#x27;</span>)</span><br><span class="line"></span><br><span class="line">sentences = [<span class="string">&#x27;This framework generates embeddings for each input sentence&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Sentences are passed as a list of string.&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;The quick brown fox jumps over the lazy dog.&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 句子编码</span></span><br><span class="line">embeddings = model.encode(sentences)</span><br></pre></td></tr></table></figure></li>
+<li><p><a target="_blank" rel="noopener" href="https://huggingface.co/models">HuggingFace 的预训练模型</a></p>
+<blockquote>
+<p>需要指定特定的类，比如使用 <code>bert-base-chinese</code> ，<a target="_blank" rel="noopener" href="https://github.com/UKPLab/sentence-transformers/issues/75#issuecomment-568717443">#issue75</a></p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sentence_transformers <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line">model_name = <span class="string">&#x27;bert-base-chinese&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 BERT 作为 encoder</span></span><br><span class="line">word_embedding_model = models.BERT(model_name)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 mean pooling 获得句向量表示</span></span><br><span class="line">pooling_model = models.Pooling(word_embedding_model.get_word_embedding_dimension(),</span><br><span class="line">pooling_mode_mean_tokens=<span class="literal">True</span>,</span><br><span class="line">pooling_mode_cls_token=<span class="literal">False</span>,</span><br><span class="line">pooling_mode_max_tokens=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">model = SentenceTransformer(modules=[word_embedding_model, pooling_model])</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h5 id="transformers">Transformers</h5>
+<p><a target="_blank" rel="noopener" href="https://huggingface.co/transformers/">Transformers :fire:</a> 支持多种预训练模型，可扩展性强，预训练模型默认输出 <code>sequence_output</code> 和 <code>pool_output</code> 分别为句子中每个 token 的向量表示和 [CLS] 的向量表示（相关论文证明 Average Embedding 效果好于 [CLS]）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModel</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Mean Pooling - Take attention mask into account for correct averaging</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mean_pooling</span>(<span class="params">model_output, attention_mask</span>):</span></span><br><span class="line">    <span class="comment"># 获得句子中每个 token 的向量表示</span></span><br><span class="line">    token_embeddings = model_output[<span class="number">0</span>] </span><br><span class="line">    input_mask_expanded = attention_mask.unsqueeze(<span class="number">-1</span>).expand(token_embeddings.size()).float()</span><br><span class="line">    sum_embeddings = torch.sum(token_embeddings * input_mask_expanded, <span class="number">1</span>)</span><br><span class="line">    sum_mask = torch.clamp(input_mask_expanded.sum(<span class="number">1</span>), min=<span class="number">1e-9</span>)</span><br><span class="line">    <span class="keyword">return</span> sum_embeddings / sum_mask</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sentences = [<span class="string">&#x27;This framework generates embeddings for each input sentence&#x27;</span>,</span><br><span class="line">             <span class="string">&#x27;Sentences are passed as a list of string.&#x27;</span>,</span><br><span class="line">             <span class="string">&#x27;The quick brown fox jumps over the lazy dog.&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载模型文件</span></span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(<span class="string">&quot;bert-base-uncased&quot;</span>)</span><br><span class="line">model = AutoModel.from_pretrained(<span class="string">&quot;bert-base-uncased&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据预处理</span></span><br><span class="line">encoded_input = tokenizer(sentences, padding=<span class="literal">True</span>, truncation=<span class="literal">True</span>, max_length=<span class="number">128</span>, return_tensors=<span class="string">&#x27;pt&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型推理</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    model_output = model(**encoded_input)</span><br><span class="line"></span><br><span class="line"><span class="comment"># mean pooling 获得句子表示</span></span><br><span class="line">sentence_embeddings = mean_pooling(model_output, encoded_input[<span class="string">&#x27;attention_mask&#x27;</span>])</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li><strong>Sentence-Transformers</strong> 进行小规模数据的单 GPU fine-tune 实验（尚不支持多 GPU 训练，<a target="_blank" rel="noopener" href="https://github.com/UKPLab/sentence-transformers/issues/311#issuecomment-659455875">Multi-GPU-training #311</a> ；实现了多种 <a target="_blank" rel="noopener" href="https://www.sbert.net/docs/package_reference/losses.html">Ranking loss</a> 可供参考）</li>
+<li><strong>Transformers</strong> 进行大规模数据的多 GPU fine-tune 训练（推荐自定义模型使用 <a target="_blank" rel="noopener" href="https://huggingface.co/transformers/training.html#trainer">Trainer</a> 进行训练）</li>
+<li>实际使用过程中 <strong>Sentence-Transformers</strong> 和 <strong>Transformers</strong> 模型基本互通互用，前者多了 <strong>Pooling 层（Mean/Max/CLS Pooling）</strong> ，可参考 <strong>Example</strong></li>
+<li>:fire: <strong>实际上线推荐直接使用 Transformers 封装</strong>，Sentence-Transformers 对于CPU服务器不太友好。</li>
+</ul>
+</blockquote>
+<h3 id="bert-微调与蒸馏">BERT 微调与蒸馏</h3>
+<p>在句向量获取中可以直接使用 <a target="_blank" rel="noopener" href="https://huggingface.co/bert-base-chinese">bert-base-chinese</a> 作为编码器，但在特定领域数据上可能需要进一步 fine-tune 来获取更好的效果</p>
+<p>fine-tune 过程主要进行<strong>文本相似度计算</strong>任务，亦<strong>句对分类任务</strong>；此处是为获得更好的句向量，因此使用<strong>双塔模型（<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Siamese_neural_network">SiameseNetwork</a> ，孪生网络）</strong>微调，而非常用的基于表示的模型 <a target="_blank" rel="noopener" href="https://huggingface.co/transformers/model_doc/bert.html#bertforsequenceclassification">BertForSequenceClassification</a></p>
+<h4 id="bertforsiamesenetwork">BertForSiameseNetwork</h4>
+<p><strong>BertForSiameseNetwork</strong> 主要步骤如下</p>
+<ul>
+<li><strong>Encoding</strong>，使用（同一个） <strong>BERT</strong> 分别对 query 和 candidate 进行编码</li>
+<li><strong>Pooling</strong>，对最后一层进行<strong>池化操作</strong>获得句子表示（Mean/Max/CLS Pooling）</li>
+<li><strong>Computing</strong>，计算两个向量的<strong>余弦相似度</strong>（或其他度量函数），计算 loss 进行反向传播</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/UKPLab/sentence-transformers/master/docs/img/SBERT_Siamese_Network.png" /></p>
+<h4 id="损失函数">损失函数</h4>
+<p>模型训练使用的损失函数为 <strong>Ranking loss</strong>，不同于CrossEntropy 和 MSE 进行分类和回归任务，<strong>Ranking loss</strong> 目的是预测输入样本对（即上述双塔模型中 <span class="math inline">\(u\)</span> 和 <span class="math inline">\(v\)</span> 之间）之间的相对距离（<strong>度量学习任务</strong>）</p>
+<ul>
+<li><p><strong>Contrastive Loss</strong></p>
+<blockquote>
+<p>来自 LeCun <a target="_blank" rel="noopener" href="http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf">Dimensionality Reduction by Learning an Invariant Mapping</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/UKPLab/sentence-transformers/blob/master/sentence_transformers/losses/ContrastiveLoss.py">sentence-transformers 源码实现</a></p>
+</blockquote>
+<ul>
+<li><p>公式形式如下，其中 <span class="math inline">\(u, v\)</span> 为 BERT 编码的向量表示，<span class="math inline">\(y\)</span> 为对应的标签（1 表示正样本，0 表示负样本）， <span class="math inline">\(\tau\)</span> 为超参数 <span class="math display">\[
+L(u_i, v_i, y_i) =  y_i ||u_i, v_i|| + (1 - y_i) \max(0, \tau - ||u_i, v_i||
+\]</span></p></li>
+<li><p>公式意义为：对于<strong>正样本</strong>，输出特征向量之间距离要<strong>尽量小</strong>；而对于<strong>负样本</strong>，输出特征向量间距离要<strong>尽量大</strong>；但是若<strong>负样本间距太大</strong>（即容易区分的<strong>简单负样本</strong>，间距大于 <span class="math inline">\(\tau\)</span>）<strong>则不处理</strong>，让模型关注更加<strong>难以区分</strong>的样本</p></li>
+</ul></li>
+<li><p><strong>OnlineContrastive Loss</strong></p>
+<ul>
+<li><p>属于 <strong>online negative sampling</strong> ，与 <strong>Contrastive Loss</strong> 类似</p></li>
+<li><p>参考 <a target="_blank" rel="noopener" href="https://github.com/UKPLab/sentence-transformers/blob/master/sentence_transformers/losses/OnlineContrastiveLoss.py">sentence-transformers 源码实现</a> ，在每个 batch 内，选择最难以区分的正例样本和负例样本进行 loss 计算（容易识别的正例和负例样本则忽略）</p></li>
+<li><p>公式形式如下，如果正样本距离小于 <span class="math inline">\(\tau_1\)</span> 则不处理，如果负样本距离大于 <span class="math inline">\(\tau_0\)</span> 则不处理，实现过程中 <span class="math inline">\(\tau_0, \tau_1\)</span> 可以分别取负/正样本的平均距离值 <span class="math display">\[
+L(u_i, v_i, y_i) 
+\begin{cases}
+\max (0, ||u_i, v_i|| - \tau_1) ,\ if \ y_i=1 &amp; \\
+\max (0, \tau_0 - ||u_i, v_i||),\ if \ y_i =0
+\end{cases}
+\]</span></p></li>
+</ul></li>
+<li><p><strong>Multiple Negatives Ranking Loss</strong></p>
+<blockquote>
+<p>来自Google <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1705.00652.pdf">Efficient Natural Language Response Suggestion for Smart Reply</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/UKPLab/sentence-transformers/blob/master/sentence_transformers/losses/MultipleNegativesRankingLoss.py">sentence-transformers 源码</a></p>
+</blockquote>
+<ul>
+<li>属于 <strong>online negative sampling</strong> ，当如果只有正样本（例如只有相似的段落/问答对等）时，训练过程中在每个 batch 内进行负采样</li>
+<li>输入句子对 <span class="math inline">\((a_1, b_1), (a_2, b_), \cdots, (a_n, b_n)\)</span> ，假设 <span class="math inline">\((a_i, b_i)\)</span> 是正样本，<span class="math inline">\((a_i, b_j), i \ne j\)</span> 是负样本</li>
+<li>在每个 batch 内，对于 <span class="math inline">\(a_i\)</span> ，其使用所有其他的 <span class="math inline">\(b_j\)</span> 作为负样本，然后优化 negative log-likehood loss</li>
+<li>依赖于负样本之间的距离，如果距离差距小，则效果可能不好</li>
+</ul></li>
+<li><p><strong>Cosine Similarity Loss</strong></p>
+<ul>
+<li><p>对于每个样本的 query 和 candidate 之间计算余弦相似度，然后与标准相似度之间计算 MSE 损失</p></li>
+<li><p>对于输入的标注相似度（即 label）需要是 float 类型（如果标签为 0 或 1，拟合效果可能欠佳）</p></li>
+<li><p>公式形式如下 <span class="math display">\[
+L(u, v, y) = (\frac{u \cdot v}{||u||_2 \times ||v||_2} - y)^2
+\]</span></p></li>
+</ul></li>
+<li><p><strong>Pairwise Max Margin Hinge loss</strong></p>
+<blockquote>
+<p>知乎搜索系统论文中用到的损失函数</p>
+<p><a target="_blank" rel="noopener" href="http://arxiv.org/abs/2008.03917">Beyond Lexical: A Semantic Retrieval Framework for Textual SearchEngine</a></p>
+</blockquote>
+<ul>
+<li>运用 SVM 中 max margin 思想，尽量拉远正负样本之间的间距</li>
+<li>训练过程中在每个 batch 内，度量两个正负样本（pairwise）之间的距离</li>
+<li>公式如下，其中 <span class="math inline">\(p_i\)</span> 和 <span class="math inline">\(p_j\)</span> 分别表示每个 <span class="math inline">\(&lt;query, candidate&gt;\)</span> 的模型计算得分，<span class="math inline">\(y_i\)</span> 和 <span class="math inline">\(y_j\)</span> 表示每个候选问题的标签，<span class="math inline">\(\tau\)</span> 为用于对齐的超参数</li>
+</ul>
+<p><span class="math display">\[
+\frac{1}{M} \sum_i \sum_{j \ne i} \max (0, \tau - (y_i - y_j) \times (p_i -p_j))
+\]</span></p></li>
+</ul>
+<p>更多 Ranking loss 信息可参考博客 <a target="_blank" rel="noopener" href="https://gombru.github.io/2019/04/03/ranking_loss/">Understanding Ranking Loss, Contrastive Loss, Margin Loss, Triplet Loss, Hinge Loss and all those confusing names</a> ，以及 SentenceTransformers 中的 <a target="_blank" rel="noopener" href="https://www.sbert.net/docs/package_reference/losses.html">Loss API</a> 以及 PyTorch 中的 <a target="_blank" rel="noopener" href="https://pytorch.org/docs/master/nn.functional.html#margin-ranking-loss">margin_ranking_loss</a></p>
+<h4 id="数据集">数据集</h4>
+<ul>
+<li><p><strong>文本相似度数据集</strong></p>
+<ul>
+<li><p>相关论文比赛发布的数据集可见 <a target="_blank" rel="noopener" href="https://github.com/IceFlameWorm/NLP_Datasets">文本相似度数据集</a> ，大部分为金融等特定领域文本，其中 <a target="_blank" rel="noopener" href="http://icrc.hitsz.edu.cn/Article/show/171.html">LCQMC</a> 提供基于百度知道的约 20w+ 开放域问题数据集，可供模型测试</p>
+<table>
+<thead>
+<tr class="header">
+<th>data</th>
+<th>total</th>
+<th>positive</th>
+<th>negative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>training</td>
+<td>238766</td>
+<td>138574</td>
+<td>100192</td>
+</tr>
+<tr class="even">
+<td>validation</td>
+<td>8802</td>
+<td>4402</td>
+<td>4400</td>
+</tr>
+<tr class="odd">
+<td>test</td>
+<td>12500</td>
+<td>6250</td>
+<td>6250</td>
+</tr>
+</tbody>
+</table></li>
+<li><p>除此以外，百度<a target="_blank" rel="noopener" href="https://www.luge.ai/">千言项目</a>发布了<a target="_blank" rel="noopener" href="https://aistudio.baidu.com/aistudio/competition/detail/45">文本相似度评测</a>，包含 LCQMC/BQ Corpus/PAWS-X 等数据集，可供参考</p></li>
+</ul></li>
+<li><p><strong>FAQ数据集</strong></p>
+<ul>
+<li><p>内部给定的 FAQ 数据集形式如下，包括各种”主题/问题“，每种“主题/问题”可以有多种不同表达形式的问题 <code>post</code>，同时对应多种形式的回复 <code>resp</code></p></li>
+<li><p>检索时只需要将 query 与所有 post 进行相似度计算，从而召回最相似的 post ，然后获取对应的 “主题/问题” 的所有回复 <code>resp</code> ，最后随机返回一个回复即可</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">   <span class="string">&quot;晚安&quot;</span>: &#123;</span><br><span class="line">       <span class="string">&quot;post&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;10点了，我要睡觉了&quot;</span>,</span><br><span class="line">            <span class="string">&quot;唉，该休息了&quot;</span>,</span><br><span class="line">               ...</span><br><span class="line">        ],</span><br><span class="line">       <span class="string">&quot;resp&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;祝你做个好梦&quot;</span>,</span><br><span class="line">            <span class="string">&quot;祝你有个好梦，晚安！&quot;</span>,</span><br><span class="line">            ...</span><br><span class="line">        ]</span><br><span class="line">     &#125;,</span><br><span class="line">   <span class="string">&quot;感谢&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;post&quot;</span>: [</span><br><span class="line">               <span class="string">&quot;多谢了&quot;</span>,</span><br><span class="line">               <span class="string">&quot;非常感谢&quot;</span>,</span><br><span class="line">          ...</span><br><span class="line">         ],</span><br><span class="line">        <span class="string">&quot;resp&quot;</span>: [</span><br><span class="line">               <span class="string">&quot;助人为乐为快乐之本&quot;</span>,</span><br><span class="line">                <span class="string">&quot;别客气&quot;</span>,</span><br><span class="line">              ...</span><br><span class="line">       ]</span><br><span class="line">    &#125;,</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>内部FAQ数据包括两个版本</p>
+<ul>
+<li>chitchat-faq-small，主要是小规模闲聊FAQ，1500主题问题（topic）、2万多不同形式问题（post）</li>
+<li>entity-faq-large，主要是大规模实体FAQ（涉及业务问题），大约3-5千主题问题（topic）、12万不同形式问题（post）</li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="负采样">负采样</h4>
+<p>对于每个 query，需要获得与其相似的 <strong>positve candidate</strong> 以及不相似的 <strong>negtive candidate</strong>，从而构成正样本和负样本作为模型输入，即 <strong>(query, candidate)</strong></p>
+<blockquote>
+<p>⚠️ 此处为 <strong>offline negtive sampling</strong>，即在训练前采样构造负样本，区别于 <strong>online negtive sampling</strong>，后者在训练中的每个 batch 内进行动态的负采样（可以通过相关损失函数实现，如 <strong>OnlineContrastive Loss</strong>）</p>
+<p>两种方法可以根据任务特性进行选择，<strong>online negtive sampling</strong> 对于数据集有一定的要求，需要确保每个 batch 内的 query 是不相似的，但是效率更高</p>
+</blockquote>
+<p>对于 <strong>offline negtive sampling</strong> 主要使用以下两种方式采样：</p>
+<ul>
+<li><strong>全局负采样</strong>
+<ul>
+<li>在整个数据集上进行正态分布采样，很难产生高难度的负样本</li>
+</ul></li>
+<li><strong>局部负采样</strong>
+<ul>
+<li>首先使用少量人工标注数据预训练的 <strong>BERT 模型</strong>对候选问题集合进行<strong>编码</strong></li>
+<li>然后使用<strong>无监督聚类</strong> ，如 <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html">Kmeans</a></li>
+<li>最后在每个 query 所在聚类簇中进行采样</li>
+</ul></li>
+</ul>
+<p>实验中对已有 FAQ 数据集中所有主题的 post 进行 <strong>9:1</strong> 划分得到训练集和测试集，负采样结果对比</p>
+<blockquote>
+<p><code>chitchat-faq-small</code> 为需要上线的 FAQ 闲聊数据，<code>entity-faq-large</code> 为辅助数据</p>
+</blockquote>
+<table>
+<thead>
+<tr class="header">
+<th>dataset</th>
+<th>topics</th>
+<th>posts</th>
+<th>positive(sampling)</th>
+<th>negative(sampling)</th>
+<th>total(sampling)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>chitchat-faq-small<br />train</td>
+<td>1468</td>
+<td>18267</td>
+<td>5w+</td>
+<td>5w+</td>
+<td>10w+</td>
+</tr>
+<tr class="even">
+<td>chitchat-faq-small<br />test</td>
+<td>768</td>
+<td>2030</td>
+<td>2984</td>
+<td>7148</td>
+<td>10132</td>
+</tr>
+<tr class="odd">
+<td>chitchat-faq-small</td>
+<td>1500</td>
+<td>20297</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>entity-faq-large</td>
+<td>-</td>
+<td>12w+</td>
+<td>50w+</td>
+<td>50w+</td>
+<td>100w+</td>
+</tr>
+</tbody>
+</table>
+<h4 id="fine-tune">Fine-tune</h4>
+<p>fine-tune 可以使用高度封装的 <a target="_blank" rel="noopener" href="https://www.sbert.net/index.html">Sentence-Transformers</a> 快速搭建模型，或者使用 <a target="_blank" rel="noopener" href="https://huggingface.co/transformers/">Transformers</a> 更灵活地实现自定义模型（推荐后者）</p>
+<table>
+<thead>
+<tr class="header">
+<th>框架</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a target="_blank" rel="noopener" href="https://www.sbert.net/index.html">Sentence-Transformers</a></td>
+<td>简单易用<br />内置多种 Ranking loss<br />插件式模块使用<br />主要用于句对分类任务<br />不支持多GPU训练</td>
+</tr>
+<tr class="even">
+<td><a target="_blank" rel="noopener" href="https://huggingface.co/transformers/">Transformers</a></td>
+<td>内置多种训练机制<br />包括半精度、分布式训练等<br />自定义程度较高，适合各种任务</td>
+</tr>
+</tbody>
+</table>
+<p>以下分别介绍代码实现步骤</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.sbert.net/index.html">Sentence-Transformers</a></p>
+<ul>
+<li><p>可以进行多种任务的 fine-tune，这里可以选择类似的 <a target="_blank" rel="noopener" href="https://www.sbert.net/examples/training/quora_duplicate_questions/README.html">Quora Duplicate Questions</a> 作为参考，即判断两个问题是否相似，标签为 0 和 1</p></li>
+<li><p>首先需要初始化预训练模型，<code>model_name</code> 必须是 Sentece-Transformers <a target="_blank" rel="noopener" href="https://public.ukp.informatik.tu-darmstadt.de/reimers/sentence-transformers/v0.2/">内置的预训练模型</a> ，也可以加载 transformers 的模型（与前文一致）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sentence_transformers <span class="keyword">import</span> SentenceTransformer, models</span><br><span class="line"><span class="comment"># 加载内置预训练模型</span></span><br><span class="line">model = SentenceTransformer(<span class="string">&#x27;model_name&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 可以自定义模块 或 使用 HugginFace Transformers 预训练模型</span></span><br><span class="line"><span class="comment">#word_embedding_model = models.Transformer(&#x27;bert-base-chinese&#x27;, max_seq_length=256)</span></span><br><span class="line"><span class="comment"># 可以选择使用 cls/max/mean 等多种 pooling 方式</span></span><br><span class="line"><span class="comment">#pooling_model = models.Pooling(word_embedding_model.get_word_embedding_dimension())</span></span><br><span class="line"><span class="comment">#model = SentenceTransformer(modules=[word_embedding_model, pooling_model])</span></span><br></pre></td></tr></table></figure></li>
+<li><p>之后创建训练集，通过内置的 InputExample 构建样本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line"><span class="keyword">from</span> sentence_transformers <span class="keyword">import</span> SentencesDataset</span><br><span class="line"><span class="keyword">from</span> sentence_transformers.readers <span class="keyword">import</span> InputExample</span><br><span class="line"></span><br><span class="line"><span class="comment"># 每个样本使用 InputExample 进行封装</span></span><br><span class="line">train_samples = [InputExample(texts=[<span class="string">&#x27;sentence1&#x27;</span>, <span class="string">&#x27;sentence2&#x27;</span>], label=<span class="number">1</span>)]</span><br><span class="line">train_dataset = SentencesDataset(train_samples, model=model)</span><br><span class="line">train_dataloader = DataLoader(train_dataset,</span><br><span class="line">                              shuffle=<span class="literal">True</span>,</span><br><span class="line">                              batch_size=<span class="number">64</span>)</span><br><span class="line"><span class="comment"># 使用余弦距离作为度量指标 (cosine_distance = 1-cosine_similarity)</span></span><br><span class="line">distance_metric = losses.SiameseDistanceMetric.COSINE_DISTANCE</span><br><span class="line"><span class="comment"># 初始化训练损失函数</span></span><br><span class="line">train_loss = losses.OnlineContrastiveLoss(model=model,</span><br><span class="line">                                          distance_metric=distance_metric,</span><br><span class="line">                                          margin=<span class="number">0.5</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>然后可以针对具体任务评估器</p>
+<ul>
+<li>简单的分类，给定 (sentence1, sentence2) 通过计算两个句向量的余弦相似度判断是否相似，如果高于某个阈值则判断为相似（源码对开发集结果进行排序，依次取两个相邻得分结果作为阈值，遍历查找最高的 f1 值作为结果）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sentence_transformers <span class="keyword">import</span> evaluation</span><br><span class="line"><span class="keyword">from</span> sentence_transformer <span class="keyword">import</span> losses</span><br><span class="line"></span><br><span class="line">dev_sents1, dev_sents2, dev_labels = [<span class="string">&#x27;sent1&#x27;</span>, <span class="string">&#x27;sent2&#x27;</span>], [<span class="string">&#x27;sent11&#x27;</span>, <span class="string">&#x27;sent22&#x27;</span>], [<span class="number">1</span>, <span class="number">0</span>]</span><br><span class="line">binary_acc_evaluator = evaluation.BinaryClassificationEvaluator(</span><br><span class="line">        dev_sentences1, dev_sentences2, dev_labels)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>还可以构建多种评估器，使用 <code>evaluation.SequentialEvaluator()</code> 依次进行评估，参考 <a target="_blank" rel="noopener" href="https://github.com/UKPLab/sentence-transformers/blob/master/examples/training/quora_duplicate_questions/training_OnlineConstrativeLoss.py">training_OnlineConstrativeLoss.py</a> 同时进行分类以及检索等评估</li>
+</ul></li>
+<li><p>最后进行模型训练</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">model.fit(train_objectives=[(train_dataloader, train_loss)],</span><br><span class="line">          evaluator=binary_acc_evaluator,</span><br><span class="line">          epochs=<span class="number">10</span>,</span><br><span class="line">          warmup_steps=<span class="number">1000</span>,</span><br><span class="line">          output_path=<span class="string">&#x27;output&#x27;</span>,</span><br><span class="line">          output_path_ignore_not_empty=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul>
+<blockquote>
+<p>高度封装，训练流程和 sklearn 以及 keras 类似，简单容易理解</p>
+<p>不支持多GPU训练，<a target="_blank" rel="noopener" href="https://github.com/UKPLab/sentence-transformers/issues/311#issuecomment-659455875">Multi-GPU-training #311</a></p>
+<p>更多例子参考 <a target="_blank" rel="noopener" href="https://github.com/UKPLab/sentence-transformers/tree/master/examples">sentence-transformers/examples</a></p>
+</blockquote>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://huggingface.co/transformers/">Transformers</a></p>
+<ul>
+<li>除了使用 <a target="_blank" rel="noopener" href="https://www.sbert.net/index.html">SentenceTransformers</a> ，也可以直接使用 <a target="_blank" rel="noopener" href="https://huggingface.co/transformers/">Transformers</a> 的 <a target="_blank" rel="noopener" href="https://huggingface.co/transformers/main_classes/trainer.html">Trainer</a> 接口进行快速模型训练</li>
+<li><a target="_blank" rel="noopener" href="https://huggingface.co/transformers/main_classes/trainer.html">Trainer</a> 基本用法参考 <a target="_blank" rel="noopener" href="https://huggingface.co/transformers/training.html#trainer">Training and fine-tuning</a> ，内部封装 PyTorch 训练/预测基本流程，只需要确定 model 和 Dataset 即可</li>
+<li>为了实现基于 BERT 的 SiameseNetwork，需要自定义 Model 以及 Dataset，具体步骤如下
+<ul>
+<li>读取所有句对样本保存 <code>List[InputExample]</code> ，<code>InputExample</code> 包含句对信息</li>
+<li>初始化 <code>SiameseDataset(examples, tokenizer)</code> ，实现 <code>__getitem__</code> 方法（进行分词等操作，返回为 token id 序列）</li>
+<li>实现 <code>collate_fn</code> 函数，用于 <code>DataLoader</code> 回调，对于每个 batch 的数据进行处理（分别对 batch 内所有 sentence1 和 sentence2 进行补齐， 并准备 <code>BertForSiameseNetwork</code> 模型输入的特征）</li>
+<li>实现 <code>BertForSiameseNetwork</code> ，继承 <code>BertPreTrainedModel</code> ，使用 <code>BertModel</code> 作为 encoder；实现 <code>forward</code> 函数，自定义输入特征参数，使用 encoder 分别编码获得 sentence1和 sentence2 的句向量，计算余弦相似度作为 loss 返回</li>
+<li>实现 <code>compute_metrics</code> ，进行指标计算</li>
+<li>初始化 <code>Trainer</code> 实例，传入 model，dataset，collate_fn 以及 compute_metrics</li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="模型蒸馏">模型蒸馏</h4>
+<p>使用基于 Transformers 的模型蒸馏工具 <a target="_blank" rel="noopener" href="https://github.com/airaria/TextBrewer">TextBrewer</a> ，主要参考 <a target="_blank" rel="noopener" href="https://github.com/airaria/TextBrewer/tree/master/examples/random_tokens_example">官方 入门示例</a> 和<a target="_blank" rel="noopener" href="https://github.com/airaria/TextBrewer/tree/master/examples/cmrc2018_example">cmrc2018示例</a></p>
+<p>使用上述 transformers Trainer 中实现的 <code>BertForSiameseNet</code> ，<code>SiameseDataset</code> 等自定义类</p>
+<p>主要步骤：</p>
+<ul>
+<li><p>读取 teacher 和 student 的配置文件（student 配置文件可以直接修改 teacher 中的 <code>num_hidden_layer</code>）</p></li>
+<li><p>构建 <code>SiameseDataset</code> 数据集，调用 <code>Collator.batching_collate</code> 函数并初始化 <code>DataLoader</code> （<code>Trainer</code> 中内部完成初始化，<code>TextBrewer</code> 需要直接传入）</p></li>
+<li><p>创建 teacher 和 student 的 <code>BertForSiameseNet</code> 模型，并加载预训练参数（teacher 模型设置为 <code>eval</code> 模式， 即训练过程中参数不改变， 只提供中间层和输出层状态给 student 参考 ）</p></li>
+<li><p>创建 optimizer 以及 TrainingConfig 和 DistillationConfig （以及 <code>intermediate_matches</code> ，即 teacher 和 student 中间层的映射方法）</p></li>
+<li><p>创建 <code>Adaptor</code>，用于解释 <code>BertForSiamesNet</code> 的输出，用于后续映射计算</p>
+<blockquote>
+<p>根据 <code>intermediate_matches</code> ，模型需要输出 hidden_states</p>
+<p>然后 <code>BertForSiameseNet</code> 中每个句子都有 hidden_states，目前解决方法时直接选择第一个句子的返回</p>
+</blockquote></li>
+<li><p>创建 <code>GeneralDistiller</code></p></li>
+<li><p>创建评估回调函数 <code>predict</code> ，可以直接使用之前的 <code>compute_metrics</code> 计算各指标</p></li>
+</ul>
+<blockquote>
+<p>蒸馏到3层，对于特定的序列分类任务有用，但对于句向量编码至少需要6层</p>
+<p>后续实验中发现使用更多数据后，目标数据上直接使用前6层比12层效果好，反而没有蒸馏的必要。。</p>
+</blockquote>
+<h3 id="faq-web服务">FAQ Web服务</h3>
+<h4 id="web-api">Web API</h4>
+<ul>
+<li>Web 框架选择
+<ul>
+<li><a target="_blank" rel="noopener" href="https://flask.palletsprojects.com/">Flask</a> + Gunicorn + gevent + nginx ，进程管理（崩溃自动重启）（uwsgi 同理，gunicorn 更简单）</li>
+<li>:fire: <strong><a target="_blank" rel="noopener" href="https://fastapi.tiangolo.com/">FastAPI</a></strong> + uvicorn（崩溃自动重启），最快的Python Web框架（实测的确比 Flask 快几倍）</li>
+</ul></li>
+<li>cache 缓存机制（保存最近的query对应的topic，命中后直接返回）
+<ul>
+<li>Flask 相关
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/sh4nks/flask-caching">flask-caching</a> （默认缓存500，超时300秒），使用 set/get 进行数据操作；项目来源于 <a target="_blank" rel="noopener" href="https://github.com/pallets/werkzeug">pallets/werkzeug</a> （werkzeug 版本0.4以后弃用 cache）</li>
+</ul></li>
+<li>Python 3.2 以上自带（FastAPI 中可使用）
+<ul>
+<li>:fire: <a target="_blank" rel="noopener" href="https://docs.python.org/3/library/functools.html#functools.lru_cache"><strong>functools.lru_cache()</strong></a> （默认缓存128，lru策略），装饰器，缓存函数输入和输出</li>
+</ul></li>
+</ul></li>
+</ul>
+<h4 id="locust-压力测试">Locust 压力测试</h4>
+<p>使用 <a target="_blank" rel="noopener" href="https://locust.io/">Locust</a> 编写压力测试脚本</p>
+<h2 id="结果及分析">结果及分析</h2>
+<h3 id="微调结果">微调结果</h3>
+<blockquote>
+<p>对于SiameseNetwork，需要在开发集上确定最佳阈值，然后测试集上使用该阈值进行句对相似度结果评价</p>
+</blockquote>
+<p>句对测试集评价结果，此处为 LCQMC 的实验结果</p>
+<table>
+<thead>
+<tr class="header">
+<th>model</th>
+<th>acc(dev/test)</th>
+<th>f1(dev/test)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BertForSeqClassify<br />:steam_locomotive: lcqmc</td>
+<td>0.8832/0.8600</td>
+<td>0.8848/0.8706</td>
+</tr>
+<tr class="even">
+<td>SiameseNetwork<br />:steam_locomotive: lcqmc</td>
+<td>0.8818/0.8705</td>
+<td>0.8810/0.8701</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>基于表示和基于交互的模型效果差别并不大</p>
+</blockquote>
+<h3 id="语义召回结果">语义召回结果</h3>
+<blockquote>
+<p>此处为 FAQ 数据集的召回结果评估，将训练集 post 作为 corpus，测试集 post 作为 query 进行相似度计算</p>
+</blockquote>
+<table>
+<colgroup>
+<col style="width: 55%" />
+<col style="width: 23%" />
+<col style="width: 21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>model</th>
+<th>hit@1(chitchat-faq-small)</th>
+<th>hit@1(entity-faq-large)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>lucene bm25 (origin)</em></td>
+<td>0.6679</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>bert-base-chinese</td>
+<td>0.7394</td>
+<td>0.7745</td>
+</tr>
+<tr class="odd">
+<td>bert-base-chinese<br />:point_up_2: <em>6 layers</em></td>
+<td>0.7276</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td>SiameseNetwork<br />:steam_locomotive: chit-faq-small</td>
+<td>0.8567</td>
+<td>0.8500</td>
+</tr>
+<tr class="odd">
+<td>SiameseNetwork<br />:steam_locomotive: chitchat-faq-small + entity-faq-large</td>
+<td>0.8980</td>
+<td><strong>0.9961</strong></td>
+</tr>
+<tr class="even">
+<td>:point_up_2: <em>6 layers</em> :fire:</td>
+<td><strong>0.9128</strong></td>
+<td>0.8201</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>chitchat-faq-small</strong>
+<ul>
+<li>测试集 hit@1 大约 85% 左右</li>
+<li>错误原因主要是 hflqa 数据问题
+<ul>
+<li>数据质量问题，部分 topic 意思相同，可以合并</li>
+<li>一些不常用表达或者表达不完整的句子</li>
+<li>正常对话的召回率还是不错的</li>
+</ul></li>
+</ul></li>
+<li><strong>chitchat-faq-small + entity-faq-large</strong>
+<ul>
+<li>2000 chitchat-faq-small 测试集，6层比12层效果好一个点，hit@1 达到 90%</li>
+<li>10000 entity-faq-large 测试集，12层 hit@1 达到 99%，6层只有 82%</li>
+<li>底层学到了较为基础的特征，在偏向闲聊的 chitchat-faq-small 上仅使用6层效果超过12层（没有蒸馏必要）</li>
+<li>高层学到了较为高级的特征，在偏向实体的 entity-faq-large 上12层效果远超于6层</li>
+<li>另外，entity-faq-large 数量规模远大于 chitchat-faq-small ，因此最后几层分类器偏向于从 entity-faq-large 学到的信息，因此在 chitchat-faq-small 小效果略有下降；同时能够避免 chitchat-faq-small 数据过拟合</li>
+</ul></li>
+</ul>
+<h3 id="web服务压测">Web服务压测</h3>
+<ul>
+<li><p>运行命令说明</p>
+<blockquote>
+<p>总共 100 个模拟用户，启动时每秒递增 10 个，压力测试持续 3 分钟</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locust  -f locust_test.py  --host=http://127.0.0.1:8889/module --headless -u 100 -r 10 -t 3m</span><br></pre></td></tr></table></figure></li>
+<li>:hourglass: 配置 <strong>4核8G CPU</strong> （6层小模型占用内存约 700MB）
+<ul>
+<li>小服务器上 <strong>bert-as-service</strong> 服务非常不稳定（tensorflow各种报错）， 效率不如简单封装的 <strong>TransformersEncoder</strong></li>
+<li><strong>FastAPI</strong> 框架速度远胜于 <strong>Flask</strong>，的确堪称最快的 Python Web 框架</li>
+<li><strong>cache</strong> 的使用能够大大提高并发量和响应速度（最大缓存均设置为<strong>500</strong>）</li>
+<li>最终推荐配置 :fire: <strong>TransformersEncoder + FastAPI + functools.lru_cache</strong></li>
+</ul></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 41%" />
+<col style="width: 7%" />
+<col style="width: 9%" />
+<col style="width: 4%" />
+<col style="width: 7%" />
+<col style="width: 5%" />
+<col style="width: 3%" />
+<col style="width: 3%" />
+<col style="width: 2%" />
+<col style="width: 5%" />
+<col style="width: 4%" />
+<col style="width: 5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>model</th>
+<th>Web</th>
+<th>Cache</th>
+<th>Users</th>
+<th>req/s</th>
+<th>reqs</th>
+<th>fails</th>
+<th>Avg</th>
+<th>Min</th>
+<th>Max</th>
+<th>Median</th>
+<th>fails/s</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>lucene bm25 (origin)</em></td>
+<td><em>flask</em></td>
+<td><em>werkzeug</em></td>
+<td><em>1000</em></td>
+<td><strong>271.75</strong></td>
+<td><em>48969</em></td>
+<td><em>0</em></td>
+<td><em>91</em></td>
+<td><em>3</em></td>
+<td><em>398</em></td>
+<td><em>79</em></td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td>BertSiameseNet<br/>​​6 layers <br/>Transformers</td>
+<td>flask</td>
+<td>flask-caching</td>
+<td>1000</td>
+<td>24.55</td>
+<td>4424</td>
+<td>654</td>
+<td>28005</td>
+<td>680</td>
+<td>161199</td>
+<td>11000</td>
+<td>3.63</td>
+</tr>
+<tr class="odd">
+<td>BertSiameseNet<br/>6 layers <br />Transformers</td>
+<td><strong>fastapi</strong></td>
+<td>lru_cache</td>
+<td>1000</td>
+<td><strong>130.87</strong></td>
+<td>23566</td>
+<td>1725</td>
+<td>3884</td>
+<td>6</td>
+<td>127347</td>
+<td>26</td>
+<td>9.58</td>
+</tr>
+<tr class="even">
+<td><em>lucene bm25 (origin)</em></td>
+<td><em>flask</em></td>
+<td><em>werkzeug</em></td>
+<td><em>100</em></td>
+<td><strong>27.66</strong></td>
+<td><em>4973</em></td>
+<td><em>1</em></td>
+<td><em>32</em></td>
+<td><em>6</em></td>
+<td><em>60077</em></td>
+<td><em>10</em></td>
+<td>0.01</td>
+</tr>
+<tr class="odd">
+<td>BertSiameseNet<br/>6 layers <br/>bert-as-service</td>
+<td>flask</td>
+<td>flask-caching</td>
+<td>100</td>
+<td>5.49</td>
+<td>987</td>
+<td>0</td>
+<td>13730</td>
+<td>357</td>
+<td>17884</td>
+<td>14000</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td>BertSiameseNet<br/>6 layers <br />Transformers</td>
+<td>flask</td>
+<td>flask-caching</td>
+<td>100</td>
+<td>5.93</td>
+<td>1066</td>
+<td>0</td>
+<td>12379</td>
+<td>236</td>
+<td>17062</td>
+<td>12000</td>
+<td>0.00</td>
+</tr>
+<tr class="odd">
+<td>BertSiameseNet<br/>:fire: 6 layers <br /><strong>Transformers</strong></td>
+<td><strong>fastapi</strong></td>
+<td><strong>lru_cache</strong></td>
+<td>100</td>
+<td><strong>22.19</strong></td>
+<td>3993</td>
+<td>0</td>
+<td>824</td>
+<td>10</td>
+<td>2402</td>
+<td>880</td>
+<td>0.00</td>
+</tr>
+<tr class="even">
+<td>BertSiameseNet<br/>6 layers<br />transformers</td>
+<td>fastapi</td>
+<td>None</td>
+<td>100</td>
+<td>18.17</td>
+<td>1900</td>
+<td>0</td>
+<td>1876</td>
+<td>138</td>
+<td>3469</td>
+<td>1900</td>
+<td>0.00</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>使用 bert-as-service 遇到的一些问题：</p>
+<ul>
+<li>老版本服务器上使用 <a target="_blank" rel="noopener" href="https://github.com/tensorflow/tensorflow/issues/6968#issuecomment-279060156">tensorflow 报错解决方案 Error in `python': double free or corruption (!prev) #6968</a></li>
+<li>报错 src/tcmalloc.cc:277] Attempt to free invalid pointer 0x7f4685efcd40 Aborted (core dumpe），解决方案，将 bert_as_service import 移到顶部</li>
+</ul>
+<p>测试服部署时报错 src/tcmalloc.cc:277] Attempt to free invalid pointer，通过改变import顺序来解决，在 <code>numpy</code> 之后 import pytorch</p>
+</blockquote>
+<h2 id="更多">更多</h2>
+<ul>
+<li>大规模问题集可以使用 <a target="_blank" rel="noopener" href="https://github.com/facebookresearch/faiss">facebookresearch/faiss</a> （建立向量索引，使用 k-nearest-neighbor 召回）</li>
+<li>很多场景下，基于关键字的倒排索引召回结果已经足够，可以考虑综合基于关键字和基于向量的召回方法，参考知乎语义检索系统 <a target="_blank" rel="noopener" href="http://arxiv.org/abs/2008.03917">Beyond Lexical: A Semantic Retrieval Framework for Textual SearchEngine</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/FAQ/" rel="tag"># FAQ</a>
+              <a href="/tags/%E8%AF%AD%E4%B9%89%E6%A3%80%E7%B4%A2/" rel="tag"># 语义检索</a>
+              <a href="/tags/BERT/" rel="tag"># BERT</a>
+              <a href="/tags/Transformers/" rel="tag"># Transformers</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/08/22/Markdown-Mermaid%E6%B5%81%E7%A8%8B%E5%9B%BE/" rel="prev" title="Markdown Mermaid 流程图">
+                  <i class="fa fa-chevron-left"></i> Markdown Mermaid 流程图
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+      
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">iseesaw</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+      
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+  <script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.6.4/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+      <script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              const target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      const script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+<script>
+NexT.utils.loadComments('#valine-comments', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
+    new Valine(Object.assign({
+      el  : '#valine-comments',
+      path: location.pathname,
+    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
+    ));
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

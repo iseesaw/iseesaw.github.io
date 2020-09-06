@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://iseesaw.github.io/images/DPLM/pre-training-dialogue-model-timeline.jpg">
 <meta property="og:image" content="https://iseesaw.github.io/images/DPLM/Transformer-Architecture-Variants.jpg">
 <meta property="article:published_time" content="2020-08-12T08:54:22.000Z">
-<meta property="article:modified_time" content="2020-08-15T08:56:15.986Z">
+<meta property="article:modified_time" content="2020-08-30T17:03:48.965Z">
 <meta property="article:author" content="iseesaw">
 <meta property="article:tag" content="开放域对话">
 <meta property="article:tag" content="回复生成">
@@ -355,7 +355,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">64</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -368,7 +368,7 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">169</span>
+        <span class="site-state-item-count">173</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -446,7 +446,7 @@ mjx-container[display="true"] + br {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-15 16:56:15" itemprop="dateModified" datetime="2020-08-15T16:56:15+08:00">2020-08-15</time>
+                <time title="Modified: 2020-08-31 01:03:48" itemprop="dateModified" datetime="2020-08-31T01:03:48+08:00">2020-08-31</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -768,68 +768,61 @@ p(T|S) = \prod_{n=m+1}^N p (x_n | x_1, \cdots, x_{n-1})
 </ul></li>
 <li><p><strong>PLATO</strong></p>
 <ul>
-<li><p><strong>Response Selection</strong> 和 <strong>Latent act Recognition</strong> 同时进行，使用双向注意力编码；负例从数据集中随机选择</p>
-<p><span class="math display">\[
+<li><strong>Response Selection</strong> 和 <strong>Latent act Recognition</strong> 同时进行，使用双向注意力编码；负例从数据集中随机选择 <span class="math display">\[
 \begin{equation}
 \begin{aligned}
 \mathcal{L}_{RS} &amp;= - \log p(l_r = 1 | c, r) - \log p(l_{r^\_}=0|c, r^\_) \\
 p(l_r=1|c,r) &amp;= sigmoid(W_3 h_{[M]} + b_3)
 \end{aligned}
 \end{equation}
-\]</span></p>
-<ul>
-<li>其中 <span class="math inline">\(h_{[M] \in \mathbb{R}^D}\)</span> 是特殊 mask 标记的最后隐层状态表示（离散隐变量识别的实现中使用 <strong>Gumbel-Softmax</strong>，避免采样后梯度消失）</li>
+\]</span></li>
 </ul></li>
-<li><p><strong>response generation</strong> 使用单向注意力解码，计算 <strong>NLL loss</strong> 和 <strong>BOW loss</strong></p>
-<ul>
+<li><p>其中 <span class="math inline">\(h_{[M] \in \mathbb{R}^D}\)</span> 是特殊 mask 标记的最后隐层状态表示（离散隐变量识别的实现中使用 <strong>Gumbel-Softmax</strong>，避免采样后梯度消失）</p></li>
+<li><p><strong>response generation</strong> 使用单向注意力解码，计算 <strong>NLL loss</strong> 和 <strong>BOW loss</strong></p></li>
 <li><p>NLL loss</p>
 <p><span class="math display">\[
-\begin{equation}
-\begin{aligned}
-\mathcal{L}_{NLL} &amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c, r)} \log p(r| c, z) \\
-&amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c, r)} \sum_{t=1}^T \log p(r_t| c, z, r_{&lt;t})
-\end{aligned}
-\end{equation}
-\]</span></p>
+   \begin{equation}
+   \begin{aligned}
+   \mathcal{L}_{NLL} &amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c, r)} \log p(r| c, z) \\
+   &amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c, r)} \sum_{t=1}^T \log p(r_t| c, z, r_{&lt;t})
+   \end{aligned}
+   \end{equation}
+   \]</span></p>
 <ul>
 <li>其中 <span class="math inline">\(z\)</span> 是 <span class="math inline">\((c,r)\)</span> 的隐变量取值，通过概率分布<span class="math inline">\(p(\mathbf{z}|c,r)\)</span>获得</li>
 </ul>
 <p><span class="math display">\[
-\begin{equation}
-p(\mathbf{z}|c,r) = softmax(W_1 h_{[M]} + b_1) \in \mathbb{R}^K
-\end{equation}
-\]</span></p></li>
+   \begin{equation}
+   p(\mathbf{z}|c,r) = softmax(W_1 h_{[M]} + b_1) \in \mathbb{R}^K
+   \end{equation}
+   \]</span></p></li>
 <li><p><strong>BOW loss</strong>（和NLL相比，BOW打乱了语序，促使离散隐变量学习目标回复的局部信息） <span class="math display">\[
-\begin{equation}
-\begin{aligned}
-\mathcal{L}_{BOW} &amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c,r)} \sum_{t=1}^T \log p(r_t|c,z) \\
-&amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c,r)} \sum_{t=1}^T \log \frac{e^{f_{r_t}}}{\sum_{v \in V} e^{f_v}}
-\end{aligned}
-\end{equation}
-\]</span></p>
+   \begin{equation}
+   \begin{aligned}
+   \mathcal{L}_{BOW} &amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c,r)} \sum_{t=1}^T \log p(r_t|c,z) \\
+   &amp;= - \mathbb{E}_{z \sim p(\mathbf{z}|c,r)} \sum_{t=1}^T \log \frac{e^{f_{r_t}}}{\sum_{v \in V} e^{f_v}}
+   \end{aligned}
+   \end{equation}
+   \]</span></p>
 <ul>
 <li>其中 <span class="math inline">\(V\)</span>是整个词表，<span class="math inline">\(f\)</span> 是以非自回归的方式预测目标回复中的单词（<span class="math inline">\(h_z\)</span>是离散隐变量的隐层表示） <span class="math display">\[
-\begin{equation}
-f = softmax(W_2 h_z + b_2) \in \mathbb{R}^{|V|}
-\end{equation}
-\]</span></li>
-</ul></li>
+   \begin{equation}
+   f = softmax(W_2 h_z + b_2) \in \mathbb{R}^{|V|}
+   \end{equation}
+   \]</span></li>
 </ul></li>
 <li><p>最终优化目标 <span class="math display">\[
-\begin{equation}
-\mathcal{L}= \mathcal{L}_{NLL} + \mathcal{L}_{BOW} + \mathcal{L}_{RS}
-\end{equation}
-\]</span></p></li>
-</ul></li>
-<li><p><strong>PLATO-2</strong></p>
-<ul>
+  \begin{equation}
+  \mathcal{L}= \mathcal{L}_{NLL} + \mathcal{L}_{BOW} + \mathcal{L}_{RS}
+  \end{equation}
+  \]</span></p></li>
+<li><p><strong>PLATO-2</strong></p></li>
 <li>采取了<strong>课程学习</strong>的方法，逐步优化参数，加快训练效率</li>
 <li><strong>PLATO-2</strong> 采用了 <strong>GPT-2 的前置正则化层</strong>的方式，以更好适应大规模训练的需求</li>
 <li>训练步骤
 <ul>
 <li><strong>第一步，PLATO-2 先训练了不含隐变量的模型。</strong>该模型进行的是简化的“一对一”建模，容易生成安全回复</li>
 <li><strong>第二步，在前一步模型基础上，添加上隐变量，然后同时训练 Generation + Recognition 和 Response Selection 两个不同模型。</strong>其中，<strong>Response Selection</strong> 模型在合适度预测的基础上，还添加了 <strong>Masked Language Model</strong> 作为辅助任务，以强化模型对语义的理解。</li>
-</ul></li>
 </ul></li>
 </ul>
 </blockquote>
