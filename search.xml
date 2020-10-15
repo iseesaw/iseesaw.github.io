@@ -7751,4 +7751,40 @@ The hashCode contract(equals(Object) and hashCode return the same integer result
         <tag>Overload</tag>
       </tags>
   </entry>
+  <entry>
+    <title>Mac远程连接Windows10</title>
+    <url>/2020/10/15/Mac%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5Windows10/</url>
+    <content><![CDATA[<p>在尝试 TeamViewer 过程中，Mac 和 Windows10 多次互连失败，遂决定选择使用 Microsoft 自家的远程连接软件</p>
+<p>几个重要步骤：</p>
+<ul>
+<li>Mac OS 上下载安装 <a href="https://go.microsoft.com/fwlink/?linkid=868963">Microsof Remote Desktop</a></li>
+</ul>
+<p><img src="/images/mac/mrd-beta.jpg" /></p>
+<ul>
+<li>Windows10 查看内网IP（Mac和Windows10都是用校园网），命令行运行 <code>ipconfig</code></li>
+<li><p><img src="/images/mac/ipconfig.jpg" /></p></li>
+<li>安装 RDPWrap
+<ul>
+<li><a href="https://github.com/stascorp/rdpwrap/releases/download/v1.6.2/RDPWrap-v1.6.2.zip">下载 RDPWrap</a>，使用管理员权限运行 <code>install.bat</code>，运行 <code>RDPWInst.exe</code> 检查是否成功</li>
+<li>显示 not listening &amp; not supported，则 <a href="https://raw.githubusercontent.com/affinityv/INI-RDPWRAP/master/rdpwrap.ini">下载 rdpwrap.init</a> 替换 <code>C:/Program File/RDP Wrapper/rdpwrap.ini</code> （参考<a href="https://github.com/stascorp/rdpwrap/issues/1163">Issue#1163</a>）</li>
+<li>显示 not listening &amp; fully supported，则 <a href="https://github.com/stascorp/rdpwrap/files/1236856/rfxvmt.zip">下载 rfxvmt.dll</a> 替换 <code>C:/Windows/system32/rfxvmt.dll</code> <img src="/images/mac/rdp.jpg" /></li>
+</ul></li>
+<li><p>关闭防火墙，管理-&gt;程序-&gt;开启所有 Remote Desktop Server 相关程序</p></li>
+<li>参考
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/109972051">Win10（家庭版）内网穿透实现远程桌面访问</a></li>
+<li><a href="https://blog.csdn.net/appke846/article/details/79636575">win10无法远程桌面连接的解决办法</a></li>
+</ul></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Mac</category>
+      </categories>
+      <tags>
+        <tag>远程连接</tag>
+        <tag>Mac</tag>
+        <tag>Windows10</tag>
+        <tag>Remote Desktop</tag>
+      </tags>
+  </entry>
 </search>

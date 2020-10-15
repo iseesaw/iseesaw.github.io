@@ -343,20 +343,20 @@ mjx-container[display="true"] + br {
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-count">66</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">173</span>
+        <span class="site-state-item-count">176</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -396,6 +396,126 @@ mjx-container[display="true"] + br {
       
 
       
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2019/03/19/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2(DFS)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="iseesaw">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="iseesaw's blog">
+    </span>
+
+    
+    
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/03/19/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2(DFS)/" class="post-title-link" itemprop="url">算法笔记之深度优先搜索(DFS)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-03-19 00:00:00" itemprop="dateCreated datePublished" datetime="2019-03-19T00:00:00+08:00">2019-03-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-08 11:54:12" itemprop="dateModified" datetime="2019-09-08T11:54:12+08:00">2019-09-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index"><span itemprop="name">Algorithm</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/03/19/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2(DFS)/" class="post-meta-item leancloud_visitors" data-flag-title="算法笔记之深度优先搜索(DFS)" title="Views">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine: </span>
+    
+    <a title="valine" href="/2019/03/19/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2(DFS)/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/03/19/%E7%AE%97%E6%B3%95%E7%AC%94%E8%AE%B0%E4%B9%8B%E6%B7%B1%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2(DFS)/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="写在前面">写在前面</h3>
+<p><span class="math inline">\(~~~~\)</span>由于各种笔试、面试都有算法编程题，总感觉对于算法和数据结构比较心虚。。最近开始刷一些算法题，复习一下数据结构以及算法的相关知识。过程中记录一下知识点，聊胜于无。</p>
+<h3 id="题目分析">题目分析</h3>
+<p><span class="math inline">\(~~~~\)</span>两个问题如下：</p>
+<ul>
+<li>搭积木 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">一共有10块积木，每个积木上有一个数字，0~9。</span><br><span class="line">搭积木规则：</span><br><span class="line">每个积木放到其它两个积木的上面，并且一定比下面的两个积木数字小。</span><br><span class="line">最后搭成4层的金字塔形，必须用完所有的积木。</span><br><span class="line">下面是两种合格的搭法：</span><br><span class="line">   0</span><br><span class="line">  1 2</span><br><span class="line"> 3 4 5</span><br><span class="line">6 7 8 9</span><br><span class="line">   0</span><br><span class="line">  3 1</span><br><span class="line"> 7 5 2</span><br><span class="line">9 8 6 4    </span><br><span class="line">请你计算这样的搭法一共有多少种？</span><br></pre></td></tr></table></figure></li>
+<li>四则运算 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">考虑如下四则运算：</span><br><span class="line">   □ + □ &#x3D; □</span><br><span class="line">   □ - □ &#x3D; □</span><br><span class="line">   □ × □ &#x3D; □</span><br><span class="line">   □ ÷ □ &#x3D; □</span><br><span class="line">每个方块代表1~13中的某一个数字，但不能重复。</span><br><span class="line">比如：</span><br><span class="line"> 6  + 7 &#x3D; 13</span><br><span class="line"> 9  - 8 &#x3D; 1</span><br><span class="line"> 3  * 4 &#x3D; 12</span><br><span class="line"> 10 &#x2F; 2 &#x3D; 5</span><br><span class="line">以及： </span><br><span class="line"> 7  + 6 &#x3D; 13</span><br><span class="line"> 9  - 8 &#x3D; 1</span><br><span class="line"> 3  * 4 &#x3D; 12</span><br><span class="line"> 10 &#x2F; 2 &#x3D; 5</span><br><span class="line">就算两种解法。（加法，乘法交换律后算不同的方案）</span><br><span class="line">你一共找到了多少种方案？</span><br></pre></td></tr></table></figure> <span class="math inline">\(~~~~\)</span>上面两道题的解题思想都是一样的，基本思路是进行<strong>全排列</strong>，然后找出所有满足要求的解。可以用蛮力法穷举的，但是显然会面临超时问题。</li>
+</ul>
+<p><span class="math inline">\(~~~~\)</span>最重要的就是选好全排列的数据结构以及有效地<strong>搜索算法</strong>，有如下解题思路： &gt;全排列问题可以看做一棵树，树的第i层是第i个位置的所有取值可能，每个节点可能是0-9中的所有数，因此可以得到一个<span class="math inline">\(10^n\)</span>(n个位置的全排列)个叶子大小的树； &gt;考虑题目条件，①不能重复；②满足一定的条件； &gt;使用DFS搜索，终止条件为全排列的长度；同时定义全局变量，记录满足条件的排列。</p>
+<p><span class="math inline">\(~~~~\)</span>其实，上面的思想，只是使用<strong>DFS</strong>在全排列表示的树中进行搜索，搜索空间仍然为<span class="math inline">\(10^n\)</span>。 <span class="math inline">\(~~~~\)</span>考虑题目的要求，可以在搜索过程中使用<strong>剪枝</strong>的思想。 <span class="math inline">\(~~~~\)</span>比如四则运算要满足条件，那么当搜搜第3、6、9、12个数时，可以判断当前数与前面两个数是否满足运算条件，如果不满足，则就放弃继续向下搜索。</p>
+<h3 id="题目解答">题目解答</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SeventhPA</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">static</span> <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line"> <span class="keyword">static</span> <span class="keyword">int</span>[] temps = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">12</span>];</span><br><span class="line"> <span class="keyword">static</span> <span class="keyword">boolean</span>[] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[<span class="number">13</span>];</span><br><span class="line"></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">     <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">       <span class="keyword">long</span> start = System.currentTimeMillis();</span><br><span class="line">     dfs(<span class="number">1</span>);</span><br><span class="line">       System.out.println(cnt);</span><br><span class="line">      <span class="keyword">long</span> end = System.currentTimeMillis();</span><br><span class="line">       System.out.println(end - start + <span class="string">&quot;ms&quot;</span>);</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> idx)</span> </span>&#123;</span><br><span class="line">       <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 不剪枝  156657ms</span></span><br><span class="line"><span class="comment">      * 剪枝 34ms</span></span><br><span class="line"><span class="comment">        */</span></span><br><span class="line">        <span class="keyword">if</span> (!check(idx - <span class="number">1</span>)) &#123;</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (idx == <span class="number">13</span>) &#123;</span><br><span class="line">            <span class="comment">//if (judge()) &#123;</span></span><br><span class="line">                cnt++;</span><br><span class="line">                print();</span><br><span class="line">              <span class="keyword">return</span>;</span><br><span class="line">          <span class="comment">//&#125;</span></span><br><span class="line">         <span class="comment">//return;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">12</span>; i++) &#123;</span><br><span class="line">         <span class="keyword">if</span> (!visited[i]) &#123;</span><br><span class="line">              temps[idx - <span class="number">1</span>] = i + <span class="number">1</span>;</span><br><span class="line">               visited[i] = <span class="keyword">true</span>;</span><br><span class="line">               dfs(idx + <span class="number">1</span>);</span><br><span class="line">             visited[i] = <span class="keyword">false</span>;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 剪枝判断</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="number">3</span> &amp;&amp; (temps[<span class="number">0</span>] + temps[<span class="number">1</span>] != temps[<span class="number">2</span>])) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="number">6</span> &amp;&amp; (temps[<span class="number">3</span>] - temps[<span class="number">4</span>] != temps[<span class="number">5</span>])) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="number">9</span> &amp;&amp; (temps[<span class="number">6</span>] * temps[<span class="number">7</span>] != temps[<span class="number">8</span>])) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= <span class="number">12</span> &amp;&amp; (temps[<span class="number">9</span>] / (<span class="keyword">float</span>) temps[<span class="number">10</span>] != temps[<span class="number">11</span>])) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 搜索结果判断</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">judge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">if</span> (temps[<span class="number">0</span>] + temps[<span class="number">1</span>] != temps[<span class="number">2</span>]) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">        <span class="keyword">if</span> (temps[<span class="number">3</span>] - temps[<span class="number">4</span>] != temps[<span class="number">5</span>]) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">        <span class="keyword">if</span> (temps[<span class="number">6</span>] * temps[<span class="number">7</span>] != temps[<span class="number">8</span>]) &#123;</span><br><span class="line">          <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line">        <span class="keyword">if</span> (temps[<span class="number">9</span>] / (<span class="keyword">float</span>) temps[<span class="number">10</span>] != temps[<span class="number">11</span>]) &#123;</span><br><span class="line">           <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="题目思考">题目思考</h3>
+<ul>
+<li>排列问题即在空间内搜索解的问题，可以想成使用树的数据结构，当然实际上并不用真的使用，只是一种便于理解思想；</li>
+<li>空间搜索问题，基本算法：DFS、BFS；优化算法：爬山法、分支限界法、A*等，基本思想是进行剪枝和预判断；</li>
+<li>扩展，智能搜索算法：遗传算法、退火算法、禁忌搜索等，主要解决NP难问题。</li>
+</ul>
+<h3 id="一个问题">一个问题</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> idx)</span></span>&#123;</span><br><span class="line">  System.out.println(idx);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Main</span><span class="params">()</span></span>&#123;</span><br><span class="line"> <span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line"> dsf(idx+<span class="number">1</span>);</span><br><span class="line">   System.out.println(idx); <span class="comment">// idx=0</span></span><br><span class="line">    <span class="comment">/**********************/</span></span><br><span class="line"> dfs(idx++)</span><br><span class="line">    System.out.println(idx); <span class="comment">// idx=1</span></span><br><span class="line">    <span class="comment">/**********************/</span></span><br><span class="line"> dfs(++idx)</span><br><span class="line">    System.out.println(idx); <span class="comment">// idx=1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>dfs(idx+1)</code>是内运算，将<code>idx</code>传入<code>dfs</code>函数，在执行函数内部代码之前进行<code>+1</code>操作，函数返回后<code>idx</code>不改变；</li>
+<li><code>dfs(idx++)</code>是后运算，将<code>idx</code>传入<code>dfs</code>函数，然后函数返回之后再进行<code>+1</code>操作；</li>
+<li><code>dfs(++idx)</code>是先运算，先进行<code>+1</code>操作，然后再将结果传入<code>dfs</code>函数。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1715,131 +1835,6 @@ JVM通常运行单一进程，但也可以创建新的进程（使用ProcessBuil
 <p>以注释的形式撰写线程安全策略 在代码中以注释的形式增加说明：该ADT采取了什么设计决策来保证线程安全。 采取了四种方法中的哪一种？ 如果是后两种，还需考虑对数据的访问都是原子的，不存在interleaving？ 举例： <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Rep invariant:</span></span><br><span class="line"><span class="comment">*     ...</span></span><br><span class="line"><span class="comment">* Abstraction function:</span></span><br><span class="line"><span class="comment">*     ...</span></span><br><span class="line"><span class="comment">* Safe from represent exposure:</span></span><br><span class="line"><span class="comment">*     ...</span></span><br><span class="line"><span class="comment">* Thread safety argument:</span></span><br><span class="line"><span class="comment">*     这个类是线程安全的，因为它是不可变的：</span></span><br><span class="line"><span class="comment">*     - a 是 final修饰</span></span><br><span class="line"><span class="comment">*     - a 指向一个可变的数组，但这个数组只在这个类中出现，</span></span><br><span class="line"><span class="comment">*         没有和其他对象共享，也没有泄露给客户端</span></span><br><span class="line"><span class="comment">*     - text 所有对text的引用都在方法1内，而方法1使用synchronized锁住</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></p>
 <h4 id="消息传递和图形用户接口-gui">10.2、消息传递和图形用户接口 (GUI)</h4>
 <p>多线程之间基于消息传递的实现机制、如何保证threadsafe BlockingQueue接口作为阻塞操作队列 put(e) take() <img src="https://img-blog.csdn.net/20180621200440148?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://iseesaw.github.io/2018/06/20/Java%E5%B8%B8%E8%A7%81%E7%9A%84I%20O%E8%AF%BB%E5%86%99%E6%96%B9%E6%B3%95/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="iseesaw">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="iseesaw's blog">
-    </span>
-
-    
-    
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/20/Java%E5%B8%B8%E8%A7%81%E7%9A%84I%20O%E8%AF%BB%E5%86%99%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">Java常见的I O读写方法</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-06-20 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-20T00:00:00+08:00">2018-06-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-08 11:52:59" itemprop="dateModified" datetime="2019-09-08T11:52:59+08:00">2019-09-08</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/SC/" itemprop="url" rel="index"><span itemprop="name">SC</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2018/06/20/Java%E5%B8%B8%E8%A7%81%E7%9A%84I%20O%E8%AF%BB%E5%86%99%E6%96%B9%E6%B3%95/" class="post-meta-item leancloud_visitors" data-flag-title="Java常见的I O读写方法" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2018/06/20/Java%E5%B8%B8%E8%A7%81%E7%9A%84I%20O%E8%AF%BB%E5%86%99%E6%96%B9%E6%B3%95/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2018/06/20/Java%E5%B8%B8%E8%A7%81%E7%9A%84I%20O%E8%AF%BB%E5%86%99%E6%96%B9%E6%B3%95/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h4 id="目录">目录</h4>
-<h4 id="写在前面">0、写在前面</h4>
-<p>本节为<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_36962569/article/details/80382927#83code-tuning-for-performance-optimization">软件构造系列Chapter8</a>中的I/O性能部分的补充。</p>
-<h4 id="io">1、I/O</h4>
-<p>Java的I/O操作比较多，具体可以查询<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/api/">Java文档</a>，Chrome中使用Ctrl+F查询io或nio即可。 这里主要介绍四种比较基本I/O方式，每种读写大致可以分为两种，按行读取和按字节读取，整体来说，大同小异。在此实现最基本的操作。 对于下面涉及的文件地址及File对象，在下面定义：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* in file *&#x2F;</span><br><span class="line">String filePathIn &#x3D; &quot;file.txt&quot;;</span><br><span class="line">File fileIn &#x3D; new File(filePath);</span><br><span class="line">&#x2F;* out file *&#x2F;</span><br><span class="line">String filePathOut &#x3D; &quot;Out.txt&quot;;</span><br><span class="line">File fileOut &#x3D; new File(filePathOut);</span><br></pre></td></tr></table></figure>
-<h5 id="bufferedreaderwriter">1.1、BufferedReader/Writer</h5>
-<p>使用缓存区的读写方式。 ###### 1.1.1、BufferedReader 这里把brCh的大小设置为<code>file.length()</code>，一次性把文件加载到缓存中，之后可以进行解析等操作；也可以设置为特定的值（eg. 1024）等，分次加载。 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* new FileReader(fileIn)读写器 *&#x2F;</span><br><span class="line">   BufferedReader brIn &#x3D; new BufferedReader(new FileReader(fileIn));</span><br><span class="line">   &#x2F;* 文件大小 *&#x2F;</span><br><span class="line">   char[] brCh &#x3D; new char[(int) fileIn.length()];</span><br><span class="line">   &#x2F;* 读取进入brCh *&#x2F;</span><br><span class="line">   brIn.read(brCh);</span><br><span class="line">   brIn.close();</span><br></pre></td></tr></table></figure></p>
-<h6 id="bufferedwriter">1.1.2、BufferedWriter</h6>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BufferedWriter bwOut &#x3D; new BufferedWriter(new FileWriter(fileOut));</span><br><span class="line">&#x2F;* 将之前读取的brCh数组写入内存 *&#x2F;</span><br><span class="line">bwOut.write(brCh);</span><br><span class="line">bwOut.close();</span><br></pre></td></tr></table></figure>
-<h5 id="nio-files">1.2、nio Files</h5>
-<p>新IO操作，有很多改进，效率较高，操作较简单。 ###### 1.2.1、read</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 按字节读取 *&#x2F;</span><br><span class="line">   byte[] nioBy &#x3D; Files.readAllBytes(Paths.get(filePathIn));</span><br><span class="line">   &#x2F;* 一次性读取所有行，可以使用for-each遍历 *&#x2F;</span><br><span class="line">   &#x2F;&#x2F;String[] lines &#x3D; Files.readAllLines(Paths.get(filePathIn));</span><br></pre></td></tr></table></figure>
-<h6 id="write">1.2.2、write</h6>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 将之前读取的nioBy字节数组写入内存 *&#x2F;</span><br><span class="line">   Files.write(Paths.get(filePathOut), nioBy);</span><br></pre></td></tr></table></figure>
-<h5 id="scannerprintwriter">1.3、Scanner/PrintWriter</h5>
-<h6 id="scanner">1.3.1、Scanner</h6>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 创建Scanner读取 *&#x2F;</span><br><span class="line">Scanner scIn &#x3D; new Scanner(fileIn);</span><br><span class="line">&#x2F;* 使用StringBuffer保存，避免生成太多临时变量 *&#x2F;</span><br><span class="line">StringBuffer scStr &#x3D; new StringBuffer();</span><br><span class="line">String scLine;</span><br><span class="line">&#x2F;* 按行读取 *&#x2F;</span><br><span class="line">while (scIn.hasNextLine()) &#123;</span><br><span class="line">  scLine &#x3D; scIn.nextLine();</span><br><span class="line">  scStr.append(scLine + &quot;\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line">scIn.close();</span><br></pre></td></tr></table></figure>
-<h6 id="printwriter">1.3.2、PrintWriter</h6>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;* 写入器 *&#x2F;</span><br><span class="line">PrintWriter pwOut &#x3D; new PrintWriter(fileOut);</span><br><span class="line">&#x2F;* 将之前读取保存的StringBuffer转为String类型，然后写入文件 *&#x2F;</span><br><span class="line">pwOut.write(scStr.toString());</span><br><span class="line">pwOut.close();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h5 id="stream">1.4、Stream</h5>
-<p>使用文件流操作。 ###### 1.4.1、InputStream</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   InputStream disIn &#x3D; new FileInputStream(fileIn);</span><br><span class="line">&#x2F;* 保存的字节数组 *&#x2F;</span><br><span class="line">   byte dosB[] &#x3D; new byte[(int) fileIn.length()];</span><br><span class="line">   &#x2F;* 一次加载进缓存 *&#x2F;</span><br><span class="line">   disIn.read(dosB);</span><br><span class="line">   disIn.close();</span><br></pre></td></tr></table></figure>
-<h6 id="outputstream">1.4.2、OutputStream</h6>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">OutputStream dosOut &#x3D; new FileOutputStream(fileOut);</span><br><span class="line">&#x2F;* 将读取的字节数组写入文件 *&#x2F;</span><br><span class="line">dosOut.write(dosB);</span><br><span class="line">dosOut.close();</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="性能对比">2、性能对比</h4>
-<figure>
-<img src="https://img-blog.csdn.net/20180620230414226?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /><figcaption>这里写图片描述</figcaption>
-</figure>
-<p>参考： <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/7/docs/api/">javadoc</a></p>
 
       
     </div>
