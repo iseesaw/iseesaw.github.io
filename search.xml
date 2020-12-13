@@ -7793,4 +7793,83 @@ The hashCode contract(equals(Object) and hashCode return the same integer result
         <tag>Remote Desktop</tag>
       </tags>
   </entry>
+  <entry>
+    <title>MLP进行MNIST分类调参技巧总结</title>
+    <url>/2020/12/13/MLP%E8%BF%9B%E8%A1%8CMNIST%E5%88%86%E7%B1%BB%E8%B0%83%E5%8F%82%E6%8A%80%E5%B7%A7%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<blockquote>
+<p>《模式识别》课程实验考试，要求自主选择分类方法，使用20000个手写数字样本训练区分10个类别的分类器，并预测20000个测试样本的标签。与一般的MNIST手写数字识别不同，本实验给定的数据是老师经过PCA降维后的数据，五组数据特征维数分别为81-85。</p>
+<p>因此基本断绝了直接使用CNN的念想，实验中主要使用MLP，并使用了一些调参（炼丹）技巧，最终准确率达到98.03%，在此总结记录！</p>
+</blockquote>
+<p>主要方法：对数据集进行4:1的训练集+验证集和测试集拆分，使用五层MLP神经网络，在训练集+验证集数据上进行5折交叉验证，最终5个模型投票给出测试集上的结果。</p>
+<h2 id="固定随机种子">固定随机种子</h2>
+<p>为了保证调参过程中的控制变量，避免数据拆分不同时的引入的随机影响，在最开始需要固定随机种子，包括 <code>random/numpy/pytorch</code> ，代码如下</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">seed = <span class="number">99</span></span><br><span class="line">torch.manual_seed(seed)</span><br><span class="line">torch.cuda.manual_seed_all(seed)</span><br><span class="line">np.random.seed(seed)</span><br><span class="line">random.seed(seed)</span><br></pre></td></tr></table></figure>
+<h2 id="mlp神经网络调参">MLP神经网络调参</h2>
+<ul>
+<li><p><strong>参数初始化</strong></p>
+<ul>
+<li><p><strong>Uniform</strong> 均匀分布初始化</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">w = np.random.uniform(low=-scale, high=scale, size=[n_in, n_out])</span><br></pre></td></tr></table></figure></li>
+<li><p><strong>Xavier</strong> 初始化，适用于 tanh sigmoid 激活函数</p></li>
+</ul></li>
+<li><p><strong>数据预处理</strong></p>
+<ul>
+<li>训练集和测试集统一使用训练集的方差、均值进行归一化</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">X -= np.mean(X, axis=<span class="number">0</span>)</span><br><span class="line">X /= np.std(X, axis=<span class="number">0</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>优化器</p>
+<ul>
+<li><p><strong>SGD</strong> 效果好于 Adam</p></li>
+<li><p>设置 momentum 和 weight_decay，后者对于过拟合问题效果不是很明显</p></li>
+<li><p>如果N个epoch内，正确率不变则降低学习率</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">optimizer = torch.optim.SGD(model.parameters(),</span><br><span class="line">                            lr=<span class="number">0.1</span>,</span><br><span class="line">                            momentum=<span class="number">0.75</span>,</span><br><span class="line">                            weight_decay=<span class="number">3e-4</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">adjust_learning_rate</span>(<span class="params">opt, num_adjust</span>):</span></span><br><span class="line">  <span class="string">&quot;&quot;&quot;Sets the learning rate to the initial LR decayed by 10 every 30 epochs&quot;&quot;&quot;</span></span><br><span class="line">  lr = <span class="number">0.1</span> * (<span class="number">0.1</span>**num_adjust)</span><br><span class="line">  <span class="keyword">for</span> param_group <span class="keyword">in</span> opt.param_groups:</span><br><span class="line">    param_group[<span class="string">&#x27;lr&#x27;</span>] = lr</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><strong>dropout</strong>，0.5 上下浮动设置</li>
+<li>激活函数，使用 <strong>ReLU</strong> 效果好于 Sigmoid 和 Tanh</li>
+<li><strong>Batch Normalization</strong>，效果有明显提升</li>
+<li><p>MLP网络层最佳顺序 <strong>Linear -&gt; Batch Norm -&gt; Activation -&gt; Droput -&gt; Linear</strong></p></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">nn.Sequential(nn.Linear(<span class="number">84</span>, <span class="number">1024</span>), nn.BatchNorm1d(<span class="number">1024</span>),</span><br><span class="line">                                 nn.ReLU(), nn.Dropout(<span class="number">0.5</span>),</span><br><span class="line">                                 nn.Linear(<span class="number">1024</span>, <span class="number">512</span>), nn.BatchNorm1d(<span class="number">512</span>),</span><br><span class="line">                                 nn.ReLU(), nn.Dropout(<span class="number">0.5</span>),</span><br><span class="line">                                 nn.Linear(<span class="number">512</span>, <span class="number">256</span>), nn.BatchNorm1d(<span class="number">256</span>),</span><br><span class="line">                                 nn.ReLU(), nn.Dropout(<span class="number">0.5</span>),</span><br><span class="line">                                 nn.Linear(<span class="number">256</span>, <span class="number">128</span>), nn.BatchNorm1d(<span class="number">128</span>),</span><br><span class="line">                                 nn.ReLU(), nn.Dropout(<span class="number">0.5</span>),</span><br><span class="line">                                 nn.Linear(<span class="number">128</span>, <span class="number">10</span>), nn.LogSoftmax(dim=<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+<h2 id="数据集划分及k折交叉验证">数据集划分及K折交叉验证</h2>
+<p><strong>主要步骤</strong></p>
+<ul>
+<li>使用 sklearn <code>train_test_split</code> 进行基本数据集切分，训练集+验证集:测试集大约4:1</li>
+<li>使用 sklearn <code>KFold</code> 进行<strong>5折交叉验证</strong>，分别保存开发集上的最优模型</li>
+<li>最后使用得到的5个模型在测试集上进行预测投票给出最终标签</li>
+</ul>
+<p><strong>注意点</strong></p>
+<ul>
+<li><p>调参过程中测试集不应太小，否则偏差较大；过程中可以多划分一些进行调参，最终模型可以不用测试集，用所有数据进行交叉验证</p></li>
+<li><p>关于交叉验证中 K 的选择，一般<strong>K=5或10</strong>，极端情况下可使用<strong>留一法</strong>（即每次使用一个样本进行验证）；根据先前的相关研究，取值情况可参考公式（其中n是样本数，d是特征维数） <span class="math display">\[
+K  \approx \log(n) \\
+n/K &gt; 3d
+\]</span></p>
+<blockquote>
+<p>本次实验中取K=10时效果不佳，最终取K等于5</p>
+<p>log(20000) = 5</p>
+<p>20000/5 = 4000 &gt; 3*84</p>
+</blockquote></li>
+</ul>
+<h2 id="写在后面">写在后面</h2>
+<p>总的来说，本次实验准备比较匆忙，仅花了一晚上来调参，很多地方并没有时间进行完备而科学的测试，最终结果倒是差强人意，貌似组内第1、2的样子，但比预期还是稍低一些。</p>
+<p>理论上如果能进行更细致科学的调参，还是有很大进步空间的。虽然在实验室睡了一宿，但实战了一些调参技巧，还是能够温故知新、受益匪浅！</p>
+<h2 id="参考链接">参考链接</h2>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/31924220">「交叉验证」到底如何选择K值？</a></li>
+<li><a href="https://www.zhihu.com/question/25097993">深度学习调参有哪些技巧？</a></li>
+<li><a href="https://www.zhihu.com/question/41631631">你有哪些deep learning（rnn、cnn）调参的经验？</a></li>
+<li><a href="https://www.miracleyoo.com/2018/08/21/layer-order/">主要神经网络layer的合理排布顺序</a></li>
+<li><p>[<a href="https://stackoverflow.com/questions/39691902/ordering-of-batch-normalization-and-dropout">Ordering of batch normalization and dropout?</a>]</p></li>
+<li><p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.KFold.html">sklearn.model_selection.KFold</a></p></li>
+</ul>
+]]></content>
+      <categories>
+        <category>DL</category>
+      </categories>
+      <tags>
+        <tag>MLP</tag>
+        <tag>MNIST</tag>
+        <tag>调参</tag>
+      </tags>
+  </entry>
 </search>
