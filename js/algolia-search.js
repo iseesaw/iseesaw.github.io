@@ -4,11 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const algoliaSettings = CONFIG.algolia;
   const { indexName, appID, apiKey } = algoliaSettings;
 
-  const search = instantsearch({
+  let search = instantsearch({
     indexName,
     searchClient  : algoliasearch(appID, apiKey),
     searchFunction: helper => {
-      if (document.querySelector('.search-input').value) {
+      let searchInput = document.querySelector('.search-input');
+      if (searchInput.value) {
         helper.search();
       }
     }
@@ -40,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
       container: '#algolia-stats',
       templates: {
         text: data => {
-          const stats = algoliaSettings.labels.hits_stats
+          let stats = algoliaSettings.labels.hits_stats
             .replace(/\$\{hits}/, data.nbHits)
             .replace(/\$\{time}/, data.processingTimeMS);
           return `${stats}
@@ -53,19 +54,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }),
 
     instantsearch.widgets.hits({
-      container : '#algolia-hits',
-      escapeHTML: false,
-      templates : {
+      container: '#algolia-hits',
+      templates: {
         item: data => {
-          const { title, excerpt, excerptStrip, contentStripTruncate } = data._highlightResult;
-          let result = `<a href="${data.permalink}" class="search-result-title">${title.value}</a>`;
-          const content = excerpt || excerptStrip || contentStripTruncate;
-          if (content && content.value) {
-            const div = document.createElement('div');
-            div.innerHTML = content.value;
-            result += `<a href="${data.permalink}"><p class="search-result">${div.textContent.substr(0, 100)}...</p></a>`;
-          }
-          return result;
+          let link = data.permalink ? data.permalink : CONFIG.root + data.path;
+          return `<a href="${link}" class="algolia-hit-item-link">${data._highlightResult.title.value}</a>`;
         },
         empty: data => {
           return `<div id="algolia-hits-empty">
@@ -74,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       },
       cssClasses: {
-        list: 'search-result-list'
+        item: 'algolia-hit-item'
       }
     }),
 
@@ -90,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         next    : '<i class="fa fa-angle-right"></i>'
       },
       cssClasses: {
-        list        : ['pagination', 'algolia-pagination'],
+        root        : 'pagination',
         item        : 'pagination-item',
         link        : 'page-number',
         selectedItem: 'current',
@@ -104,14 +97,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle and trigger popup window
   document.querySelectorAll('.popup-trigger').forEach(element => {
     element.addEventListener('click', () => {
-      document.body.classList.add('search-active');
-      setTimeout(() => document.querySelector('.search-input').focus(), 500);
+      document.body.style.overflow = 'hidden';
+      document.querySelector('.search-pop-overlay').classList.add('search-active');
+      document.querySelector('.search-input').focus();
     });
   });
 
   // Monitor main search box
   const onPopupClose = () => {
-    document.body.classList.remove('search-active');
+    document.body.style.overflow = '';
+    document.querySelector('.search-pop-overlay').classList.remove('search-active');
   };
 
   document.querySelector('.search-pop-overlay').addEventListener('click', event => {
@@ -120,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   document.querySelector('.popup-btn-close').addEventListener('click', onPopupClose);
-  document.addEventListener('pjax:success', onPopupClose);
+  window.addEventListener('pjax:success', onPopupClose);
   window.addEventListener('keyup', event => {
     if (event.key === 'Escape') {
       onPopupClose();

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.0.2">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -13,13 +13,11 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.14.0/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-
-<script class="hexo-configurations">
+<script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"iseesaw.github.io","root":"/","scheme":"Gemini","version":"8.0.0-rc.5","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"path":"search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+    var CONFIG = {"hostname":"iseesaw.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta property="og:type" content="website">
@@ -30,11 +28,10 @@
 <meta property="article:author" content="iseesaw">
 <meta name="twitter:card" content="summary">
 
-
 <link rel="canonical" href="https://iseesaw.github.io/page/5/">
 
 
-<script class="page-configurations">
+<script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -46,15 +43,6 @@
 
   <title>iseesaw's blog</title>
   
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-105146755-1"></script>
-    <script>
-      if (CONFIG.hostname === location.hostname) {
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'UA-105146755-1');
-      }
-    </script>
 
 
 
@@ -63,187 +51,58 @@
 
   <noscript>
   <style>
-  body { margin-top: 2rem; }
-
+  .use-motion .brand,
   .use-motion .menu-item,
-  .use-motion .sidebar,
+  .sidebar-inner,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
+  .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
 
-<style>mjx-container[jax="SVG"] {
-  direction: ltr;
-}
+</head>
 
-mjx-container[jax="SVG"] > svg {
-  overflow: visible;
-}
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-mjx-container[jax="SVG"] > svg a {
-  fill: blue;
-  stroke: blue;
-}
-
-mjx-container[jax="SVG"][display="true"] {
-  display: block;
-  text-align: center;
-  margin: 1em 0;
-}
-
-mjx-container[jax="SVG"][justify="left"] {
-  text-align: left;
-}
-
-mjx-container[jax="SVG"][justify="right"] {
-  text-align: right;
-}
-
-g[data-mml-node="merror"] > g {
-  fill: red;
-  stroke: red;
-}
-
-g[data-mml-node="merror"] > rect[data-background] {
-  fill: yellow;
-  stroke: none;
-}
-
-g[data-mml-node="mtable"] > line[data-line] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > rect[data-frame] {
-  stroke-width: 70px;
-  fill: none;
-}
-
-g[data-mml-node="mtable"] > .mjx-dashed {
-  stroke-dasharray: 140;
-}
-
-g[data-mml-node="mtable"] > .mjx-dotted {
-  stroke-linecap: round;
-  stroke-dasharray: 0,140;
-}
-
-g[data-mml-node="mtable"] > svg {
-  overflow: visible;
-}
-
-[jax="SVG"] mjx-tool {
-  display: inline-block;
-  position: relative;
-  width: 0;
-  height: 0;
-}
-
-[jax="SVG"] mjx-tool > mjx-tip {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-mjx-tool > mjx-tip {
-  display: inline-block;
-  padding: .2em;
-  border: 1px solid #888;
-  font-size: 70%;
-  background-color: #F8F8F8;
-  color: black;
-  box-shadow: 2px 2px 5px #AAAAAA;
-}
-
-g[data-mml-node="maction"][data-toggle] {
-  cursor: pointer;
-}
-
-mjx-status {
-  display: block;
-  position: fixed;
-  left: 1em;
-  bottom: 1em;
-  min-width: 25%;
-  padding: .2em .4em;
-  border: 1px solid #888;
-  font-size: 90%;
-  background-color: #F8F8F8;
-  color: black;
-}
-
-foreignObject[data-mjx-xml] {
-  font-family: initial;
-  line-height: normal;
-  overflow: visible;
-}
-
-.MathJax path {
-  stroke-width: 3;
-}
-
-mjx-container[display="true"] {
-  overflow: auto hidden;
-}
-
-mjx-container[display="true"] + br {
-  display: none;
-}
-</style></head>
-
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
-
-  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
+      <span class="logo-line-before"><i></i></span>
       <h1 class="site-title">iseesaw's blog</h1>
-      <i class="logo-line"></i>
+      <span class="logo-line-after"><i></i></span>
     </a>
   </div>
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
+
 
 
 
@@ -259,125 +118,13 @@ mjx-container[display="true"] + br {
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
-        </a>
-      </li>
   </ul>
 </nav>
 
 
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
-
-    </div>
-  </div>
 
 </div>
-        
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-overview-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-      </section>
-      <!--/noindex-->
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">iseesaw</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">67</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">11</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">179</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/iseesaw" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;iseesaw" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:minekaiyan@gmail.com" title="E-Mail → mailto:minekaiyan@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-  </div>
-
-
-
-      </section>
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
     </header>
 
     
@@ -385,17 +132,15 @@ mjx-container[display="true"] + br {
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
-  <div class="reading-progress-bar"></div>
-
-<noscript>
-  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
 
-    <div class="main-inner index posts-expand">
-      
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-      
+          <div class="content index posts-expand">
+            
       
   
   
@@ -411,9 +156,6 @@ mjx-container[display="true"] + br {
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="iseesaw's blog">
     </span>
-
-    
-    
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
@@ -455,6 +197,8 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
           <h3 id="相关">相关</h3>
 <p>很多机器学习问题需要研究的对象时文字甚至图像，提取变量特征的方法是数据处理的前提。 #### BOW和VSM BOW：bags-of-words model，忽略文档内的单词顺序和语法等要素，将其仅仅看作是若干的词汇的集合。 VSM：Vector space model，表示文本文档的数学模型，在BOW的假设下，将每个文档表示成同一向量空间的向量。 <img src="https://img-blog.csdn.net/2018042221121235?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM2OTYyNTY5/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里写图片描述" /> 优化： 如果再出现一个长文档，将会有更多的零向量，可以采取的方法是，最后仅仅出现在一个文档中的都集中到一个向量中，减少维数。 #### 停用词 Stop words，在信息检索中，为节省存储空间和提高处理效率，在处理自然语言文本之前或之后自动过滤掉的某些字或词。英文常用停用词：the，a，of，an，to，be，etc。</p>
 <h4 id="n-gram模型">N-gram模型</h4>
@@ -509,9 +253,6 @@ N=1，称为unigram；N=2，称为bigram；N=3，称为trigram。 <img src="http
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="iseesaw's blog">
     </span>
-
-    
-    
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
@@ -553,6 +294,8 @@ N=1，称为unigram；N=2，称为bigram；N=3，称为trigram。 <img src="http
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
           <h4 id="目录">目录</h4>
 <p><strong>Chapter 6: Maintainability-Oriented Software Construction Approaches</strong> #### 6.0、Maintainability-Oriented Software Construction Approaches 第6章主要讲的是面向可维护的软件构造方法； 第一节介绍了什么是软件维护，以及可维护性的度量标准，和实现可维护性的设计原则； 第二节介绍了可维护性的设计模式； 第三节介绍除了OO设计模式以外的其他能够提升软件可维护性的构造技术：基于状态、表驱动、基于语法的构造技术。 考点： 可维护性的常见度量指标 聚合度和耦合度 SOLID 语法、正则表达式 #### 6.1、Metrics and Construction Principles for Maintainability ##### 6.1.1、Metrics of Maintainability 〇几个概念Concepts 软件维护：修复错误、改善性能（软件的大部分成本来自于维护阶段）； 软件演化：对软件进行持续的更新； 软件熵（Entropy）：当系统被修改时，它的混乱度（熵）会增加；</p>
 ①Some Names Of Maintainability 可维护性的范畴 &gt;Ready for Change, Ready for Extension.
@@ -967,9 +710,6 @@ Command
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="iseesaw's blog">
     </span>
-
-    
-    
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
@@ -1011,6 +751,8 @@ Command
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
           <h4 id="目录">目录</h4>
 <h4 id="nltk">1.1、NLTK</h4>
 <p><strong>提供的文本处理库：</strong> 1、Classification（分类，比较少用） 2、Tokenization（词语切分，单词化处理） 3、Stemming（词干提取） 4、Tagging（标注，如词性标注） 5、Parsing（句法分析） 6、sementic reasoning（语义角色标注）</p>
@@ -1051,9 +793,6 @@ Command
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="iseesaw's blog">
     </span>
-
-    
-    
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
@@ -1095,6 +834,8 @@ Command
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
           <p>研修课上讲了两个例子，融合一下。 主要演示大致的过程： 导入-&gt;拆分-&gt;训练-&gt;模型报告<br />
 以及几个重要问题： ①标签二值化 ②网格搜索法调参 ③k折交叉验证 ④增加噪声特征（之前涉及） <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">from sklearn import datasets</span><br><span class="line">#从cross_validation导入会出现warning，说已弃用</span><br><span class="line">from sklearn.model_selection import train-test_split</span><br><span class="line">from sklearn.grid_search import GridSearchCV</span><br><span class="line">from sklearn.metrics import classification_report</span><br><span class="line">from sklearn.svm import SVC</span><br><span class="line">import sklearn.exceptioins</span><br><span class="line">#导入鸢尾花数据集</span><br><span class="line">iris &#x3D; datasets.load_iris()</span><br><span class="line">#将数据集拆分为训练集和测试集各一半</span><br><span class="line">#其中X为数据特征（花萼、花瓣的高度宽度），为150*4的矩阵</span><br><span class="line">#Y为鸢尾花种类（0, 1, 2三种），为150*1矩阵</span><br><span class="line">#如果使用标签二值化， 将0, 1, 2表示为100 010 001</span><br><span class="line">#使用y.label_binarize(y, classes[0, 1, 2]),变为150*3矩阵</span><br><span class="line">X_train, X_test, y_train, y_test &#x3D; train_test_split(</span><br><span class="line">iris.data, iris.target, test_size&#x3D;0.5, random_state&#x3D;0)</span><br><span class="line">#set the parameters by cross_validation</span><br><span class="line">turn_parameters &#x3D; [&#123;&#39;kernel&#39; : [&#39;rbf&#39;, &#39;gamma&#39; : [1e-3, 1e - 4, &#39;C&#39;:[1,10,100,1000]&#125;,  </span><br><span class="line">&#123;&#39;kernel&#39;:[&#39;linear&#39;], &#39;C&#39;:[1,10,100,1000]&#125;</span><br><span class="line">]</span><br><span class="line">#clf分离器</span><br><span class="line">#使用网格搜索法调超参数</span><br><span class="line">#训练集做5折交叉验证</span><br><span class="line">clf &#x3D; GridSearchCV(SVC(C&#x3D;1), turned_parameters, cv&#x3D;5, scoring&#x3D;&#39;%s_weighted&#39; % score)</span><br><span class="line">#用前一半train数据再做5折交叉验证</span><br><span class="line">#因为之前的train_test_split已经分割为2份了</span><br><span class="line">#fit-拟合</span><br><span class="line">clf.fit(X_train, y_train)</span><br><span class="line">#超参数</span><br><span class="line">print(clf.best_params_)</span><br><span class="line">#得分</span><br><span class="line">for params, mean_score, scores in clf.gird_scores_:</span><br><span class="line">  print(&quot;%.3f (+&#x2F;-%.0.03f) for %r&quot; % (mean_score, scores.std()*1.96,params))</span><br><span class="line">#分类报告</span><br><span class="line">y_true, y_pred &#x3D; y_test, clf.predict(X_test)</span><br><span class="line">print(classification_report(y_true, y_pred))</span><br></pre></td></tr></table></figure></p>
 
@@ -1127,9 +868,6 @@ Command
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="iseesaw's blog">
     </span>
-
-    
-    
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
@@ -1171,6 +909,8 @@ Command
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
           <h4 id="目录">目录</h4>
 <h4 id="概念">1、概念</h4>
 性能度量（评价）指标，主分为两大类：<br />
@@ -1373,9 +1113,6 @@ recall=<span class="math display">\[\frac{0.9}{1}\]</span>
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="iseesaw's blog">
     </span>
-
-    
-    
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
@@ -1417,6 +1154,8 @@ recall=<span class="math display">\[\frac{0.9}{1}\]</span>
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
           <h4 id="目录">目录</h4>
 <p><strong>Chapter 5：Reusability-Oriented Software Construction Approaches</strong> 本章面向一个重要的外部质量指标：可复用性——如何构造出可在不同应用中重复使用的软件模块/API？ #### 5.1 Metric, Morphology and External Observations of Reusability 本节探讨可复用软件的形态与特征 考点： Programming for/with reuse 白盒、黑盒框架的原理和实现 ##### 5.1.1 About Reuse &gt; 可复用性：不针对应用，而是针对多个引用场景。</p>
 <strong>Software reuse</strong>
@@ -1855,9 +1594,6 @@ Interfaces
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="iseesaw's blog">
     </span>
-
-    
-    
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
@@ -1899,6 +1635,8 @@ Interfaces
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
           <h3 id="chapter3">Chapter3</h3>
 本章主要介绍： 软件构造的理论基础-ADT 软件构造的技术基础-OOP #### 3.1 Data Type and Type Checking 第一节研究数据类型及其特性： 基本数据类型、对象数据类型 静态类型检查、动态类型检查 Mutable、Immutable数据类型（可变数据类型的危险性，不变数据类型的优越性） 值的改变、引用的改变 防御式拷贝 Snapshot diagram理解数据类型 Null references（空指针） ##### 3.1.1 Date type <strong>Date type in Java（基本、对象数据类型）</strong>
 <table>
@@ -2630,9 +2368,6 @@ The hashCode contract(equals(Object) and hashCode return the same integer result
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="iseesaw's blog">
     </span>
-
-    
-    
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
@@ -2674,6 +2409,8 @@ The hashCode contract(equals(Object) and hashCode return the same integer result
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
           <h3 id="chapter1">Chapter1</h3>
 <h4 id="multi-dimensional-views">1.1 Multi-Dimensional Views</h4>
 <p>从三个维度看软件系统的构成 用模型/视图描述软件系统 将软件构造看做不同视图之间的转换 ##### 1.1.1 Three dimensions</p>
@@ -2945,9 +2682,6 @@ Performance-Pertomance and efficiency(效率性)
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="iseesaw's blog">
     </span>
-
-    
-    
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
@@ -2989,6 +2723,8 @@ Performance-Pertomance and efficiency(效率性)
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
           <h3 id="chapter2-process-and-tools-of-software-construction">Chapter2 Process and Tools of Software Construction</h3>
 <p>主要介绍了软件开发的基本过程，传统软件开发过程模型，敏捷开发，<strong>软件配置管理SCM</strong>，<strong>版本控制系统VCS</strong>，<strong>Git作为配置管理工具</strong>； 广义的软件构造过程，Eclipse作为java构造工具，软件构造各阶段的常见工具，狭义的软件构造：build，常见的build工具；</p>
 <h4 id="software-lifecycle-and-configuration-management">2.1 Software Lifecycle and Configuration Management</h4>
@@ -3206,9 +2942,6 @@ Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="iseesaw's blog">
     </span>
-
-    
-    
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
@@ -3250,6 +2983,8 @@ Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
           <h4 id="目录">目录</h4>
 <h3 id="前记">前记</h3>
 <p> 鉴于实验要求，需要对项目包进行build。推荐使用JDK、<a target="_blank" rel="noopener" href="http://ant.apache.org">Ant</a>、<a target="_blank" rel="noopener" href="http://maven.apache.org">Maven</a>、<a target="_blank" rel="noopener" href="https://gradle.org">Gradle</a>等工具进行build，或者是提交到GitHub后使用<a target="_blank" rel="noopener" href="https://travis-ci.org">Travis</a>进行自动化集成。   在此采用Travis进行自动化集成，但是需要配置文件build.xml，因此又学习了Ant相关知识。而eclipse自带Ant功能，可以自动生成build.xml文件，但是运行时出错，在GitHub上找到了关于ant+Junit的项目模板，最终重写了build.xml文件，构建成功。</p>
@@ -3297,7 +3032,8 @@ Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持
 
 
 
-      
+          </div>
+          
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -3306,7 +3042,7 @@ Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -3315,54 +3051,96 @@ Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
+      let commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
 
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">iseesaw</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">67</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">179</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
     </div>
-  </main>
+  </aside>
+  <div id="sidebar-dimmer"></div>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      
 
-      
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
 
 <div class="copyright">
   
-  &copy; 2017 – 
+  &copy; 
   <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">iseesaw</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
   </div>
 
-      
-<div class="busuanzi-count">
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="Total Visitors">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="Total Views">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
+        
 
 
 
@@ -3371,19 +3149,33 @@ Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持
 
 
 
-    </div>
-  </footer>
+      </div>
+    </footer>
+  </div>
 
   
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
 
 
 
-  <script src="/js/local-search.js"></script>
 
 
 
@@ -3393,79 +3185,11 @@ Make, Ant, Maven, Gradle, Eclipse, Travis CI（Continuous Integration，CI，持
 
 
 
-
-<script>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.6.4/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
-</script>
 
 
   
 
   
-      <script>
-  if (typeof MathJax === 'undefined') {
-    window.MathJax = {
-      loader: {
-        source: {
-          '[tex]/amsCd': '[tex]/amscd',
-          '[tex]/AMScd': '[tex]/amscd'
-        }
-      },
-      tex: {
-        inlineMath: {'[+]': [['$', '$']]},
-        tags: 'ams'
-      },
-      options: {
-        renderActions: {
-          findScript: [10, doc => {
-            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-            });
-          }, '', false],
-          insertedScript: [200, () => {
-            document.querySelectorAll('mjx-container').forEach(node => {
-              const target = node.parentNode;
-              if (target.nodeName.toLowerCase() === 'li') {
-                target.parentNode.classList.add('has-jax');
-              }
-            });
-          }, '', false]
-        }
-      }
-    };
-    (function () {
-      const script = document.createElement('script');
-      script.src = '//cdn.jsdelivr.net/npm/mathjax@3.0.5/es5/tex-mml-chtml.js';
-      script.defer = true;
-      document.head.appendChild(script);
-    })();
-  } else {
-    MathJax.startup.document.state(0);
-    MathJax.texReset();
-    MathJax.typeset();
-  }
-</script>
-
-    
-
-  
-
 
 </body>
 </html>
