@@ -457,13 +457,6 @@ mjx-container[display="true"] + br {
             </span>
 
           
-            <span id="/2017/08/12/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%89%EF%BC%89%E7%AE%80%E5%8D%95%E7%9A%84%E7%88%AC%E8%99%AB%E5%AE%9E%E8%B7%B5-%E8%B1%86%E7%93%A3%E3%80%8A%E6%B2%B3%E7%A5%9E%E3%80%8B%E6%BC%94%E5%91%98%E5%9B%BE%E7%89%87%E5%8F%8A%E5%A7%93%E5%90%8D/" class="post-meta-item leancloud_visitors" data-flag-title="【Python3.6爬虫学习记录】（三）简单的爬虫实践-豆瓣《河神》演员图片及姓名" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -471,20 +464,6 @@ mjx-container[display="true"] + br {
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2017/08/12/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%89%EF%BC%89%E7%AE%80%E5%8D%95%E7%9A%84%E7%88%AC%E8%99%AB%E5%AE%9E%E8%B7%B5-%E8%B1%86%E7%93%A3%E3%80%8A%E6%B2%B3%E7%A5%9E%E3%80%8B%E6%BC%94%E5%91%98%E5%9B%BE%E7%89%87%E5%8F%8A%E5%A7%93%E5%90%8D/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2017/08/12/%E3%80%90Python3.6%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%E3%80%91%EF%BC%88%E4%B8%89%EF%BC%89%E7%AE%80%E5%8D%95%E7%9A%84%E7%88%AC%E8%99%AB%E5%AE%9E%E8%B7%B5-%E8%B1%86%E7%93%A3%E3%80%8A%E6%B2%B3%E7%A5%9E%E3%80%8B%E6%BC%94%E5%91%98%E5%9B%BE%E7%89%87%E5%8F%8A%E5%A7%93%E5%90%8D/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
 
         </div>
       </header>
@@ -540,7 +519,7 @@ mjx-container[display="true"] + br {
 
 
       
-    <div class="comments" id="valine-comments"></div>
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -576,7 +555,7 @@ mjx-container[display="true"] + br {
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -708,15 +687,24 @@ if (document.querySelectorAll('pre.mermaid').length) {
     
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
+
 <script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el  : '#valine-comments',
-      path: location.pathname,
-    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
-    ));
-  }, window.Valine);
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b0bc9b8b422d36c937dc',
+      clientSecret: '6ac5e3e8c301f91955648ce279ab0202a5a55c4d',
+      repo        : 'iseesaw.github.io',
+      owner       : 'iseesaw',
+      admin       : ['iseesaw'],
+      id          : 'd5ed5cfc8747e183b241b34b534f0de4',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
 });
 </script>
 

@@ -461,13 +461,6 @@ mjx-container[display="true"] + br {
             </span>
 
           
-            <span id="/2019/08/28/%E3%80%90Ubuntu16.04%E3%80%91%20File%20Browser%20+%20Apache2%20%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%9B%98%EF%BC%88%E4%BA%8C%E7%BA%A7%E5%9F%9F%E5%90%8D%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="【Ubuntu16.04】 File Browser + Apache2 正向代理搭建个人网盘（二级域名）" title="Views">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">Views: </span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
             <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -475,20 +468,6 @@ mjx-container[display="true"] + br {
               <span class="post-meta-item-text">Views: </span>
               <span id="busuanzi_value_page_pv"></span>
             </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine: </span>
-    
-    <a title="valine" href="/2019/08/28/%E3%80%90Ubuntu16.04%E3%80%91%20File%20Browser%20+%20Apache2%20%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%9B%98%EF%BC%88%E4%BA%8C%E7%BA%A7%E5%9F%9F%E5%90%8D%EF%BC%89/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2019/08/28/%E3%80%90Ubuntu16.04%E3%80%91%20File%20Browser%20+%20Apache2%20%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%9B%98%EF%BC%88%E4%BA%8C%E7%BA%A7%E5%9F%9F%E5%90%8D%EF%BC%89/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
             <div class="post-description">使用File Browser在Ubuntu上搭建个人网盘，并使用二级域名映射</div>
 
         </div>
@@ -572,7 +551,7 @@ mjx-container[display="true"] + br {
 
 
       
-    <div class="comments" id="valine-comments"></div>
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -608,7 +587,7 @@ mjx-container[display="true"] + br {
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -740,15 +719,24 @@ if (document.querySelectorAll('pre.mermaid').length) {
     
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css">
+
 <script>
-NexT.utils.loadComments('#valine-comments', () => {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', () => {
-    new Valine(Object.assign({
-      el  : '#valine-comments',
-      path: location.pathname,
-    }, {"enable":true,"appId":"AcO1QGFxIyU9JQW7PElveCVz-gzGzoHsz","appKey":"oorqsIbcBCyu8WJ0JoyiMsTd","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"serverURLs":null,"enableQQ":true,"requiredFields":[]}
-    ));
-  }, window.Valine);
+NexT.utils.loadComments('#gitalk-container', () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'b0bc9b8b422d36c937dc',
+      clientSecret: '6ac5e3e8c301f91955648ce279ab0202a5a55c4d',
+      repo        : 'iseesaw.github.io',
+      owner       : 'iseesaw',
+      admin       : ['iseesaw'],
+      id          : '6d8f4abff9d1f704c8f896b8886bbd12',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
 });
 </script>
 
