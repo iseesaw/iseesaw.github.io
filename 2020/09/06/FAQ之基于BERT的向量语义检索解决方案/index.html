@@ -410,14 +410,14 @@ score = \frac{V_{query} \cdot V_{corpus}}{||V_{query}|| \cdot ||V_{corpus}||}
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sentence_transformers <span class="keyword">import</span> models</span><br><span class="line"></span><br><span class="line">model_name = <span class="string">&#x27;bert-base-chinese&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 BERT 作为 encoder</span></span><br><span class="line">word_embedding_model = models.BERT(model_name)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 mean pooling 获得句向量表示</span></span><br><span class="line">pooling_model = models.Pooling(word_embedding_model.get_word_embedding_dimension(),</span><br><span class="line">pooling_mode_mean_tokens=<span class="literal">True</span>,</span><br><span class="line">pooling_mode_cls_token=<span class="literal">False</span>,</span><br><span class="line">pooling_mode_max_tokens=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line">model = SentenceTransformer(modules=[word_embedding_model, pooling_model])</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h5 id="transformers">Transformers</h5>
-<p><a target="_blank" rel="noopener" href="https://huggingface.co/transformers/">Transformers :fire:</a> 支持多种预训练模型，可扩展性强，预训练模型默认输出 <code>sequence_output</code> 和 <code>pool_output</code> 分别为句子中每个 token 的向量表示和 [CLS] 的向量表示（相关论文证明 Average Embedding 效果好于 [CLS]）</p>
+<p><a target="_blank" rel="noopener" href="https://huggingface.co/transformers/">Transformers <span class="github-emoji" data-alias="fire" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f525.png?v8">🔥</span></a> 支持多种预训练模型，可扩展性强，预训练模型默认输出 <code>sequence_output</code> 和 <code>pool_output</code> 分别为句子中每个 token 的向量表示和 [CLS] 的向量表示（相关论文证明 Average Embedding 效果好于 [CLS]）</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> transformers <span class="keyword">import</span> AutoTokenizer, AutoModel</span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Mean Pooling - Take attention mask into account for correct averaging</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mean_pooling</span>(<span class="params">model_output, attention_mask</span>):</span></span><br><span class="line">    <span class="comment"># 获得句子中每个 token 的向量表示</span></span><br><span class="line">    token_embeddings = model_output[<span class="number">0</span>] </span><br><span class="line">    input_mask_expanded = attention_mask.unsqueeze(-<span class="number">1</span>).expand(token_embeddings.size()).<span class="built_in">float</span>()</span><br><span class="line">    sum_embeddings = torch.<span class="built_in">sum</span>(token_embeddings * input_mask_expanded, <span class="number">1</span>)</span><br><span class="line">    sum_mask = torch.clamp(input_mask_expanded.<span class="built_in">sum</span>(<span class="number">1</span>), <span class="built_in">min</span>=<span class="number">1e-9</span>)</span><br><span class="line">    <span class="keyword">return</span> sum_embeddings / sum_mask</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sentences = [<span class="string">&#x27;This framework generates embeddings for each input sentence&#x27;</span>,</span><br><span class="line">             <span class="string">&#x27;Sentences are passed as a list of string.&#x27;</span>,</span><br><span class="line">             <span class="string">&#x27;The quick brown fox jumps over the lazy dog.&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载模型文件</span></span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(<span class="string">&quot;bert-base-uncased&quot;</span>)</span><br><span class="line">model = AutoModel.from_pretrained(<span class="string">&quot;bert-base-uncased&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据预处理</span></span><br><span class="line">encoded_input = tokenizer(sentences, padding=<span class="literal">True</span>, truncation=<span class="literal">True</span>, max_length=<span class="number">128</span>, return_tensors=<span class="string">&#x27;pt&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型推理</span></span><br><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">    model_output = model(**encoded_input)</span><br><span class="line"></span><br><span class="line"><span class="comment"># mean pooling 获得句子表示</span></span><br><span class="line">sentence_embeddings = mean_pooling(model_output, encoded_input[<span class="string">&#x27;attention_mask&#x27;</span>])</span><br></pre></td></tr></table></figure>
 <blockquote>
 <ul>
 <li><strong>Sentence-Transformers</strong> 进行小规模数据的单 GPU fine-tune 实验（尚不支持多 GPU 训练，<a target="_blank" rel="noopener" href="https://github.com/UKPLab/sentence-transformers/issues/311#issuecomment-659455875">Multi-GPU-training #311</a> ；实现了多种 <a target="_blank" rel="noopener" href="https://www.sbert.net/docs/package_reference/losses.html">Ranking loss</a> 可供参考）</li>
 <li><strong>Transformers</strong> 进行大规模数据的多 GPU fine-tune 训练（推荐自定义模型使用 <a target="_blank" rel="noopener" href="https://huggingface.co/transformers/training.html#trainer">Trainer</a> 进行训练）</li>
 <li>实际使用过程中 <strong>Sentence-Transformers</strong> 和 <strong>Transformers</strong> 模型基本互通互用，前者多了 <strong>Pooling 层（Mean/Max/CLS Pooling）</strong> ，可参考 <strong>Example</strong></li>
-<li>:fire: <strong>实际上线推荐直接使用 Transformers 封装</strong>，Sentence-Transformers 对于CPU服务器不太友好。</li>
+<li><span class="github-emoji" data-alias="fire" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f525.png?v8">🔥</span> <strong>实际上线推荐直接使用 Transformers 封装</strong>，Sentence-Transformers 对于CPU服务器不太友好。</li>
 </ul>
 </blockquote>
 <h3 id="bert-微调与蒸馏">BERT 微调与蒸馏</h3>
@@ -698,7 +698,7 @@ L(u, v, y) = (\frac{u \cdot v}{||u||_2 \times ||v||_2} - y)^2
 <li>Web 框架选择
 <ul>
 <li><a target="_blank" rel="noopener" href="https://flask.palletsprojects.com/">Flask</a> + Gunicorn + gevent + nginx ，进程管理（崩溃自动重启）（uwsgi 同理，gunicorn 更简单）</li>
-<li>:fire: <strong><a target="_blank" rel="noopener" href="https://fastapi.tiangolo.com/">FastAPI</a></strong> + uvicorn（崩溃自动重启），最快的Python Web框架（实测的确比 Flask 快几倍）</li>
+<li><span class="github-emoji" data-alias="fire" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f525.png?v8">🔥</span> <strong><a target="_blank" rel="noopener" href="https://fastapi.tiangolo.com/">FastAPI</a></strong> + uvicorn（崩溃自动重启），最快的Python Web框架（实测的确比 Flask 快几倍）</li>
 </ul></li>
 <li>cache 缓存机制（保存最近的query对应的topic，命中后直接返回）
 <ul>
@@ -708,7 +708,7 @@ L(u, v, y) = (\frac{u \cdot v}{||u||_2 \times ||v||_2} - y)^2
 </ul></li>
 <li>Python 3.2 以上自带（FastAPI 中可使用）
 <ul>
-<li>:fire: <a target="_blank" rel="noopener" href="https://docs.python.org/3/library/functools.html#functools.lru_cache"><strong>functools.lru_cache()</strong></a> （默认缓存128，lru策略），装饰器，缓存函数输入和输出</li>
+<li><span class="github-emoji" data-alias="fire" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f525.png?v8">🔥</span> <a target="_blank" rel="noopener" href="https://docs.python.org/3/library/functools.html#functools.lru_cache"><strong>functools.lru_cache()</strong></a> （默认缓存128，lru策略），装饰器，缓存函数输入和输出</li>
 </ul></li>
 </ul></li>
 </ul>
@@ -730,12 +730,12 @@ L(u, v, y) = (\frac{u \cdot v}{||u||_2 \times ||v||_2} - y)^2
 </thead>
 <tbody>
 <tr class="odd">
-<td>BertForSeqClassify<br />:steam_locomotive: lcqmc</td>
+<td>BertForSeqClassify<br /><span class="github-emoji" data-alias="steam_locomotive" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f682.png?v8">🚂</span> lcqmc</td>
 <td>0.8832/0.8600</td>
 <td>0.8848/0.8706</td>
 </tr>
 <tr class="even">
-<td>SiameseNetwork<br />:steam_locomotive: lcqmc</td>
+<td>SiameseNetwork<br /><span class="github-emoji" data-alias="steam_locomotive" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f682.png?v8">🚂</span> lcqmc</td>
 <td>0.8818/0.8705</td>
 <td>0.8810/0.8701</td>
 </tr>
@@ -749,11 +749,6 @@ L(u, v, y) = (\frac{u \cdot v}{||u||_2 \times ||v||_2} - y)^2
 <p>此处为 FAQ 数据集的召回结果评估，将训练集 post 作为 corpus，测试集 post 作为 query 进行相似度计算</p>
 </blockquote>
 <table>
-<colgroup>
-<col style="width: 55%" />
-<col style="width: 23%" />
-<col style="width: 21%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th>model</th>
@@ -773,22 +768,22 @@ L(u, v, y) = (\frac{u \cdot v}{||u||_2 \times ||v||_2} - y)^2
 <td>0.7745</td>
 </tr>
 <tr class="odd">
-<td>bert-base-chinese<br />:point_up_2: <em>6 layers</em></td>
+<td>bert-base-chinese<br /><span class="github-emoji" data-alias="point_up_2" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f446.png?v8">👆</span> <em>6 layers</em></td>
 <td>0.7276</td>
 <td>-</td>
 </tr>
 <tr class="even">
-<td>SiameseNetwork<br />:steam_locomotive: chit-faq-small</td>
+<td>SiameseNetwork<br /><span class="github-emoji" data-alias="steam_locomotive" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f682.png?v8">🚂</span> chit-faq-small</td>
 <td>0.8567</td>
 <td>0.8500</td>
 </tr>
 <tr class="odd">
-<td>SiameseNetwork<br />:steam_locomotive: chitchat-faq-small + entity-faq-large</td>
+<td>SiameseNetwork<br /><span class="github-emoji" data-alias="steam_locomotive" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f682.png?v8">🚂</span> chitchat-faq-small + entity-faq-large</td>
 <td>0.8980</td>
 <td><strong>0.9961</strong></td>
 </tr>
 <tr class="even">
-<td>:point_up_2: <em>6 layers</em> :fire:</td>
+<td><span class="github-emoji" data-alias="point_up_2" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f446.png?v8">👆</span> <em>6 layers</em> <span class="github-emoji" data-alias="fire" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f525.png?v8">🔥</span></td>
 <td><strong>0.9128</strong></td>
 <td>0.8201</td>
 </tr>
@@ -821,12 +816,12 @@ L(u, v, y) = (\frac{u \cdot v}{||u||_2 \times ||v||_2} - y)^2
 <p>总共 100 个模拟用户，启动时每秒递增 10 个，压力测试持续 3 分钟</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locust  -f locust_test.py  --host=http://127.0.0.1:8889/module --headless -u 100 -r 10 -t 3m</span><br></pre></td></tr></table></figure></li>
-<li>:hourglass: 配置 <strong>4核8G CPU</strong> （6层小模型占用内存约 700MB）
+<li><span class="github-emoji" data-alias="hourglass" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/231b.png?v8">⌛</span> 配置 <strong>4核8G CPU</strong> （6层小模型占用内存约 700MB）
 <ul>
 <li>小服务器上 <strong>bert-as-service</strong> 服务非常不稳定（tensorflow各种报错）， 效率不如简单封装的 <strong>TransformersEncoder</strong></li>
 <li><strong>FastAPI</strong> 框架速度远胜于 <strong>Flask</strong>，的确堪称最快的 Python Web 框架</li>
 <li><strong>cache</strong> 的使用能够大大提高并发量和响应速度（最大缓存均设置为<strong>500</strong>）</li>
-<li>最终推荐配置 :fire: <strong>TransformersEncoder + FastAPI + functools.lru_cache</strong></li>
+<li>最终推荐配置 <span class="github-emoji" data-alias="fire" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f525.png?v8">🔥</span> <strong>TransformersEncoder + FastAPI + functools.lru_cache</strong></li>
 </ul></li>
 </ul>
 <table>
@@ -946,7 +941,7 @@ L(u, v, y) = (\frac{u \cdot v}{||u||_2 \times ||v||_2} - y)^2
 <td>0.00</td>
 </tr>
 <tr class="odd">
-<td>BertSiameseNet<br/>:fire: 6 layers <br /><strong>Transformers</strong></td>
+<td>BertSiameseNet<br/><span class="github-emoji" data-alias="fire" style="" data-fallback-src="https://github.githubassets.com/images/icons/emoji/unicode/1f525.png?v8">🔥</span> 6 layers <br /><strong>Transformers</strong></td>
 <td><strong>fastapi</strong></td>
 <td><strong>lru_cache</strong></td>
 <td>100</td>
