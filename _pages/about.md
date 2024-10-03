@@ -2,15 +2,15 @@
 layout: about
 title: about
 permalink: /
-subtitle: Kaiyan Zhang, Ph.D Student
+subtitle: 
 
 profile:
   align: right
   image: 
   image_circular: true # crops the image to make it circular
   more_info: >
-    <p>ROHM EE Hall</p>
-    <p>Tsinghua University</p>
+    <p>Kaiyan Zhang</p>
+    <p>Ph.D Student</p>
 
 news: true # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
