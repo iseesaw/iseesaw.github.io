@@ -8,8 +8,8 @@ profile:
   align: right
   image: 
   image_circular: true # crops the image to make it circular
-  more_info: >
-    <p><b>Kaiyan Zhang (张开颜)</b></p>
+  # more_info: >
+    # <p><b>Kaiyan Zhang (张开颜)</b></p>
 
 news: true # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
