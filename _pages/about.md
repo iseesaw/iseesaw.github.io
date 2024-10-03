@@ -2,16 +2,15 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: Kaiyan Zhang, Ph.D Student
 
 profile:
   align: right
-  image: avatar.png
+  image: 
   image_circular: true # crops the image to make it circular
   more_info: >
-    <p>ROHM Electronic Engineering Hall</p>
+    <p>ROHM EE Hall</p>
     <p>Tsinghua University</p>
-    <p>Haidian District, Beijing 100084</p>
 
 news: true # includes a list of news items
 selected_papers: true # includes a list of papers marked as "selected={true}"
