@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-We released collections of RL recipes for reasoning on Github (see [Awesome-RL-Reasoning-Recipes](https://github.com/TsinghuaC3I/Awesome-RL-Reasoning-Recipes) ![](https://img.shields.io/github/stars/TsinghuaC3I/Awesome-RL-Reasoning-Recipes)).
+We released collections of RL recipes (see [Awesome-RL-Reasoning-Recipes](https://github.com/TsinghuaC3I/Awesome-RL-Reasoning-Recipes) ![](https://img.shields.io/github/stars/TsinghuaC3I/Awesome-RL-Reasoning-Recipes)).

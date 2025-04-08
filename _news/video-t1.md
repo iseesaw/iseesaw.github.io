@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Video-T1 was released, which firstly evaluated test-time scaling on video generation (see [Video-T1](https://github.com/liuff19/Video-T1) ![](https://img.shields.io/github/stars/liuff19/Video-T1)).
+Video-T1 was released, which firstly evaluated TTS on video generation (see [Video-T1](https://github.com/liuff19/Video-T1) ![](https://img.shields.io/github/stars/liuff19/Video-T1)).
