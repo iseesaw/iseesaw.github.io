@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-One first-author paper has accepted to NeurIPS 2024 D&B Track (see [UltraMedical](https://github.com/TsinghuaC3I/UltraMedical)).
+One first-author paper has accepted to NeurIPS 2024 D&B Track (see [UltraMedical](https://github.com/TsinghuaC3I/UltraMedical) ![](https://img.shields.io/github/stars/TsinghuaC3I/UltraMedical)).
