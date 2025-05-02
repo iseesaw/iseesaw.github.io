@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-One first-author paper has accepted to EMNLP 2023 (see [CRaSh](https://github.com/TsinghuaC3I/CRaSh)).
+One first-author paper is accepted to EMNLP 2023 (see [CRaSh](https://github.com/TsinghuaC3I/CRaSh)).

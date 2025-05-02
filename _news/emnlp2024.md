@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-One paper has accepted to EMNLP 2024 (see [LPA](https://github.com/TsinghuaC3I/LPA)).
+One paper is accepted to EMNLP 2024 (see [LPA](https://github.com/TsinghuaC3I/LPA)).

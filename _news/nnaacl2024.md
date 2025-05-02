@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-One paper has accepted to NAACL 2024 (see [PAD](https://github.com/Xuekai-Zhu/pad)).
+One paper is accepted to NAACL 2024 (see [PAD](https://github.com/Xuekai-Zhu/pad)).

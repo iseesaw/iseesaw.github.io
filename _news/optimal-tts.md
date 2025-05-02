@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-We explored compute-optimal test-time scaling (see [compute-optimal-tts](https://github.com/RyanLiu112/compute-optimal-tts) ![](https://img.shields.io/github/stars/RyanLiu112/compute-optimal-tts)).
+We explore compute-optimal test-time scaling (see [compute-optimal-tts](https://github.com/RyanLiu112/compute-optimal-tts) ![](https://img.shields.io/github/stars/RyanLiu112/compute-optimal-tts)).
