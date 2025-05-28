@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Just shared our latest work on TTS, RL and TTRL at [QingkeTalk](https://qingkelab.github.io/talks/2025/05-14/).
+Just shared our latest work on TTS, RL and TTRL at [QingkeTalk](http://qingkeai.online/archives/sE5qOogK).
