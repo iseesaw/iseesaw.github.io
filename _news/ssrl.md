@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-We present [SSRL](https://github.com/TsinghuaC3I/SSRL) (Self-Search Reinforcement Learning), an investigation for Agentic Search RL without reliance on external search engine while maintaining strong sim2real generalization.
+We investigate agentic search RL without reliance on external search engine while maintaining strong sim2real generalization. (see [SSRL](https://github.com/TsinghuaC3I/SSRL) ![](https://img.shields.io/github/stars/TsinghuaC3I/SSRL)).
