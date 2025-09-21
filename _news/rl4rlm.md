@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-Excited to share our new survey paper on RL for Large Reasoning Models (LRMs)! (see [RL4LRM](https://github.com/TsinghuaC3I/Awesome-RL-for-LRMs) ![](https://img.shields.io/github/stars/TsinghuaC3I/Awesome-RL-for-LRMs)).
+Excited to share our new survey paper on [RL for Large Reasoning Models](https://github.com/TsinghuaC3I/Awesome-RL-for-LRMs) ![](https://img.shields.io/github/stars/TsinghuaC3I/Awesome-RL-for-LRMs).
