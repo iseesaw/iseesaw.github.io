@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-We release a survey on self- and meta-evolution of self-improving agents: [Awesome-Self-Improving-Agents](https://github.com/FrontisAI/Awesome-Self-Improving-Agents).
+We release a survey on self- and meta-evolution of self-improving agents: [Awesome-Self-Improving-Agents](https://github.com/FrontisAI/Awesome-Self-Improving-Agents) [![GitHub stars](https://img.shields.io/github/stars/FrontisAI/Awesome-Self-Improving-Agents?style=social)](https://github.com/FrontisAI/Awesome-Self-Improving-Agents).
