@@ -51,6 +51,7 @@ body {
   border-radius: 0 !important;
   box-shadow: none !important;
   border: 1px solid var(--global-divider-color);
+  max-width: 220px; // cap on narrow viewports where .profile falls back to 100% width
 }
 
 .publications .links a.btn,
@@ -252,7 +253,7 @@ ul.task-list input[type="checkbox"] {
 
 @media (min-width: 576px) {
   .profile {
-    width: 22%;
+    width: 200px; // fixed px so the avatar renders identically across browsers/viewports
 
     .address {
       p {
