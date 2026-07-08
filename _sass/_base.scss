@@ -23,6 +23,41 @@ hr {
   border-top: 1px solid var(--global-divider-color);
 }
 
+body {
+  font-family: "Inter", "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+// research-thread section headings on the about page
+.publications h3.thread-heading {
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-left: 3px solid var(--global-edge-color);
+  padding-left: 0.6rem;
+  margin: 1.75rem 0 1.25rem;
+}
+
+// publications page: plain list — no venue badge/thumbnail column, entries span the full row
+.publications-plain ol.bibliography li .row > .abbr {
+  display: none;
+}
+
+.publications-plain ol.bibliography li .row > .col-sm-8 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+// Frontis geometry: flat surfaces, square corners, layers built from color and spacing — not shadows
+.profile img {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: 1px solid var(--global-divider-color);
+}
+
+.publications .links a.btn,
+input#bibsearch {
+  border-radius: 0 !important;
+}
+
 table {
   td,
   th {
@@ -217,7 +252,7 @@ ul.task-list input[type="checkbox"] {
 
 @media (min-width: 576px) {
   .profile {
-    width: 30%;
+    width: 22%;
 
     .address {
       p {
@@ -245,7 +280,7 @@ ul.task-list input[type="checkbox"] {
 
 .navbar {
   box-shadow: none;
-  border-bottom: 1px solid var(--global-divider-color);
+  border-bottom: 3px solid var(--global-edge-color);
   background-color: var(--global-bg-color);
   opacity: 0.95;
 }
@@ -691,7 +726,11 @@ footer.sticky-bottom {
     li {
       margin-bottom: 1rem;
 
-      .preview {
+      // flat, uniform thumbnail cards: no shadow, no rounding
+      img.preview {
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        border: 1px solid var(--global-divider-color);
       }
 
       .abbr {

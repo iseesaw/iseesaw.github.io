@@ -13,7 +13,6 @@ description: > # the ">" symbol means to ignore newlines until "footer_text:"
 footer_text: >
   Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
   Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-  Photos from <a href="https://unsplash.com" target="_blank">Unsplash</a>.
 keywords: Kaiyan Zhang, 张开颜, Frontis.AI, agent self-evolution, recursive self-improvement, AI for AI, self-improving agents, reinforcement learning, LLM agents, large reasoning models, Tsinghua University # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
@@ -66,7 +65,7 @@ max_width: 930px
 # see https://schema.org/docs/faq.html for more information
 serve_og_meta: true # Include Open Graph meta tags in the HTML head
 serve_schema_org: true # Include Schema.org in the HTML head
-og_image: # The site-wide (default for all links) Open Graph preview image
+og_image: https://iseesaw.github.io/assets/img/avatar.png # The site-wide (default for all links) Open Graph preview image
 
 # -----------------------------------------------------------------------------
 # Social integration
@@ -135,7 +134,7 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # -----------------------------------------------------------------------------
 
 blog_name: # blog_name will be displayed in your blog page
-blog_description: a simple whitespace theme for academics
+blog_description: # description shown on the blog page
 permalink: # /blog/:year/:title/
 lsi: false # produce an index for related posts
 
@@ -232,6 +231,7 @@ kramdown:
 include: ["_pages"]
 exclude:
   - bin/
+  - CLAUDE.md
   - CONTRIBUTING.md
   - CUSTOMIZE.md
   - Dockerfile
@@ -245,7 +245,6 @@ exclude:
   - lighthouse_results/
   - package.json
   - package-lock.json
-  - _pages/about_einstein.md
   - purgecss.config.js
   - README.md
   - readme_preview/
@@ -370,6 +369,7 @@ filtered_bibtex_keywords:
     selected,
     slides,
     supp,
+    thread,
     video,
     website,
   ]
@@ -399,7 +399,7 @@ external_links:
 # MAKE SURE imagemagick is installed and on your PATH before enabling imagemagick. In a terminal, run:
 #   convert -version
 imagemagick:
-  enabled: true # enables responsive images for your site (recommended, see https://github.com/alshedivat/al-folio/issues/537)
+  enabled: false # requires the ImageMagick `convert` binary; disabled since it is not installed (srcset falls back to original images)
   widths:
     - 480
     - 800
@@ -491,7 +491,7 @@ third_party_libraries:
     version: "5.5.0"
   google_fonts:
     url:
-      fonts: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&display=swap"
+      fonts: "https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700|Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&display=swap"
   highlightjs:
     integrity:
       css:
@@ -629,23 +629,3 @@ third_party_libraries:
       js_map: "https://cdn.jsdelivr.net/npm/vega-lite@{{version}}/build/vega-lite.min.js.map"
     version: "5.16.3"
 
-# -----------------------------------------------------------------------------
-# Get external JSON data
-# -----------------------------------------------------------------------------
-
-jekyll_get_json:
-  - data: resume
-    json: assets/json/resume.json # it can also be an url
-jsonresume:
-  - basics
-  - work
-  - education
-  - publications
-  - projects
-  - volunteer
-  - awards
-  - certificates
-  - skills
-  - languages
-  - interests
-  - references

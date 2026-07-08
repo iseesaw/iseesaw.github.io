@@ -24,6 +24,12 @@ $pink-color: #f92080 !default;
 $pink-color-light: #ffdddd !default;
 $yellow-color: #efcc00 !default;
 
+// Frontis palette (personal accent system)
+$frontis-cyan: #00c1d4 !default; // 跃迁青 - structural accent lines only, not text
+$frontis-cyan-deep: #0097b2 !default; // 流通青 - hover states
+$frontis-link-blue: #1a6fd4 !default; // 信息蓝 - links (WCAG AA on white)
+$frontis-orange: #fa5f26 !default; // 能量橙 - single peak emphasis per page
+
 $grey-color: #828282 !default;
 $grey-color-light: color.adjust($grey-color, $lightness: 40%);
 $grey-color-dark: #1c1c1d;
@@ -34,7 +40,7 @@ $black-color: #000000 !default;
 
 // Theme colors
 
-$code-bg-color-light: rgba($purple-color, 0.05);
+$code-bg-color-light: rgba($frontis-link-blue, 0.05);
 $code-bg-color-dark: #2c3237 !default;
 
 // Font awesome location

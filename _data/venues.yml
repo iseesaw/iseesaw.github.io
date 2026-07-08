@@ -1,9 +1,35 @@
-"AJP":
-  url: https://aapt.scitation.org/journal/ajp
-  color: "#00369f"
+# Venue links for publication badges (abbr field in papers.bib).
+# Badges use the site theme color; add `color: "#hex"` per venue to override.
 
-"PhysRev":
-  url: https://journals.aps.org/
+"NeurIPS 2025":
+  url: https://neurips.cc/
 
-"Vision":
-  color: "#009f36"
+"NeurIPS 2024":
+  url: https://neurips.cc/
+
+"ICLR 2026":
+  url: https://iclr.cc/
+
+"ICLR 2025":
+  url: https://iclr.cc/
+
+"ECCV 2026":
+  url: https://eccv.ecva.net/
+
+"EMNLP 2025":
+  url: https://2025.emnlp.org/
+
+"EMNLP 2023":
+  url: https://2023.emnlp.org/
+
+"ACL 2024":
+  url: https://2024.aclweb.org/
+
+"COLM 2024":
+  url: https://colmweb.org/
+
+"ICML@MAS 2025":
+  url: https://icml.cc/
+
+"arXiv":
+  url: https://arxiv.org/a/zhang_kaiyan_1

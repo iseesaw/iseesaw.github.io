@@ -2,7 +2,7 @@
 layout: page
 permalink: /publications/
 title: publications
-description: publications by categories in reversed chronological order.
+description: papers I led or co-led (first, co-first, or corresponding author), in reverse chronological order.
 nav: true
 nav_order: 2
 ---
@@ -13,7 +13,7 @@ Full list in [Google Scholar](https://scholar.google.com/citations?user=3RjM7L8A
 
 {% include bib_search.liquid %}
 
-<div class="publications">
+<div class="publications publications-plain">
 
 {% bibliography %}
 
